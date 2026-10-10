@@ -703,7 +703,7 @@ async function boot(){
   if(!session) return renderAuth();
   S.user = session.user;
   const {data:me} = await sb.from("bv_profiles").select("*").eq("id",S.user.id).maybeSingle();
-  if(!me){ await sb.auth.signOut(); return renderAuth("up"); }
+  if(!me) return finishRoom();
   S.me = me;
   document.documentElement.style.setProperty("--accent", me.room_accent||"#4FA8D8");
   sb.rpc("bv_touch");
