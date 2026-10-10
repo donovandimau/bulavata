@@ -609,7 +609,7 @@ async function viewCrewRoom(){
   const {data:cs}=await sb.rpc("bv_my_crews"); const c=(cs||[]).find(x=>x.id===S.crew);
   if(!c){ S.crew=null; return render(); }
   const {data:msgs}=await sb.from("bv_crew_messages").select("*").eq("crew_id",c.id).order("created_at",{ascending:false}).limit(80);
-  const list=(msgs||[]).slice().reverse();
+  const list=(msgs||[]);   /* newest first - latest at the top, no scrolling back up */
   const ids=[...new Set(list.map(m=>m.author))];
   const {data:ppl}=ids.length?await sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji").in("id",ids):{data:[]};
   const map=Object.fromEntries((ppl||[]).map(p=>[p.id,p]));
