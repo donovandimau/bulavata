@@ -243,8 +243,8 @@ async function signUp(){
   if(!/^[a-z0-9_]{3,20}$/.test(handle)){ err.textContent="Handle: 3–20 lowercase letters, numbers or _"; b.disabled=false; return; }
   if(!name){ err.textContent="Pick a display name."; b.disabled=false; return; }
   if(!year || (2026-year) < 16){ err.textContent="Bula Vata is for 16 and over."; b.disabled=false; return; }
-  const {data:taken} = await sb.from("bv_profiles").select("handle").eq("handle",handle).maybeSingle();
-  if(taken){ err.textContent="That handle is taken."; b.disabled=false; return; }
+  const {data:free, error:he} = await sb.rpc("bv_handle_free",{p_handle:handle});
+  if(!he && free===false){ err.textContent="That handle is taken."; b.disabled=false; return; }
   const {data,error} = await sb.auth.signUp({email:$("#a-email").value.trim(),password:$("#a-pass").value});
   if(error){ err.textContent=error.message; b.disabled=false; return; }
   if(!data.session){ err.textContent="Check your email to confirm, then sign in."; b.disabled=false; return; }
