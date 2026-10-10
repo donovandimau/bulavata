@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bula Vata — alive together</title>
+<meta name="description" content="A small, private place for your actual friends. No algorithm. No ads. No AI slop. Your room, your archive, yours to keep.">
+<meta name="theme-color" content="#87CEEB">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js"></script>
+<style>
+:root{
+  --sky:#87CEEB; --sky-deep:#5FB3D9; --lagoon:#4FA8D8; --ink:#143B52; --ink-soft:#3C6B86;
+  --shell:rgba(255,255,255,.62); --shell-solid:#fff; --line:rgba(255,255,255,.75);
+  --line-hard:rgba(20,59,82,.12); --coral:#FF8A7A; --sun:#FFD39B; --mint:#A8E6CF;
+  --r:20px; --r-sm:12px; --shadow:0 8px 30px rgba(20,59,82,.10); --accent:var(--lagoon);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:Lexend,system-ui,sans-serif; color:var(--ink); min-height:100vh;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, #CFEEFB 0%, transparent 58%),
+    radial-gradient(900px 560px at 92% 4%, #E3F6FF 0%, transparent 55%),
+    radial-gradient(800px 700px at 50% 108%, #BFE7F7 0%, transparent 62%),
+    #87CEEB;
+  background-attachment:fixed; font-weight:300; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,.ff{font-family:Manrope,system-ui,sans-serif;font-weight:800;letter-spacing:-.02em;margin:0}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--lagoon);text-decoration:none}
+
+/* bubbles */
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bubbles i{position:absolute;border-radius:50%;background:rgba(255,255,255,.34);
+  box-shadow:inset 0 0 18px rgba(255,255,255,.6);animation:rise linear infinite;bottom:-160px}
+@keyframes rise{to{transform:translateY(-118vh) translateX(var(--dx,0)) rotate(180deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.bubbles{display:none}}
+
+.glass{background:var(--shell);backdrop-filter:blur(18px) saturate(1.3);
+  -webkit-backdrop-filter:blur(18px) saturate(1.3);border:1px solid var(--line);
+  border-radius:var(--r);box-shadow:var(--shadow)}
+
+/* shell */
+#app{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:14px 16px 112px}
+header.top{display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:16px;position:sticky;top:8px;z-index:40}
+.logotile{width:38px;height:38px;border-radius:11px;background:#fff;display:grid;place-items:center;
+  box-shadow:0 2px 10px rgba(20,59,82,.14);flex:none;overflow:hidden}
+.logotile img{width:30px;height:30px;object-fit:contain;display:block}
+.logotile span{font-family:Manrope;font-weight:800;color:var(--lagoon);font-size:17px}
+.brand{font-family:Manrope;font-weight:800;font-size:19px;letter-spacing:-.03em;line-height:1}
+.brand small{display:block;font-family:Lexend;font-weight:300;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
+.spacer{flex:1}
+.luvchip{display:flex;align-items:center;gap:6px;background:#fff;border-radius:999px;padding:7px 13px;
+  font-size:13px;font-weight:500;box-shadow:0 2px 10px rgba(20,59,82,.1);white-space:nowrap}
+
+/* controls */
+.btn{border:0;border-radius:999px;padding:11px 18px;font-weight:500;font-size:14.5px;cursor:pointer;
+  background:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(79,168,216,.34);transition:.16s;display:inline-flex;
+  align-items:center;gap:7px;justify-content:center}
+.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:rgba(255,255,255,.78);color:var(--ink);box-shadow:0 2px 10px rgba(20,59,82,.09)}
+.btn.sm{padding:8px 14px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+input,textarea,select{width:100%;background:rgba(255,255,255,.85);border:1px solid var(--line-hard);
+  border-radius:var(--r-sm);padding:12px 14px;font-size:15px;font-weight:300;outline:none;transition:.15s}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,168,216,.16);background:#fff}
+textarea{resize:vertical;min-height:84px;line-height:1.55}
+label{display:block;font-size:12px;font-weight:500;color:var(--ink-soft);margin:0 0 6px 2px;
+  text-transform:uppercase;letter-spacing:.06em}
+
+/* layout */
+.grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:900px){.grid.two{grid-template-columns:1.45fr 1fr}}
+.card{padding:18px}
+.card h3{font-size:16px;margin-bottom:3px}
+.sub{font-size:12.5px;color:var(--ink-soft);font-weight:300}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;align-items:center;gap:11px}
+.wrap{flex-wrap:wrap}
+.hr{height:1px;background:var(--line-hard);margin:14px 0;border:0}
+
+/* avatars */
+.av{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:21px;flex:none;
+  background:#fff;box-shadow:0 2px 8px rgba(20,59,82,.1)}
+.av.lg{width:72px;height:72px;border-radius:21px;font-size:36px}
+.av.sm{width:32px;height:32px;border-radius:10px;font-size:16px}
+.name{font-weight:500;font-size:14.5px;line-height:1.25}
+.handle{font-size:12px;color:var(--ink-soft);font-weight:300}
+.verified{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;
+  background:var(--mint);color:#15603F;font-size:9px;font-weight:700;vertical-align:1px;margin-left:4px}
+
+/* pulse */
+.pulse-item{display:flex;gap:11px;align-items:flex-start;padding:11px;border-radius:var(--r-sm);transition:.15s;cursor:pointer}
+.pulse-item:hover{background:rgba(255,255,255,.62)}
+.pulse-text{font-size:14px;line-height:1.45}
+.ago{font-size:11px;color:var(--ink-soft);white-space:nowrap}
+
+/* moments */
+.moment{padding:15px;border-radius:var(--r);background:rgba(255,255,255,.7);border:1px solid var(--line);margin-bottom:12px}
+.moment .body{font-size:14.5px;line-height:1.6;margin:10px 0;white-space:pre-wrap;word-break:break-word}
+.moment img{width:100%;border-radius:var(--r-sm);display:block;margin:10px 0}
+.luvbtn{background:none;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+  font-size:13px;color:var(--ink-soft);padding:5px 9px;border-radius:999px;transition:.15s}
+.luvbtn:hover{background:rgba(255,138,122,.14)}
+.luvbtn.on{color:var(--coral);font-weight:500}
+
+/* wall */
+.scrawl{padding:11px 13px;border-radius:14px;background:rgba(255,255,255,.8);margin-bottom:9px;
+  border-left:3px solid var(--accent);font-size:14px;line-height:1.5}
+
+/* top friends */
+.topgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+@media(min-width:620px){.topgrid{grid-template-columns:repeat(8,1fr)}}
+.topslot{aspect-ratio:1;border-radius:14px;background:rgba(255,255,255,.6);display:grid;place-items:center;
+  font-size:21px;cursor:pointer;position:relative;border:1px dashed rgba(20,59,82,.16);transition:.15s}
+.topslot.filled{border-style:solid;border-color:var(--line);background:#fff;box-shadow:0 2px 8px rgba(20,59,82,.08)}
+.topslot:hover{transform:translateY(-2px)}
+.topslot b{position:absolute;top:3px;left:6px;font-size:9px;color:var(--ink-soft);font-weight:700}
+
+/* nav */
+nav.bottom{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;z-index:50;display:flex;gap:3px;
+  padding:7px;width:calc(100% - 28px);max-width:470px;justify-content:space-around}
+nav.bottom button{flex:1;border:0;background:none;cursor:pointer;border-radius:14px;padding:8px 2px;
+  display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:500;
+  color:var(--ink-soft);transition:.15s}
+nav.bottom button em{font-style:normal;font-size:19px;line-height:1}
+nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px rgba(20,59,82,.1)}
+.badge{position:absolute;top:2px;right:18%;background:var(--coral);color:#fff;font-size:9px;font-weight:700;
+  min-width:16px;height:16px;border-radius:999px;display:grid;place-items:center;padding:0 4px}
+
+/* koro chat */
+.msgs{max-height:48vh;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:4px 2px}
+.msg{max-width:82%;padding:9px 13px;border-radius:16px;font-size:14px;line-height:1.45;background:#fff;
+  align-self:flex-start;box-shadow:0 1px 5px rgba(20,59,82,.07);word-break:break-word}
+.msg.mine{align-self:flex-end;background:var(--accent);color:#fff}
+.msg .who{font-size:10.5px;opacity:.72;display:block;margin-bottom:2px;font-weight:500}
+
+/* misc */
+.pill{display:inline-block;padding:4px 11px;border-radius:999px;background:rgba(255,255,255,.72);
+  font-size:11.5px;font-weight:500;color:var(--ink-soft)}
+.empty{text-align:center;padding:30px 18px;color:var(--ink-soft);font-size:13.5px;line-height:1.6}
+.empty em{font-style:normal;font-size:34px;display:block;margin-bottom:10px;opacity:.65}
+.hidden{display:none !important}
+.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;
+  padding:11px 20px;border-radius:999px;font-size:13.5px;z-index:200;box-shadow:0 8px 24px rgba(20,59,82,.3);
+  animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:translateX(-50%) translateY(8px)}}
+.modal{position:fixed;inset:0;background:rgba(20,59,82,.42);backdrop-filter:blur(5px);z-index:150;
+  display:grid;place-items:center;padding:18px}
+.modal .box{max-width:430px;width:100%;padding:22px;background:#fff;max-height:86vh;overflow-y:auto}
+.ellip{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* auth */
+.authwrap{max-width:430px;margin:5vh auto;padding:28px}
+.tagline{font-size:14.5px;line-height:1.65;color:var(--ink-soft);margin:12px 0 20px}
+.promises{display:flex;flex-direction:column;gap:9px;margin:18px 0}
+.promise{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.5}
+.promise b{font-weight:600;color:var(--ink)}
+.tick{color:var(--lagoon);flex:none;font-size:14px}
+.seg{display:flex;background:rgba(255,255,255,.6);border-radius:999px;padding:4px;margin-bottom:18px}
+.seg button{flex:1;border:0;background:none;padding:9px;border-radius:999px;cursor:pointer;font-size:14px;
+  font-weight:500;color:var(--ink-soft);transition:.15s}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(20,59,82,.1)}
+</style>
+</head>
+<body>
+<div class="bubbles" id="bubbles"></div>
+<div id="app"></div>
+<script>
+/* ---------- config ---------- */
+const SB_URL = "https://aqfzpaczyodhugsgqvxi.supabase.co";
+const SB_KEY = "sb_publishable_DvpX2PSuPtxE3IqWUlRZfQ_YP2qLZtF";
+const sb = window.supabase.createClient(SB_URL, SB_KEY);
+
+/* ---------- state ---------- */
+const S = { user:null, me:null, tab:"pulse", luv:3, pending:[], friends:[], crew:null, roomHandle:null };
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const esc = t => String(t??"").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ago = t => { const s=(Date.now()-new Date(t))/1000;
+  if(s<60) return "now"; if(s<3600) return Math.floor(s/60)+"m"; if(s<86400) return Math.floor(s/3600)+"h";
+  if(s<604800) return Math.floor(s/86400)+"d"; return new Date(t).toLocaleDateString(undefined,{day:'numeric',month:'short'}); };
+function toast(m){ const d=document.createElement("div"); d.className="toast"; d.textContent=m;
+  document.body.appendChild(d); setTimeout(()=>d.remove(),2600); }
+
+/* bubbles */
+(function(){ const b=$("#bubbles"); for(let i=0;i<16;i++){ const e=document.createElement("i");
+  const sz=14+Math.random()*52; e.style.width=e.style.height=sz+"px"; e.style.left=Math.random()*100+"%";
+  e.style.setProperty("--dx",(Math.random()*90-45)+"px");
+  e.style.animationDuration=(17+Math.random()*26)+"s"; e.style.animationDelay=(-Math.random()*34)+"s";
+  e.style.opacity=.14+Math.random()*.3; b.appendChild(e);} })();
+
+const LOGO = `<div class="logotile"><img src="/dimau-fintech-logo.png" alt=""
+  onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'B'}))"></div>`;
+
+/* ================= AUTH ================= */
+function renderAuth(mode="in"){
+  app.innerHTML = `
+  <div class="glass authwrap">
+    <div class="row" style="gap:12px">${LOGO}
+      <div class="brand">Bula Vata<small>alive together</small></div></div>
+    <p class="tagline">A small, private place for your <b style="font-weight:600;color:var(--ink)">actual friends</b>.
+      Build a room nobody can flatten into a grid. Keep everything you make. Forever.</p>
+    <div class="promises">
+      <div class="promise"><span class="tick">✓</span><div><b>No algorithm.</b> Newest first. That's the whole ranking.</div></div>
+      <div class="promise"><span class="tick">✓</span><div><b>No ads, ever.</b> If we sold your attention we'd have to farm it.</div></div>
+      <div class="promise"><span class="tick">✓</span><div><b>No AI content.</b> Humans only. That's the point.</div></div>
+      <div class="promise"><span class="tick">✓</span><div><b>Your archive is yours.</b> Download the lot, any time, one tap.</div></div>
+      <div class="promise"><span class="tick">✓</span><div><b>No followers.</b> Friendship is mutual or it isn't real.</div></div>
+    </div>
+    <div class="seg">
+      <button class="${mode==='in'?'on':''}" onclick="renderAuth('in')">Sign in</button>
+      <button class="${mode==='up'?'on':''}" onclick="renderAuth('up')">Create a room</button>
+    </div>
+    <div class="stack">
+      ${mode==='up'?`<div><label>Your handle</label><input id="a-handle" placeholder="bula_sina" maxlength="20" autocapitalize="off">
+        <div class="sub" style="margin-top:5px">Lowercase letters, numbers and underscores. This is your room address.</div></div>
+      <div><label>Display name</label><input id="a-name" placeholder="Sina" maxlength="40"></div>`:''}
+      <div><label>Email</label><input id="a-email" type="email" placeholder="you@email.com" autocapitalize="off"></div>
+      <div><label>Password</label><input id="a-pass" type="password" placeholder="At least 8 characters"></div>
+      ${mode==='up'?`<div><label>Year you were born</label><input id="a-year" type="number" placeholder="2008" min="1900" max="2026">
+        <div class="sub" style="margin-top:5px">Bula Vata is 16+. We ask once, store only an age band, and never a document.</div></div>`:''}
+      <button class="btn" id="a-go">${mode==='up'?'Create my room':'Sign in'}</button>
+      <div class="sub" id="a-err" style="color:var(--coral);text-align:center"></div>
+    </div>
+  </div>`;
+  $("#a-go").onclick = () => mode==='up' ? signUp() : signIn();
+  app.querySelectorAll("input").forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter")$("#a-go").click()}));
+}
+async function signIn(){
+  const b=$("#a-go"); b.disabled=true; $("#a-err").textContent="";
+  const {error} = await sb.auth.signInWithPassword({email:$("#a-email").value.trim(),password:$("#a-pass").value});
+  if(error){ $("#a-err").textContent=error.message; b.disabled=false; } else boot();
+}
+async function signUp(){
+  const b=$("#a-go"); b.disabled=true; const err=$("#a-err"); err.textContent="";
+  const handle=$("#a-handle").value.trim().toLowerCase(), name=$("#a-name").value.trim(), year=parseInt($("#a-year").value);
+  if(!/^[a-z0-9_]{3,20}$/.test(handle)){ err.textContent="Handle: 3–20 lowercase letters, numbers or _"; b.disabled=false; return; }
+  if(!name){ err.textContent="Pick a display name."; b.disabled=false; return; }
+  if(!year || (2026-year) < 16){ err.textContent="Bula Vata is for 16 and over."; b.disabled=false; return; }
+  const {data:taken} = await sb.from("bv_profiles").select("handle").eq("handle",handle).maybeSingle();
+  if(taken){ err.textContent="That handle is taken."; b.disabled=false; return; }
+  const {data,error} = await sb.auth.signUp({email:$("#a-email").value.trim(),password:$("#a-pass").value});
+  if(error){ err.textContent=error.message; b.disabled=false; return; }
+  if(!data.session){ err.textContent="Check your email to confirm, then sign in."; b.disabled=false; return; }
+  const band = (2026-year)>=18 ? "adult" : "teen";
+  const {error:pe} = await sb.from("bv_profiles").insert({id:data.user.id,handle,display_name:name,birth_year:year,age_band:band});
+  if(pe){ err.textContent=pe.message; b.disabled=false; return; }
+  boot();
+}
+
+/* ================= SHELL ================= */
+function shell(body){
+  const p = S.pending.length;
+  app.innerHTML = `
+  <header class="top glass">
+    ${LOGO}<div class="brand">Bula Vata<small>alive together</small></div>
+    <div class="spacer"></div>
+    <div class="luvchip" title="Three Uro a day. That is why one means something.">🫶 <b>${S.luv}</b></div>
+  </header>
+  <div id="view">${body}</div>
+  <nav class="bottom glass">
+    ${[["pulse","🌊","Pulse"],["moments","🐚","Moments"],["room","🏝","My room"],["crews","🪸","Koro"],["friends","🤝","Friends"]]
+      .map(([k,i,l])=>`<button class="${S.tab===k?'on':''}" onclick="go('${k}')" style="position:relative">
+        <em>${i}</em>${l}${k==='friends'&&p?`<span class="badge">${p}</span>`:''}</button>`).join("")}
+  </nav>`;
+}
+function go(t){ S.tab=t; S.roomHandle=null; S.crew=null; render(); }
+
+/* ================= DATA ================= */
+async function refreshMeta(){
+  const [l,pr,fr] = await Promise.all([
+    sb.rpc("bv_luv_left"), sb.rpc("bv_pending_requests"), sb.rpc("bv_my_friends")
+  ]);
+  S.luv = l.data ?? 0; S.pending = pr.data || []; S.friends = fr.data || [];
+}
+
+/* ================= PULSE ================= */
+async function viewPulse(){
+  shell(`<div class="empty glass card"><em>🌊</em>Loading the pulse…</div>`);
+  const today = new Date().toISOString().slice(0,10);
+  const [pf, sp] = await Promise.all([
+    sb.rpc("bv_pulse_feed"),
+    sb.from("bv_sparks").select("*").eq("for_date",today).maybeSingle()
+  ]);
+  const pulses = (pf.data||[]).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  let spark = sp.data, mine=null, answers=[];
+  if(spark){
+    const {data:ans} = await sb.from("bv_spark_answers").select("*").eq("spark_id",spark.id);
+    answers = ans||[]; mine = answers.find(a=>a.author===S.user.id);
+    if(mine){ const ids=answers.map(a=>a.author);
+      const {data:ppl} = await sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji").in("id",ids);
+      const map=Object.fromEntries((ppl||[]).map(p=>[p.id,p]));
+      answers = answers.map(a=>({...a,p:map[a.author]||{}})); }
+  }
+  shell(`
+  <div class="grid two">
+    <div class="stack">
+      <div class="glass card">
+        <h3>Say where you're at</h3>
+        <div class="sub" style="margin-bottom:11px">One line. Your friends see it. It replaces the last one.</div>
+        <textarea id="p-text" maxlength="140" placeholder="knackered but the sun's out" style="min-height:62px"></textarea>
+        <div class="row" style="margin-top:9px">
+          <input id="p-mood" placeholder="mood (optional) 🌤" maxlength="16" style="max-width:170px">
+          <div class="spacer"></div><button class="btn sm" onclick="postPulse()">Post</button>
+        </div>
+      </div>
+      <div class="glass card">
+        <h3>The Pulse</h3><div class="sub" style="margin-bottom:8px">Everyone, right now. Newest first.</div>
+        ${pulses.length? pulses.map(p=>`
+          <div class="pulse-item" onclick="openRoom('${esc(p.handle)}')">
+            <div class="av" style="background:${esc(p.accent)}18">${esc(p.avatar_emoji||'🌺')}</div>
+            <div style="flex:1;min-width:0">
+              <div class="row" style="gap:7px"><span class="name">${esc(p.display_name||p.handle)}</span>
+                ${p.mood?`<span class="pill">${esc(p.mood)}</span>`:''}
+                <div class="spacer"></div><span class="ago">${ago(p.created_at)}</span></div>
+              <div class="pulse-text">${esc(p.text)}</div>
+            </div></div>`).join("")
+          : `<div class="empty"><em>🌊</em>Quiet in here. Add a friend, or post the first line.</div>`}
+      </div>
+    </div>
+    <div class="stack">
+      ${spark?`<div class="glass card">
+        <h3>Today's Spark</h3><div class="sub">One question a day. You see the answers once you've written yours.</div>
+        <div style="font-size:15.5px;line-height:1.5;margin:13px 0;font-weight:400">${esc(spark.question)}</div>
+        ${mine? `<div class="scrawl"><b style="font-weight:600">You:</b> ${esc(mine.body)}</div>
+          ${answers.filter(a=>a.author!==S.user.id).map(a=>`
+            <div class="scrawl" style="border-left-color:var(--sun)">
+              <b style="font-weight:600">${esc(a.p.display_name||a.p.handle||'friend')}:</b> ${esc(a.body)}</div>`).join("")
+            || `<div class="sub" style="margin-top:9px">No friends have answered yet today.</div>`}`
+        : `<textarea id="sp-a" maxlength="300" placeholder="Answer to unlock everyone else's…"></textarea>
+           <button class="btn sm" style="margin-top:9px" onclick="answerSpark(${spark.id})">Unlock</button>`}
+      </div>`:''}
+      <div class="glass card">
+        <h3>Why this is small</h3>
+        <div class="sub" style="line-height:1.7;margin-top:8px">
+          Bula Vata has no recommendations, no reach, no boost and no strangers.
+          Three Uro a day keeps praise meaningful.
+          Everything you write is yours and downloadable from
+          <a href="#" onclick="go('room');return false">your room</a>.
+        </div>
+      </div>
+    </div>
+  </div>`);
+}
+async function postPulse(){
+  const t=$("#p-text").value.trim(); if(!t) return;
+  const {error}=await sb.from("bv_pulses").insert({author:S.user.id,text:t,mood:$("#p-mood").value.trim()});
+  if(error) return toast(error.message); toast("Posted"); render();
+}
+async function answerSpark(id){
+  const b=$("#sp-a").value.trim(); if(!b) return;
+  const {error}=await sb.from("bv_spark_answers").insert({spark_id:id,author:S.user.id,body:b});
+  if(error) return toast(error.message); render();
+}
+
+/* ================= MOMENTS ================= */
+async function viewMoments(){
+  shell(`<div class="empty glass card"><em>🐚</em>Loading…</div>`);
+  const {data} = await sb.rpc("bv_moments_feed",{lim:60});
+  shell(`
+  <div class="grid two">
+    <div class="stack">
+      <div class="glass card">
+        <h3>Post a moment</h3>
+        <div class="sub" style="margin-bottom:11px">Kept forever unless you delete it. We never will.</div>
+        <textarea id="m-body" placeholder="what happened…"></textarea>
+        <input id="m-url" placeholder="Image link (optional)" style="margin-top:9px">
+        <div class="row" style="margin-top:9px"><div class="spacer"></div>
+          <button class="btn sm" onclick="postMoment()">Post</button></div>
+      </div>
+      ${(data||[]).length? (data||[]).map(m=>`
+        <div class="moment">
+          <div class="row">
+            <div class="av sm" style="background:${esc(m.accent)}18">${esc(m.avatar_emoji||'🌺')}</div>
+            <div style="flex:1;min-width:0"><div class="name ellip">${esc(m.display_name||m.handle)}</div>
+              <div class="handle">@${esc(m.handle)} · ${ago(m.created_at)}</div></div>
+            ${m.author===S.user.id?`<button class="luvbtn" onclick="delMoment(${m.id})">🗑</button>`:''}
+          </div>
+          ${m.body?`<div class="body">${esc(m.body)}</div>`:''}
+          ${m.media_url?`<img src="${esc(m.media_url)}" alt="" loading="lazy" onerror="this.remove()">`:''}
+          <button class="luvbtn ${m.i_luvd?'on':''}" onclick="giveLuv('moment',${m.id})">
+            🫶 <span>Uro</span>${m.luv_count? ' · '+m.luv_count : ''}</button>
+        </div>`).join("")
+        : `<div class="glass card empty"><em>🐚</em>Nothing yet. Your moments live here — permanently.</div>`}
+    </div>
+    <div class="glass card" style="align-self:start">
+      <h3>Moments, not content</h3>
+      <div class="sub" style="line-height:1.7;margin-top:8px">
+        Strictly newest first. No reach, no impressions, no "suggested for you".
+        Nobody who isn't your friend can see any of this — enforced in the database, not just the screen.
+      </div>
+    </div>
+  </div>`);
+}
+async function postMoment(){
+  const b=$("#m-body").value.trim(), u=$("#m-url").value.trim();
+  if(!b && !u) return;
+  const {error}=await sb.from("bv_moments").insert({author:S.user.id,body:b,media_url:u||null});
+  if(error) return toast(error.message); toast("Posted"); render();
+}
+async function delMoment(id){ if(!confirm("Delete this moment? This can't be undone.")) return;
+  await sb.from("bv_moments").delete().eq("id",id); render(); }
+async function giveLuv(kind,id){
+  const {error}=await sb.from("bv_luv").insert({giver:S.user.id,target_kind:kind,target_id:id});
+  if(error) return toast(error.message.includes("OUT_OF_LUV")?"You are out of Uro for today. That is the point.":"Already given");
+  await refreshMeta(); render();
+}
+
+/* ================= ROOM ================= */
+async function openRoom(h){ S.tab="room"; S.roomHandle=h; render(); }
+async function viewRoom(){
+  const h = S.roomHandle || S.me.handle;
+  shell(`<div class="empty glass card"><em>🏝</em>Opening the room…</div>`);
+  const {data:R} = await sb.rpc("bv_room",{p_handle:h});
+  if(!R || !R.found) return shell(`<div class="glass card empty"><em>🤷</em>No room at @${esc(h)}.</div>`);
+  const p = R.profile, me = R.is_me;
+  document.documentElement.style.setProperty("--accent", p.room_accent || "#4FA8D8");
+
+  if(!R.visible){
+    return shell(`<div class="glass card" style="text-align:center;padding:34px 20px">
+      <div class="av lg" style="margin:0 auto 14px;background:${esc(p.room_accent)}18">${esc(p.avatar_emoji)}</div>
+      <h3>${esc(p.display_name||p.handle)}</h3><div class="handle">@${esc(p.handle)}</div>
+      <p class="sub" style="margin:16px 0">This room is closed. Rooms open to friends only.</p>
+      ${R.friend_status==='none'?`<button class="btn" onclick="addFriend('${esc(p.id)}')">Ask to be friends</button>`
+        :`<span class="pill">Request ${esc(R.friend_status)}</span>`}
+    </div>`);
+  }
+
+  const custom = (p.room_css||"").slice(0,4000);
+  shell(`
+  ${custom?`<style id="roomcss">${custom}</style>`:''}
+  <div class="glass card" id="room-head" style="background:linear-gradient(135deg, ${esc(p.room_accent)}22, rgba(255,255,255,.6))">
+    <div class="row" style="align-items:flex-start">
+      <div class="av lg" style="background:#fff">${esc(p.avatar_emoji)}</div>
+      <div style="flex:1;min-width:0">
+        <h2 style="font-size:21px">${esc(p.display_name||p.handle)}${p.human_verified?'<span class="verified">✓</span>':''}</h2>
+        <div class="handle">@${esc(p.handle)}${p.pronouns?' · '+esc(p.pronouns):''} · here since ${new Date(p.created_at).toLocaleDateString(undefined,{month:'short',year:'numeric'})}</div>
+        ${p.bio?`<div style="font-size:14px;line-height:1.55;margin-top:9px">${esc(p.bio)}</div>`:''}
+      </div>
+    </div>
+    <div class="row wrap" style="margin-top:13px">
+      ${me?`<button class="btn sm" onclick="openDecorate()">🎨 Decorate</button>
+            <button class="btn sm ghost" onclick="exportArchive()">⬇ Download my archive</button>`
+          :(R.friend_status==='accepted'
+             ?`<span class="pill">🤝 Friends</span>
+               <button class="btn sm ghost" onclick="pinTop('${esc(p.id)}')">📌 Add to Tanoa 8</button>`
+             :`<button class="btn sm" onclick="addFriend('${esc(p.id)}')">Ask to be friends</button>`)}
+    </div>
+  </div>
+
+  <div class="grid two" style="margin-top:16px">
+    <div class="stack">
+      <div class="glass card">
+        <h3>The Whiteboard</h3>
+        <div class="sub" style="margin-bottom:11px">${me?"What your friends have scrawled on your wall. Permanent — you can hide one, nobody can erase it.":"Scrawl something on their wall. It stays."}</div>
+        ${R.friend_status==='accepted'||me?`
+          <div class="row" style="margin-bottom:12px">
+            <input id="w-body" placeholder="leave a mark…" maxlength="500">
+            <button class="btn sm" onclick="scrawl('${esc(p.id)}')">Write</button>
+          </div>`:''}
+        ${(R.wall||[]).length? R.wall.map(w=>`
+          <div class="scrawl" style="border-left-color:${esc(w.ink)}">
+            <div class="row" style="gap:7px;margin-bottom:3px">
+              <span style="font-size:14px">${esc(w.avatar_emoji||'🌺')}</span>
+              <b style="font-weight:600;font-size:13px">@${esc(w.handle)}</b>
+              <div class="spacer"></div><span class="ago">${ago(w.created_at)}</span></div>
+            ${esc(w.body)}</div>`).join("")
+          : `<div class="empty"><em>✍️</em>Blank wall. Someone should fix that.</div>`}
+      </div>
+      <div class="glass card">
+        <h3>Moments</h3>
+        ${(R.moments||[]).length? R.moments.map(m=>`
+          <div class="scrawl" style="border-left-color:${esc(p.room_accent)}">
+            ${m.body?esc(m.body):''}
+            ${m.media_url?`<img src="${esc(m.media_url)}" style="width:100%;border-radius:10px;margin-top:8px" onerror="this.remove()">`:''}
+            <div class="ago" style="margin-top:6px">${ago(m.created_at)}</div></div>`).join("")
+          : `<div class="empty"><em>🐚</em>No moments yet.</div>`}
+      </div>
+    </div>
+    <div class="stack">
+      <div class="glass card">
+        <h3>Tanoa 8</h3><div class="sub" style="margin-bottom:12px">Eight seats round the bowl. Ranked, public, and yes — people notice.</div>
+        <div class="topgrid">
+          ${Array.from({length:8},(_,i)=>{ const t=(R.top||[]).find(x=>x.slot===i+1);
+            return `<div class="topslot ${t?'filled':''}" ${t?`onclick="openRoom('${esc(t.handle)}')" title="@${esc(t.handle)}"`:''}>
+              <b>${i+1}</b>${t?esc(t.avatar_emoji||'🌺'):'<span style="opacity:.3">+</span>'}</div>`;}).join("")}
+        </div>
+        ${me?`<div class="sub" style="margin-top:11px">Open a friend's room and tap "Add to Tanoa 8".</div>`:''}
+      </div>
+      ${me?`<div class="glass card">
+        <h3>Your archive</h3>
+        <div class="sub" style="line-height:1.7;margin-top:7px">Every moment, pulse, scrawl and message you've ever written,
+        as one file, whenever you want it. MySpace deleted 50 million songs in a botched migration.
+        Bebo wiped every profile. We built the export before we built the feed.</div>
+        <button class="btn sm" style="margin-top:12px" onclick="exportArchive()">⬇ Download everything</button>
+      </div>`:''}
+    </div>
+  </div>`);
+}
+async function scrawl(owner){
+  const b=$("#w-body").value.trim(); if(!b) return;
+  const {error}=await sb.from("bv_wall_posts").insert({wall_owner:owner,author:S.user.id,body:b,ink:S.me.room_accent});
+  if(error) return toast(error.message); render();
+}
+async function addFriend(id){
+  const {error}=await sb.from("bv_friendships").insert({requester:S.user.id,addressee:id});
+  toast(error?"Already asked":"Request sent"); render();
+}
+async function pinTop(fid){
+  const {data:cur}=await sb.from("bv_top_friends").select("slot,friend").eq("owner",S.user.id);
+  if((cur||[]).some(x=>x.friend===fid)) return toast("Already in your Tanoa 8");
+  const used=new Set((cur||[]).map(x=>x.slot)); let slot=0;
+  for(let i=1;i<=8;i++) if(!used.has(i)){slot=i;break;}
+  if(!slot) return toast("Tanoa 8 is full — that's the point.");
+  const {error}=await sb.from("bv_top_friends").insert({owner:S.user.id,friend:fid,slot});
+  toast(error?error.message:`Pinned at #${slot}`); render();
+}
+function openDecorate(){
+  const p=S.me;
+  const m=document.createElement("div"); m.className="modal"; m.onclick=e=>{if(e.target===m)m.remove()};
+  m.innerHTML=`<div class="box glass" style="background:#fff">
+    <h3>Decorate your room</h3><div class="sub" style="margin-bottom:14px">This is yours. Nobody flattens it into a grid.</div>
+    <div class="stack">
+      <div><label>Display name</label><input id="d-name" value="${esc(p.display_name)}" maxlength="40"></div>
+      <div><label>Pronouns</label><input id="d-pro" value="${esc(p.pronouns||'')}" maxlength="24"></div>
+      <div><label>Bio</label><textarea id="d-bio" maxlength="400" style="min-height:70px">${esc(p.bio||'')}</textarea></div>
+      <div><label>Your emoji</label><input id="d-emo" value="${esc(p.avatar_emoji||'🌺')}" maxlength="4"></div>
+      <div><label>Room colour</label><input id="d-acc" type="color" value="${esc(p.room_accent||'#4FA8D8')}" style="height:46px;padding:5px"></div>
+      <div><label>Custom CSS — go wild</label>
+        <textarea id="d-css" placeholder="#room-head{border-radius:40px}  .scrawl{font-family:monospace}" style="font-family:ui-monospace,monospace;font-size:12.5px;min-height:96px">${esc(p.room_css||'')}</textarea>
+        <div class="sub" style="margin-top:5px">Hand-written CSS, like it's 2007. Only you can edit it; your friends see it.</div></div>
+      <button class="btn" onclick="saveRoom()">Save my room</button>
+    </div></div>`;
+  document.body.appendChild(m);
+}
+async function saveRoom(){
+  const patch={ display_name:$("#d-name").value.trim(), pronouns:$("#d-pro").value.trim(),
+    bio:$("#d-bio").value, avatar_emoji:$("#d-emo").value.trim()||"🌺",
+    room_accent:$("#d-acc").value, room_css:$("#d-css").value.slice(0,4000) };
+  const {error}=await sb.from("bv_profiles").update(patch).eq("id",S.user.id);
+  if(error) return toast(error.message);
+  Object.assign(S.me,patch); document.querySelector(".modal")?.remove(); toast("Room saved"); render();
+}
+async function exportArchive(){
+  toast("Packing your archive…");
+  const {data,error}=await sb.rpc("bv_export_my_archive");
+  if(error) return toast(error.message);
+  const text=JSON.stringify(data,null,2);
+  try{
+    const blob=new Blob([text],{type:"application/json"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+    a.download=`bulavata-${S.me.handle}-${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+    toast("Downloaded. It's yours.");
+  }catch(e){
+    try{ await navigator.clipboard.writeText(text); toast("Copied your whole archive to the clipboard."); }
+    catch(_){ const w=window.open("","_blank"); if(w){ w.document.write("<pre>"+esc(text)+"</pre>"); toast("Archive opened — save the page."); }
+      else toast("Couldn't save here."); }
+  }
+}
+
+/* ================= KORO ================= */
+async function viewCrews(){
+  if(S.crew) return viewCrewRoom();
+  shell(`<div class="empty glass card"><em>🪸</em>Loading…</div>`);
+  const {data:crews}=await sb.rpc("bv_my_crews");
+  shell(`<div class="grid two"><div class="stack">
+    <div class="glass card"><h3>Your Koro</h3>
+      <div class="sub" style="margin-bottom:12px">Villages. Small, closed, invite-only. No discovery, no public anything.</div>
+      ${(crews||[]).length? crews.map(c=>`
+        <div class="pulse-item" onclick="S.crew=${c.id};render()">
+          <div class="av" style="background:${esc(c.accent)}22">${esc(c.emoji)}</div>
+          <div style="flex:1;min-width:0"><div class="name">${esc(c.name)}</div>
+            <div class="handle">${c.members} member${c.members==1?'':'s'}${c.last_at?' · '+ago(c.last_at):''}</div></div>
+        </div>`).join("") : `<div class="empty"><em>🪸</em>No Koro yet.</div>`}
+    </div></div>
+    <div class="stack">
+      <div class="glass card"><h3>Start a Koro</h3>
+        <div class="row" style="margin-top:11px"><input id="c-name" placeholder="Village name" maxlength="40">
+          <button class="btn sm" onclick="makeCrew()">Make</button></div></div>
+      <div class="glass card"><h3>Join with a code</h3>
+        <div class="row" style="margin-top:11px"><input id="c-code" placeholder="paste join code" autocapitalize="off">
+          <button class="btn sm ghost" onclick="joinCrew()">Join</button></div></div>
+    </div></div>`);
+}
+async function makeCrew(){
+  const n=$("#c-name").value.trim(); if(!n) return;
+  const {data,error}=await sb.from("bv_crews").insert({name:n,owner:S.user.id}).select().single();
+  if(error) return toast(error.message);
+  await sb.from("bv_crew_members").insert({crew_id:data.id,member:S.user.id});
+  S.crew=data.id; render();
+}
+async function joinCrew(){
+  const {data,error}=await sb.rpc("bv_join_crew",{p_code:$("#c-code").value.trim()});
+  if(error) return toast("No Koro with that code"); S.crew=data; render();
+}
+async function viewCrewRoom(){
+  const {data:cs}=await sb.rpc("bv_my_crews"); const c=(cs||[]).find(x=>x.id===S.crew);
+  if(!c){ S.crew=null; return render(); }
+  const {data:msgs}=await sb.from("bv_crew_messages").select("*").eq("crew_id",c.id).order("created_at",{ascending:false}).limit(80);
+  const list=(msgs||[]).slice().reverse();
+  const ids=[...new Set(list.map(m=>m.author))];
+  const {data:ppl}=ids.length?await sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji").in("id",ids):{data:[]};
+  const map=Object.fromEntries((ppl||[]).map(p=>[p.id,p]));
+  shell(`<div class="glass card">
+    <div class="row"><button class="btn sm ghost" onclick="S.crew=null;render()">←</button>
+      <div class="av" style="background:${esc(c.accent)}22">${esc(c.emoji)}</div>
+      <div style="flex:1;min-width:0"><div class="name">${esc(c.name)}</div>
+        <div class="handle">${c.members} member${c.members==1?'':'s'}</div></div>
+      <button class="btn sm ghost" onclick="navigator.clipboard.writeText('${esc(c.join_code)}');toast('Join code copied')">🔗 Invite</button>
+    </div><hr class="hr">
+    <div class="msgs" id="msgs">
+      ${list.length? list.map(m=>{const p=map[m.author]||{};return `
+        <div class="msg ${m.author===S.user.id?'mine':''}">
+          ${m.author!==S.user.id?`<span class="who">${esc(p.avatar_emoji||'🌺')} ${esc(p.display_name||p.handle||'')}</span>`:''}
+          ${esc(m.body)}</div>`}).join("")
+        : `<div class="empty"><em>🪸</em>Say something first.</div>`}
+    </div>
+    <div class="row" style="margin-top:12px"><input id="cm" placeholder="Message…" maxlength="900">
+      <button class="btn sm" onclick="sendMsg(${c.id})">Send</button></div>
+  </div>`);
+  const box=$("#msgs"); if(box) box.scrollTop=box.scrollHeight;
+  $("#cm").addEventListener("keydown",e=>{if(e.key==="Enter")sendMsg(c.id)});
+}
+async function sendMsg(cid){
+  const b=$("#cm").value.trim(); if(!b) return; $("#cm").value="";
+  const {error}=await sb.from("bv_crew_messages").insert({crew_id:cid,author:S.user.id,body:b});
+  if(error) toast(error.message); render();
+}
+
+/* ================= FRIENDS ================= */
+async function viewFriends(){
+  shell(`
+  <div class="grid two"><div class="stack">
+    ${S.pending.length?`<div class="glass card"><h3>Asking to be friends</h3>
+      ${S.pending.map(r=>`<div class="pulse-item">
+        <div class="av">${esc(r.avatar_emoji||'🌺')}</div>
+        <div style="flex:1;min-width:0"><div class="name">${esc(r.display_name||r.handle)}</div>
+          <div class="handle">@${esc(r.handle)}</div></div>
+        <button class="btn sm" onclick="respond(${r.friendship_id},'accepted')">Accept</button>
+        <button class="btn sm ghost" onclick="respond(${r.friendship_id},'reject')">No</button>
+      </div>`).join("")}</div>`:''}
+    <div class="glass card"><h3>Your friends</h3>
+      <div class="sub" style="margin-bottom:10px">${S.friends.length} ${S.friends.length===1?'person':'people'}. Mutual, always.</div>
+      ${S.friends.length? S.friends.map(f=>`
+        <div class="pulse-item" onclick="openRoom('${esc(f.handle)}')">
+          <div class="av" style="background:${esc(f.accent)}18">${esc(f.avatar_emoji||'🌺')}</div>
+          <div style="flex:1;min-width:0"><div class="name">${esc(f.display_name||f.handle)}</div>
+            <div class="handle">@${esc(f.handle)}</div></div>
+          <span class="ago">${ago(f.last_seen)}</span></div>`).join("")
+        : `<div class="empty"><em>🤝</em>Nobody yet. Search a handle to send the first ask.</div>`}
+    </div></div>
+    <div class="stack">
+      <div class="glass card"><h3>Find someone</h3>
+        <div class="sub" style="margin-bottom:11px">By handle only. There is no people-you-may-know here.</div>
+        <div class="row"><input id="s-q" placeholder="handle" autocapitalize="off">
+          <button class="btn sm" onclick="search()">Find</button></div>
+        <div id="s-res" style="margin-top:12px"></div>
+      </div>
+      <div class="glass card"><h3>Your handle</h3>
+        <div class="row" style="margin-top:9px"><span class="pill" style="font-size:14px">@${esc(S.me.handle)}</span>
+          <button class="btn sm ghost" onclick="navigator.clipboard.writeText('@${esc(S.me.handle)}');toast('Copied')">Copy</button></div>
+      </div>
+      <div class="glass card"><button class="btn ghost" onclick="sb.auth.signOut().then(()=>location.reload())">Sign out</button></div>
+    </div></div>`);
+  $("#s-q").addEventListener("keydown",e=>{if(e.key==="Enter")search()});
+}
+async function search(){
+  const q=$("#s-q").value.trim().toLowerCase().replace(/^@/,""); if(!q) return;
+  const {data}=await sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji")
+    .ilike("handle",`%${q}%`).neq("id",S.user.id).limit(10);
+  $("#s-res").innerHTML=(data||[]).length? data.map(p=>`
+    <div class="pulse-item"><div class="av sm">${esc(p.avatar_emoji||'🌺')}</div>
+      <div style="flex:1;min-width:0"><div class="name">${esc(p.display_name||p.handle)}</div>
+        <div class="handle">@${esc(p.handle)}</div></div>
+      <button class="btn sm" onclick="addFriend('${esc(p.id)}')">Ask</button></div>`).join("")
+    : `<div class="sub">Nobody with that handle.</div>`;
+}
+async function respond(id,act){
+  if(act==='reject') await sb.from("bv_friendships").delete().eq("id",id);
+  else await sb.from("bv_friendships").update({status:'accepted'}).eq("id",id);
+  await refreshMeta(); render();
+}
+
+/* ================= ROUTER ================= */
+async function render(){
+  await refreshMeta();
+  if(S.tab==="pulse") return viewPulse();
+  if(S.tab==="moments") return viewMoments();
+  if(S.tab==="room") return viewRoom();
+  if(S.tab==="crews") return viewCrews();
+  if(S.tab==="friends") return viewFriends();
+}
+async function boot(){
+  const {data:{session}} = await sb.auth.getSession();
+  if(!session) return renderAuth();
+  S.user = session.user;
+  const {data:me} = await sb.from("bv_profiles").select("*").eq("id",S.user.id).maybeSingle();
+  if(!me){ await sb.auth.signOut(); return renderAuth("up"); }
+  S.me = me;
+  document.documentElement.style.setProperty("--accent", me.room_accent||"#4FA8D8");
+  sb.rpc("bv_touch");
+  render();
+}
+window.go=go; window.openRoom=openRoom; window.renderAuth=renderAuth;
+boot();
+</script>
+</body>
+</html>
