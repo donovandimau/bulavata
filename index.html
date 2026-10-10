@@ -620,6 +620,8 @@ async function viewCrewRoom(){
         <div class="handle">${c.members} member${c.members==1?'':'s'}</div></div>
       <button class="btn sm ghost" onclick="navigator.clipboard.writeText('${esc(c.join_code)}');toast('Join code copied')">🔗 Invite</button>
     </div><hr class="hr">
+    <div class="row" style="margin-bottom:12px"><input id="cm" placeholder="Message…" maxlength="900">
+      <button class="btn sm" onclick="sendMsg(${c.id})">Send</button></div>
     <div class="msgs" id="msgs">
       ${list.length? list.map(m=>{const p=map[m.author]||{};return `
         <div class="msg ${m.author===S.user.id?'mine':''}">
