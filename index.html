@@ -713,7 +713,42 @@ async function boot(){
   sb.rpc("bv_touch");
   render();
 }
-window.go=go; window.openRoom=openRoom; window.renderAuth=renderAuth;
+/* Signed in, but no room yet. Never sign them out - let them finish. */
+function finishRoom(){
+  let pre={}; try{ pre=JSON.parse(localStorage.getItem("bv_pending")||"{}"); }catch(_){}
+  app.innerHTML=`
+  <div class="glass authwrap">
+    <div class="row" style="gap:12px">${LOGO}
+      <div class="brand">Bula Vata<small>alive together</small></div></div>
+    <p class="tagline">You are signed in as <b style="font-weight:600;color:var(--ink)">${esc(S.user.email||"you")}</b>,
+      but you have not made your room yet. One screen and you are in.</p>
+    <div class="stack">
+      <div><label>Your handle</label><input id="f-handle" value="${esc(pre.handle||'')}" placeholder="bula_sina" maxlength="20" autocapitalize="off">
+        <div class="sub" style="margin-top:5px">Lowercase letters, numbers and underscores.</div></div>
+      <div><label>Display name</label><input id="f-name" value="${esc(pre.name||'')}" placeholder="Sina" maxlength="40"></div>
+      <div><label>Year you were born</label><input id="f-year" type="number" value="${esc(pre.year||'')}" placeholder="2008" min="1900" max="2026"></div>
+      <button class="btn" id="f-go">Make my room</button>
+      <div class="sub" id="f-err" style="color:var(--coral);text-align:center"></div>
+      <button class="btn ghost" onclick="sb.auth.signOut().then(()=>location.reload())">Sign out instead</button>
+    </div>
+  </div>`;
+  $("#f-go").onclick = async () => {
+    const b=$("#f-go"), err=$("#f-err"); b.disabled=true; err.textContent="";
+    const handle=$("#f-handle").value.trim().toLowerCase(), name=$("#f-name").value.trim(), year=parseInt($("#f-year").value);
+    if(!/^[a-z0-9_]{3,20}$/.test(handle)){ err.textContent="Handle: 3-20 lowercase letters, numbers or _"; b.disabled=false; return; }
+    if(!name){ err.textContent="Pick a display name."; b.disabled=false; return; }
+    if(!year || (2026-year) < 16){ err.textContent="Bula Vata is for 16 and over."; b.disabled=false; return; }
+    const {data:free}=await sb.rpc("bv_handle_free",{p_handle:handle});
+    if(free===false){ err.textContent="That handle is taken."; b.disabled=false; return; }
+    const {error}=await sb.from("bv_profiles").insert({id:S.user.id,handle,display_name:name,
+      birth_year:year, age_band:(2026-year)>=18?"adult":"teen"});
+    if(error){ err.textContent=error.message; b.disabled=false; return; }
+    try{ localStorage.removeItem("bv_pending"); }catch(_){}
+    boot();
+  };
+  app.querySelectorAll("input").forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter")$("#f-go").click()}));
+}
+window.go=go; window.openRoom=openRoom; window.renderAuth=renderAuth; window.sb=sb;
 boot();
 </script>
 </body>
