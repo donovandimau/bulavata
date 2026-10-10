@@ -629,10 +629,8 @@ async function viewCrewRoom(){
           ${esc(m.body)}</div>`}).join("")
         : `<div class="empty"><em>🪸</em>Say something first.</div>`}
     </div>
-    <div class="row" style="margin-top:12px"><input id="cm" placeholder="Message…" maxlength="900">
-      <button class="btn sm" onclick="sendMsg(${c.id})">Send</button></div>
   </div>`);
-  const box=$("#msgs"); if(box) box.scrollTop=box.scrollHeight;
+  const box=$("#msgs"); if(box) box.scrollTop=0;
   $("#cm").addEventListener("keydown",e=>{if(e.key==="Enter")sendMsg(c.id)});
 }
 async function sendMsg(cid){
