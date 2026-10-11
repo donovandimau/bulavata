@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sotakece.vercel.app/sitemap.xml
