@@ -32,7 +32,7 @@
         oscillator.connect(gain);gain.connect(context.destination);oscillator.start(time);oscillator.stop(time+.46);
       });
       document.querySelectorAll('[data-sample-play]').forEach(button=>{
-        button.textContent=button.id==='bv-home-play'?'�� Stop sample':'��';button.setAttribute('aria-label','Stop sample loop');button.setAttribute('aria-pressed','true');
+        button.textContent=button.id==='bv-home-play'?'��� Stop sample':'���';button.setAttribute('aria-label','Stop sample loop');button.setAttribute('aria-pressed','true');
       });
       document.querySelector('.bv-mixtape')?.classList.add('is-playing');
       document.querySelectorAll('[data-sample-status]').forEach(status=>status.textContent='Playing a sample melody · made here');
@@ -54,7 +54,7 @@
         ${interests.length?`<div class="bv-interests">${interests.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}</div>
       <div class="bv-preview-columns"><section class="bv-mini-card"><h3>Talanoa <small>Example notes</small></h3><div class="bv-photo-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div><small>2h ago</small></div><div class="bv-photo-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>Bring your favourite track. See you there.</p></div><small>4h ago</small></div></section>
       <section class="bv-mini-card"><h3>Top Mates · 16</h3><div class="bv-photo-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
-      ${s.trackUrl||s.trackPath?trackMarkup(s):`<div class="bv-photo-track"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂�▇▃▂�▂▆▃▁</span></div>`}</div>`;
+      ${s.trackUrl||s.trackPath?trackMarkup(s):`<div class="bv-photo-track"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂��▇▃▂��▂▆▃▁</span></div>`}</div>`;
   }
   function coverMediaMarkup(settings) {
     return settings.coverPath?`<button type="button" class="bv-cover-load" data-cover-path="${esc(settings.coverPath)}">Load my cover artwork ↗</button>`:'';
@@ -168,14 +168,7 @@
   function frontCrop(x,y,w,h,label) {
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
   }
-  function frontAvatar(label) {
-    // Crop inside the supplied portrait, excluding its baked-in white frame and screenshot background.
-    return `<svg class="sk-photo" viewBox="0 0 160 160" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768" transform="matrix(1.217656012 0 0 1.125175809 -796.7123286 -339.6905768)"/></svg>`;
-  }
-  function frontCover() {
-    // Rectify the photo and render the supplied masi as its own frame; exclude the screenshot avatar overlap.
-    return `<svg class="sk-photo" viewBox="0 0 677 249" role="img" aria-label="Fijian friends sharing a happy afternoon, framed by the supplied masi pattern"><foreignObject width="677" height="249"><div xmlns="http://www.w3.org/1999/xhtml" style="width:677px;height:249px;overflow:hidden;position:relative"><img src="/assets/front-reference.jpg" width="1360" height="768" alt="" style="position:absolute;max-width:none;width:1360px;height:768px;transform-origin:0 0;transform:matrix3d(1.3078165504,0.0629467077182,0,0.000230892811002,0.0226461740329,1.25152865934,0,0.0000464346625284,0,0,1,0,-828.646154037,-156.174484596,0,1);"/></div></foreignObject><defs><pattern id="sk-cover-masi" patternUnits="userSpaceOnUse" width="677" height="60"><image href="/assets/masi-supplied.png" width="677" height="60" preserveAspectRatio="xMidYMid slice"/></pattern></defs><path fill="url(#sk-cover-masi)" fill-rule="evenodd" d="M0 0H677V249H0Z M26 28V215H651V28Z"/></svg>`;
-  }
+  function frontAvatar(label) { return frontCrop(647,294,153,158,label); }
   renderAuth=function(mode='in'){
     reset();originalAuth(mode);
     const authNode=app.querySelector('.authwrap');
@@ -186,24 +179,10 @@
     authNode.querySelector('#a-pass').autocomplete=mode==='up'?'new-password':'current-password';
     const auth=authNode.outerHTML;
     app.classList.add('bv-welcome');
-    const portraits=Array.from({length:16},(_,i)=>frontCrop([1020,1080,1141,1202][i%4],448+Math.floor(i/4)*50,48,48,`Illustrated example friend ${i+1}`));
-    app.innerHTML=`<div class="sk-front">
-      <div class="sk-sunset" aria-hidden="true"></div>
-      <header class="sk-header"><a class="sk-brand" href="/" aria-label="Sota Kece home"><svg viewBox="0 0 36 44" aria-hidden="true"><path fill="currentColor" d="M2 2 15 9 2 18ZM34 2 21 9 34 18ZM2 26 15 33 2 42ZM34 26 21 33 34 42ZM18 9 29 22 18 35 7 22Z"/></svg><span>Sota Kece</span></a><nav aria-label="Explore Sota Kece"><a href="#bv-your-room">Rooms</a><a href="#sk-music">Music</a><button type="button" id="sk-sign-in">Sign in</button></nav></header>
-      <main class="sk-hero">
-        <section class="sk-copy" aria-labelledby="sk-headline"><h1 id="sk-headline">Create your own<br><span>space with friends.</span></h1><p>Choose your style, share your music,<br>and make space for your friends.</p><button class="sk-create" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Create your space <span aria-hidden="true">↗</span></button></section>
-        <section class="sk-room" aria-label="Sema's example room">
-          <div class="sk-browser-bar"><span aria-hidden="true"><i></i><i></i><i></i></span><button type="button" id="sk-room-menu" aria-label="Open room design studio">☰</button></div>
-          <div class="sk-cover">${frontCover()}</div>
-          <div class="sk-profile"><div class="sk-avatar">${frontAvatar('Sema with natural afro hair and a red hibiscus')}</div><div class="sk-profile-words"><h2>Sema</h2><b>@sema</b><p>Good people. Brighter days.</p><small>⌖ Suva, Fiji</small></div><button type="button" id="sk-edit-profile">Edit profile</button></div>
-          <div class="sk-cards"><section class="sk-talanoa sk-glass"><h3>Talanoa <span aria-hidden="true">›</span></h3><div class="sk-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div><small>2h ago</small></div><div class="sk-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>See you there.</p></div><small>4h ago</small></div></section><section class="sk-mates sk-glass"><h3>Top Mates · 16 <span aria-hidden="true">›</span></h3><div class="sk-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
-          <div class="sk-player sk-glass" id="sk-music"><div class="sk-album">${frontCrop(648,644,50,52,'Island afternoon album artwork')}</div><div class="sk-song"><b>Island afternoon</b><small>Sota Kece · original sample</small></div><div class="sk-wave"><svg viewBox="0 0 300 45" preserveAspectRatio="none" aria-hidden="true"><path d="M0 23H300"/><path d="${Array.from({length:75},(_,i)=>{const n=4+Math.round((Math.sin(i*.61)+1)*(Math.sin(i*.19)+1)*8);return `M${i*4} ${23-n/2}v${n}`}).join(' ')}"/></svg><small id="sk-home-status" data-sample-status role="status">Sample melody · tap to play</small></div><button id="sk-home-play" data-sample-play type="button" aria-label="Play sample loop" aria-pressed="false">▶</button></div>
-          <small class="sk-example">Example room · photos from your supplied design</small>
-        </section>
-      </main>
-      <a class="sk-explore" href="#bv-neon">Explore music, mates & rooms <span aria-hidden="true">↓</span></a>
-    </div>
-<div class="bv-neon-section" id="bv-neon"><div class="bv-classic">
+    app.innerHTML=`<section class="sk-front sk-original-front" aria-label="Sota Kece original supplied design">
+      <img class="sk-original-design" src="/assets/front-reference.jpg" width="1360" height="768" fetchpriority="high" alt="Sota Kece: Create your own space with friends. The original sunset design with Sema's slanted room, masi border, Talanoa, Top Mates and music player.">
+      <nav class="sk-original-actions" aria-label="Get started"><button class="sk-create" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Create your space</button><button type="button" id="sk-room-menu">Open room design studio</button><button type="button" id="sk-sign-in">Sign in</button><a href="#bv-music">Explore music, mates & rooms</a></nav>
+    </section><div class="bv-neon-section" id="bv-neon"><div class="bv-classic">
       <header class="bv-classic-header"><div class="bv-wordmark" aria-label="Sota Kece"><a href="/" aria-label="Sota Kece home"><span>sota</span>kece</a><small>FIJI ROOTS. EVERYWHERE ENERGY.</small></div>
         <form class="bv-home-search" id="bv-home-search"><label for="bv-find-mate">Find your people</label><div><input id="bv-find-mate" placeholder="Find a mate by @handle" value="${esc(pendingMate)}" maxlength="21" autocapitalize="off" spellcheck="false"><button type="submit" aria-label="Find a mate">⌕</button></div><small id="bv-search-status" role="status">Your people, one handle away.</small></form>
         ${mode==='in'?`<section class="bv-header-auth" id="bv-entry" aria-label="Sign in">${auth}<button class="bv-link" type="button" onclick="renderAuth('up')">New here? Sign up</button></section>`:`<div class="bv-header-return"><p>Already part of the crew?</p><button type="button" class="btn sm" onclick="renderAuth('in')">Sign in</button></div>`}
@@ -227,8 +206,6 @@
     $('#bv-try-studio').addEventListener('click',()=>open());
     $('#bv-edit-room').addEventListener('click',()=>open());
     $('#bv-home-play').addEventListener('click',playSample);
-    $('#sk-home-play').addEventListener('click',playSample);
-    $('#sk-edit-profile').addEventListener('click',()=>open());
     $('#sk-room-menu').addEventListener('click',()=>open());
     $('#sk-sign-in').addEventListener('click',()=>{renderAuth('in');$('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'});$('#a-email').focus();});
     app.querySelectorAll('[data-collage-skin]').forEach(button=>button.addEventListener('click',()=>open({id:button.dataset.collageSkin})));
