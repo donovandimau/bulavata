@@ -1,6 +1,6 @@
 // Only the public app shell is cached. Auth, profiles, messages and media never enter this cache.
-const CACHE='sota-kece-shell-20261011-v7-photo-led';
-const ASSETS=['/','/index.html','/skins.css','/skins.js','/skin-studio.js','/room-media.js','/assets/music.jpg','/assets/friends.jpg','/assets/beach.jpg','/assets/masi-band.svg','/offline.js','/kava.css','/kava.js','/kava-ui.js','/vendor/supabase-2.45.0.min.js'];
+const CACHE='sota-kece-shell-20261011-v8-sema-and-neon';
+const ASSETS=['/','/index.html','/skins.css','/skins.js','/skin-studio.js','/room-media.js','/front-page.css','/assets/fiji-sunset.jpg','/assets/front-reference.jpg','/assets/music.jpg','/assets/friends.jpg','/assets/beach.jpg','/assets/masi-band.svg','/offline.js','/kava.css','/kava.js','/kava-ui.js','/vendor/supabase-2.45.0.min.js'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('sota-kece-shell-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',event=>{

@@ -1,7 +1,7 @@
-# Design review hold
+# Combined homepage release
 
-Donovan requested the first photo-led neon setup on 11 October 2026. The guitarist hero, cyan frame, real-photo collage, compact authentication and classic Sign up / Share / Invite layout are restored. The cartoon room showcase is removed from the homepage;24 skins and personal design controls remain in the studio. Masi-inspired framing remains at the entrance and footer.
+On11 October2026 Donovan clarified: “Put the Sema layout as the main page and the current page below it.” Then he explicitly instructed: “publish it. we will then work on the rest of the improvements.”
 
-PREVIEW ONLY. Donovan previously said “dont publish. i want to see first.” Do not merge, promote or assign this revision to production until he explicitly authorizes publication. Production stays on the restored f34b3f6 deployment. Vercel production-domain assignment is paused by that rollback.
+The Sema sunset/glass layout is first. The restored photo-led neon page follows in the same document. The cartoon homepage room showcase stays removed;24studio skins, masi framing and personal design controls remain. Auth, search and both sample-player buttons stay wired.
 
-Private upload storage remains unapplied; file upload controls remain disabled. Direct audio links and existing profile/media safeguards remain intact. Older sunset assets are retained in history and source, but are neither loaded nor cached by this entrance.
+Publish this combined design after exact-source, CI and desktop/phone verification. This instruction supersedes the previous publication hold. Private upload storage remains unapplied and disabled; hosted Kava migration remains separate work.
