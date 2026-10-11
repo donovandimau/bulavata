@@ -169,12 +169,14 @@
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
   }
   function frontAvatar(label) { return frontCrop(647,294,153,158,label); }
-  function placeOriginalWordmark() {
-    const app=document.querySelector('#app'), logo=app?.querySelector('.bv-wordmark');
-    const mobile=app?.querySelector('.sk-original-front'), header=app?.querySelector('.bv-classic-header');
-    if(logo&&mobile&&header)(window.matchMedia('(max-width:760px)').matches?mobile:header).prepend(logo);
+  function placeResponsiveNavigation() {
+    const app=document.querySelector('#app'), nav=app?.querySelector('.bv-classic-nav');
+    const classic=app?.querySelector('.bv-classic'), panels=app?.querySelector('.bv-classic-panels');
+    if(!nav||!classic||!panels)return;
+    if(window.matchMedia('(max-width:760px)').matches)panels.insertBefore(nav,panels.querySelector('.bv-people-feature'));
+    else classic.insertBefore(nav,classic.querySelector('.bv-register')||panels);
   }
-  window.matchMedia('(max-width:760px)').addEventListener('change',placeOriginalWordmark);
+  window.matchMedia('(max-width:760px)').addEventListener('change',placeResponsiveNavigation);
   renderAuth=function(mode='in'){
     reset();originalAuth(mode);
     const authNode=app.querySelector('.authwrap');
@@ -190,6 +192,7 @@
       <nav class="sk-original-actions" aria-label="Get started"><button class="sk-create" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Create your space</button><button type="button" id="sk-room-menu"><span class="sk-action-full">Open room design studio</span><span class="sk-action-short">Room studio</span></button><button type="button" id="sk-sign-in">Sign in</button><a href="#bv-music"><span class="sk-action-full">Explore music, mates & rooms</span><span class="sk-action-short">Explore</span></a></nav>
     </section><div class="bv-neon-section" id="bv-neon"><div class="bv-classic">
       <header class="bv-classic-header"><div class="bv-wordmark" aria-label="Sota Kece"><a href="/" aria-label="Sota Kece home"><span>sota</span>kece</a><small>FIJI ROOTS. EVERYWHERE ENERGY.</small></div>
+        ${mode==='in'?`<button class="btn bv-mobile-join" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Sign up</button>`:''}
         <form class="bv-home-search" id="bv-home-search"><label for="bv-find-mate">Find your people</label><div><input id="bv-find-mate" placeholder="Find a mate by @handle" value="${esc(pendingMate)}" maxlength="21" autocapitalize="off" spellcheck="false"><button type="submit" aria-label="Find a mate">⌕</button></div><small id="bv-search-status" role="status">Your people, one handle away.</small></form>
         ${mode==='in'?`<section class="bv-header-auth" id="bv-entry" aria-label="Sign in">${auth}<button class="bv-link" type="button" onclick="renderAuth('up')">New here? Sign up</button></section>`:`<div class="bv-header-return"><p>Already part of the crew?</p><button type="button" class="btn sm" onclick="renderAuth('in')">Sign in</button></div>`}
       </header>
@@ -200,13 +203,13 @@
         <section class="bv-people-feature" id="bv-people" aria-label="Sample collage and room skins"><div class="bv-people-collage">${peopleCollage()}</div><div class="bv-collage-caption"><b>Your people. Your vibe.</b><span>Sample photos & skins · tap a tile</span></div></section>
       </div>
       <section class="bv-social-stage" id="bv-circle" aria-label="Your circle starts here">        <section class="bv-circle-feature" aria-labelledby="bv-circle-title"><div class="bv-circle-art" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><linearGradient id="bv-circle-gradient" x2="0" y2="1"><stop stop-color="#d9ff82"/><stop offset="1" stop-color="#05bb84"/></linearGradient></defs><g stroke="url(#bv-circle-gradient)" stroke-width="16" stroke-linecap="round"><path d="M60 17V103M23 38L97 82M23 82L97 38"/></g></svg></div><small>SIT DOWN. CATCH UP.</small><h2 id="bv-circle-title">Same circle. New stories.</h2><p>Pull up a seat in the Digital Kava Circle.</p><button type="button" class="bv-link" onclick="window.SotaKavaUI.preview()">Take a look →</button></section>
-<section class="bv-classic-actions" aria-label="Start here"><div><h2>Sign up</h2><p>Come as you are. Bula!</p><button type="button" class="bv-link" onclick="renderAuth('up')">Create your room →</button></div><div><h2>Share</h2><p>Moments, music and proper Talanoa.</p><button type="button" class="bv-link" id="bv-try-studio">Try a profile skin →</button></div><div><h2>Invite</h2><p>Bring the crew. Make some noise.</p><button type="button" class="bv-link" id="bv-copy-invite">Copy invite link →</button><small id="bv-invite-status" role="status"></small></div></section>
+<section class="bv-classic-actions" aria-label="Start here"><div><h2>Sign up</h2><div class="bv-action-content"><p>Come as you are. Bula!</p><button type="button" class="bv-link" onclick="renderAuth('up')">Create your room →</button></div></div><div><h2>Share</h2><div class="bv-action-content"><p>Moments, music and proper Talanoa.</p><button type="button" class="bv-link" id="bv-try-studio">Try a profile skin →</button></div></div><div><h2>Invite</h2><div class="bv-action-content"><p>Bring the crew. Make some noise.</p><button type="button" class="bv-link" id="bv-copy-invite">Copy invite link →</button><small id="bv-invite-status" role="status"></small></div></div></section>
       <div class="bv-join-strip"><span>Your top 16. Your tunes. Your Talanoa.</span><button type="button" class="btn" onclick="renderAuth('up')">sign up now!</button><small>Free to join · 16+</small></div>
       </section>
       <section class="bv-room-entry" id="bv-your-room" aria-label="Design your room"><div><h2>Your room. Your rules.</h2><p>24 skins. Masi borders. Your colours, music and cover art.</p><small>Studio choice · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="btn" id="bv-edit-room">Open the skin studio →</button></section>
       <footer class="bv-classic-footer"><span>Sota Kece · alive together</span><span>Mutual friends · Your own archive · No ads</span><details><summary>Photo credits</summary><p>Sample photography by <a href="https://unsplash.com/photos/i6r5kQMQ9Zk" target="_blank" rel="noopener noreferrer">Ben Collins</a>, <a href="https://unsplash.com/photos/roOETBSa8mA" target="_blank" rel="noopener noreferrer">Samsung UK</a> and <a href="https://unsplash.com/photos/tZhEr2d3oeM" target="_blank" rel="noopener noreferrer">Hoi An and Da Nang Photographer</a>, via Unsplash.</p></details></footer>
     </div></div>`;
-    placeOriginalWordmark();
+    placeResponsiveNavigation();
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').onclick=()=>mode==='up'?signUp():signIn();
     app.querySelectorAll('.authwrap input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')$('#a-go').click();}));

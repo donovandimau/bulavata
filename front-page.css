@@ -156,9 +156,55 @@
 .bv-studio .bv-studio-preview>p.sub{font-size:12px!important;line-height:1.5}
 @media(max-width:760px){.bv-welcome :is(.bv-circle-feature h2,.bv-classic-actions h2,.bv-room-entry h2){font-size:26px!important}.bv-welcome .bv-music-copy h1{font-size:32px}.bv-welcome .bv-join-strip .btn{font-size:22px}.bv-welcome :is(.bv-home-search,.bv-header-auth,.bv-register) input,.bv-studio .bv-studio-body>div :is(input,select,textarea){font-size:16px;line-height:1.4}.bv-studio .bv-studio-body>div :is(h3,h4){font-size:18px}}
 
-/* Phones use the same original artwork and controls as desktop. */
+
+/* Reflow the existing content to Donovan's phone references; desktop keeps its grid. */
+.bv-mobile-join{display:none}
+.bv-action-content{display:contents}
 @media(max-width:760px){
-  .sk-original-front>.bv-wordmark{padding:6px var(--sk-page-gutter) 16px}
-  .sk-original-front>.bv-wordmark a{font-size:clamp(38px,3.8vw,52px);line-height:1}
-  .sk-original-front>.bv-wordmark small{margin-top:10px}
+  .bv-neon-section .bv-classic-header{grid-template-columns:minmax(0,1fr);gap:10px;padding:0 0 16px}
+  .bv-neon-section .bv-wordmark{padding:0 0 6px;text-align:center}
+  .bv-neon-section .bv-wordmark a{font-size:46px}
+  .bv-neon-section .bv-wordmark small{margin:10px 0 0;font-size:11px;letter-spacing:1.2px}
+  .bv-neon-section .bv-mobile-join{display:block;grid-column:1;width:100%;min-height:44px;margin:0 0 4px;font-size:16px;border-radius:6px}
+  .bv-neon-section .bv-home-search,.bv-neon-section .bv-header-auth,.bv-neon-section .bv-header-return{width:min(100%,340px);justify-self:center;margin:0;grid-column:1;padding:0;border:0}
+  .bv-neon-section .bv-home-search label,.bv-neon-section .bv-header-auth label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+  .bv-neon-section .bv-home-search small:empty{display:none}
+  .bv-neon-section .bv-home-search small{font-size:12px;margin:4px 0 0}
+  .bv-neon-section .bv-header-auth .stack{grid-template-columns:minmax(0,1fr);gap:8px}
+  .bv-neon-section .bv-header-auth .stack>div:nth-child(1){grid-column:1;grid-row:1}
+  .bv-neon-section .bv-header-auth .stack>div:nth-child(2){grid-column:1;grid-row:2}
+  .bv-neon-section .bv-header-auth #a-go{grid-column:1;grid-row:3;width:100%;font-size:16px}
+  .bv-neon-section .bv-header-auth #a-err{grid-column:1;grid-row:4}
+  .bv-neon-section .bv-header-auth>.bv-link{width:100%;text-align:center;margin:6px 0 0;min-height:32px}
+  .bv-neon-section .bv-classic-panels{grid-template-columns:minmax(0,1fr);gap:0}
+  .bv-neon-section .bv-music-feature{height:clamp(250px,57vw,330px);margin-inline:calc(-1 * var(--sk-page-gutter));border:0;border-radius:0;box-shadow:none}
+  .bv-neon-section .bv-music-copy{inset:20px auto auto 20px;max-width:calc(100% - 40px)}
+  .bv-neon-section .bv-music-copy h1{font-size:32px;line-height:1.1;margin:8px 0}
+  .bv-neon-section .bv-music-copy p{font-size:14px}
+  .bv-neon-section .bv-music-copy button{min-height:44px;padding:9px 14px;font-size:16px}
+  .bv-neon-section .bv-music-feature>img{object-position:center}
+  .bv-neon-section .bv-classic-panels>.bv-classic-nav{display:flex;justify-content:space-between;gap:6px;flex-wrap:nowrap;margin:0;padding:12px 0;border:0;background:transparent}
+  .bv-neon-section .bv-classic-nav a,.bv-neon-section .bv-classic-nav button{font-size:12px;min-height:44px;display:inline-flex;align-items:center;padding:0;white-space:nowrap}
+  .bv-neon-section .bv-classic-nav>span{display:none}
+  .bv-neon-section .bv-people-feature{height:auto}
+  .bv-neon-section .bv-people-collage{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:clamp(45px,12vw,66px);height:auto}
+  .bv-neon-section .bv-collage-caption{font-size:11px;flex-wrap:wrap;margin:8px 0 0}
+  .bv-neon-section .bv-social-stage{margin:24px 0 0;padding:24px 14px 30px}
+  .bv-neon-section .bv-social-stage .bv-circle-feature{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:0 0 28px;text-align:left}
+  .bv-neon-section .bv-social-stage .bv-circle-feature>small{grid-column:1;grid-row:1;font-size:11px;letter-spacing:1.5px}
+  .bv-neon-section .bv-social-stage .bv-circle-art{grid-column:1;grid-row:2;width:116px;height:116px;margin:0 0 2px}
+  .bv-neon-section .bv-circle-art svg{padding:15px}
+  .bv-neon-section .bv-social-stage .bv-circle-feature h2{grid-column:1;grid-row:3;font-size:28px!important;line-height:1.2;margin:0;letter-spacing:-.5px;text-wrap:balance}
+  .bv-neon-section .bv-social-stage .bv-circle-feature p{grid-column:1;grid-row:4;margin:0;font-size:16px;line-height:1.5}
+  .bv-neon-section .bv-social-stage .bv-circle-feature>.bv-link{grid-column:1;grid-row:5;font-size:16px;min-height:44px;padding:6px 0}
+  .bv-neon-section .bv-social-stage .bv-classic-actions{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;margin:0 0 24px}
+  .bv-neon-section .bv-social-stage .bv-classic-actions>div{display:block;padding:0;border:0;text-align:center}
+  .bv-neon-section .bv-social-stage .bv-classic-actions>div:after{content:none}
+  .bv-neon-section .bv-social-stage .bv-classic-actions>div h2{font-size:28px!important;line-height:1.2;letter-spacing:-.5px;margin:0 0 14px;padding:0;white-space:normal;background:none;color:#49efff;text-shadow:0 0 14px #34cffa60;filter:none}
+  .bv-neon-section .bv-social-stage .bv-action-content{display:grid;justify-items:center;gap:12px;padding:22px 14px;border:1px solid #b6a8eac4;border-radius:22px;background:linear-gradient(115deg,#070d2b85,#210b4680);box-shadow:inset 0 0 20px #8f51cb35,0 0 14px #577cce2b}
+  .bv-neon-section .bv-social-stage .bv-classic-actions p{margin:0;font-size:16px;line-height:1.5}
+  .bv-neon-section .bv-social-stage .bv-classic-actions button{justify-self:center;margin:0;padding:6px 0;font-size:16px;min-height:44px;text-align:center}
+  .bv-neon-section .bv-social-stage .bv-classic-actions>div:first-child button{font-size:16px;padding:10px 16px;border-radius:14px}
+  .bv-neon-section .bv-social-stage .bv-classic-actions small{margin:0;font-size:12px}
+  .bv-neon-section .bv-social-stage .bv-classic-actions small:empty{display:none}
 }
