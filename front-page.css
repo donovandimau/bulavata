@@ -1,3 +1,40 @@
+@font-face {
+  font-family: 'Fredoka';
+  font-style: normal;
+  font-weight: 400 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(/assets/fonts/fredoka-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Fredoka';
+  font-style: normal;
+  font-weight: 400 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(/assets/fonts/fredoka-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(/assets/fonts/nunito-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(/assets/fonts/nunito-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 /* Sunset front page: all interactive text and controls remain real HTML. */
 #app.bv-welcome{max-width:none!important;width:100%;padding:0!important;margin:0!important;border:0;border-radius:0;background:transparent;box-shadow:none}
 .bv-welcome .sk-front{position:relative;isolation:isolate;color:#fff;background:#16434b;min-height:100vh;font-family:Arial,Helvetica,sans-serif}
@@ -27,3 +64,109 @@
 
 /* Sema is the entrance; the classic neon experience follows in document flow. */
 .sk-sunset{height:100%;inset:0;min-height:0}.sk-explore{display:flex;align-items:center;justify-content:center;gap:12px;padding:0 20px 26px;color:#fff;font:600 14px Arial,sans-serif;text-shadow:0 2px 6px #153749}.sk-explore span{font-size:22px}.bv-neon-section{padding:40px 24px;background:radial-gradient(ellipse at top left,#10364788,transparent 60%),radial-gradient(ellipse at right,#48114155,transparent 65%),#110c1d}.bv-neon-section .bv-classic{max-width:1088px;margin:0 auto}.bv-neon-section .bv-classic-footer{margin-bottom:0}@media(max-width:600px){.bv-neon-section{padding:26px 10px}.sk-explore{font-size:13px;padding-bottom:25px}}
+
+/* Match the supplied Sema room's perspective: right edge nearer, whole card tilted together. */
+@media(min-width:761px){.sk-room{transform:perspective(1000px) rotateY(-10deg);transform-origin:center}}
+@media(max-width:760px){.sk-room{width:96%;transform:perspective(1000px) rotateY(-8deg);transform-origin:center}}
+
+/* Keep the entrance on the same supporting type scale as the page below it. */
+.sk-header nav a,.sk-header nav button{font-size:14px}.sk-copy p{font-size:clamp(18px,2vw,24px);line-height:1.4}.sk-create{font-size:20px}.sk-profile-words p,.sk-profile-words small,.sk-note p{font-size:14px;line-height:1.4}.sk-profile-words>b,.sk-note b,.sk-song b,.sk-profile>button{font-size:14px}.sk-note small,.sk-song small,.sk-wave small,.sk-example{font-size:12px;line-height:1.4}.sk-explore{font-size:14px}.sk-cards h3{font-size:18px}
+@media(max-width:700px){.sk-header nav a,.sk-header nav button{font-size:12px}.sk-copy p{font-size:19px}.sk-create{font-size:18px}.sk-profile-words p,.sk-profile-words small,.sk-note p,.sk-note b,.sk-song b,.sk-profile>button{font-size:12px}.sk-profile-words>b,.sk-cards h3{font-size:14px}.sk-note small,.sk-song small,.sk-wave small,.sk-example{font-size:11px}.sk-explore{font-size:12px}}
+
+/* Use the studio reference's flush cover and one gutter for both homepage sections. */
+.bv-welcome{--sk-page-width:1440px;--sk-page-gutter:clamp(16px,3vw,48px)}
+.sk-header,.sk-hero{max-width:var(--sk-page-width);padding-inline:var(--sk-page-gutter)}
+.sk-copy{padding-inline-start:0}
+.bv-neon-section{padding-inline:var(--sk-page-gutter)}
+.bv-neon-section .bv-classic{max-width:calc(var(--sk-page-width) - 2 * var(--sk-page-gutter));min-width:0}
+.bv-neon-section .bv-classic::before{margin:0 0 27px}
+.bv-neon-section .bv-classic-footer::after{margin-inline:0}
+.sk-room{width:100%;max-width:none;padding:0;overflow:hidden}
+.sk-cover{border:0}
+.sk-browser-bar{padding:8px 12px}
+.sk-player{margin:0 8px 8px}
+.sk-example{margin:6px 12px 10px}
+
+/* Keep the public search, sign-in, studio entry and footer on a readable grid. */
+.bv-neon-section .bv-classic-header{grid-template-columns:minmax(180px,.85fr) minmax(220px,1fr) minmax(360px,1.5fr);align-items:start;gap:28px;padding:8px 0 28px;min-height:0}
+.bv-neon-section .bv-wordmark{padding-top:16px}
+.bv-neon-section .bv-wordmark a{font-size:clamp(38px,3.8vw,52px);line-height:1}
+.bv-neon-section .bv-wordmark small{display:block;margin-top:10px;line-height:1.5}
+.bv-neon-section .bv-home-search label,.bv-neon-section .bv-header-auth label{display:block;font-size:13px;line-height:1.4;margin:0 0 8px;font-weight:600}
+.bv-neon-section .bv-home-search>div{padding:0;gap:8px;background:transparent;border:0}
+.bv-neon-section .bv-home-search input,.bv-neon-section .bv-header-auth input{width:100%;height:44px;min-height:44px;padding:10px 12px;border-radius:8px;font-size:14px;line-height:1.4}
+.bv-neon-section .bv-home-search button{width:44px;height:44px;border-radius:8px;font-size:24px}
+.bv-neon-section .bv-home-search small{font-size:12px;line-height:1.5;margin-top:10px}
+.bv-neon-section .bv-header-auth{display:block;padding:0;border:0}
+.bv-neon-section .bv-header-auth .stack{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:12px;align-items:end}
+.bv-neon-section .bv-header-auth .stack>div:nth-child(1){grid-column:1;grid-row:1;min-width:0}
+.bv-neon-section .bv-header-auth .stack>div:nth-child(2){grid-column:2;grid-row:1;min-width:0}
+.bv-neon-section .bv-header-auth #a-go{grid-column:3;grid-row:1;align-self:end;min-height:44px;height:44px;margin:0;padding:10px 16px;border-radius:8px;font-size:14px;white-space:nowrap}
+.bv-neon-section .bv-header-auth #a-err{grid-column:1/-1;grid-row:2;margin:0}
+.bv-neon-section .bv-header-auth>.bv-link{margin:10px 0 0;padding:0;font-size:13px;line-height:1.5;text-align:left}
+.bv-neon-section .bv-room-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:24px;margin:32px 0 24px;padding:28px;background:linear-gradient(120deg,#182134aa,#20102caa);border:1px solid #665378;border-radius:16px}
+.bv-neon-section .bv-room-entry h2{margin:0 0 12px;font-size:clamp(26px,2.4vw,34px);line-height:1.2;text-wrap:balance}
+.bv-neon-section .bv-room-entry p{margin:0 0 12px;max-width:48ch;line-height:1.6;text-wrap:pretty}
+.bv-neon-section .bv-room-entry small{display:block;font-size:12px;line-height:1.5}
+.bv-neon-section .bv-room-entry .btn{min-height:44px;padding:12px 20px;border-radius:8px;font-size:14px;line-height:1.4}
+.bv-neon-section .bv-classic-footer{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 24px;padding:24px 0 0;font-size:14px;line-height:1.6}
+.bv-neon-section .bv-classic-footer>span:first-child{grid-column:1;grid-row:1;font-weight:600;color:#eee3f8}
+.bv-neon-section .bv-classic-footer>span:nth-child(2){grid-column:1;grid-row:2;text-wrap:pretty}
+.bv-neon-section .bv-classic-footer details{grid-column:2;grid-row:1/3;width:auto;align-self:start;text-align:left;max-width:42ch}
+.bv-neon-section .bv-classic-footer summary{padding:0;line-height:1.6}
+.bv-neon-section .bv-classic-footer p{margin:12px 0 0;line-height:1.6}
+.bv-neon-section .bv-classic-footer::after{grid-column:1/-1;margin-top:16px;border-radius:4px}
+@media(max-width:1100px){.bv-neon-section .bv-classic-header{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px}.bv-neon-section .bv-header-auth,.bv-neon-section .bv-header-return{grid-column:1/-1;padding-top:24px;border-top:1px solid #4c385d}.bv-neon-section .bv-wordmark{padding-top:12px}}
+@media(max-width:600px){.bv-neon-section .bv-classic-header{grid-template-columns:minmax(0,1fr);gap:24px;padding:0 0 24px}.bv-neon-section .bv-wordmark{padding-top:0}.bv-neon-section .bv-header-auth .stack{grid-template-columns:minmax(0,1fr);gap:16px}.bv-neon-section .bv-header-auth .stack>div:nth-child(1){grid-column:1;grid-row:1}.bv-neon-section .bv-header-auth .stack>div:nth-child(2){grid-column:1;grid-row:2}.bv-neon-section .bv-header-auth #a-go{grid-column:1;grid-row:3;width:100%}.bv-neon-section .bv-header-auth #a-err{grid-column:1;grid-row:4}.bv-neon-section .bv-room-entry{grid-template-columns:minmax(0,1fr);gap:20px;padding:20px;margin:24px 0}.bv-neon-section .bv-room-entry p{text-wrap:balance}.bv-neon-section .bv-room-entry .btn{width:100%}.bv-neon-section .bv-classic-footer{grid-template-columns:minmax(0,1fr);gap:10px;padding-top:20px}.bv-neon-section .bv-classic-footer details{grid-column:1;grid-row:3;margin-top:4px}.bv-neon-section .bv-classic-footer::after{margin-top:10px}}
+
+/* Shared UI lettering follows the same 760px breakpoint as the room layout. */
+:root{--sk-ui-font:'Fredoka',Arial,sans-serif;--sk-heading-weight:700}
+.bv-welcome,.bv-welcome :where(*),.bv-studio,.bv-studio :where(*){font-family:var(--sk-ui-font)!important}
+.bv-welcome .sk-front,.bv-welcome :is(.sk-copy h1,.sk-brand,.sk-profile-words h2,.sk-cards h3,.sk-note b,.sk-song b,.sk-explore,.bv-wordmark a,.bv-classic-actions h2,.bv-music-copy h1,.bv-circle-feature h2,.bv-room-heading h2,.bv-room-entry h2),.bv-studio :is(h2,h3,h4,p,button,input,select,label,strong,small){font-family:var(--sk-ui-font)}
+.bv-welcome :is(.sk-copy h1,.sk-brand,.sk-profile-words h2,.sk-cards h3,.bv-wordmark a,.bv-classic-actions h2,.bv-music-copy h1,.bv-circle-feature h2,.bv-room-heading h2,.bv-room-entry h2){font-weight:var(--sk-heading-weight);font-style:normal}
+.bv-welcome .sk-copy h1{letter-spacing:-.035em}
+/* Personal room lettering remains controlled by the member's studio choice. */
+.bv-welcome .bv-preview :is(.bv-cover-words,h2,h3),.bv-studio .bv-preview :is(.bv-cover-words,h2,h3){font-family:var(--bv-font,var(--sk-ui-font))!important}
+@media(max-width:760px){:root{--sk-ui-font:'Nunito',Arial,sans-serif;--sk-heading-weight:800}}
+/* Keep photo crops square before the room's single perspective transform. */
+.sk-avatar{aspect-ratio:1;flex-shrink:0}.sk-avatar .sk-photo{width:100%;height:100%}
+@media(min-width:761px) and (max-width:1080px){.bv-welcome .sk-copy h1{font-size:clamp(32px,4.1vw,39px)}}
+
+/* Display the original supplied design intact, with one uniform responsive scale. */
+.bv-welcome .sk-original-front{min-height:0;background:#16434b}
+.sk-original-design{display:block;width:100%;height:auto;max-width:none;aspect-ratio:1360/768;object-fit:contain;transform:none}
+.sk-original-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:18px;padding:24px var(--sk-page-gutter);background:#16434b;color:#fff}
+.sk-original-actions>button:not(.sk-create),.sk-original-actions>a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border:1px solid #b2f7ff;border-radius:8px;background:#ffffff15;color:#fff;font-size:14px;text-decoration:none;cursor:pointer}
+.sk-action-short{display:none}
+@media(max-width:760px){.sk-original-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px var(--sk-page-gutter)}.sk-original-actions>button,.sk-original-actions>a{min-width:0;min-height:44px;padding:8px 10px;font-size:14px;line-height:1.2}.sk-original-actions .sk-create{justify-content:center;gap:0;border-radius:12px;box-shadow:0 0 10px #6df0ff70,inset 0 2px 6px #ffffff80}.sk-original-actions .sk-action-full{display:none}.sk-original-actions .sk-action-short{display:inline}}
+
+/* A consistent reading scale for the public page and studio controls. */
+.bv-welcome :is(.bv-circle-feature h2,.bv-classic-actions h2,.bv-room-entry h2){font-size:32px!important;line-height:1.2}
+.bv-welcome .bv-music-copy h1{font-size:36px;line-height:1.1}
+.bv-welcome :is(.bv-circle-feature,.bv-classic-actions,.bv-room-entry,.bv-music-copy) p{font-size:14px;line-height:1.5}
+.bv-welcome :is(.bv-circle-feature,.bv-classic-actions) .bv-link,.bv-welcome .bv-classic-nav :is(a,button){font-size:14px;line-height:1.4}
+.bv-welcome :is(.bv-wordmark,.bv-music-copy,.bv-circle-feature,.bv-join-strip) small{font-size:12px;line-height:1.5}
+.bv-welcome .bv-join-strip .btn{font-size:24px;line-height:1.2;padding:12px 24px;min-height:44px}
+.bv-studio .bv-studio-head p,.bv-studio .bv-studio-body>div p{font-size:14px;line-height:1.5}
+.bv-studio .bv-studio-body>div :is(h3,h4){font-size:18px;line-height:1.3}
+.bv-studio .bv-studio-body>div label{font-size:13px;line-height:1.4}
+.bv-studio .bv-skin-categories button{font-size:14px;line-height:1.4}
+.bv-studio .bv-skin-option strong{font-size:14px;line-height:1.4}
+.bv-studio .bv-skin-option small{font-size:12px;line-height:1.5}
+.bv-studio .bv-studio-preview>p.sub{font-size:12px!important;line-height:1.5}
+@media(max-width:760px){.bv-welcome :is(.bv-circle-feature h2,.bv-classic-actions h2,.bv-room-entry h2){font-size:26px!important}.bv-welcome .bv-music-copy h1{font-size:32px}.bv-welcome .bv-join-strip .btn{font-size:22px}.bv-welcome :is(.bv-home-search,.bv-header-auth,.bv-register) input,.bv-studio .bv-studio-body>div :is(input,select,textarea){font-size:16px;line-height:1.4}.bv-studio .bv-studio-body>div :is(h3,h4){font-size:18px}}
+
+/* Spacious phone composition: readable copy first, then the intact Sema room. */
+.sk-mobile-front{display:none}
+@media(max-width:760px){
+  .sk-original-design{display:none}
+  .sk-mobile-front{display:flex;flex-direction:column;gap:24px;padding:6px var(--sk-page-gutter) 20px;background:linear-gradient(#24142220,#16434b30),url('/assets/fiji-sunset.jpg') 38% center/cover no-repeat}
+  .sk-mobile-front .sk-copy{width:100%;padding:0;align-self:stretch}
+  .sk-mobile-front .sk-copy h1{font-size:clamp(38px,11vw,46px);line-height:1.02;letter-spacing:-.035em;margin:0 0 14px}
+  .sk-mobile-front .sk-copy p{font-size:18px;line-height:1.35;letter-spacing:0;margin:0 0 18px}
+  .sk-mobile-front .sk-create{font-size:20px;line-height:1.2;padding:12px 20px;min-height:50px}
+  .sk-mobile-room{display:block;position:relative;width:100%;aspect-ratio:720/740;padding:0;border:0;border-radius:18px;background:transparent;overflow:hidden;cursor:pointer}
+  .sk-mobile-room .sk-photo{width:100%;height:100%}
+  .sk-original-actions>.sk-create{display:none}
+  .sk-original-actions{grid-template-columns:repeat(3,minmax(0,1fr))}
+}

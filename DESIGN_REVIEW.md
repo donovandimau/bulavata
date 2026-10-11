@@ -7,3 +7,7 @@ The Sema sunset/glass layout is first. The restored photo-led neon page follows 
 Publish this combined design after exact-source, CI and desktop/phone verification. This instruction supersedes the previous publication hold. Private upload storage remains unapplied and disabled; hosted Kava migration remains separate work.
 
 The later screenshot feedback is incorporated: replace the emoji-heavy sample board with a real cover, photographic friend portraits, example Talanoa notes and a music strip. The same photo-led preview is used inside the studio.
+
+Studio choice cards now show photographic miniature rooms and four-colour palettes, replacing the Aa pattern swatches. The24 selectable skin IDs and custom design controls are preserved.
+
+Latest steering: Fijian music hero photograph and Fijian community faces in the collage, retaining its lively box composition.
