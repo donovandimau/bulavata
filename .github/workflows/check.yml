@@ -2,7 +2,7 @@ name: Sota Kece checks
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, 'agent/**']
 jobs:
   social-and-skins:
     runs-on: ubuntu-latest
@@ -13,3 +13,4 @@ jobs:
           node-version: '22'
       - run: node tests/sota.test.cjs
       - run: node tests/kava.test.cjs
+      - run: node tests/room-media.test.cjs

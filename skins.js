@@ -12,9 +12,25 @@
     {id:'palm',name:'Palm Social',category:'Island',note:'Your little green corner.',bg:'#e4eedc',panel:'#fbfff7',ink:'#274231',muted:'#5c715f',accent:'#326342',cover:'#a7c98a',pattern:'stripes',font:'rounded'},
     {id:'sunset',name:'Golden Hour',category:'Bright',note:'Stay for one more sunset.',bg:'#fff0d9',panel:'#fffdf8',ink:'#583725',muted:'#80684d',accent:'#a34321',cover:'#ffbf7a',pattern:'waves',font:'serif'},
     {id:'pixel',name:'Pixel Party',category:'Bright',note:'Main-character energy.',bg:'#eee6ff',panel:'#fffaff',ink:'#3e255a',muted:'#755b87',accent:'#7938bc',cover:'#c5a4f0',pattern:'checker',font:'mono'},
-    {id:'notebook',name:'Notebook',category:'Classic',note:'Leave a little note.',bg:'#eeeee8',panel:'#fffef5',ink:'#303f55',muted:'#697283',accent:'#3558a1',cover:'#c2d2e4',pattern:'grid',font:'mono'}
+    {id:'notebook',name:'Notebook',category:'Classic',note:'Leave a little note.',bg:'#eeeee8',panel:'#fffef5',ink:'#303f55',muted:'#697283',accent:'#3558a1',cover:'#c2d2e4',pattern:'grid',font:'mono'},
+    {"id":"electric","name":"Bula Electric","category":"Bright","note":"Big bula. Bigger energy.","bg":"#151025","panel":"#261c3b","ink":"#fff5fd","muted":"#d1bedf","accent":"#6cedee","cover":"#ba399f","pattern":"checker","font":"rounded"},
+    {"id":"masi","name":"Masi Social","category":"Masi-inspired","note":"Island roots. Your story.","bg":"#efe1c6","panel":"#fff8eb","ink":"#3d2920","muted":"#705d4c","accent":"#6e3827","cover":"#d9b984","pattern":"masi","font":"serif"},
+    {"id":"drua","name":"Drua Day","category":"Sport","note":"Bring the whole crew.","bg":"#d9f1ff","panel":"#ffffff","ink":"#102c50","muted":"#475d78","accent":"#1458a0","cover":"#66c5ef","pattern":"stripes","font":"rounded"},
+    {"id":"hibiscus","name":"Hibiscus Heat","category":"Island","note":"Full bloom. Full volume.","bg":"#ffe1f0","panel":"#fff9fd","ink":"#531932","muted":"#795063","accent":"#bb2066","cover":"#ee69a5","pattern":"flowers","font":"rounded"},
+    {"id":"reef","name":"Reef Rave","category":"Bright","note":"Ocean air. Electric nights.","bg":"#08232d","panel":"#103440","ink":"#e8ffff","muted":"#b7d9de","accent":"#64f2d7","cover":"#0d776d","pattern":"waves","font":"mono"},
+    {"id":"kava","name":"Yaqona Nights","category":"Dark","note":"Good stories. Late nights.","bg":"#231b17","panel":"#352b25","ink":"#fff0d5","muted":"#d4c1ac","accent":"#edc086","cover":"#624b35","pattern":"masi","font":"serif"},
+    {"id":"mango","name":"Mango Season","category":"Island","note":"A little sunshine goes a long way.","bg":"#fff0cf","panel":"#fffaf0","ink":"#5c3619","muted":"#78604d","accent":"#a6450e","cover":"#ffc05c","pattern":"dots","font":"rounded"},
+    {"id":"candy","name":"Candy Crush","category":"Soft","note":"Sweet colours. Big personality.","bg":"#f6e5ff","panel":"#fffbff","ink":"#4a255d","muted":"#725583","accent":"#8a399c","cover":"#e4a3e8","pattern":"checker","font":"rounded"},
+    {"id":"cloud","name":"Cloud Nine","category":"Soft","note":"Soft days. Good company.","bg":"#e8eefb","panel":"#fcfdff","ink":"#273750","muted":"#536782","accent":"#3d5ea7","cover":"#bacdf8","pattern":"stars","font":"serif"},
+    {"id":"ink","name":"Ink & Paper","category":"Classic","note":"Your words take the stage.","bg":"#e7e4dd","panel":"#fffdf5","ink":"#232b31","muted":"#59636c","accent":"#343e46","cover":"#c9c4b7","pattern":"grid","font":"mono"},
+    {"id":"disco","name":"Disco Cousins","category":"Bright","note":"One more song for the cousins.","bg":"#27113d","panel":"#3a1c4c","ink":"#fff2fc","muted":"#dab8e7","accent":"#ffb2e9","cover":"#9e327e","pattern":"dots","font":"rounded"},
+    {"id":"acid","name":"Lime Limelight","category":"Bright","note":"Main stage. Main character.","bg":"#162110","panel":"#26351c","ink":"#f2ffe5","muted":"#c4d9b2","accent":"#c7ff48","cover":"#5e732a","pattern":"checker","font":"mono"},
+    {"id":"varsity","name":"Schoolyard Stories","category":"Sport","note":"Same mates. New stories.","bg":"#eee5e0","panel":"#fffaf6","ink":"#3d2328","muted":"#70555c","accent":"#8f2d40","cover":"#ca7f89","pattern":"stripes","font":"serif"},
+    {"id":"comic","name":"Comic Crew","category":"Bright","note":"Big laughs. Bold lines.","bg":"#fff3bc","panel":"#fffdf1","ink":"#2b263f","muted":"#605772","accent":"#6a37a5","cover":"#f9d647","pattern":"dots","font":"mono"},
+    {"id":"afterglow","name":"Island Afterglow","category":"Dark","note":"Stay for one more story.","bg":"#221326","panel":"#39223b","ink":"#fff0eb","muted":"#e4bfc7","accent":"#ffbe94","cover":"#a05c76","pattern":"waves","font":"serif"},
+    {"id":"mint","name":"Mint Condition","category":"Soft","note":"Fresh space. Fresh start.","bg":"#dcefe8","panel":"#f8fffb","ink":"#224638","muted":"#577468","accent":"#25634a","cover":"#a4d2bb","pattern":"flowers","font":"rounded"}
   ];
-  const patterns = ['waves','dots','stars','flowers','stripes','checker','grid','plain'];
+  const patterns = ['waves','dots','stars','flowers','stripes','checker','grid','masi','plain'];
   const fonts = ['rounded','serif','mono'];
   const marker = /^\/\* bv-skin:v1 ([^\n]*?) \*\/\n?/;
   const hex = (v, fallback) => /^#[0-9a-f]{6}$/i.test(String(v)) ? String(v).toLowerCase() : fallback;
@@ -26,6 +42,9 @@
       return u.href;
     }catch(_){return '';}
   }
+  function safeMediaPath(value,kind) {
+    const text=String(value||'');return new RegExp('^[a-f0-9-]{36}/'+kind+'/[a-f0-9-]{36}\\.(?:'+(kind==='music'?'mp3|m4a|ogg|opus|wav':'jpg|jpeg|png|webp')+')$','i').test(text)?text:'';
+  }
   function normalize(raw) {
     const input = raw && typeof raw === 'object' ? raw : {};
     const preset = presets.find(p => p.id === input.id) || presets[0];
@@ -34,7 +53,11 @@
       font:fonts.includes(input.font)?input.font:preset.font,
       layout:input.layout==='wide'?'wide':'classic',
       note:String(input.note??preset.note).slice(0,80),interests:String(input.interests??'').slice(0,160),
-      trackUrl:safeUrl(input.trackUrl,true),trackTitle:String(input.trackTitle??'').slice(0,80)};
+      trackUrl:safeUrl(input.trackUrl,true),trackTitle:String(input.trackTitle??'').slice(0,80),
+      trackPath:safeMediaPath(input.trackPath,'music'),coverPath:safeMediaPath(input.coverPath,'covers'),
+      panel:hex(input.panel,preset.panel),cover:hex(input.cover,preset.cover),
+      cardStyle:['soft','square','round'].includes(input.cardStyle)?input.cardStyle:'soft',
+      effect:['flat','glow','sticker'].includes(input.effect)?input.effect:'flat'};
   }
   function read(css) {
     const text = String(css??'').slice(0,4000), match = text.match(marker);
@@ -62,15 +85,17 @@
       flowers:`radial-gradient(ellipse at 30% 35%,${light} 0 12px,transparent 13px),radial-gradient(ellipse at 65% 65%,${light} 0 12px,transparent 13px)`,
       stripes:`repeating-linear-gradient(125deg,transparent 0 22px,${light} 23px 28px,transparent 29px 48px)`,
       checker:`conic-gradient(${light} 25%,transparent 0 50%,${light} 0 75%,transparent 0)`,
-      grid:`linear-gradient(${dark} 1px,transparent 1px),linear-gradient(90deg,${dark} 1px,transparent 1px)`,plain:'none'}[pattern]||'none';
+      grid:`linear-gradient(${dark} 1px,transparent 1px),linear-gradient(90deg,${dark} 1px,transparent 1px)`,masi:'url(/assets/masi-band.svg)',plain:'none'}[pattern]||'none';
   }
   function tokens(raw) {
     const s=normalize(raw),p=presets.find(p=>p.id===s.id);
-    return {'--bv-bg':s.background,'--bv-panel':p.panel,'--bv-ink':p.ink,'--bv-muted':p.muted,
+    return {'--bv-bg':s.background,'--bv-panel':s.panel,'--bv-ink':s.panel===p.panel?p.ink:foreground(s.panel),'--bv-muted':s.panel===p.panel?p.muted:foreground(s.panel),
       '--bv-accent':s.accent,'--bv-on-accent':foreground(s.accent),
-      '--bv-link':contrast(s.accent,p.panel)>=4.5?s.accent:p.ink,
-      '--bv-cover':p.cover,'--bv-cover-ink':foreground(p.cover),
-      '--bv-pattern':motif(s.pattern),'--bv-pattern-size':['dots','stars','grid'].includes(s.pattern)?'24px 24px':s.pattern==='checker'?'48px 48px':'160px 140px',
+      '--bv-link':contrast(s.accent,s.panel)>=4.5?s.accent:s.panel===p.panel?p.ink:foreground(s.panel),
+      '--bv-cover':s.cover,'--bv-cover-ink':foreground(s.cover),
+      '--bv-radius':s.cardStyle==='square'?'2px':s.cardStyle==='round'?'22px':'10px',
+      '--bv-card-shadow':s.effect==='glow'?'0 0 16px '+s.accent+'44':s.effect==='sticker'?'4px 4px 0 '+s.accent:'none',
+      '--bv-pattern':motif(s.pattern),'--bv-pattern-size':['dots','stars','grid'].includes(s.pattern)?'24px 24px':s.pattern==='checker'?'48px 48px':s.pattern==='masi'?'120px 32px':'160px 140px',
       '--bv-font':s.font==='mono'?'ui-monospace, monospace':s.font==='serif'?'Georgia, serif':'Manrope, system-ui, sans-serif'};
   }
   function inline(raw) { return Object.entries(tokens(raw)).map(([k,v])=>`${k}:${v}`).join(';'); }
