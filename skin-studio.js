@@ -250,8 +250,8 @@
     const p=S.me||example;skinCategory='All';
     studio=document.createElement('dialog');studio.className='bv-studio';studio.setAttribute('aria-labelledby','bv-studio-title');
     studio.innerHTML=`<div class="bv-studio-head"><div><h2 id="bv-studio-title">Make it yours.</h2><p>Pick a skin. Mix the colours. Give your room a personality.</p></div><button type="button" class="bv-close" aria-label="Close skin studio">×</button></div>
-      <div class="bv-studio-body"><div><h3>Choose your room style</h3><p class="bv-style-intro">24 photo-led designs. Start with a palette, then make it yours.</p><div class="bv-skin-categories" id="bv-skin-categories"></div><div class="bv-skin-grid" id="bv-skin-options"></div>
-      <h3>Add your own twist</h3><div class="bv-controls">
+      <div class="bv-studio-body"><div class="bv-studio-controls"><div class="bv-studio-picker"><h3>Choose your room style</h3><p class="bv-style-intro">24 photo-led designs. Start with a palette, then make it yours.</p><div class="bv-skin-categories" id="bv-skin-categories"></div><div class="bv-skin-grid" id="bv-skin-options"></div></div>
+      <div class="bv-studio-custom"><h3>Add your own twist</h3><div class="bv-controls">
         <div><label for="bv-accent">Accent colour</label><input id="bv-accent" type="color" value="${draft.accent}"></div>
         <div><label for="bv-background">Page colour</label><input id="bv-background" type="color" value="${draft.background}"></div>
         <div><label for="bv-panel">Card colour</label><input id="bv-panel" type="color" value="${draft.panel}"></div><div><label for="bv-cover">Cover colour</label><input id="bv-cover" type="color" value="${draft.cover}"></div>
@@ -268,7 +268,7 @@
         <div><label for="d-pro">Pronouns</label><input id="d-pro" value="${esc(p.pronouns||'')}" maxlength="24"></div>
         <div><label for="d-bio">Bio</label><textarea id="d-bio" maxlength="400">${esc(p.bio||'')}</textarea></div>
         <div><label for="d-emo">Your emoji</label><input id="d-emo" value="${esc(p.avatar_emoji||'🌺')}" maxlength="8"></div></div></details>
-        <details><summary>Advanced: your custom CSS</summary><p class="sub">Style room cards and text. External files and page overlays are excluded.</p><label for="d-css">Room CSS</label><textarea id="d-css" maxlength="3000" placeholder=".scrawl { border-radius: 20px; }">${esc(legacy)}</textarea></details>`:''}</div>
+        <details><summary>Advanced: your custom CSS</summary><p class="sub">Style room cards and text. External files and page overlays are excluded.</p><label for="d-css">Room CSS</label><textarea id="d-css" maxlength="3000" placeholder=".scrawl { border-radius: 20px; }">${esc(legacy)}</textarea></details>`:''}</div></div>
       <aside class="bv-studio-preview"><div class="bv-example-label"><span>${S.user?'Your room · live preview':'Example room · live preview'}</span><span id="bv-preview-name"></span></div><div id="bv-studio-preview"></div><p class="sub" style="font-size:11px;line-height:1.7;margin-top:14px">${S.user?'Your friends will see this skin when they visit your room.':'These are example details. Your own name, friends and posts appear when you make a room.'}</p></aside></div>
       <div class="bv-studio-footer"><div class="bv-studio-error" id="bv-studio-error" role="status" aria-live="polite"></div><div class="row"><button type="button" class="btn ghost" id="bv-cancel">Cancel</button><button type="button" class="btn" id="bv-save">${S.user?'Save my room':'Use this skin'}</button></div></div>`;
     document.body.appendChild(studio);
