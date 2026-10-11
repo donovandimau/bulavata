@@ -47,7 +47,7 @@
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
     const interests=s.interests.split(',').map(x=>x.trim()).filter(Boolean).slice(0,8);
     return `<div class="bv-preview" style="${esc(skins.inline(s))}" data-layout="${s.layout}">
-      <div class="bv-cover">${coverMediaMarkup(s)}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
+      <div class="bv-cover" data-pattern="${s.pattern}">${coverMediaMarkup(s)}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
       <div class="bv-profile-intro"><div class="bv-profile-avatar">${esc(profile.avatar_emoji||'🌺')}</div>
         <h2>${esc(profile.display_name||profile.handle||'Your name')}</h2>
         <p>@${esc(profile.handle||'yourhandle')}</p><p>${esc(profile.bio||'Your profile. Your people. Your rules.')}</p>
@@ -132,7 +132,7 @@
     document.head.appendChild(style);document.body.classList.add('bv-room-active');
     const p=skins.presets.find(p=>p.id===s.id),head=document.querySelector('#room-head');
     if(head){
-      const cover=document.createElement('div');cover.className='bv-cover';
+      const cover=document.createElement('div');cover.className='bv-cover';cover.dataset.pattern=s.pattern;
       cover.innerHTML=`${coverMediaMarkup(s)}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span>`;
       head.prepend(cover);
       const stats=document.createElement('div');stats.className='bv-profile-stats';
@@ -215,7 +215,7 @@
     const box=document.querySelector('#bv-welcome-preview');if(!box)return;
     const mates=['🌺','🌴','🌊','🐚','☀️','🪸','🍍','🦋','🏉','🎸','🥥','🌻','🐬','🦜','⭐','🌈'];
     box.innerHTML=`<div class="bv-preview bv-demo-room" style="${esc(skins.inline(s))}">
-      <div class="bv-cover">${coverMediaMarkup(s)}<div class="bv-cover-words">${esc(s.note)}</div><span class="bv-skin-tag">Example room</span><span class="bv-cover-flower" aria-hidden="true">✳</span></div>
+      <div class="bv-cover" data-pattern="${s.pattern}">${coverMediaMarkup(s)}<div class="bv-cover-words">${esc(s.note)}</div><span class="bv-skin-tag">Example room</span><span class="bv-cover-flower" aria-hidden="true">✳</span></div>
       <div class="bv-profile-intro"><div class="bv-profile-avatar">🌺</div><div><h2>Litia's island vibe</h2><p>@litia.suva · Fiji at heart. Everywhere energy.</p></div><span class="bv-profile-star" aria-hidden="true">✦</span></div>
       <div class="bv-preview-columns"><section class="bv-mini-card bv-demo-talanoa"><h3>Talanoa <span>Sample notes</span></h3><div class="bv-demo-note"><span aria-hidden="true">🦋</span><p><b>Mere</b> beach, tunes, whole crew? <span aria-hidden="true">☀️</span></p></div><div class="bv-demo-note"><span aria-hidden="true">🎸</span><p><b>Jo</b> Drua day at yours? Bring the cousins.</p></div><div class="bv-note-prompt">Your mates. Your inside jokes. Your wall.</div></section>
       <section class="bv-mini-card"><h3>Top Mates <span>16</span></h3><div class="bv-mini-friends">${mates.map((e,i)=>`<span title="Example mate #${i+1}"><small>${i+1}</small>${e}</span>`).join('')}</div></section></div>
