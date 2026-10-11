@@ -4,9 +4,41 @@
   if (!skins) return;
   let studio = null, draft = null, legacy = '', focusBefore = null;
   const example = {display_name:'Your name goes here',handle:'yourhandle',avatar_emoji:'🌺',bio:'A little corner of the internet that feels like you.'};
+  let sampleAudio = null, sampleTimer = null;
+  function stopSample() {
+    clearTimeout(sampleTimer);
+    if(sampleAudio) { sampleAudio.close().catch(()=>{}); sampleAudio=null; }
+    const button=document.querySelector('#bv-sample-play');
+    if(button) { button.textContent='▶';button.setAttribute('aria-label','Play sample loop');button.setAttribute('aria-pressed','false'); }
+    document.querySelector('.bv-mixtape')?.classList.remove('is-playing');
+  }
+  async function playSample() {
+    if(sampleAudio) { stopSample();return; }
+    const status=document.querySelector('#bv-sample-status');
+    try {
+      const Audio=window.AudioContext||window.webkitAudioContext;
+      if(!Audio)throw new Error('Audio unavailable');
+      const context=new Audio();sampleAudio=context;
+      await context.resume();
+      if(sampleAudio!==context)return;
+      const start=context.currentTime;
+      [261.63,329.63,392,523.25,392,329.63,293.66,392,440,587.33,440,392].forEach((frequency,i)=>{
+        const oscillator=context.createOscillator(),gain=context.createGain();
+        oscillator.type='sine';oscillator.frequency.value=frequency;
+        const time=start+i*.32;
+        gain.gain.setValueAtTime(0,time);gain.gain.linearRampToValueAtTime(.09,time+.025);gain.gain.exponentialRampToValueAtTime(.001,time+.44);
+        oscillator.connect(gain);gain.connect(context.destination);oscillator.start(time);oscillator.stop(time+.46);
+      });
+      const button=document.querySelector('#bv-sample-play');
+      button.textContent='Ⅱ';button.setAttribute('aria-label','Stop sample loop');button.setAttribute('aria-pressed','true');
+      document.querySelector('.bv-mixtape')?.classList.add('is-playing');
+      status.textContent='Playing a little sample loop · made here';
+      sampleTimer=setTimeout(()=>{stopSample();if(status.isConnected)status.textContent='Sample loop · tap to play again';},4200);
+    }catch(_){stopSample();if(status)status.textContent='Audio unavailable in this browser. Your room can still have a profile track.';}
+  }
   function picked() {
-    try { return skins.normalize(JSON.parse(localStorage.getItem('bv-picked-skin')||'null')); }
-    catch (_) { return skins.normalize(); }
+    try { return skins.normalize(JSON.parse(localStorage.getItem('bv-picked-skin')||'{"id":"pixel"}')); }
+    catch (_) { return skins.normalize({id:'pixel'}); }
   }
   function preview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
@@ -36,6 +68,7 @@
     });});
   }
   function reset() {
+    stopSample();
     document.body.classList.remove('bv-room-active');
     document.querySelector('#bv-active-skin')?.remove();
     app.classList.remove('bv-welcome');
@@ -80,15 +113,23 @@
     reset();originalAuth(mode);
     const auth=app.innerHTML;
     app.classList.add('bv-welcome');
-    app.innerHTML=`<header class="top glass"><div class="row">${LOGO}<div class="brand">Sota Kece<small>alive together</small></div></div><div class="spacer"></div><span class="pill">Real friends. Real colour.</span></header>
-      <div class="bv-welcome-grid"><section class="bv-intro"><div class="bv-eyebrow">Remember when your profile felt like you?</div>
-        <h1>Your friends.<br>Your space.<br><span>Your rules.</span></h1>
-        <p>Your people, from home to wherever life takes you. Pick a skin, rank your Top Mates, share a track and leave some banter on the Talanoa whiteboard.</p>
-        <div class="row wrap"><button type="button" class="btn" id="bv-try-studio">Try the skin studio ↗</button><span class="sub">No account needed to play.</span></div>
-        <div class="bv-badges"><span>Top Mates 16</span><span>Personal skins + music</span><span>Low data by default</span></div>
-        <div class="bv-example-label"><span>Example room · try a skin</span><span id="bv-welcome-skin-name"></span></div>
-        <div id="bv-welcome-preview"></div><div class="bv-gallery-strip" id="bv-welcome-chips"></div></section>
-        <section aria-label="Sign in or create your room">${auth}</section></div>`;
+    app.innerHTML=`<header class="top glass"><div class="row">${LOGO}<div class="brand">Sota Kece<small>alive together</small></div></div><div class="spacer"></div><a class="bv-entry-link" href="#bv-entry">Sign in <span aria-hidden="true">↗</span></a></header>
+      <div class="bv-welcome-grid"><section class="bv-intro"><div class="bv-eyebrow"><span class="bv-spark" aria-hidden="true">✳</span> Your people. Your kind of internet.</div>
+        <h1>Good people.<br><span>Great energy.</span></h1>
+        <p>A little home for your big personality. Dress your room, put your mates front and centre, and turn the music up.</p>
+        <div class="row wrap bv-hero-actions"><button type="button" class="btn" id="bv-try-studio">Make your room <span aria-hidden="true">↗</span></button><a class="bv-text-link" href="#bv-entry">Find your people <span aria-hidden="true">→</span></a></div>
+        <div class="bv-no-account">Try it out. No account needed.</div>
+        <div class="bv-friend-note"><span aria-hidden="true">🌺 🦋 🎸 🌴</span><p>From the islands.<br><b>To wherever life takes you.</b></p></div>
+        <div class="bv-side-note">More you. Less algorithm. <span aria-hidden="true">↝</span></div>
+      </section><section class="bv-room-showcase" aria-label="Interactive example room">
+        <div class="bv-room-window"><div class="bv-window-bar"><span aria-hidden="true">● ● ●</span><span>YOUR LITTLE CORNER OF THE INTERNET</span><span aria-hidden="true">↗</span></div>
+          <div id="bv-welcome-preview"></div></div>
+        <div class="bv-sticker" aria-hidden="true">100%<br><b>YOU.</b></div>
+        <div class="bv-example-label"><span>Example room · change the vibe</span><span id="bv-welcome-skin-name"></span></div>
+        <div class="bv-gallery-strip" id="bv-welcome-chips"></div>
+      </section></div>
+      <div class="bv-manifesto"><span>A ROOM THAT LOOKS LIKE YOU</span><span aria-hidden="true">✳</span><span>YOUR TOP MATES 16</span><span aria-hidden="true">✳</span><span>REAL TALANOA</span><span aria-hidden="true">✳</span><span>YOUR OWN SOUNDTRACK</span></div>
+      <section class="bv-entry" id="bv-entry" aria-label="Sign in or create your room"><div class="bv-entry-copy"><div class="bv-eyebrow">Come as you are.</div><h2>Your corner.<br>Your crew.</h2><p>Pick your colours. Share a moment. Leave a note that makes someone's day.</p><div class="bv-badges"><span>No ads</span><span>Mutual friendships</span><span>Low data by default</span></div></div><div>${auth}</div></section>`;
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').onclick=()=>mode==='up'?signUp():signIn();
     app.querySelectorAll('.authwrap input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')$('#a-go').click();}));
@@ -96,10 +137,18 @@
     showWelcome(picked());
   };
   function showWelcome(settings) {
+    stopSample();
     const s=skins.normalize(settings);
     const box=document.querySelector('#bv-welcome-preview');if(!box)return;
-    box.innerHTML=preview(example,s);
+    const mates=['🌺','🌴','🌊','🐚','☀️','🪸','🍍','🦋','🏉','🎸','🥥','🌻','🐬','🦜','⭐','🌈'];
+    box.innerHTML=`<div class="bv-preview bv-demo-room" style="${esc(skins.inline(s))}">
+      <div class="bv-cover"><div class="bv-cover-words">${esc(s.note)}</div><span class="bv-skin-tag">Example room</span><span class="bv-cover-flower" aria-hidden="true">✳</span></div>
+      <div class="bv-profile-intro"><div class="bv-profile-avatar">🌺</div><div><h2>Litia's little corner</h2><p>@litia.afterhours · Suva roots, everywhere energy.</p></div><span class="bv-profile-star" aria-hidden="true">✦</span></div>
+      <div class="bv-preview-columns"><section class="bv-mini-card bv-demo-talanoa"><h3>Talanoa <span>Sample notes</span></h3><div class="bv-demo-note"><span aria-hidden="true">🦋</span><p><b>Mere</b> same time, same sunset? <span aria-hidden="true">☀️</span></p></div><div class="bv-demo-note"><span aria-hidden="true">🎸</span><p><b>Jo</b> this room is such a vibe.</p></div><div class="bv-note-prompt">Your mates. Your inside jokes. Your wall.</div></section>
+      <section class="bv-mini-card"><h3>Top Mates <span>16</span></h3><div class="bv-mini-friends">${mates.map((e,i)=>`<span title="Example mate #${i+1}"><small>${i+1}</small>${e}</span>`).join('')}</div></section></div>
+      ${s.trackUrl?trackMarkup(s):`<div class="bv-mixtape"><div class="bv-record" aria-hidden="true"><span>✳</span></div><div><b>A little sunshine</b><small id="bv-sample-status" role="status">Sample loop · tap to play · no download</small></div><div class="bv-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><button id="bv-sample-play" type="button" aria-label="Play sample loop" aria-pressed="false">▶</button></div>`}</div>`;
     wireMedia(box);
+    box.querySelector('#bv-sample-play')?.addEventListener('click',playSample);
     $('#bv-welcome-skin-name').textContent=skins.presets.find(p=>p.id===s.id).name;
     $('#bv-welcome-chips').innerHTML=skins.presets.map(p=>`<button type="button" class="bv-chip" data-welcome-skin="${p.id}" aria-pressed="${p.id===s.id}"><span class="bv-dot" style="${esc(skins.inline({id:p.id}))}"></span>${esc(p.name)}</button>`).join('');
     $('#bv-welcome-chips').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
