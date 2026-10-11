@@ -3,6 +3,8 @@
   const skins = window.BulaSkins;
   if (!skins) return;
   let studio = null, draft = null, legacy = '', focusBefore = null;
+  let homeSkinChosen=false;
+  try{homeSkinChosen=!!localStorage.getItem('bv-picked-skin');}catch(_){}
   const example = {display_name:'Sema',handle:'sema',bio:'Good people. Brighter days. Suva, Fiji.'};
   let sampleAudio = null, sampleTimer = null;
   function stopSample() {
@@ -47,9 +49,9 @@
   function preview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
     const interests=s.interests.split(',').map(x=>x.trim()).filter(Boolean).slice(0,8);
-    const portraits=Array.from({length:16},(_,i)=>frontCrop([1020,1080,1141,1202][i%4],448+Math.floor(i/4)*50,48,48,`Example friend ${i+1}`));
+    const portraits=Array.from({length:14},(_,i)=>originalMate(i,`Example friend ${i+1}`));
     return `<div class="bv-preview bv-photo-room" style="${esc(skins.inline(s))}" data-layout="${s.layout}">
-      <div class="bv-cover" data-pattern="${s.pattern}">${s.coverPath?coverMediaMarkup(s):'<svg class="bv-cover-photo sk-photo" viewBox="632 100 677 224" role="img" aria-label="Fijian friends from the supplied Sema design"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>'}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
+      <div class="bv-cover" data-pattern="${s.pattern}">${s.coverPath?coverMediaMarkup(s):'<svg class="bv-cover-photo sk-photo" viewBox="632 100 677 224" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Fijian friends from the supplied Sema design"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>'}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
       <div class="bv-profile-intro"><div class="bv-profile-avatar">${frontAvatar('Sema — example profile portrait')}</div>
         <h2>${esc(profile.display_name||profile.handle||'Your name')}</h2><p>@${esc(profile.handle||'yourhandle')}</p><p>${esc(profile.bio||'Good people. Brighter days.')}</p>
         ${interests.length?`<div class="bv-interests">${interests.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}</div>
@@ -166,10 +168,20 @@
     const photo=p.category==='Dark'?'/assets/fiji-music.jpg':p.category==='Bright'?'/assets/fiji-sunset.jpg':p.category==='Masi-inspired'?'/assets/masi-band.svg':p.category==='Sport'?'/assets/friends.jpg':'/assets/beach.jpg';
     return `<div class="bv-room-thumbnail" style="${esc(skins.inline({id:p.id}))}" aria-hidden="true"><div class="bv-thumb-cover"><img src="${photo}" width="720" height="480" alt="" loading="lazy"><span></span></div><div class="bv-thumb-profile"><i>${frontAvatar('')}</i><div><b></b><span></span></div></div><div class="bv-thumb-panels"><i></i><i></i></div></div><div class="bv-skin-palette" aria-hidden="true">${[p.bg,p.panel,p.accent,p.cover].map(c=>`<i style="background:${c}"></i>`).join('')}</div>`;
   }
-  function frontCrop(x,y,w,h,label) {
-    return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
+  function originalCrop(x,y,w,h,label) {
+    return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(label)}"><image href="/assets/mobile-front-reference.png" width="1008" height="1792"/></svg>`;
   }
-  function frontAvatar(label) { return frontCrop(647,294,153,158,label); }
+  function originalMate(index,label) {
+    // Native portraits from Donovan's original mobile artwork, without re-encoding.
+    return originalCrop(150+(index%7)*103,1452+Math.floor(index/7)*85,80,80,label);
+  }
+  function frontCrop(x,y,w,h,label) {
+    if(x===660&&y===500)return originalCrop(153,1221,79,79,label);
+    if(x===658&&y===562)return originalCrop(153,1305,79,79,label);
+    if(w===48&&h===48)return originalMate((Math.round((x-1020)/61)+Math.round((y-448)/50)*4)%14,label);
+    return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
+  }
+  function frontAvatar(label) { return originalCrop(121,951,215,215,label); }
   function placeResponsiveNavigation() {
     const app=document.querySelector('#app'), nav=app?.querySelector('.bv-classic-nav');
     const classic=app?.querySelector('.bv-classic'), panels=app?.querySelector('.bv-classic-panels');
@@ -235,13 +247,21 @@
       try{await navigator.clipboard.writeText('https://bulavata.vercel.app/');$('#bv-invite-status').textContent='Invite link copied. Share it with your mates.';}
       catch(_){$('#bv-invite-status').textContent='Invite your mates: https://bulavata.vercel.app/';}
     });
-    showWelcome(picked());
+    showWelcome(picked(),homeSkinChosen);
   };
-  function showWelcome(settings) {
+  function showWelcome(settings,themed=true) {
+    const s=skins.normalize(settings),root=document.querySelector('#app.bv-welcome');
     const label=document.querySelector('#bv-welcome-skin-name');
-    if(label)label.textContent=skins.presets.find(p=>p.id===skins.normalize(settings).id).name;
-    const box=document.querySelector('#bv-welcome-preview');
-    if(box){box.innerHTML=preview(example,{...skins.normalize(settings),note:'Good people. Brighter days.'});wireMedia(box);}
+    if(label)label.textContent=skins.presets.find(p=>p.id===s.id).name;
+    if(!root)return;
+    root.classList.toggle('bv-home-skinned',themed);
+    if(themed){
+      Object.entries(skins.tokens(s)).forEach(([key,value])=>root.style.setProperty(key,value));
+      root.dataset.homeSkin=s.id;
+    }else{
+      Object.keys(skins.tokens(s)).forEach(key=>root.style.removeProperty(key));
+      delete root.dataset.homeSkin;
+    }
   }
   function open(initial) {
     if(studio)return;
@@ -252,7 +272,7 @@
     const p=S.me||example;skinCategory='All';
     studio=document.createElement('dialog');studio.className='bv-studio';studio.setAttribute('aria-labelledby','bv-studio-title');
     studio.innerHTML=`<div class="bv-studio-head"><div><h2 id="bv-studio-title">Make it yours.</h2><p>Pick a skin. Mix the colours. Give your room a personality.</p></div><button type="button" class="bv-close" aria-label="Close skin studio">×</button></div>
-      <div class="bv-studio-body"><div class="bv-studio-controls"><div class="bv-studio-picker"><h3>Choose your room style</h3><p class="bv-style-intro">24 photo-led designs. Start with a palette, then make it yours.</p><div class="bv-skin-categories" id="bv-skin-categories"></div><div class="bv-skin-grid" id="bv-skin-options"></div></div>
+      <div class="bv-studio-body"><div class="bv-studio-controls"><div class="bv-studio-picker"><h3>Choose your room style</h3><p class="bv-style-intro">24 photo-led designs. Start with a palette, then make it yours.</p><div class="bv-skin-categories" id="bv-skin-categories"></div><div class="bv-skin-navigation"><button type="button" id="bv-skins-left" aria-label="Scroll skins left" aria-controls="bv-skin-options">←</button><span>Swipe or browse the colours</span><button type="button" id="bv-skins-right" aria-label="Scroll skins right" aria-controls="bv-skin-options">→</button></div><div class="bv-skin-grid" id="bv-skin-options" tabindex="0" aria-label="Room skins"></div></div>
       <div class="bv-studio-custom"><h3>Add your own twist</h3><div class="bv-controls">
         <div><label for="bv-accent">Accent colour</label><input id="bv-accent" type="color" value="${draft.accent}"></div>
         <div><label for="bv-background">Page colour</label><input id="bv-background" type="color" value="${draft.background}"></div>
@@ -278,25 +298,41 @@
     studio.querySelector('#bv-cancel').addEventListener('click',close);
     studio.querySelector('#bv-save').addEventListener('click',save);
     studio.addEventListener('cancel',event=>{event.preventDefault();close();});
-    studio.addEventListener('close',()=>{discardUploads();const dialog=document.querySelector('dialog.bv-studio');dialog?.remove();studio=null;draft=null;focusBefore?.focus();});
+    studio.addEventListener('close',()=>{discardUploads();const dialog=document.querySelector('dialog.bv-studio');dialog?.remove();studio=null;draft=null;showWelcome(picked(),homeSkinChosen);focusBefore?.focus({preventScroll:true});});
     studio.addEventListener('input',update);studio.addEventListener('change',update);
     studio.querySelectorAll('input[type=file]').forEach(input=>input.addEventListener('change',uploadRoomMedia));
     studio.querySelector('#bv-remove-track').addEventListener('click',()=>{draft.trackPath='';draft.trackUrl='';draft.trackTitle='';studio.querySelector('#bv-trackUrl').value='';studio.querySelector('#bv-trackTitle').value='';drawPreview();});
     studio.querySelector('#bv-remove-cover').addEventListener('click',()=>{draft.coverPath='';drawPreview();});
-    drawOptions();drawPreview();studio.showModal();
+    const gallery=studio.querySelector('#bv-skin-options');
+    const scrollSkins=direction=>gallery.scrollBy({left:direction*(gallery.querySelector('.bv-skin-option')?.offsetWidth+12||gallery.clientWidth),behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
+    studio.querySelector('#bv-skins-left').addEventListener('click',()=>scrollSkins(-1));
+    studio.querySelector('#bv-skins-right').addEventListener('click',()=>scrollSkins(1));
+    gallery.addEventListener('keydown',event=>{if(event.target===gallery&&['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();scrollSkins(event.key==='ArrowRight'?1:-1);}});
+    gallery.addEventListener('scroll',updateSkinNavigation);
+    studio.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
+    drawOptions();drawPreview();studio.showModal();updateSkinNavigation();
+    const resize=new ResizeObserver(updateSkinNavigation);resize.observe(gallery);studio.addEventListener('close',()=>resize.disconnect(),{once:true});
   }
   function close() {studio?.close();}
   let skinCategory='All';
+  function updateSkinNavigation() {
+    if(!studio)return;
+    const gallery=studio.querySelector('#bv-skin-options');
+    studio.querySelector('#bv-skins-left').disabled=gallery.scrollLeft<=2;
+    studio.querySelector('#bv-skins-right').disabled=gallery.scrollLeft+gallery.clientWidth>=gallery.scrollWidth-2;
+  }
   function drawOptions() {
     const categories=['All',...new Set(skins.presets.map(p=>p.category))];
     studio.querySelector('#bv-skin-categories').innerHTML=categories.map(category=>`<button type="button" data-skin-category="${esc(category)}" aria-pressed="${category===skinCategory}">${esc(category)}</button>`).join('');
     studio.querySelectorAll('[data-skin-category]').forEach(button=>button.addEventListener('click',()=>{skinCategory=button.dataset.skinCategory;drawOptions();studio.querySelector(`[data-skin-category="${skinCategory}"]`).focus();}));
-    studio.querySelector('#bv-skin-options').innerHTML=skins.presets.filter(p=>skinCategory==='All'||p.category===skinCategory).map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<strong>${esc(p.name)}</strong><small>${esc(p.category)} · ${esc(p.note)}</small></button>`).join('');
+    const gallery=studio.querySelector('#bv-skin-options'),previousScroll=gallery.scrollLeft;
+    gallery.innerHTML=skins.presets.filter(p=>skinCategory==='All'||p.category===skinCategory).map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<strong>${esc(p.name)}</strong><small>${esc(p.category)} · ${esc(p.note)}</small></button>`).join('');
     studio.querySelectorAll('[data-skin]').forEach(b=>b.addEventListener('click',()=>{
       draft=skins.normalize({id:b.dataset.skin,layout:draft.layout,interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath});
       for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle'])studio.querySelector('#bv-'+key).value=draft[key];
-      drawOptions();drawPreview();studio.querySelector(`[data-skin="${draft.id}"]`).focus();
+      drawOptions();drawPreview();studio.querySelector(`[data-skin="${draft.id}"]`).focus({preventScroll:true});
     }));
+    gallery.scrollLeft=previousScroll;updateSkinNavigation();
   }
   function update(event) {
     if(!studio||!draft)return;
@@ -310,6 +346,7 @@
     studio.querySelector('#bv-studio-preview').innerHTML=preview(profile,draft);
     wireMedia(studio.querySelector('#bv-studio-preview'));
     studio.querySelector('#bv-preview-name').textContent=skins.presets.find(p=>p.id===draft.id).name;
+    if(!S.user)showWelcome(draft);
   }
   async function save() {
     if(!studio||!draft||mediaBusy)return;
@@ -319,7 +356,7 @@
     if(trackInput&&!skins.safeUrl(trackInput,true)){errorBox.textContent='Use a direct HTTPS audio-file link, or leave it empty.';studio.querySelector('#bv-trackUrl').focus();return;}
     if(!S.user||!S.me){
       try{localStorage.setItem('bv-picked-skin',JSON.stringify(draft));}catch(_){errorBox.textContent='This browser could not keep your choice. You can still pick it after signing in.';return;}
-      const chosen={...draft};close();showWelcome(chosen);toast('Skin picked. Make your room to save it with your profile.');return;
+      const chosen={...draft};homeSkinChosen=true;close();showWelcome(chosen);document.querySelector('#bv-neon')?.scrollIntoView({block:'start'});toast('Homepage skin updated. Make your room to save it with your profile.');return;
     }
     const name=studio.querySelector('#d-name').value.trim();
     if(!name){errorBox.textContent='Give your profile a display name.';studio.querySelector('#d-name').focus();return;}
