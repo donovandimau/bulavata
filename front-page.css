@@ -44,7 +44,7 @@
 .bv-neon-section .bv-classic{max-width:calc(var(--sk-page-width) - 2 * var(--sk-page-gutter));min-width:0}
 .bv-neon-section .bv-classic::before{margin:0 0 27px}
 .bv-neon-section .bv-classic-footer::after{margin-inline:0}
-.sk-room{width:100%;max-width:none;padding:0;transform:none;overflow:hidden}
+.sk-room{width:100%;max-width:none;padding:0;overflow:hidden}
 .sk-cover{border:0}
 .sk-browser-bar{padding:8px 12px}
 .sk-player{margin:0 8px 8px}
