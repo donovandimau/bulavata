@@ -316,3 +316,7 @@
 .bv-home-skinned .bv-social-stage::before,.bv-home-skinned .bv-social-stage::after{opacity:.12}
 
 @media(max-width:760px){.bv-studio .bv-photo-room .bv-cover{min-height:0;aspect-ratio:754/228;padding:10px}.bv-studio .bv-photo-room .bv-cover-words{font-size:20px;max-width:65%;padding:4px 6px}.bv-studio .bv-skin-tag{max-width:85px}}
+
+.bv-studio .bv-photo-room .bv-cover{min-height:0;aspect-ratio:754/228;padding:16px}
+.bv-studio .bv-skin-categories{flex-wrap:nowrap;overflow-x:auto;padding:4px 0 10px}.bv-studio .bv-skin-categories button{flex:none}
+@media(max-width:760px){.bv-studio .bv-photo-room .bv-cover{padding:10px}}

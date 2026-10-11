@@ -318,7 +318,7 @@
   function updateSkinNavigation() {
     if(!studio)return;
     const gallery=studio.querySelector('#bv-skin-options');
-    studio.querySelector('#bv-skins-left').disabled=gallery.scrollLeft<=2;
+    studio.querySelector('#bv-skins-left').disabled=gallery.scrollLeft<=4;
     studio.querySelector('#bv-skins-right').disabled=gallery.scrollLeft+gallery.clientWidth>=gallery.scrollWidth-2;
   }
   function drawOptions() {
