@@ -161,6 +161,10 @@
     const tiles=[['friends',24,33],['text','bula!'],['beach',40,31],['friends',55,47],['emoji','🌺'],['music',28,38],['text','YOUR\nSPACE'],['beach',63,33],['friends',70,34],['emoji','🌊'],['beach',75,30],['text','♫'],['friends',24,33],['emoji','🦋'],['beach',49,34],['text','16\nMATES'],['music',28,38],['friends',70,34],['emoji','🎸'],['beach',40,31],['text','talanoa'],['friends',55,47],['emoji','🌴'],['beach',63,33],['friends',70,34],['text','GOOD\nTIMES'],['emoji','☀️'],['music',28,38],['beach',49,34],['text','♥']];
     return tiles.map((tile,i)=>`<button type="button" class="bv-collage-tile bv-tile-${tile[0]}" data-collage-skin="${skins.presets[i%skins.presets.length].id}" aria-label="Try ${esc(skins.presets[i%skins.presets.length].name)} skin" style="--tile-tone:${['#086779','#ac244c','#362459','#187e9c','#a05617','#194f47'][i%6]};${!['text','emoji'].includes(tile[0])?`background-image:url('/assets/${tile[0]}.jpg');background-position:${tile[1]}% ${tile[2]}%;`:''}">${['text','emoji'].includes(tile[0])?esc(tile[1]).replace(/\n/g,'<br>'):''}</button>`).join('');
   }
+  function skinThumbnail(p) {
+    const photo=p.category==='Dark'?'/assets/music.jpg':p.category==='Bright'?'/assets/fiji-sunset.jpg':p.category==='Masi-inspired'?'/assets/masi-band.svg':p.category==='Sport'?'/assets/friends.jpg':'/assets/beach.jpg';
+    return `<div class="bv-room-thumbnail" style="${esc(skins.inline({id:p.id}))}" aria-hidden="true"><div class="bv-thumb-cover"><img src="${photo}" width="720" height="480" alt="" loading="lazy"><span></span></div><div class="bv-thumb-profile"><i>${frontCrop(647,294,153,158,'')}</i><div><b></b><span></span></div></div><div class="bv-thumb-panels"><i></i><i></i></div></div><div class="bv-skin-palette" aria-hidden="true">${[p.bg,p.panel,p.accent,p.cover].map(c=>`<i style="background:${c}"></i>`).join('')}</div>`;
+  }
   function frontCrop(x,y,w,h,label) {
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
   }
@@ -249,7 +253,7 @@
     const p=S.me||example;skinCategory='All';
     studio=document.createElement('dialog');studio.className='bv-studio';studio.setAttribute('aria-labelledby','bv-studio-title');
     studio.innerHTML=`<div class="bv-studio-head"><div><h2 id="bv-studio-title">Make it yours.</h2><p>Pick a skin. Mix the colours. Give your room a personality.</p></div><button type="button" class="bv-close" aria-label="Close skin studio">×</button></div>
-      <div class="bv-studio-body"><div><h3>Find your skin · 24 ways to start</h3><div class="bv-skin-categories" id="bv-skin-categories"></div><div class="bv-skin-grid" id="bv-skin-options"></div>
+      <div class="bv-studio-body"><div><h3>Choose your room style</h3><p class="bv-style-intro">24 photo-led designs. Start with a palette, then make it yours.</p><div class="bv-skin-categories" id="bv-skin-categories"></div><div class="bv-skin-grid" id="bv-skin-options"></div>
       <h3>Add your own twist</h3><div class="bv-controls">
         <div><label for="bv-accent">Accent colour</label><input id="bv-accent" type="color" value="${draft.accent}"></div>
         <div><label for="bv-background">Page colour</label><input id="bv-background" type="color" value="${draft.background}"></div>
@@ -288,7 +292,7 @@
     const categories=['All',...new Set(skins.presets.map(p=>p.category))];
     studio.querySelector('#bv-skin-categories').innerHTML=categories.map(category=>`<button type="button" data-skin-category="${esc(category)}" aria-pressed="${category===skinCategory}">${esc(category)}</button>`).join('');
     studio.querySelectorAll('[data-skin-category]').forEach(button=>button.addEventListener('click',()=>{skinCategory=button.dataset.skinCategory;drawOptions();studio.querySelector(`[data-skin-category="${skinCategory}"]`).focus();}));
-    studio.querySelector('#bv-skin-options').innerHTML=skins.presets.filter(p=>skinCategory==='All'||p.category===skinCategory).map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin"><div class="bv-skin-swatch" style="${esc(skins.inline({id:p.id}))}">Aa.</div><strong>${esc(p.name)}</strong><small>${esc(p.category)} · ${esc(p.note)}</small></button>`).join('');
+    studio.querySelector('#bv-skin-options').innerHTML=skins.presets.filter(p=>skinCategory==='All'||p.category===skinCategory).map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<strong>${esc(p.name)}</strong><small>${esc(p.category)} · ${esc(p.note)}</small></button>`).join('');
     studio.querySelectorAll('[data-skin]').forEach(b=>b.addEventListener('click',()=>{
       draft=skins.normalize({id:b.dataset.skin,layout:draft.layout,interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath});
       for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle'])studio.querySelector('#bv-'+key).value=draft[key];
