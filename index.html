@@ -259,7 +259,7 @@ async function signUp(){
   if(!he && free===false){ err.textContent="That handle is taken."; b.disabled=false; return; }
   const {data,error} = await sb.auth.signUp({email:$("#a-email").value.trim(),password:$("#a-pass").value});
   if(error){ err.textContent=error.message; b.disabled=false; return; }
-  const band = (2026-year)>=18 ? "adult" : "teen";
+  const band = bandFor(year);
   if(!data.session){
     try{ localStorage.setItem("bv_pending", JSON.stringify({handle,name,year,band})); }catch(_){}
     err.textContent="Check your email to confirm, then sign in — your handle is saved.";
