@@ -165,8 +165,7 @@
     return tiles.map((tile,i)=>`<button type="button" class="bv-collage-tile bv-tile-${tile[0]}" data-collage-skin="${skins.presets[i%skins.presets.length].id}" aria-label="Try ${esc(skins.presets[i%skins.presets.length].name)} skin" style="--tile-tone:${['#086779','#ac244c','#362459','#187e9c','#a05617','#194f47'][i%6]};${tile[0]==='music'?`background-image:url('/assets/fiji-music.jpg');background-position:65% 35%;`:''}">${tile[0]==='photo'?frontCrop(tile[1],tile[2],tile[3],tile[4],'Friends from your Fijian community design'):['text','emoji'].includes(tile[0])?esc(tile[1]).replace(/\n/g,'<br>'):''}</button>`).join('');
   }
   function skinThumbnail(p) {
-    const photo=p.category==='Dark'?'/assets/fiji-music.jpg':p.category==='Bright'?'/assets/fiji-sunset.jpg':p.category==='Masi-inspired'?'/assets/masi-band.svg':p.category==='Sport'?'/assets/friends.jpg':'/assets/beach.jpg';
-    return `<div class="bv-room-thumbnail" style="${esc(skins.inline({id:p.id}))}" aria-hidden="true"><div class="bv-thumb-cover"><img src="${photo}" width="720" height="480" alt="" loading="lazy"><span></span></div><div class="bv-thumb-profile"><i>${frontAvatar('')}</i><div><b></b><span></span></div></div><div class="bv-thumb-panels"><i></i><i></i></div></div><div class="bv-skin-palette" aria-hidden="true">${[p.bg,p.panel,p.accent,p.cover].map(c=>`<i style="background:${c}"></i>`).join('')}</div>`;
+    return `<span class="bv-skin-palette" aria-hidden="true">${[p.bg,p.panel,p.accent,p.cover].map(c=>`<i style="background:${c}"></i>`).join('')}</span>`;
   }
   function originalCrop(x,y,w,h,label) {
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(label)}"><image href="/assets/mobile-front-reference.png" width="1008" height="1792"/></svg>`;
@@ -326,7 +325,7 @@
     studio.querySelector('#bv-skin-categories').innerHTML=categories.map(category=>`<button type="button" data-skin-category="${esc(category)}" aria-pressed="${category===skinCategory}">${esc(category)}</button>`).join('');
     studio.querySelectorAll('[data-skin-category]').forEach(button=>button.addEventListener('click',()=>{skinCategory=button.dataset.skinCategory;drawOptions();studio.querySelector(`[data-skin-category="${skinCategory}"]`).focus();}));
     const gallery=studio.querySelector('#bv-skin-options'),previousScroll=gallery.scrollLeft;
-    gallery.innerHTML=skins.presets.filter(p=>skinCategory==='All'||p.category===skinCategory).map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<strong>${esc(p.name)}</strong><small>${esc(p.category)} · ${esc(p.note)}</small></button>`).join('');
+    gallery.innerHTML=skins.presets.filter(p=>skinCategory==='All'||p.category===skinCategory).map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<strong>${esc(p.name)}</strong></button>`).join('');
     studio.querySelectorAll('[data-skin]').forEach(b=>b.addEventListener('click',()=>{
       draft=skins.normalize({id:b.dataset.skin,layout:draft.layout,interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath});
       for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle'])studio.querySelector('#bv-'+key).value=draft[key];
