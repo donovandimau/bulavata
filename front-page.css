@@ -322,3 +322,6 @@
 @media(max-width:760px){.bv-studio .bv-photo-room .bv-cover{padding:10px}}
 
 @media(max-width:760px){.bv-studio .bv-photo-room .bv-cover{min-height:110px}.bv-studio .bv-photo-room .bv-cover-words{font-size:clamp(18px,5vw,20px)}}
+
+/* Bound the proportional cover to its actual preview width, including in Ops iframes. */
+.bv-studio .bv-photo-room .bv-cover{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
