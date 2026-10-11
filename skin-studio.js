@@ -9,20 +9,21 @@
     clearTimeout(sampleTimer);
     if(sampleAudio) { sampleAudio.close().catch(()=>{}); sampleAudio=null; }
     document.querySelectorAll('[data-sample-play]').forEach(button=>{
-      button.textContent=button.id==='bv-home-play'?'▶ Try a sample':'▶';button.setAttribute('aria-label','Play sample loop');button.setAttribute('aria-pressed','false');
+      button.textContent=button.id==='sk-hero-play'?'':button.id==='bv-home-play'?'▶ Try a sample':'▶';button.setAttribute('aria-label',button.id==='sk-hero-play'?'Play sample music':'Play sample loop');button.setAttribute('aria-pressed','false');
     });
     document.querySelectorAll('[data-sample-status]').forEach(status=>status.textContent='Sample melody · tap to play');
     document.querySelector('.bv-mixtape')?.classList.remove('is-playing');
   }
   async function playSample() {
     if(sampleAudio) { stopSample();return; }
-    const status=document.querySelector('#bv-home-status')||document.querySelector('#bv-sample-status');
+    const status=document.querySelector('#bv-home-status')||document.querySelector('#bv-sample-status')||document.querySelector('#sk-hero-status');
     try {
       const Audio=window.AudioContext||window.webkitAudioContext;
       if(!Audio)throw new Error('Audio unavailable');
       const context=new Audio();sampleAudio=context;
       await context.resume();
       if(sampleAudio!==context)return;
+      if(context.state!=='running')throw new Error('Audio did not start');
       const start=context.currentTime;
       [261.63,329.63,392,523.25,392,329.63,293.66,392,440,587.33,440,392].forEach((frequency,i)=>{
         const oscillator=context.createOscillator(),gain=context.createGain();
@@ -32,7 +33,7 @@
         oscillator.connect(gain);gain.connect(context.destination);oscillator.start(time);oscillator.stop(time+.46);
       });
       document.querySelectorAll('[data-sample-play]').forEach(button=>{
-        button.textContent=button.id==='bv-home-play'?'��� Stop sample':'���';button.setAttribute('aria-label','Stop sample loop');button.setAttribute('aria-pressed','true');
+        button.textContent=button.id==='sk-hero-play'?'':button.id==='bv-home-play'?'Ⅱ Stop sample':'Ⅱ';button.setAttribute('aria-label',button.id==='sk-hero-play'?'Stop sample music':'Stop sample loop');button.setAttribute('aria-pressed','true');
       });
       document.querySelector('.bv-mixtape')?.classList.add('is-playing');
       document.querySelectorAll('[data-sample-status]').forEach(status=>status.textContent='Playing a sample melody · made here');
@@ -188,7 +189,7 @@
     const auth=authNode.outerHTML;
     app.classList.add('bv-welcome');
     app.innerHTML=`<section class="sk-front sk-original-front" aria-label="Sota Kece original supplied design">
-      <picture class="sk-original-picture"><source media="(max-width:760px)" srcset="/assets/mobile-front-reference.png" width="1008" height="1792"><img class="sk-original-design" src="/assets/front-reference.jpg" width="1360" height="768" fetchpriority="high" alt="Sota Kece: Create your own space with friends. The original sunset design with Sema's slanted room, masi border, Talanoa, Top Mates and music player."></picture>
+      <div class="sk-hero-artwork"><picture class="sk-original-picture"><source media="(max-width:760px)" srcset="/assets/mobile-front-reference.png" width="1008" height="1792"><img class="sk-original-design" src="/assets/front-reference.jpg" width="1360" height="768" fetchpriority="high" alt="Sota Kece: Create your own space with friends. The original sunset design with Sema's slanted room, masi border, Talanoa, Top Mates and music player."></picture><button class="sk-hero-play" id="sk-hero-play" type="button" data-sample-play aria-label="Play sample music" aria-pressed="false" aria-describedby="sk-hero-status" title="Play sample music"></button><span class="sk-hero-status" id="sk-hero-status" data-sample-status role="status">Sample music · tap to play</span></div>
       <nav class="sk-original-actions" aria-label="Get started"><button class="sk-create" type="button" onclick="renderAuth('up',true)">Create your space</button><button type="button" id="sk-room-menu"><span class="sk-action-full">Open room design studio</span><span class="sk-action-short">Room studio</span></button><button type="button" id="sk-sign-in">Sign in</button><a href="#bv-music"><span class="sk-action-full">Explore music, mates & rooms</span><span class="sk-action-short">Explore</span></a></nav>
     </section><div class="bv-neon-section" id="bv-neon"><div class="bv-classic">
       <header class="bv-classic-header"><div class="bv-wordmark" aria-label="Sota Kece"><a href="/" aria-label="Sota Kece home"><span>sota</span>kece</a><small>FIJI ROOTS. EVERYWHERE ENERGY.</small></div>
@@ -212,6 +213,7 @@
     app.querySelectorAll('.authwrap input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')$('#a-go').click();}));
     $('#bv-edit-room').addEventListener('click',()=>open());
     $('#bv-home-play').addEventListener('click',playSample);
+    $('#sk-hero-play').addEventListener('click',playSample);
     $('#sk-room-menu').addEventListener('click',()=>open());
     $('#sk-sign-in').setAttribute('aria-haspopup','dialog');
     $('#sk-sign-in').setAttribute('aria-controls','bv-entry');
