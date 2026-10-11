@@ -144,8 +144,8 @@ body:has(#app.bv-welcome){background:#080713;background-image:radial-gradient(el
 
 
 /* Masi-inspired framing for Donovan's Fijian-centred entrance. */
-.bv-classic::before{content:'';display:block;height:24px;background:#ecd4a9 url('/assets/masi-band.svg') repeat-x center;background-size:90px 24px;margin:-27px -27px 27px;border-bottom:3px solid #ed69e0}
-.bv-classic-footer::after{content:'';display:block;flex-basis:100%;height:24px;background:#ecd4a9 url('/assets/masi-band.svg') repeat-x center;background-size:90px 24px;border-top:3px solid #60e7ff;margin-top:16px}
+.bv-classic::before{content:'';display:block;height:24px;background:#ecd4a9 url('/assets/masi-supplied.png') repeat-x center;background-size:90px 24px;margin:-27px -27px 27px;border-bottom:3px solid #ed69e0}
+.bv-classic-footer::after{content:'';display:block;flex-basis:100%;height:24px;background:#ecd4a9 url('/assets/masi-supplied.png') repeat-x center;background-size:90px 24px;border-top:3px solid #60e7ff;margin-top:16px}
 .bv-classic-room .bv-gallery-strip{max-height:200px;overflow:auto;padding:3px}
 @media(max-width:600px){.bv-classic::before{margin:-17px -17px 20px;height:20px;background-size:75px 20px}}
 .bv-preview .bv-mini-card,.bv-room-active .glass.card,.bv-room-active .moment,.bv-room-active .scrawl{border-radius:var(--bv-radius,10px);box-shadow:var(--bv-card-shadow,none)}
@@ -172,3 +172,9 @@ body:has(#app.bv-welcome){background:#080713;background-image:radial-gradient(el
 .bv-social-stage .bv-classic-actions>div h2{color:transparent}
 
 @media(max-width:700px){.bv-social-stage .bv-classic-actions>div:first-child h2{font-size:clamp(29px,8.8vw,48px);white-space:nowrap}}
+
+/* Use the exact supplied masi; the centred crop shows its patterned band without cream padding. */
+.bv-classic::before,.bv-classic-footer::after{background-size:116.4px 119.5px;background-position:center center;height:60px}
+/* Shared type scale for labels, navigation, descriptions and controls. */
+.bv-welcome{--bv-caption:12px;--bv-body:16px;--bv-nav:14px;--bv-control:16px}.bv-home-search label,.bv-header-auth label{font-size:var(--bv-caption)}.bv-home-search input,.bv-header-auth input{font-size:var(--bv-nav)}.bv-home-search small,.bv-wordmark small,.bv-collage-caption,.bv-classic-footer,.bv-room-entry small{font-size:var(--bv-caption);line-height:1.5}.bv-classic-nav a,.bv-classic-nav button,.bv-classic-nav>span{font-size:var(--bv-nav)}.bv-header-auth .btn,.bv-header-auth>.bv-link,.bv-home-search button{font-size:var(--bv-nav)}.bv-music-copy p{font-size:var(--bv-body)}.bv-music-copy>small:first-child,.bv-music-copy [data-sample-status]{font-size:var(--bv-caption)}.bv-music-copy button{font-size:var(--bv-control)}.bv-social-stage .bv-circle-feature p,.bv-social-stage .bv-classic-actions p,.bv-room-entry p{font-size:var(--bv-body);line-height:1.5}.bv-social-stage .bv-classic-actions button,.bv-social-stage .bv-classic-actions>div:first-child button,.bv-room-entry .btn{font-size:var(--bv-control)}.bv-social-stage .bv-circle-feature>.bv-link,.bv-social-stage .bv-classic-actions small{font-size:var(--bv-caption)}.bv-social-stage .bv-circle-feature>small{font-size:var(--bv-nav)}.bv-social-stage .bv-join-strip>span,.bv-social-stage .bv-join-strip small{font-size:20px;line-height:1.5}.bv-social-stage .bv-classic-actions>div h2{font-size:clamp(60px,6.4vw,84px)}
+@media(max-width:700px){.bv-welcome{--bv-caption:11px;--bv-body:14px;--bv-nav:12px;--bv-control:14px}.bv-classic::before,.bv-classic-footer::after{background-size:87.3px 89.6px;height:45px}.bv-social-stage .bv-classic-actions>div h2,.bv-social-stage .bv-classic-actions>div:first-child h2{font-size:clamp(29px,8.8vw,48px);line-height:1.15;white-space:nowrap}.bv-social-stage .bv-join-strip>span,.bv-social-stage .bv-join-strip small{font-size:16px}.bv-music-copy button{font-size:14px}}

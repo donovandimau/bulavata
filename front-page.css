@@ -31,3 +31,7 @@
 /* Match the supplied Sema room's perspective: right edge nearer, whole card tilted together. */
 @media(min-width:761px){.sk-room{transform:perspective(1000px) rotateY(-10deg);transform-origin:center}}
 @media(max-width:760px){.sk-room{width:96%;transform:perspective(1000px) rotateY(-8deg);transform-origin:center}}
+
+/* Keep the entrance on the same supporting type scale as the page below it. */
+.sk-header nav a,.sk-header nav button{font-size:14px}.sk-copy p{font-size:clamp(18px,2vw,24px);line-height:1.4}.sk-create{font-size:20px}.sk-profile-words p,.sk-profile-words small,.sk-note p{font-size:14px;line-height:1.4}.sk-profile-words>b,.sk-note b,.sk-song b,.sk-profile>button{font-size:14px}.sk-note small,.sk-song small,.sk-wave small,.sk-example{font-size:12px;line-height:1.4}.sk-explore{font-size:14px}.sk-cards h3{font-size:18px}
+@media(max-width:700px){.sk-header nav a,.sk-header nav button{font-size:12px}.sk-copy p{font-size:19px}.sk-create{font-size:18px}.sk-profile-words p,.sk-profile-words small,.sk-note p,.sk-note b,.sk-song b,.sk-profile>button{font-size:12px}.sk-profile-words>b,.sk-cards h3{font-size:14px}.sk-note small,.sk-song small,.sk-wave small,.sk-example{font-size:11px}.sk-explore{font-size:12px}}
