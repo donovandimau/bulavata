@@ -229,7 +229,7 @@ function renderAuth(mode="in"){
       <div><label>Display name</label><input id="a-name" placeholder="Sina" maxlength="40"></div>`:''}
       <div><label>Email</label><input id="a-email" type="email" placeholder="you@email.com" autocapitalize="off"></div>
       <div><label>Password</label><input id="a-pass" type="password" placeholder="At least 8 characters"></div>
-      ${mode==='up'?`<div><label>Year you were born</label><input id="a-year" type="number" placeholder="2008" min="1900" max="2026">
+      ${mode==='up'?`<div><label>Year you were born</label><input id="a-year" type="number" inputmode="numeric" placeholder="e.g. 2004" min="1900" max="${new Date().getFullYear()}">
         <div class="sub" style="margin-top:5px">Sota Kece is 16+. We ask once, store only an age band, and never a document.</div></div>`:''}
       <button class="btn" id="a-go">${mode==='up'?'Create my room':'Sign in'}</button>
       <div class="sub" id="a-err" style="color:var(--coral);text-align:center"></div>
