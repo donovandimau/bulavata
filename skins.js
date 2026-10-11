@@ -18,6 +18,14 @@
   const fonts = ['rounded','serif','mono'];
   const marker = /^\/\* bv-skin:v1 ([^\n]*?) \*\/\n?/;
   const hex = (v, fallback) => /^#[0-9a-f]{6}$/i.test(String(v)) ? String(v).toLowerCase() : fallback;
+  function safeUrl(value, audio=false) {
+    try {
+      const u=new URL(String(value||'').trim());
+      if(u.protocol!=='https:'||u.username||u.password||u.href.length>320)return '';
+      if(audio&&!/\.(mp3|m4a|ogg|opus|wav)$/i.test(u.pathname))return '';
+      return u.href;
+    }catch(_){return '';}
+  }
   function normalize(raw) {
     const input = raw && typeof raw === 'object' ? raw : {};
     const preset = presets.find(p => p.id === input.id) || presets[0];
@@ -25,7 +33,8 @@
       pattern:patterns.includes(input.pattern)?input.pattern:preset.pattern,
       font:fonts.includes(input.font)?input.font:preset.font,
       layout:input.layout==='wide'?'wide':'classic',
-      note:String(input.note??preset.note).slice(0,80),interests:String(input.interests??'').slice(0,160)};
+      note:String(input.note??preset.note).slice(0,80),interests:String(input.interests??'').slice(0,160),
+      trackUrl:safeUrl(input.trackUrl,true),trackTitle:String(input.trackTitle??'').slice(0,80)};
   }
   function read(css) {
     const text = String(css??'').slice(0,4000), match = text.match(marker);
@@ -77,5 +86,5 @@
     }
     return rules.join('\n');
   }
-  return {presets,patterns,fonts,normalize,read,encode,tokens,inline,safeLegacy,contrast,foreground};
+  return {presets,patterns,fonts,normalize,read,encode,tokens,inline,safeLegacy,contrast,foreground,safeUrl};
 });

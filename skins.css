@@ -1,4 +1,4 @@
-/* Bula Vata: personal rooms, with a little 2007 energy. */
+/* Sota Kece: personal rooms, with a little 2007 energy. */
 :root{--accent:#086779;--lagoon:#086779}
 body{background-color:#e1f4f3;background-image:radial-gradient(rgba(23,62,73,.06) 1px,transparent 1px);background-size:24px 24px}
 .bubbles{display:none}
@@ -82,3 +82,10 @@ nav.bottom{background:#fff;border-radius:15px;box-shadow:0 6px 30px rgba(23,62,7
 @media(min-width:900px){.bv-room>.grid.two{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)}}
 @media(max-width:650px){#app{padding:10px 12px 112px}.bv-welcome-grid{margin:24px 0;gap:24px}.bv-intro h1{font-size:43px}.bv-studio-body{grid-template-columns:1fr;padding:18px;max-height:67vh;gap:18px}.bv-studio-preview{position:relative;order:-1}.bv-studio-preview .bv-cover{min-height:105px}.bv-studio-preview .bv-preview-columns{display:none}.bv-studio-head,.bv-studio-footer{padding:14px 18px}.bv-studio-head h2{font-size:20px}.bv-studio-footer{flex-wrap:wrap}.bv-studio-footer .row{width:100%;justify-content:flex-end}.bv-cover{min-height:125px;padding:18px}.bv-cover-words{font-size:27px}.bv-skin-tag{font-size:8px;max-width:110px;white-space:normal}.bv-room #room-head>.row{padding-left:18px;padding-right:18px}.bv-room #room-head h2{font-size:22px!important}.bv-room[data-layout=wide]>.grid.two>.stack:nth-child(2){grid-template-columns:1fr}.bv-profile-stats{padding:13px 18px;gap:12px}.bv-preview-columns{grid-template-columns:1fr}.bv-example-label{font-size:9px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+.bv-mini-friends>span{position:relative;min-height:40px;padding-top:7px}.bv-mini-friends small{position:absolute;left:3px;top:2px;font:600 8px system-ui;color:var(--bv-muted)}
+.bv-track{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:16px 20px;background:var(--bv-panel);color:var(--bv-ink);border-top:1px solid var(--bv-bg);font-size:12px}.bv-track>span{flex:1;min-width:140px;font-weight:700;overflow-wrap:anywhere}.bv-track small{width:100%;color:var(--bv-muted);font-size:10px}.bv-track audio{width:min(100%,300px);height:38px}
+.bv-shared-media{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0;font-size:11px}.bv-shared-media small{color:var(--ink-soft)}.bv-shared-media img{width:100%;max-height:600px;object-fit:contain;border-radius:10px}.bv-shared-media a{overflow-wrap:anywhere;color:var(--accent)}
+.bv-meme-input{font-size:12px;margin:0 0 16px}.bv-meme-input summary{cursor:pointer;margin-bottom:10px}.bv-meme-input .sub{font-size:10px;margin-top:6px}
+.bv-mate{min-width:0}.bv-mate-tools{display:flex;gap:2px;margin-top:4px;justify-content:center}.bv-mate-tools .btn{padding:4px 6px;min-width:24px;min-height:28px;font-size:13px}
+@media(max-width:650px){.bv-welcome .top>.pill{display:none}.bv-welcome .top .brand{font-size:22px}.bv-track{padding:14px 18px}.bv-mate-tools .btn{padding:3px 5px}}
+#sota-connection{padding:12px 18px;background:#fff3c6;color:#584118;text-align:center;font:600 12px system-ui;line-height:1.5}#sota-connection[hidden]{display:none}
