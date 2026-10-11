@@ -169,9 +169,8 @@
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
   }
   function frontCover() {
-    // Render the supplied angled cover as one flat panel before the whole room receives its perspective.
-    const strips=Array.from({length:64},(_,i)=>{const t=(i+.5)/64,x=632+i*676/64,top=93-34*t,bottom=324-3*t;return `<svg x="${i*677/64}" y="0" width="${677/64+.2}" height="249" viewBox="${x} ${top} ${676/64} ${bottom-top}" preserveAspectRatio="none"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;}).join('');
-    return `<svg class="sk-photo" viewBox="0 0 677 249" role="img" aria-label="Fijian friends sharing a happy afternoon, framed by the supplied masi pattern">${strips}</svg>`;
+    // Align the supplied photograph and masi frame before the whole room receives its perspective.
+    return `<svg class="sk-photo" viewBox="0 0 677 249" role="img" aria-label="Fijian friends sharing a happy afternoon, framed by the supplied masi pattern"><foreignObject width="677" height="249"><div xmlns="http://www.w3.org/1999/xhtml" style="width:677px;height:249px;overflow:hidden;position:relative"><img src="/assets/front-reference.jpg" width="1360" height="768" alt="" style="position:absolute;max-width:none;width:1360px;height:768px;transform-origin:0 0;transform:matrix3d(1.3078165504,0.0629467077182,0,0.000230892811002,0.0226461740329,1.25152865934,0,0.0000464346625284,0,0,1,0,-828.646154037,-156.174484596,0,1);"/></div></foreignObject></svg>`;
   }
   renderAuth=function(mode='in'){
     reset();originalAuth(mode);
