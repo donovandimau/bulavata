@@ -177,7 +177,7 @@
     else classic.insertBefore(nav,classic.querySelector('.bv-register')||panels);
   }
   window.matchMedia('(max-width:760px)').addEventListener('change',placeResponsiveNavigation);
-  renderAuth=function(mode='in'){
+  renderAuth=function(mode='in',expanded=false){
     reset();originalAuth(mode);
     const authNode=app.querySelector('.authwrap');
     authNode.querySelectorAll(':scope > .row,:scope > .tagline,:scope > .promises,:scope > .btn').forEach(node=>node.remove());
@@ -189,22 +189,19 @@
     app.classList.add('bv-welcome');
     app.innerHTML=`<section class="sk-front sk-original-front" aria-label="Sota Kece original supplied design">
       <picture class="sk-original-picture"><source media="(max-width:760px)" srcset="/assets/mobile-front-reference.png" width="1008" height="1792"><img class="sk-original-design" src="/assets/front-reference.jpg" width="1360" height="768" fetchpriority="high" alt="Sota Kece: Create your own space with friends. The original sunset design with Sema's slanted room, masi border, Talanoa, Top Mates and music player."></picture>
-      <nav class="sk-original-actions" aria-label="Get started"><button class="sk-create" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Create your space</button><button type="button" id="sk-room-menu"><span class="sk-action-full">Open room design studio</span><span class="sk-action-short">Room studio</span></button><button type="button" id="sk-sign-in">Sign in</button><a href="#bv-music"><span class="sk-action-full">Explore music, mates & rooms</span><span class="sk-action-short">Explore</span></a></nav>
+      <nav class="sk-original-actions" aria-label="Get started"><button class="sk-create" type="button" onclick="renderAuth('up',true)">Create your space</button><button type="button" id="sk-room-menu"><span class="sk-action-full">Open room design studio</span><span class="sk-action-short">Room studio</span></button><button type="button" id="sk-sign-in">Sign in</button><a href="#bv-music"><span class="sk-action-full">Explore music, mates & rooms</span><span class="sk-action-short">Explore</span></a></nav>
     </section><div class="bv-neon-section" id="bv-neon"><div class="bv-classic">
       <header class="bv-classic-header"><div class="bv-wordmark" aria-label="Sota Kece"><a href="/" aria-label="Sota Kece home"><span>sota</span>kece</a><small>FIJI ROOTS. EVERYWHERE ENERGY.</small></div>
-        ${mode==='in'?`<button class="btn bv-mobile-join" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Sign up</button>`:''}
         <form class="bv-home-search" id="bv-home-search"><label for="bv-find-mate">Find your people</label><div><input id="bv-find-mate" placeholder="Find a mate by @handle" value="${esc(pendingMate)}" maxlength="21" autocapitalize="off" spellcheck="false"><button type="submit" aria-label="Find a mate">⌕</button></div><small id="bv-search-status" role="status">Your people, one handle away.</small></form>
-        ${mode==='in'?`<section class="bv-header-auth" id="bv-entry" aria-label="Sign in">${auth}<button class="bv-link" type="button" onclick="renderAuth('up')">New here? Sign up</button></section>`:`<div class="bv-header-return"><p>Already part of the crew?</p><button type="button" class="btn sm" onclick="renderAuth('in')">Sign in</button></div>`}
       </header>
       <nav class="bv-classic-nav" aria-label="Explore Sota Kece"><a href="#bv-music">Music</a><a href="#bv-people">Top Mates</a><a href="#bv-your-room">Talanoa & skins</a><button type="button" onclick="window.SotaKavaUI.preview()">Kava Circle</button><span>Bula! You're home.</span></nav>
-      ${mode==='up'?`<section class="bv-register" id="bv-entry" aria-label="Create your room"><div><h1>Come on in.</h1><p>A profile with personality. A wall for your mates.<br>A little place to call your own.</p><button type="button" class="bv-link" onclick="renderAuth('in')">Already have a room? Sign in</button></div>${auth}</section>`:''}
+      <dialog class="bv-account-dialog" id="bv-entry" aria-labelledby="bv-account-title"><div class="bv-account-head"><h2 id="bv-account-title">${mode==='up'?'Create your room':'Sign in'}</h2><button type="button" id="bv-account-close" aria-label="Close account form">×</button></div>${auth}<button type="button" class="bv-link" onclick="renderAuth('${mode==='up'?'in':'up'}',true)">${mode==='up'?'Already have a room? Sign in':'New here? Sign up'}</button></dialog>
       <div class="bv-classic-panels">
         <section class="bv-music-feature" id="bv-music" aria-labelledby="bv-music-title"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Fijian singer and friends sharing live music at a seaside gathering" fetchpriority="high"><div class="bv-music-copy"><small>YOUR ROOM. YOUR SOUNDTRACK.</small><h1 id="bv-music-title">Viti roots.<br>Volume up.</h1><p>Your tunes. Your people. Your island energy.</p><button id="bv-home-play" data-sample-play type="button" aria-label="Play sample loop" aria-pressed="false">▶ Try a sample</button><small id="bv-home-status" data-sample-status role="status">Sample melody · tap to play</small></div></section>
         <section class="bv-people-feature" id="bv-people" aria-label="Sample collage and room skins"><div class="bv-people-collage">${peopleCollage()}</div><div class="bv-collage-caption"><b>Your people. Your vibe.</b><span>Sample photos & skins · tap a tile</span></div></section>
       </div>
       <section class="bv-social-stage" id="bv-circle" aria-label="Your circle starts here">        <section class="bv-circle-feature" aria-labelledby="bv-circle-title"><div class="bv-circle-art" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><linearGradient id="bv-circle-gradient" x2="0" y2="1"><stop stop-color="#d9ff82"/><stop offset="1" stop-color="#05bb84"/></linearGradient></defs><g stroke="url(#bv-circle-gradient)" stroke-width="16" stroke-linecap="round"><path d="M60 17V103M23 38L97 82M23 82L97 38"/></g></svg></div><small>SIT DOWN. CATCH UP.</small><h2 id="bv-circle-title">Same circle. New stories.</h2><p>Pull up a seat in the Digital Kava Circle.</p><button type="button" class="bv-link" onclick="window.SotaKavaUI.preview()">Take a look →</button></section>
-<section class="bv-classic-actions" aria-label="Start here"><div><h2>Sign up</h2><div class="bv-action-content"><p>Come as you are. Bula!</p><button type="button" class="bv-link" onclick="renderAuth('up')">Create your room →</button></div></div><div><h2>Share</h2><div class="bv-action-content"><p>Moments, music and proper Talanoa.</p><button type="button" class="bv-link" id="bv-try-studio">Try a profile skin →</button></div></div><div><h2>Invite</h2><div class="bv-action-content"><p>Bring the crew. Make some noise.</p><button type="button" class="bv-link" id="bv-copy-invite">Copy invite link →</button><small id="bv-invite-status" role="status"></small></div></div></section>
-      <div class="bv-join-strip"><span>Your top 16. Your tunes. Your Talanoa.</span><button type="button" class="btn" onclick="renderAuth('up')">sign up now!</button><small>Free to join · 16+</small></div>
+<section class="bv-community-tools" aria-label="Invite your mates"><p>Moments, music and proper Talanoa. Bring your mates into the circle.</p><button type="button" class="bv-link" id="bv-copy-invite">Copy invite link →</button><small id="bv-invite-status" role="status"></small></section>
       </section>
       <section class="bv-room-entry" id="bv-your-room" aria-label="Design your room"><div><h2>Your room. Your rules.</h2><p>24 skins. Masi borders. Your colours, music and cover art.</p><small>Studio choice · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="btn" id="bv-edit-room">Open the skin studio →</button></section>
       <footer class="bv-classic-footer"><span>Sota Kece · alive together</span><span>Mutual friends · Your own archive · No ads</span><details><summary>Photo credits</summary><p>Sample photography by <a href="https://unsplash.com/photos/i6r5kQMQ9Zk" target="_blank" rel="noopener noreferrer">Ben Collins</a>, <a href="https://unsplash.com/photos/roOETBSa8mA" target="_blank" rel="noopener noreferrer">Samsung UK</a> and <a href="https://unsplash.com/photos/tZhEr2d3oeM" target="_blank" rel="noopener noreferrer">Hoi An and Da Nang Photographer</a>, via Unsplash.</p></details></footer>
@@ -213,17 +210,22 @@
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').onclick=()=>mode==='up'?signUp():signIn();
     app.querySelectorAll('.authwrap input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')$('#a-go').click();}));
-    $('#bv-try-studio').addEventListener('click',()=>open());
     $('#bv-edit-room').addEventListener('click',()=>open());
     $('#bv-home-play').addEventListener('click',playSample);
     $('#sk-room-menu').addEventListener('click',()=>open());
-    $('#sk-sign-in').addEventListener('click',()=>{renderAuth('in');$('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'});$('#a-email').focus();});
+    $('#sk-sign-in').setAttribute('aria-haspopup','dialog');
+    $('#sk-sign-in').setAttribute('aria-controls','bv-entry');
+    $('#sk-sign-in').addEventListener('click',()=>renderAuth('in',true));
+    const account=$('#bv-entry');
+    $('#bv-account-close').addEventListener('click',()=>account.close());
+    account.addEventListener('close',()=>$('#sk-sign-in').focus({preventScroll:true}));
+    if(expanded){account.showModal();$(mode==='up'?'#a-handle':'#a-email').focus();}
     app.querySelectorAll('[data-collage-skin]').forEach(button=>button.addEventListener('click',()=>open({id:button.dataset.collageSkin})));
     $('#bv-home-search').addEventListener('submit',event=>{
       event.preventDefault();pendingMate=$('#bv-find-mate').value.trim().toLowerCase().replace(/^@/,'');
       if(!/^[a-z0-9_]{3,20}$/.test(pendingMate)){ $('#bv-search-status').textContent='Use a handle: 3–20 letters, numbers or underscores.';return; }
       try{sessionStorage.setItem('sota-find-mate',pendingMate);}catch(_){}
-      if(mode==='up')renderAuth('in');
+      if(mode==='up')renderAuth('in',true);else if(!$('#bv-entry').open)$('#bv-entry').showModal();
       $('#bv-search-status').textContent=`Sign in to find @${pendingMate}. Profiles stay private.`;
       $('#a-email').focus();
     });
