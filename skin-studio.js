@@ -3,7 +3,7 @@
   const skins = window.BulaSkins;
   if (!skins) return;
   let studio = null, draft = null, legacy = '', focusBefore = null;
-  const example = {display_name:'Your name goes here',handle:'yourhandle',avatar_emoji:'🌺',bio:'A little corner of the internet that feels like you.'};
+  const example = {display_name:'Sema',handle:'sema',bio:'Good people. Brighter days. Suva, Fiji.'};
   let sampleAudio = null, sampleTimer = null;
   function stopSample() {
     clearTimeout(sampleTimer);
@@ -46,15 +46,15 @@
   function preview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
     const interests=s.interests.split(',').map(x=>x.trim()).filter(Boolean).slice(0,8);
-    return `<div class="bv-preview" style="${esc(skins.inline(s))}" data-layout="${s.layout}">
-      <div class="bv-cover" data-pattern="${s.pattern}">${coverMediaMarkup(s)}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
-      <div class="bv-profile-intro"><div class="bv-profile-avatar">${esc(profile.avatar_emoji||'🌺')}</div>
-        <h2>${esc(profile.display_name||profile.handle||'Your name')}</h2>
-        <p>@${esc(profile.handle||'yourhandle')}</p><p>${esc(profile.bio||'Your profile. Your people. Your rules.')}</p>
+    const portraits=Array.from({length:16},(_,i)=>frontCrop([1020,1080,1141,1202][i%4],448+Math.floor(i/4)*50,48,48,`Example friend ${i+1}`));
+    return `<div class="bv-preview bv-photo-room" style="${esc(skins.inline(s))}" data-layout="${s.layout}">
+      <div class="bv-cover" data-pattern="${s.pattern}">${s.coverPath?coverMediaMarkup(s):'<img class="bv-cover-photo" src="/assets/friends.jpg" width="720" height="480" alt="Friends enjoying time together" loading="lazy">'}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
+      <div class="bv-profile-intro"><div class="bv-profile-avatar">${frontCrop(647,294,153,158,'Sema — example profile portrait')}</div>
+        <h2>${esc(profile.display_name||profile.handle||'Your name')}</h2><p>@${esc(profile.handle||'yourhandle')}</p><p>${esc(profile.bio||'Good people. Brighter days.')}</p>
         ${interests.length?`<div class="bv-interests">${interests.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}</div>
-      <div class="bv-preview-columns"><section class="bv-mini-card"><h3>Talanoa · Whiteboard</h3><p>Banter, memes and shoutouts. Straight from your mates, with no algorithm in between.</p></section>
-        <section class="bv-mini-card"><h3>Top Mates · 16</h3><div class="bv-mini-friends">${['🌺','🌴','🌊','🐚','☀️','🪸','🍍','🦋','🏉','🎸','🥥','🌻','🐬','🦜','⭐','🌈'].map((e,i)=>`<span title="Example mate #${i+1}"><small>${i+1}</small>${e}</span>`).join('')}</div></section></div>
-        ${trackMarkup(s)}</div>`;
+      <div class="bv-preview-columns"><section class="bv-mini-card"><h3>Talanoa <small>Example notes</small></h3><div class="bv-photo-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div><small>2h ago</small></div><div class="bv-photo-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>Bring your favourite track. See you there.</p></div><small>4h ago</small></div></section>
+      <section class="bv-mini-card"><h3>Top Mates · 16</h3><div class="bv-photo-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
+      ${s.trackUrl||s.trackPath?trackMarkup(s):`<div class="bv-photo-track"><img src="/assets/music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂▅▇▃▂▅▂▆▃▁</span></div>`}</div>`;
   }
   function coverMediaMarkup(settings) {
     return settings.coverPath?`<button type="button" class="bv-cover-load" data-cover-path="${esc(settings.coverPath)}">Load my cover artwork ↗</button>`:'';
@@ -205,6 +205,7 @@
       </div>
       <section class="bv-classic-actions" aria-label="Start here"><div><h2>Sign up</h2><p>Come as you are. Bula!</p><button type="button" class="bv-link" onclick="renderAuth('up')">Create your room →</button></div><div><h2>Share</h2><p>Moments, music and proper Talanoa.</p><button type="button" class="bv-link" id="bv-try-studio">Try a profile skin →</button></div><div><h2>Invite</h2><p>Bring the crew. Make some noise.</p><button type="button" class="bv-link" id="bv-copy-invite">Copy invite link →</button><small id="bv-invite-status" role="status"></small></div></section>
       <div class="bv-join-strip"><span>Your top 16. Your tunes. Your Talanoa.</span><button type="button" class="btn" onclick="renderAuth('up')">sign up now!</button><small>Free to join · 16+</small></div>
+      <section class="bv-photo-showcase" aria-label="Photo-led example room"><div id="bv-welcome-preview"></div></section>
       <section class="bv-room-entry" id="bv-your-room" aria-label="Design your room"><div><h2>Your room. Your rules.</h2><p>24 skins. Masi borders. Your colours, music and cover art.</p><small>Studio choice · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="btn" id="bv-edit-room">Open the skin studio →</button></section>
       <footer class="bv-classic-footer"><span>Sota Kece · alive together</span><span>Mutual friends · Your own archive · No ads</span><details><summary>Photo credits</summary><p>Sample photography by <a href="https://unsplash.com/photos/i6r5kQMQ9Zk" target="_blank" rel="noopener noreferrer">Ben Collins</a>, <a href="https://unsplash.com/photos/roOETBSa8mA" target="_blank" rel="noopener noreferrer">Samsung UK</a> and <a href="https://unsplash.com/photos/tZhEr2d3oeM" target="_blank" rel="noopener noreferrer">Hoi An and Da Nang Photographer</a>, via Unsplash.</p></details></footer>
     </div></div>`;
@@ -236,6 +237,8 @@
   function showWelcome(settings) {
     const label=document.querySelector('#bv-welcome-skin-name');
     if(label)label.textContent=skins.presets.find(p=>p.id===skins.normalize(settings).id).name;
+    const box=document.querySelector('#bv-welcome-preview');
+    if(box){box.innerHTML=preview(example,{...skins.normalize(settings),note:'Good people. Brighter days.'});wireMedia(box);}
   }
   function open(initial) {
     if(studio)return;
