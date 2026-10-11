@@ -51,7 +51,7 @@
     const interests=s.interests.split(',').map(x=>x.trim()).filter(Boolean).slice(0,8);
     const portraits=Array.from({length:14},(_,i)=>originalMate(i,`Example friend ${i+1}`));
     return `<div class="bv-preview bv-photo-room" style="${esc(skins.inline(s))}" data-layout="${s.layout}">
-      <div class="bv-cover" data-pattern="${s.pattern}">${s.coverPath?coverMediaMarkup(s):'<svg class="bv-cover-photo sk-photo" viewBox="632 100 677 224" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Fijian friends from the supplied Sema design"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>'}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
+      <div class="bv-cover" data-pattern="${s.pattern}">${s.coverPath?coverMediaMarkup(s):'<svg class="bv-cover-photo sk-photo" viewBox="137 715 754 228" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Fijian friends from the supplied Sema design"><image href="/assets/mobile-front-reference.png" width="1008" height="1792"/></svg>'}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
       <div class="bv-profile-intro"><div class="bv-profile-avatar">${frontAvatar('Sema — example profile portrait')}</div>
         <h2>${esc(profile.display_name||profile.handle||'Your name')}</h2><p>@${esc(profile.handle||'yourhandle')}</p><p>${esc(profile.bio||'Good people. Brighter days.')}</p>
         ${interests.length?`<div class="bv-interests">${interests.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}</div>
