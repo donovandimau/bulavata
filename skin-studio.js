@@ -188,7 +188,7 @@
     const auth=authNode.outerHTML;
     app.classList.add('bv-welcome');
     app.innerHTML=`<section class="sk-front sk-original-front" aria-label="Sota Kece original supplied design">
-      <img class="sk-original-design" src="/assets/front-reference.jpg" width="1360" height="768" fetchpriority="high" alt="Sota Kece: Create your own space with friends. The original sunset design with Sema's slanted room, masi border, Talanoa, Top Mates and music player.">
+      <picture class="sk-original-picture"><source media="(max-width:760px)" srcset="/assets/mobile-front-reference.png" width="1008" height="1792"><img class="sk-original-design" src="/assets/front-reference.jpg" width="1360" height="768" fetchpriority="high" alt="Sota Kece: Create your own space with friends. The original sunset design with Sema's slanted room, masi border, Talanoa, Top Mates and music player."></picture>
       <nav class="sk-original-actions" aria-label="Get started"><button class="sk-create" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Create your space</button><button type="button" id="sk-room-menu"><span class="sk-action-full">Open room design studio</span><span class="sk-action-short">Room studio</span></button><button type="button" id="sk-sign-in">Sign in</button><a href="#bv-music"><span class="sk-action-full">Explore music, mates & rooms</span><span class="sk-action-short">Explore</span></a></nav>
     </section><div class="bv-neon-section" id="bv-neon"><div class="bv-classic">
       <header class="bv-classic-header"><div class="bv-wordmark" aria-label="Sota Kece"><a href="/" aria-label="Sota Kece home"><span>sota</span>kece</a><small>FIJI ROOTS. EVERYWHERE ENERGY.</small></div>
