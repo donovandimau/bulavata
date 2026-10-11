@@ -89,12 +89,33 @@
   }
   function tokens(raw) {
     const s=normalize(raw),p=presets.find(p=>p.id===s.id);
+    // Materials follow the chosen palette; saved v1 settings remain compatible.
+    const paper=['masi','kava','notebook','ink','varsity','comic'].includes(s.id);
+    const raised=['kula','bloom','palm','mango','candy','cloud','mint'].includes(s.id);
+    const light=luminance(s.panel)>.5;
+    const edge=`color-mix(in srgb,${s.accent} ${paper?'24':'18'}%,${s.panel})`;
+    const sheen=`color-mix(in srgb,${s.panel} 91%,${light?'#ffffff':'#b3eaff'})`;
+    const materialShadow=paper?`0 3px 0 color-mix(in srgb,${s.accent} 17%,${s.background}),0 8px 20px ${s.accent}14,inset 0 0 0 1px ${edge}`:
+      raised?`7px 7px 18px color-mix(in srgb,${s.background} 82%,${p.ink}),-5px -5px 14px ${light?'#ffffff99':'#ffffff0c'},inset 0 1px 0 ${light?'#ffffff':'#ffffff26'}`:
+      `0 12px 28px ${light?'#102b3c18':'#00000040'},inset 0 1px 0 ${light?'#ffffff':'#ffffff30'},inset 0 0 0 1px ${edge}`;
+    const texture=paper?`repeating-linear-gradient(0deg,transparent 0 3px,${light?'#5c361908':'#fff1d507'} 3px 4px),radial-gradient(${light?'#6e382718':'#fff1d514'} .6px,transparent .8px)`:
+      raised?`linear-gradient(135deg,${sheen},${s.panel} 55%,color-mix(in srgb,${s.panel} 95%,${s.accent}))`:
+      `linear-gradient(135deg,${light?'#ffffff99':'#ffffff14'},transparent 55%,${s.accent}0d)`;
+    const finish=s.effect==='glow'?`,0 0 16px ${s.accent}44`:s.effect==='sticker'?`,4px 4px 0 ${s.accent}`:'';
+    const controlShadow=`0 3px 8px ${s.accent}24,inset 0 1px 0 #ffffff40,inset 0 -2px 0 #00000012`;
     return {'--bv-bg':s.background,'--bv-panel':s.panel,'--bv-ink':s.panel===p.panel?p.ink:foreground(s.panel),'--bv-muted':s.panel===p.panel?p.muted:foreground(s.panel),
       '--bv-accent':s.accent,'--bv-on-accent':foreground(s.accent),
       '--bv-link':contrast(s.accent,s.panel)>=4.5?s.accent:s.panel===p.panel?p.ink:foreground(s.panel),
       '--bv-cover':s.cover,'--bv-cover-ink':foreground(s.cover),
       '--bv-radius':s.cardStyle==='square'?'2px':s.cardStyle==='round'?'22px':'10px',
       '--bv-card-shadow':s.effect==='glow'?'0 0 16px '+s.accent+'44':s.effect==='sticker'?'4px 4px 0 '+s.accent:'none',
+      '--bv-surface':s.panel,'--bv-surface-image':texture,'--bv-surface-size':paper?'auto,7px 9px':'auto',
+      '--bv-surface-shadow':materialShadow,'--bv-surface-edge':edge,
+      '--bv-surface-card-shadow':materialShadow+finish,
+      '--bv-surface-blur':paper||raised?'none':'blur(10px)',
+      '--bv-glass-surface':paper||raised?s.panel:`color-mix(in srgb,${s.panel} 94%,transparent)`,
+      '--bv-control-shadow':controlShadow,'--bv-control-card-shadow':controlShadow+finish,
+      '--bv-cover-sheen':`linear-gradient(135deg,#ffffff30,transparent 48%,${s.accent}18)`,
       '--bv-pattern':motif(s.pattern),'--bv-pattern-size':['dots','stars','grid'].includes(s.pattern)?'24px 24px':s.pattern==='checker'?'48px 48px':s.pattern==='masi'?'120px 32px':'160px 140px',
       '--bv-font':s.font==='mono'?'ui-monospace, monospace':s.font==='serif'?'Georgia, serif':'Manrope, system-ui, sans-serif'};
   }
