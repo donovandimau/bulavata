@@ -1,0 +1,28 @@
+.kava-hero{padding:26px;position:relative;overflow:hidden;background:var(--bv-panel,#fff)}
+.kava-hero:before{content:'';position:absolute;width:230px;height:230px;right:-70px;top:-120px;border:35px solid var(--bv-cover,#a8e6cf);border-radius:50%;opacity:.45;pointer-events:none}
+.kava-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+.kava-hero h1{font-size:clamp(26px,5vw,40px);margin:9px 0;line-height:1.1}
+.kava-hero p{max-width:610px;line-height:1.7;font-size:14px}
+.kava-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.kava-columns{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:16px}
+@media(min-width:820px){.kava-columns{grid-template-columns:minmax(0,1.65fr) minmax(280px,1fr)}}
+.kava-stage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:15px}
+@media(min-width:650px){.kava-stage{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.kava-seat{min-height:130px;background:var(--bv-bg,#e1f4f3);border:1px solid var(--line-hard);border-radius:16px;padding:14px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;text-align:center;overflow-wrap:anywhere;position:relative}
+.kava-seat small{color:var(--ink-soft);font-size:11px}.kava-seat .kava-face{font-size:29px}.kava-seat b{font-size:13px}.kava-seat.host{border:2px solid var(--bv-accent,#086779)}
+.kava-seat .btn{font-size:11px;padding:5px 9px}.kava-state{margin:14px 0;background:var(--bv-bg,#e1f4f3);padding:12px;border-radius:12px;font-size:12px;line-height:1.6}
+.kava-comment{padding:11px 0;border-bottom:1px solid var(--line-hard);overflow-wrap:anywhere}
+.kava-comment p{white-space:pre-wrap;font-size:13px;line-height:1.55;margin:5px 0}.kava-comment small{font-size:11px;color:var(--ink-soft)}
+.kava-comments{max-height:400px;overflow:auto}.kava-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.kava-list>button{border:1px solid var(--line-hard);background:var(--bv-panel,#fff);padding:15px;border-radius:14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.kava-list strong{font-size:16px}.kava-list span{font-size:12px;color:var(--ink-soft)}
+.kava-person{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0;font-size:13px}.kava-person b{flex:1;min-width:100px}
+.kava-tips{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.kava-tips button[aria-pressed=true]{outline:2px solid var(--bv-accent,#086779);outline-offset:2px}
+.kava-money{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px;font-size:12px;line-height:1.6;margin:15px 0}.kava-money dd,.kava-money dt{margin:0;overflow-wrap:anywhere}.kava-money dd{text-align:right}
+.kava-notice{font-size:12px;line-height:1.6;color:var(--ink-soft)}
+.kava-label{margin-top:12px}.kava-topic{white-space:pre-wrap;overflow-wrap:anywhere}.kava-error{color:var(--ink);font-size:13px;line-height:1.5;margin-top:12px}.kava-back{margin-bottom:12px}
+.kava-demo{font-size:12px;letter-spacing:.06em;font-weight:700}.kava-form textarea{min-height:90px}.kava-form button[type=submit]{margin-top:12px}
+.kava-comment-form textarea{min-height:72px;margin-top:12px}.kava-comment-form button{margin-top:8px}
+.kava-respect{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}.kava-respect span{font-size:11px;padding:6px 10px;border:1px solid var(--line-hard);border-radius:999px}
+#kava-error[hidden]{display:none}.kava-hero .btn{position:relative}.kava-close{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+nav.bottom{max-width:540px}nav.bottom button{min-width:0}button:focus-visible{outline:3px solid var(--bv-accent,#086779);outline-offset:3px}

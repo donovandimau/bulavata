@@ -3,13 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bula Vata — alive together</title>
-<meta name="description" content="A small, private place for your actual friends. No algorithm. No ads. No AI slop. Your room, your archive, yours to keep.">
+<title>Sota Kece — alive together</title>
+<meta name="description" content="Sota Kece: a Pacific-first home for your people. Top Mates 16, Talanoa, personal skins, profile music and hosted Kava Circles. Low data by default.">
 <meta name="theme-color" content="#87CEEB">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js"></script>
+<script src="/vendor/supabase-2.45.0.min.js"></script>
 <style>
 :root{
   --sky:#87CEEB; --sky-deep:#5FB3D9; --lagoon:#4FA8D8; --ink:#143B52; --ink-soft:#3C6B86;
@@ -167,6 +164,9 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
   font-weight:500;color:var(--ink-soft);transition:.15s}
 .seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(20,59,82,.1)}
 </style>
+<link rel="stylesheet" href="/skins.css">
+<link rel="stylesheet" href="/kava.css">
+<script src="/skins.js"></script>
 </head>
 <body>
 <div class="bubbles" id="bubbles"></div>
@@ -195,15 +195,14 @@ function toast(m){ const d=document.createElement("div"); d.className="toast"; d
   e.style.animationDuration=(17+Math.random()*26)+"s"; e.style.animationDelay=(-Math.random()*34)+"s";
   e.style.opacity=.14+Math.random()*.3; b.appendChild(e);} })();
 
-const LOGO = `<div class="logotile"><img src="/dimau-fintech-logo.png" alt=""
-  onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'B'}))"></div>`;
+const LOGO = `<div class="logotile" aria-label="Sota Kece"><span>SK</span></div>`;
 
 /* ================= AUTH ================= */
 function renderAuth(mode="in"){
   app.innerHTML = `
   <div class="glass authwrap">
     <div class="row" style="gap:12px">${LOGO}
-      <div class="brand">Bula Vata<small>alive together</small></div></div>
+      <div class="brand">Sota Kece<small>alive together</small></div></div>
     <p class="tagline">A small, private place for your <b style="font-weight:600;color:var(--ink)">actual friends</b>.
       Build a room nobody can flatten into a grid. Keep everything you make. Forever.</p>
     <div class="promises">
@@ -213,6 +212,7 @@ function renderAuth(mode="in"){
       <div class="promise"><span class="tick">✓</span><div><b>Your archive is yours.</b> Download the lot, any time, one tap.</div></div>
       <div class="promise"><span class="tick">✓</span><div><b>No followers.</b> Friendship is mutual or it isn't real.</div></div>
     </div>
+    <button class="btn ghost" type="button" onclick="window.SotaKavaUI.preview()" style="margin-bottom:16px">Explore the Digital Kava Circle</button>
     <div class="seg">
       <button class="${mode==='in'?'on':''}" onclick="renderAuth('in')">Sign in</button>
       <button class="${mode==='up'?'on':''}" onclick="renderAuth('up')">Create a room</button>
@@ -224,7 +224,7 @@ function renderAuth(mode="in"){
       <div><label>Email</label><input id="a-email" type="email" placeholder="you@email.com" autocapitalize="off"></div>
       <div><label>Password</label><input id="a-pass" type="password" placeholder="At least 8 characters"></div>
       ${mode==='up'?`<div><label>Year you were born</label><input id="a-year" type="number" placeholder="2008" min="1900" max="2026">
-        <div class="sub" style="margin-top:5px">Bula Vata is 16+. We ask once, store only an age band, and never a document.</div></div>`:''}
+        <div class="sub" style="margin-top:5px">Sota Kece is 16+. We ask once, store only an age band, and never a document.</div></div>`:''}
       <button class="btn" id="a-go">${mode==='up'?'Create my room':'Sign in'}</button>
       <div class="sub" id="a-err" style="color:var(--coral);text-align:center"></div>
     </div>
@@ -242,7 +242,7 @@ async function signUp(){
   const handle=$("#a-handle").value.trim().toLowerCase(), name=$("#a-name").value.trim(), year=parseInt($("#a-year").value);
   if(!/^[a-z0-9_]{3,20}$/.test(handle)){ err.textContent="Handle: 3–20 lowercase letters, numbers or _"; b.disabled=false; return; }
   if(!name){ err.textContent="Pick a display name."; b.disabled=false; return; }
-  if(!year || (2026-year) < 16){ err.textContent="Bula Vata is for 16 and over."; b.disabled=false; return; }
+  if(!year || (2026-year) < 16){ err.textContent="Sota Kece is for 16 and over."; b.disabled=false; return; }
   const {data:free, error:he} = await sb.rpc("bv_handle_free",{p_handle:handle});
   if(!he && free===false){ err.textContent="That handle is taken."; b.disabled=false; return; }
   const {data,error} = await sb.auth.signUp({email:$("#a-email").value.trim(),password:$("#a-pass").value});
@@ -253,7 +253,7 @@ async function signUp(){
     err.textContent="Check your email to confirm, then sign in — your handle is saved.";
     b.disabled=false; return;
   }
-  const {error:pe} = await sb.from("bv_profiles").insert({id:data.user.id,handle,display_name:name,birth_year:year,age_band:band});
+  const {error:pe} = await sb.from("bv_profiles").insert({id:data.user.id,handle,display_name:name,birth_year:year,age_band:band,...initialSkin()});
   if(pe){ err.textContent=pe.message; b.disabled=false; return; }
   boot();
 }
@@ -263,18 +263,18 @@ function shell(body){
   const p = S.pending.length;
   app.innerHTML = `
   <header class="top glass">
-    ${LOGO}<div class="brand">Bula Vata<small>alive together</small></div>
+    ${LOGO}<div class="brand">Sota Kece<small>alive together</small></div>
     <div class="spacer"></div>
     <div class="luvchip" title="Three Uro a day. That is why one means something.">🫶 <b>${S.luv}</b></div>
   </header>
   <div id="view">${body}</div>
   <nav class="bottom glass">
-    ${[["pulse","🌊","Pulse"],["moments","🐚","Moments"],["room","🏝","My room"],["crews","🪸","Koro"],["friends","🤝","Friends"]]
+    ${[["pulse","🌊","Pulse"],["moments","🐚","Moments"],["room","🏝","My room"],["circles","🥥","Circles"],["crews","🪸","Koro"],["friends","🤝","Friends"]]
       .map(([k,i,l])=>`<button class="${S.tab===k?'on':''}" onclick="go('${k}')" style="position:relative">
         <em>${i}</em>${l}${k==='friends'&&p?`<span class="badge">${p}</span>`:''}</button>`).join("")}
   </nav>`;
 }
-function go(t){ S.tab=t; S.roomHandle=null; S.crew=null; render(); }
+function go(t){ window.SotaKavaUI?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
 
 /* ================= DATA ================= */
 async function refreshMeta(){
@@ -343,7 +343,7 @@ async function viewPulse(){
       <div class="glass card">
         <h3>Why this is small</h3>
         <div class="sub" style="line-height:1.7;margin-top:8px">
-          Bula Vata has no recommendations, no reach, no boost and no strangers.
+          Sota Kece has no recommendations, no reach, no boost and no strangers.
           Three Uro a day keeps praise meaningful.
           Everything you write is yours and downloadable from
           <a href="#" onclick="go('room');return false">your room</a>.
@@ -387,7 +387,7 @@ async function viewMoments(){
             ${m.author===S.user.id?`<button class="luvbtn" onclick="delMoment(${m.id})">🗑</button>`:''}
           </div>
           ${m.body?`<div class="body">${esc(m.body)}</div>`:''}
-          ${m.media_url?`<img src="${esc(m.media_url)}" alt="" loading="lazy" onerror="this.remove()">`:''}
+          ${mediaMarkup(m.media_url)}
           <button class="luvbtn ${m.i_luvd?'on':''}" onclick="giveLuv('moment',${m.id})">
             🫶 <span>Uro</span>${m.luv_count? ' · '+m.luv_count : ''}</button>
         </div>`).join("")
@@ -421,7 +421,8 @@ async function openRoom(h){ S.tab="room"; S.roomHandle=h; render(); }
 async function viewRoom(){
   const h = S.roomHandle || S.me.handle;
   shell(`<div class="empty glass card"><em>🏝</em>Opening the room…</div>`);
-  const {data:R} = await sb.rpc("bv_room",{p_handle:h});
+  const {data:R,error:roomError} = await sb.rpc("bv_room",{p_handle:h});
+  if(roomError)return shell(`<div class="glass card"><h3>Connection interrupted.</h3><p>We could not load this room. Try again when your signal returns.</p><button class="btn" onclick="viewRoom()">Try again</button></div>`);
   if(!R || !R.found) return shell(`<div class="glass card empty"><em>🤷</em>No room at @${esc(h)}.</div>`);
   const p = R.profile, me = R.is_me;
   document.documentElement.style.setProperty("--accent", p.room_accent || "#4FA8D8");
@@ -436,9 +437,7 @@ async function viewRoom(){
     </div>`);
   }
 
-  const custom = (p.room_css||"").slice(0,4000);
   shell(`
-  ${custom?`<style id="roomcss">${custom}</style>`:''}
   <div class="glass card" id="room-head" style="background:linear-gradient(135deg, ${esc(p.room_accent)}22, rgba(255,255,255,.6))">
     <div class="row" style="align-items:flex-start">
       <div class="av lg" style="background:#fff">${esc(p.avatar_emoji)}</div>
@@ -453,7 +452,7 @@ async function viewRoom(){
             <button class="btn sm ghost" onclick="exportArchive()">⬇ Download my archive</button>`
           :(R.friend_status==='accepted'
              ?`<span class="pill">🤝 Friends</span>
-               <button class="btn sm ghost" onclick="pinTop('${esc(p.id)}')">📌 Add to Tanoa 8</button>`
+               <button class="btn sm ghost" onclick="pinTop('${esc(p.id)}')">📌 Add to Top Mates 16</button>`
              :`<button class="btn sm" onclick="addFriend('${esc(p.id)}')">Ask to be friends</button>`)}
     </div>
   </div>
@@ -461,20 +460,20 @@ async function viewRoom(){
   <div class="grid two" style="margin-top:16px">
     <div class="stack">
       <div class="glass card">
-        <h3>The Whiteboard</h3>
+        <h3>Talanoa · Whiteboard</h3>
         <div class="sub" style="margin-bottom:11px">${me?"What your friends have scrawled on your wall. Permanent — you can hide one, nobody can erase it.":"Scrawl something on their wall. It stays."}</div>
         ${R.friend_status==='accepted'||me?`
           <div class="row" style="margin-bottom:12px">
-            <input id="w-body" placeholder="leave a mark…" maxlength="500">
+            <input id="w-body" aria-label="Talanoa message" placeholder="Banter, memories, shoutouts…" maxlength="500">
             <button class="btn sm" onclick="scrawl('${esc(p.id)}')">Write</button>
-          </div>`:''}
+          </div><details class="bv-meme-input"><summary>Add a meme link</summary><label for="w-meme">HTTPS image link (optional)</label><input id="w-meme" type="url" maxlength="320" placeholder="https://…/meme.jpg"><p class="sub">Friends tap to load it. Your note and link together can be up to 500 characters.</p></details>`:''}
         ${(R.wall||[]).length? R.wall.map(w=>`
           <div class="scrawl" style="border-left-color:${esc(w.ink)}">
             <div class="row" style="gap:7px;margin-bottom:3px">
               <span style="font-size:14px">${esc(w.avatar_emoji||'🌺')}</span>
               <b style="font-weight:600;font-size:13px">@${esc(w.handle)}</b>
               <div class="spacer"></div><span class="ago">${ago(w.created_at)}</span></div>
-            ${esc(w.body)}</div>`).join("")
+            ${wallMarkup(w.body)}</div>`).join("")
           : `<div class="empty"><em>✍️</em>Blank wall. Someone should fix that.</div>`}
       </div>
       <div class="glass card">
@@ -482,20 +481,20 @@ async function viewRoom(){
         ${(R.moments||[]).length? R.moments.map(m=>`
           <div class="scrawl" style="border-left-color:${esc(p.room_accent)}">
             ${m.body?esc(m.body):''}
-            ${m.media_url?`<img src="${esc(m.media_url)}" style="width:100%;border-radius:10px;margin-top:8px" onerror="this.remove()">`:''}
+            ${mediaMarkup(m.media_url)}
             <div class="ago" style="margin-top:6px">${ago(m.created_at)}</div></div>`).join("")
           : `<div class="empty"><em>🐚</em>No moments yet.</div>`}
       </div>
     </div>
     <div class="stack">
       <div class="glass card">
-        <h3>Tanoa 8</h3><div class="sub" style="margin-bottom:12px">Eight seats round the bowl. Ranked, public, and yes — people notice.</div>
+        <h3>Top Mates 16</h3><div class="sub" style="margin-bottom:12px">Sixteen close friends. Ranked, visible to your mates, and yes — people notice.</div>
         <div class="topgrid">
-          ${Array.from({length:8},(_,i)=>{ const t=(R.top||[]).find(x=>x.slot===i+1);
-            return `<div class="topslot ${t?'filled':''}" ${t?`onclick="openRoom('${esc(t.handle)}')" title="@${esc(t.handle)}"`:''}>
-              <b>${i+1}</b>${t?esc(t.avatar_emoji||'🌺'):'<span style="opacity:.3">+</span>'}</div>`;}).join("")}
+          ${Array.from({length:16},(_,i)=>{ const t=(R.top||[]).find(x=>x.slot===i+1);
+            return `<div class="bv-mate"><div class="topslot ${t?'filled':''}" ${t?`onclick="openRoom('${esc(t.handle)}')" title="@${esc(t.handle)}"`:''}>
+              <b>${i+1}</b>${t?esc(t.avatar_emoji||'🌺'):'<span style="opacity:.3">+</span>'}</div>${me&&t?`<div class="bv-mate-tools"><button class="btn sm ghost" onclick="manageTop(${i+1},'up')" aria-label="Move mate ${i+1} up" ${i===0?'disabled':''}>↑</button><button class="btn sm ghost" onclick="manageTop(${i+1},'down')" aria-label="Move mate ${i+1} down" ${i===15?'disabled':''}>↓</button><button class="btn sm ghost" onclick="manageTop(${i+1},'remove')" aria-label="Remove mate ${i+1}">×</button></div>`:''}</div>`;}).join("")}
         </div>
-        ${me?`<div class="sub" style="margin-top:11px">Open a friend's room and tap "Add to Tanoa 8".</div>`:''}
+        ${me?`<div class="sub" style="margin-top:11px">Open a friend's room and tap "Add to Top Mates 16".</div>`:''}
       </div>
       ${me?`<div class="glass card">
         <h3>Your archive</h3>
@@ -506,9 +505,36 @@ async function viewRoom(){
       </div>`:''}
     </div>
   </div>`);
+  window.BulaSkinStudio?.apply(p,R);
 }
+function mediaMarkup(value){
+  const url=window.BulaSkins.safeUrl(value);
+  return url?`<div class="bv-shared-media"><button type="button" class="btn sm ghost" data-media-url="${esc(url)}">Load shared image</button><small>Tap to use data</small><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Open image link ↗</a></div>`:'';
+}
+function initialSkin(){
+  try{const saved=localStorage.getItem('bv-picked-skin');if(saved){const settings=window.BulaSkins.normalize(JSON.parse(saved));return {room_accent:settings.accent,room_css:window.BulaSkins.encode(settings)};}}catch(_){}
+  return {};
+}
+function wallMarkup(body){
+  const raw=String(body||'');
+  if(raw.startsWith('[sota-meme]')){
+    try{const post=JSON.parse(raw.slice(11));if(typeof post.note==='string'&&window.BulaSkins.safeUrl(post.url))return esc(post.note)+mediaMarkup(post.url);}catch(_){}
+  }
+  return esc(raw);
+}
+async function manageTop(slot,action){
+  const {error}=await sb.rpc('bv_manage_top',{p_slot:slot,p_action:action});
+  if(error)return toast('Your mates could not be changed. '+error.message);
+  toast(action==='remove'?'Mate unpinned. You are still friends.':'Top Mates order saved.');await render();
+}
+
 async function scrawl(owner){
-  const b=$("#w-body").value.trim(); if(!b) return;
+  const note=$("#w-body").value.trim(), rawLink=$("#w-meme")?.value.trim()||"";
+  const url=window.BulaSkins.safeUrl(rawLink);
+  if(rawLink&&!url)return toast("Use an HTTPS image link.");
+  const b=url?"[sota-meme]"+JSON.stringify({note,url}):note;
+  if(!b)return;
+  if(b.length>500)return toast("Shorten your note or meme link to fit 500 characters.");
   const {error}=await sb.from("bv_wall_posts").insert({wall_owner:owner,author:S.user.id,body:b,ink:S.me.room_accent});
   if(error) return toast(error.message); render();
 }
@@ -517,11 +543,12 @@ async function addFriend(id){
   toast(error?"Already asked":"Request sent"); render();
 }
 async function pinTop(fid){
-  const {data:cur}=await sb.from("bv_top_friends").select("slot,friend").eq("owner",S.user.id);
-  if((cur||[]).some(x=>x.friend===fid)) return toast("Already in your Tanoa 8");
+  const {data:cur,error:readError}=await sb.from("bv_top_friends").select("slot,friend").eq("owner",S.user.id);
+  if(readError)return toast("Could not load your mates. Try again.");
+  if((cur||[]).some(x=>x.friend===fid)) return toast("Already in your Top Mates 16");
   const used=new Set((cur||[]).map(x=>x.slot)); let slot=0;
-  for(let i=1;i<=8;i++) if(!used.has(i)){slot=i;break;}
-  if(!slot) return toast("Tanoa 8 is full — that's the point.");
+  for(let i=1;i<=16;i++) if(!used.has(i)){slot=i;break;}
+  if(!slot) return toast("Top Mates 16 is full — that's the point.");
   const {error}=await sb.from("bv_top_friends").insert({owner:S.user.id,friend:fid,slot});
   toast(error?error.message:`Pinned at #${slot}`); render();
 }
@@ -559,7 +586,7 @@ async function exportArchive(){
   try{
     const blob=new Blob([text],{type:"application/json"});
     const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
-    a.download=`bulavata-${S.me.handle}-${new Date().toISOString().slice(0,10)}.json`;
+    a.download=`sota-kece-${S.me.handle}-${new Date().toISOString().slice(0,10)}.json`;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(()=>URL.revokeObjectURL(a.href),4000);
     toast("Downloaded. It's yours.");
@@ -699,14 +726,17 @@ async function render(){
   if(S.tab==="pulse") return viewPulse();
   if(S.tab==="moments") return viewMoments();
   if(S.tab==="room") return viewRoom();
+  if(S.tab==="circles") return window.SotaKavaUI.view();
   if(S.tab==="crews") return viewCrews();
   if(S.tab==="friends") return viewFriends();
 }
 async function boot(){
+  if(!navigator.onLine)return renderAuth();
   const {data:{session}} = await sb.auth.getSession();
   if(!session) return renderAuth();
   S.user = session.user;
-  const {data:me} = await sb.from("bv_profiles").select("*").eq("id",S.user.id).maybeSingle();
+  const {data:me,error:profileError} = await sb.from("bv_profiles").select("*").eq("id",S.user.id).maybeSingle();
+  if(profileError)return shell(`<div class="glass card"><h3>Your room is still yours.</h3><p>Connection interrupted. Try loading it again when your signal returns.</p><button class="btn" onclick="boot()">Try again</button></div>`);
   if(!me) return finishRoom();
   S.me = me;
   document.documentElement.style.setProperty("--accent", me.room_accent||"#4FA8D8");
@@ -719,7 +749,7 @@ function finishRoom(){
   app.innerHTML=`
   <div class="glass authwrap">
     <div class="row" style="gap:12px">${LOGO}
-      <div class="brand">Bula Vata<small>alive together</small></div></div>
+      <div class="brand">Sota Kece<small>alive together</small></div></div>
     <p class="tagline">You are signed in as <b style="font-weight:600;color:var(--ink)">${esc(S.user.email||"you")}</b>,
       but you have not made your room yet. One screen and you are in.</p>
     <div class="stack">
@@ -737,11 +767,11 @@ function finishRoom(){
     const handle=$("#f-handle").value.trim().toLowerCase(), name=$("#f-name").value.trim(), year=parseInt($("#f-year").value);
     if(!/^[a-z0-9_]{3,20}$/.test(handle)){ err.textContent="Handle: 3-20 lowercase letters, numbers or _"; b.disabled=false; return; }
     if(!name){ err.textContent="Pick a display name."; b.disabled=false; return; }
-    if(!year || (2026-year) < 16){ err.textContent="Bula Vata is for 16 and over."; b.disabled=false; return; }
+    if(!year || (2026-year) < 16){ err.textContent="Sota Kece is for 16 and over."; b.disabled=false; return; }
     const {data:free}=await sb.rpc("bv_handle_free",{p_handle:handle});
     if(free===false){ err.textContent="That handle is taken."; b.disabled=false; return; }
     const {error}=await sb.from("bv_profiles").insert({id:S.user.id,handle,display_name:name,
-      birth_year:year, age_band:(2026-year)>=18?"adult":"teen"});
+      birth_year:year, age_band:(2026-year)>=18?"adult":"teen",...initialSkin()});
     if(error){ err.textContent=error.message; b.disabled=false; return; }
     try{ localStorage.removeItem("bv_pending"); }catch(_){}
     boot();
@@ -749,7 +779,11 @@ function finishRoom(){
   app.querySelectorAll("input").forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter")$("#f-go").click()}));
 }
 window.go=go; window.openRoom=openRoom; window.renderAuth=renderAuth; window.sb=sb;
-boot();
 </script>
+<script src="/skin-studio.js"></script>
+<script src="/offline.js"></script>
+<script src="/kava.js"></script>
+<script src="/kava-ui.js"></script>
+<script>window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});boot();</script>
 </body>
 </html>
