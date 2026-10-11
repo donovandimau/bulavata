@@ -134,7 +134,9 @@
 
 /* Display the original supplied design intact, with one uniform responsive scale. */
 .bv-welcome .sk-original-front{min-height:0;background:#16434b}
+.sk-original-picture{display:block}
 .sk-original-design{display:block;width:100%;height:auto;max-width:none;aspect-ratio:1360/768;object-fit:contain;transform:none}
+@media(max-width:760px){.sk-original-design{aspect-ratio:1008/1792}}
 .sk-original-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:18px;padding:24px var(--sk-page-gutter);background:#16434b;color:#fff}
 .sk-original-actions>button:not(.sk-create),.sk-original-actions>a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border:1px solid #b2f7ff;border-radius:8px;background:#ffffff15;color:#fff;font-size:14px;text-decoration:none;cursor:pointer}
 .sk-action-short{display:none}
