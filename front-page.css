@@ -35,3 +35,17 @@
 /* Keep the entrance on the same supporting type scale as the page below it. */
 .sk-header nav a,.sk-header nav button{font-size:14px}.sk-copy p{font-size:clamp(18px,2vw,24px);line-height:1.4}.sk-create{font-size:20px}.sk-profile-words p,.sk-profile-words small,.sk-note p{font-size:14px;line-height:1.4}.sk-profile-words>b,.sk-note b,.sk-song b,.sk-profile>button{font-size:14px}.sk-note small,.sk-song small,.sk-wave small,.sk-example{font-size:12px;line-height:1.4}.sk-explore{font-size:14px}.sk-cards h3{font-size:18px}
 @media(max-width:700px){.sk-header nav a,.sk-header nav button{font-size:12px}.sk-copy p{font-size:19px}.sk-create{font-size:18px}.sk-profile-words p,.sk-profile-words small,.sk-note p,.sk-note b,.sk-song b,.sk-profile>button{font-size:12px}.sk-profile-words>b,.sk-cards h3{font-size:14px}.sk-note small,.sk-song small,.sk-wave small,.sk-example{font-size:11px}.sk-explore{font-size:12px}}
+
+/* Use the studio reference's flush cover and one gutter for both homepage sections. */
+.bv-welcome{--sk-page-width:1440px;--sk-page-gutter:clamp(16px,3vw,48px)}
+.sk-header,.sk-hero{max-width:var(--sk-page-width);padding-inline:var(--sk-page-gutter)}
+.sk-copy{padding-inline-start:0}
+.bv-neon-section{padding-inline:var(--sk-page-gutter)}
+.bv-neon-section .bv-classic{max-width:calc(var(--sk-page-width) - 2 * var(--sk-page-gutter));min-width:0}
+.bv-neon-section .bv-classic::before{margin:0 0 27px}
+.bv-neon-section .bv-classic-footer::after{margin-inline:0}
+.sk-room{width:100%;max-width:none;padding:0;transform:none;overflow:hidden}
+.sk-cover{border:0}
+.sk-browser-bar{padding:8px 12px}
+.sk-player{margin:0 8px 8px}
+.sk-example{margin:6px 12px 10px}
