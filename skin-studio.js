@@ -168,6 +168,11 @@
   function frontCrop(x,y,w,h,label) {
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
   }
+  function frontCover() {
+    // Render the supplied angled cover as one flat panel before the whole room receives its perspective.
+    const strips=Array.from({length:64},(_,i)=>{const t=(i+.5)/64,x=632+i*676/64,top=93-34*t,bottom=324-3*t;return `<svg x="${i*677/64}" y="0" width="${677/64+.2}" height="249" viewBox="${x} ${top} ${676/64} ${bottom-top}" preserveAspectRatio="none"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;}).join('');
+    return `<svg class="sk-photo" viewBox="0 0 677 249" role="img" aria-label="Fijian friends sharing a happy afternoon, framed by the supplied masi pattern">${strips}</svg>`;
+  }
   renderAuth=function(mode='in'){
     reset();originalAuth(mode);
     const authNode=app.querySelector('.authwrap');
@@ -186,7 +191,7 @@
         <section class="sk-copy" aria-labelledby="sk-headline"><h1 id="sk-headline">Create your own<br><span>space with friends.</span></h1><p>Choose your style, share your music,<br>and make space for your friends.</p><button class="sk-create" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Create your space <span aria-hidden="true">↗</span></button></section>
         <section class="sk-room" aria-label="Sema's example room">
           <div class="sk-browser-bar"><span aria-hidden="true"><i></i><i></i><i></i></span><button type="button" id="sk-room-menu" aria-label="Open room design studio">☰</button></div>
-          <div class="sk-cover">${frontCrop(632,76,677,249,'Fijian friends sharing a happy afternoon, framed by the supplied masi pattern')}</div>
+          <div class="sk-cover">${frontCover()}</div>
           <div class="sk-profile"><div class="sk-avatar">${frontCrop(647,294,153,158,'Sema with natural afro hair and a red hibiscus')}</div><div class="sk-profile-words"><h2>Sema</h2><b>@sema</b><p>Good people. Brighter days.</p><small>⌖ Suva, Fiji</small></div><button type="button" id="sk-edit-profile">Edit profile</button></div>
           <div class="sk-cards"><section class="sk-talanoa sk-glass"><h3>Talanoa <span aria-hidden="true">›</span></h3><div class="sk-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div><small>2h ago</small></div><div class="sk-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>See you there.</p></div><small>4h ago</small></div></section><section class="sk-mates sk-glass"><h3>Top Mates · 16 <span aria-hidden="true">›</span></h3><div class="sk-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
           <div class="sk-player sk-glass" id="sk-music"><div class="sk-album">${frontCrop(648,644,50,52,'Island afternoon album artwork')}</div><div class="sk-song"><b>Island afternoon</b><small>Sota Kece · original sample</small></div><div class="sk-wave"><svg viewBox="0 0 300 45" preserveAspectRatio="none" aria-hidden="true"><path d="M0 23H300"/><path d="${Array.from({length:75},(_,i)=>{const n=4+Math.round((Math.sin(i*.61)+1)*(Math.sin(i*.19)+1)*8);return `M${i*4} ${23-n/2}v${n}`}).join(' ')}"/></svg><small id="sk-home-status" data-sample-status role="status">Sample melody · tap to play</small></div><button id="sk-home-play" data-sample-play type="button" aria-label="Play sample loop" aria-pressed="false">▶</button></div>
