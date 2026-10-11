@@ -772,7 +772,7 @@ function finishRoom(){
       <div><label>Your handle</label><input id="f-handle" value="${esc(pre.handle||'')}" placeholder="bula_sina" maxlength="20" autocapitalize="off">
         <div class="sub" style="margin-top:5px">Lowercase letters, numbers and underscores.</div></div>
       <div><label>Display name</label><input id="f-name" value="${esc(pre.name||'')}" placeholder="Sina" maxlength="40"></div>
-      <div><label>Year you were born</label><input id="f-year" type="number" value="${esc(pre.year||'')}" placeholder="2008" min="1900" max="2026"></div>
+      <div><label>Year you were born</label><input id="f-year" type="number" inputmode="numeric" placeholder="e.g. 2004" min="1900" max="${new Date().getFullYear()}"></div>
       <button class="btn" id="f-go">Make my room</button>
       <div class="sub" id="f-err" style="color:var(--coral);text-align:center"></div>
       <button class="btn ghost" onclick="sb.auth.signOut().then(()=>location.reload())">Sign out instead</button>
