@@ -787,7 +787,7 @@ function finishRoom(){
     const {data:free}=await sb.rpc("bv_handle_free",{p_handle:handle});
     if(free===false){ err.textContent="That handle is taken."; b.disabled=false; return; }
     const {error}=await sb.from("bv_profiles").insert({id:S.user.id,handle,display_name:name,
-      birth_year:year, age_band:(2026-year)>=18?"adult":"teen",...initialSkin()});
+      age_band:bandFor(year),...initialSkin()});
     if(error){ err.textContent=error.message; b.disabled=false; return; }
     try{ localStorage.removeItem("bv_pending"); }catch(_){}
     boot();
