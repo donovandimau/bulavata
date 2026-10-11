@@ -188,6 +188,7 @@
   .bv-neon-section .bv-classic-nav>span{display:none}
   .bv-neon-section .bv-people-feature{height:auto}
   .bv-neon-section .bv-people-collage{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:clamp(45px,12vw,66px);height:auto}
+  .bv-neon-section .bv-collage-tile:nth-last-child(-n+2){grid-column:span 2}
   .bv-neon-section .bv-collage-caption{font-size:11px;flex-wrap:wrap;margin:8px 0 0}
   .bv-neon-section .bv-social-stage{margin:24px 0 0;padding:24px 14px 30px}
   .bv-neon-section .bv-social-stage .bv-circle-feature{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:0 0 28px;text-align:left}
