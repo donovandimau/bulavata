@@ -265,7 +265,7 @@ async function signUp(){
     err.textContent="Check your email to confirm, then sign in — your handle is saved.";
     b.disabled=false; return;
   }
-  const {error:pe} = await sb.from("bv_profiles").insert({id:data.user.id,handle,display_name:name,birth_year:year,age_band:band,...initialSkin()});
+  const {error:pe} = await sb.from("bv_profiles").insert({id:data.user.id,handle,display_name:name,age_band:band,...initialSkin()});
   if(pe){ err.textContent=pe.message; b.disabled=false; return; }
   boot();
 }
