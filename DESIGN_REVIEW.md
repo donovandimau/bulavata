@@ -1,9 +1,7 @@
-# Sota Kece front-page review
+# Design review hold
 
-Donovan requested on 11 October 2026: do not publish; show the design first.
+Donovan requested the first photo-led neon setup on 11 October 2026. The guitarist hero, cyan frame, real-photo collage, compact authentication and classic Sign up / Share / Invite layout are restored. The cartoon room showcase is removed from the homepage;24 skins and personal design controls remain in the studio. Masi-inspired framing remains at the entrance and footer.
 
-The sunset/glass front page is a review preview. The previous live deployment (commit f34b3f6cbbe0719ccd312eed585e0b5673e8e621) has been restored through Vercel rollback. Preserve the new layout and room studio, and do not promote it until Donovan approves.
+PREVIEW ONLY. Donovan previously said “dont publish. i want to see first.” Do not merge, promote or assign this revision to production until he explicitly authorizes publication. Production stays on the restored f34b3f6 deployment. Vercel production-domain assignment is paused by that rollback.
 
-The earlier explicitly requested publication merged PR6 before the later instruction arrived. Git history retains that work; production currently serves the prior deployment. Vercel rollback pauses automatic production-domain assignment; a later approved release must deliberately restore it through the normal project release workflow.
-
-Private music/artwork storage and the hosted Kava migration remain unapplied.
+Private upload storage remains unapplied; file upload controls remain disabled. Direct audio links and existing profile/media safeguards remain intact. Older sunset assets are retained in history and source, but are neither loaded nor cached by this entrance.
