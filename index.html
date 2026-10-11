@@ -261,7 +261,7 @@ async function signUp(){
   if(error){ err.textContent=error.message; b.disabled=false; return; }
   const band = bandFor(year);
   if(!data.session){
-    try{ localStorage.setItem("bv_pending", JSON.stringify({handle,name,year,band})); }catch(_){}
+    try{ localStorage.setItem("bv_pending", JSON.stringify({handle,name,band})); }catch(_){}
     err.textContent="Check your email to confirm, then sign in — your handle is saved.";
     b.disabled=false; return;
   }
