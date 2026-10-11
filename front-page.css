@@ -339,7 +339,7 @@
 }
 .bv-preview .bv-mini-card,.bv-room-active :is(.glass.card,.moment,.scrawl){border-radius:var(--bv-radius)}
 .bv-preview .bv-profile-avatar{box-shadow:0 0 0 1px var(--bv-surface-edge),0 4px 12px #00000020}
-.bv-preview .bv-cover-words{box-shadow:inset 0 1px 0 #ffffff30,0 3px 10px #00000020;backdrop-filter:var(--bv-surface-blur)}
+.bv-preview.bv-photo-room .bv-cover-words{background:transparent;box-shadow:none;backdrop-filter:none;color:#fff;text-shadow:0 1px 3px #000,0 0 6px #000b}
 .bv-preview .bv-skin-tag{background-color:var(--bv-panel);background-image:var(--bv-surface-image);color:var(--bv-ink);box-shadow:var(--bv-surface-shadow)}
 .bv-thumb-panels>i{border-top-color:var(--bv-surface-edge)}
 .bv-home-skinned .bv-neon-section :is(.bv-classic-header,.bv-classic-nav,.bv-room-entry,.bv-social-stage,.bv-action-content){
@@ -365,3 +365,10 @@
   .bv-preview .bv-mini-card,.bv-room-active :is(.glass.card,.moment,.scrawl),
   .bv-home-skinned .bv-neon-section :is(.bv-classic-header,.bv-classic-nav,.bv-room-entry){background-color:var(--bv-panel);backdrop-filter:none}
 }
+
+/* Skin selection is a compact palette list, without miniature room cards. */
+.bv-studio .bv-skin-grid{grid-auto-columns:minmax(140px,45%);gap:8px}
+.bv-studio .bv-skin-option{display:flex;flex-direction:column;justify-content:center;gap:8px;min-height:78px;padding:12px 22px 12px 12px}
+.bv-studio .bv-skin-option .bv-skin-palette{padding:0;gap:6px}
+.bv-studio .bv-skin-option .bv-skin-palette i{width:14px;height:14px}
+.bv-studio .bv-skin-option strong{padding:0;font-size:14px;line-height:1.35}
