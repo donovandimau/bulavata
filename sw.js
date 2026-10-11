@@ -1,5 +1,5 @@
 // Only the public app shell is cached. Auth, profiles, messages and media never enter this cache.
-const CACHE='sota-kece-shell-20261011-v18-original-supplied-image';
+const CACHE='sota-kece-shell-20261011-v19-mobile-brand-slant';
 const ASSETS=['/','/index.html','/skins.css','/skins.js','/skin-studio.js','/room-media.js','/front-page.css','/assets/fiji-sunset.jpg','/assets/front-reference.jpg','/assets/fiji-music.jpg','/assets/friends.jpg','/assets/beach.jpg','/assets/masi-band.svg','/assets/masi-supplied.png','/offline.js','/kava.css','/kava.js','/kava-ui.js','/vendor/supabase-2.45.0.min.js'];
 // Download and cache only the face requested by the current viewport.
 const FONT_ASSETS=['/assets/fonts/fredoka-latin-ext.woff2','/assets/fonts/fredoka-latin.woff2','/assets/fonts/nunito-latin-ext.woff2','/assets/fonts/nunito-latin.woff2'];
