@@ -144,14 +144,14 @@
 .bv-welcome :is(.bv-circle-feature h2,.bv-classic-actions h2,.bv-room-entry h2){font-size:32px;line-height:1.2}
 .bv-welcome .bv-music-copy h1{font-size:36px;line-height:1.1}
 .bv-welcome :is(.bv-circle-feature,.bv-classic-actions,.bv-room-entry,.bv-music-copy) p{font-size:14px;line-height:1.5}
-.bv-welcome :is(.bv-circle-feature,.bv-classic-actions) .bv-link,.bv-welcome .bv-classic-tabs :is(a,button){font-size:14px;line-height:1.4}
+.bv-welcome :is(.bv-circle-feature,.bv-classic-actions) .bv-link,.bv-welcome .bv-classic-nav :is(a,button){font-size:14px;line-height:1.4}
 .bv-welcome :is(.bv-wordmark,.bv-music-copy,.bv-circle-feature,.bv-join-strip) small{font-size:12px;line-height:1.5}
 .bv-welcome .bv-join-strip .btn{font-size:24px;line-height:1.2;padding:12px 24px;min-height:44px}
-.bv-studio .bv-studio-head p,.bv-studio .bv-studio-controls p{font-size:14px;line-height:1.5}
-.bv-studio .bv-studio-controls :is(h3,h4){font-size:18px;line-height:1.3}
-.bv-studio .bv-studio-controls label{font-size:13px;line-height:1.4}
+.bv-studio .bv-studio-head p,.bv-studio .bv-studio-body>div p{font-size:14px;line-height:1.5}
+.bv-studio .bv-studio-body>div :is(h3,h4){font-size:18px;line-height:1.3}
+.bv-studio .bv-studio-body>div label{font-size:13px;line-height:1.4}
 .bv-studio .bv-skin-categories button{font-size:14px;line-height:1.4}
 .bv-studio .bv-skin-option strong{font-size:14px;line-height:1.4}
 .bv-studio .bv-skin-option small{font-size:12px;line-height:1.5}
 .bv-studio .bv-studio-preview>p.sub{font-size:12px!important;line-height:1.5}
-@media(max-width:760px){.bv-welcome :is(.bv-circle-feature h2,.bv-classic-actions h2,.bv-room-entry h2){font-size:26px}.bv-welcome .bv-music-copy h1{font-size:32px}.bv-welcome .bv-join-strip .btn{font-size:22px}.bv-welcome :is(.bv-home-search,.bv-header-auth,.bv-register) input,.bv-studio .bv-studio-controls :is(input,select,textarea){font-size:16px;line-height:1.4}.bv-studio .bv-studio-controls :is(h3,h4){font-size:18px}}
+@media(max-width:760px){.bv-welcome :is(.bv-circle-feature h2,.bv-classic-actions h2,.bv-room-entry h2){font-size:26px}.bv-welcome .bv-music-copy h1{font-size:32px}.bv-welcome .bv-join-strip .btn{font-size:22px}.bv-welcome :is(.bv-home-search,.bv-header-auth,.bv-register) input,.bv-studio .bv-studio-body>div :is(input,select,textarea){font-size:16px;line-height:1.4}.bv-studio .bv-studio-body>div :is(h3,h4){font-size:18px}}
