@@ -169,8 +169,8 @@
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
   }
   function frontAvatar(label) {
-    // Rectify the oval portrait in the supplied angled reference before tilting the room once.
-    return `<svg class="sk-photo" viewBox="0 0 160 160" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768" transform="matrix(1.095890411 0 0 1.012658228 -709.0410959 -297.7215190)"/></svg>`;
+    // Crop inside the supplied portrait, excluding its baked-in white frame and screenshot background.
+    return `<svg class="sk-photo" viewBox="0 0 160 160" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768" transform="matrix(1.217656012 0 0 1.125175809 -796.7123286 -339.6905768)"/></svg>`;
   }
   function frontCover() {
     // Align the supplied photograph and masi frame before the whole room receives its perspective.
