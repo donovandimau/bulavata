@@ -243,6 +243,12 @@ async function signIn(){
   const {error} = await sb.auth.signInWithPassword({email:$("#a-email").value.trim(),password:$("#a-pass").value});
   if(error){ $("#a-err").textContent=error.message; b.disabled=false; } else boot();
 }
+/* Age is worked out against TODAY. It used to be measured against a 2026
+   written into the code, so from 1 January the sum was a year out and the
+   gate started turning away people who really were 16. We also keep the age
+   BAND only and never the birth year, which is what the form promises. */
+const bandFor = y => (new Date().getFullYear() - y) >= 18 ? "adult" : "teen";
+const oldEnough = y => { const a = new Date().getFullYear() - y; return a >= 16 && a < 120; };
 async function signUp(){
   const b=$("#a-go"); b.disabled=true; const err=$("#a-err"); err.textContent="";
   const handle=$("#a-handle").value.trim().toLowerCase(), name=$("#a-name").value.trim(), year=parseInt($("#a-year").value);
