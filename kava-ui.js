@@ -41,7 +41,12 @@
       if(q('#kava-create'))q('#kava-create').onsubmit=event=>{
         event.preventDefault();action(event.submitter,async()=>{const id=await service.create({crew:q('#kc-koro').value,title:q('#kc-title').value,topic:q('#kc-topic').value,capacity:q('#kc-seats').value});await open(id);});
       };
-    }catch(err){if(run!==epoch)return;ctx.shell(`${hero()}<section class="glass card" style="margin-top:16px"><p>Connection interrupted. Your circles and Koro are still yours.</p><button class="btn" id="kc-retry">Try again</button><p id="kava-error" class="kava-error" role="alert"></p></section>`);error(err);q('#kc-retry').onclick=view;}
+    }catch(err){if(run!==epoch)return;
+      const setup=['PGRST205','PGRST202','42P01','42883'].includes(err.code);
+      ctx.shell(`${hero()}<section class="glass card" style="margin-top:16px"><p>${setup?'Circles are awaiting database setup. You can explore the layout now; saved rooms and comments will open when setup is complete.':'Connection interrupted. Your circles and Koro are still yours.'}</p>
+      <button class="btn" id="kc-retry">${setup?'Explore circle layout':'Try again'}</button><p id="kava-error" class="kava-error" role="alert" ${setup?'hidden':''}></p></section>`);
+      if(!setup)error(err);q('#kc-retry').onclick=setup?preview:view;
+    }
   }
   function frame(demo){
     return `<button class="btn sm ghost kava-back" id="kc-back">← ${demo?'Back to sign in':'Your circles'}</button>
@@ -82,7 +87,7 @@
     }catch(err){if(run!==epoch)return;ctx.shell('<section class="glass card"><h2>This circle could not load.</h2><p id="kava-error" class="kava-error" role="alert"></p><button class="btn" id="kc-retry">Try again</button> <button class="btn ghost" id="kc-back">Your circles</button></section>');error(err);q('#kc-retry').onclick=()=>open(id);q('#kc-back').onclick=view;}
   }
   function bind(){
-    q('#kc-back').onclick=()=>{stop();if(guest){guest=false;root.renderAuth();}else view();};
+    q('#kc-back').onclick=()=>{stop();if(guest){guest=false;if(ctx.state.user)view();else root.renderAuth();}else view();};
     q('#kc-currency').onchange=updateTip;updateTip();
     q('#kc-comment-form').onsubmit=event=>{event.preventDefault();const input=q('#kc-comment');const body=input.value;
       action(event.submitter,async()=>{await service.comment(current,ctx.state.user.id,body);if(input.value===body)input.value='';await refresh(epoch);});};
@@ -100,8 +105,8 @@
     q('#kc-host-actions').innerHTML=isHost&&!ended?`${circle.status==='planned'?'<button class="btn sm" id="kc-open-chat">Open comments</button>':''}<button class="btn sm ghost" id="kc-end">End circle</button>`:'';
     if(q('#kc-open-chat'))q('#kc-open-chat').onclick=event=>action(event.target,async()=>{await service.status(current,'open');await refresh(epoch);});
     if(q('#kc-end'))q('#kc-end').onclick=event=>{if(!root.confirm('End this circle? Its comments stay readable, but the conversation cannot reopen.'))return;action(event.target,async()=>{await service.status(current,'ended');await refresh(epoch);});};
-    q('#kc-my-actions').innerHTML=guest?'<button class="btn sm" id="kc-signin">Sign in to start a circle</button>':!ended&&mine&&!isHost&&!mine.seat&&!mine.comments_paused?`<button class="btn sm ghost" id="kc-request">${mine.requested?'Cancel seat request':'Request a speaker seat'}</button>`:'';
-    if(q('#kc-signin'))q('#kc-signin').onclick=()=>{stop();guest=false;root.renderAuth();};
+    q('#kc-my-actions').innerHTML=guest?`<button class="btn sm" id="kc-signin">${ctx.state.user?'Back to my circles':'Sign in to start a circle'}</button>`:!ended&&mine&&!isHost&&!mine.seat&&!mine.comments_paused?`<button class="btn sm ghost" id="kc-request">${mine.requested?'Cancel seat request':'Request a speaker seat'}</button>`:'';
+    if(q('#kc-signin'))q('#kc-signin').onclick=()=>{stop();guest=false;if(ctx.state.user)view();else root.renderAuth();};
     if(q('#kc-request'))q('#kc-request').onclick=event=>action(event.target,async()=>{await service.request(current,user,!mine.requested);await refresh(epoch);});
     q('#kc-chat-status').textContent=guest?'Layout preview: no audience, messages or payments are live.':ended?'This circle has ended. Comments remain readable.':circle.status==='planned'?'The host has not opened comments yet.':mine?.comments_paused?'The host has paused your comments.':'Comments open · Updates every 7 seconds while this page is visible.';
     const enabled=!guest&&!ended&&circle.status==='open'&&mine&&!mine.comments_paused;

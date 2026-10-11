@@ -27,7 +27,7 @@
     return {minor,currency,label:money(minor,currency),available:false,fee:null,recipientAmount:null};
   }
   function api(client){
-    const check=result=>{if(result.error)throw new Error(result.error.message);return result.data;};
+    const check=result=>{if(result.error){const err=new Error(result.error.message);err.code=result.error.code;throw err;}return result.data;};
     return {
       crews:async()=>check(await client.rpc('bv_my_crews'))||[],
       list:async()=>check(await client.from('bv_circles').select('*').order('created_at',{ascending:false}).limit(40))||[],

@@ -1,6 +1,6 @@
 # Digital Kava Circle service boundary
 
-The shipped circle layer saves Koro-scoped rooms, 4–6 speaker seats, audience seat requests, host moderation and comments. The host starts the written conversation explicitly. Video and real payments are unavailable until their services have been verified; there are no simulated balances, sample earnings or successful-payment animations.
+The circle implementation saves Koro-scoped rooms, 4–6 speaker seats, audience seat requests, host moderation and comments once its migration is applied. The host starts the written conversation explicitly. Video and real payments are unavailable until their services have been verified; there are no simulated balances, sample earnings or successful-payment animations.
 
 ## Video connection
 
