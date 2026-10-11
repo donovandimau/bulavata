@@ -32,7 +32,7 @@
         oscillator.connect(gain);gain.connect(context.destination);oscillator.start(time);oscillator.stop(time+.46);
       });
       document.querySelectorAll('[data-sample-play]').forEach(button=>{
-        button.textContent=button.id==='bv-home-play'?'Ⅱ Stop sample':'Ⅱ';button.setAttribute('aria-label','Stop sample loop');button.setAttribute('aria-pressed','true');
+        button.textContent=button.id==='bv-home-play'?'�� Stop sample':'��';button.setAttribute('aria-label','Stop sample loop');button.setAttribute('aria-pressed','true');
       });
       document.querySelector('.bv-mixtape')?.classList.add('is-playing');
       document.querySelectorAll('[data-sample-status]').forEach(status=>status.textContent='Playing a sample melody · made here');
@@ -49,12 +49,12 @@
     const portraits=Array.from({length:16},(_,i)=>frontCrop([1020,1080,1141,1202][i%4],448+Math.floor(i/4)*50,48,48,`Example friend ${i+1}`));
     return `<div class="bv-preview bv-photo-room" style="${esc(skins.inline(s))}" data-layout="${s.layout}">
       <div class="bv-cover" data-pattern="${s.pattern}">${s.coverPath?coverMediaMarkup(s):'<svg class="bv-cover-photo sk-photo" viewBox="632 100 677 224" role="img" aria-label="Fijian friends from the supplied Sema design"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>'}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
-      <div class="bv-profile-intro"><div class="bv-profile-avatar">${frontCrop(647,294,153,158,'Sema — example profile portrait')}</div>
+      <div class="bv-profile-intro"><div class="bv-profile-avatar">${frontAvatar('Sema — example profile portrait')}</div>
         <h2>${esc(profile.display_name||profile.handle||'Your name')}</h2><p>@${esc(profile.handle||'yourhandle')}</p><p>${esc(profile.bio||'Good people. Brighter days.')}</p>
         ${interests.length?`<div class="bv-interests">${interests.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}</div>
       <div class="bv-preview-columns"><section class="bv-mini-card"><h3>Talanoa <small>Example notes</small></h3><div class="bv-photo-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div><small>2h ago</small></div><div class="bv-photo-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>Bring your favourite track. See you there.</p></div><small>4h ago</small></div></section>
       <section class="bv-mini-card"><h3>Top Mates · 16</h3><div class="bv-photo-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
-      ${s.trackUrl||s.trackPath?trackMarkup(s):`<div class="bv-photo-track"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂▅▇▃▂▅▂▆▃▁</span></div>`}</div>`;
+      ${s.trackUrl||s.trackPath?trackMarkup(s):`<div class="bv-photo-track"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂�▇▃▂�▂▆▃▁</span></div>`}</div>`;
   }
   function coverMediaMarkup(settings) {
     return settings.coverPath?`<button type="button" class="bv-cover-load" data-cover-path="${esc(settings.coverPath)}">Load my cover artwork ↗</button>`:'';
@@ -163,10 +163,14 @@
   }
   function skinThumbnail(p) {
     const photo=p.category==='Dark'?'/assets/fiji-music.jpg':p.category==='Bright'?'/assets/fiji-sunset.jpg':p.category==='Masi-inspired'?'/assets/masi-band.svg':p.category==='Sport'?'/assets/friends.jpg':'/assets/beach.jpg';
-    return `<div class="bv-room-thumbnail" style="${esc(skins.inline({id:p.id}))}" aria-hidden="true"><div class="bv-thumb-cover"><img src="${photo}" width="720" height="480" alt="" loading="lazy"><span></span></div><div class="bv-thumb-profile"><i>${frontCrop(647,294,153,158,'')}</i><div><b></b><span></span></div></div><div class="bv-thumb-panels"><i></i><i></i></div></div><div class="bv-skin-palette" aria-hidden="true">${[p.bg,p.panel,p.accent,p.cover].map(c=>`<i style="background:${c}"></i>`).join('')}</div>`;
+    return `<div class="bv-room-thumbnail" style="${esc(skins.inline({id:p.id}))}" aria-hidden="true"><div class="bv-thumb-cover"><img src="${photo}" width="720" height="480" alt="" loading="lazy"><span></span></div><div class="bv-thumb-profile"><i>${frontAvatar('')}</i><div><b></b><span></span></div></div><div class="bv-thumb-panels"><i></i><i></i></div></div><div class="bv-skin-palette" aria-hidden="true">${[p.bg,p.panel,p.accent,p.cover].map(c=>`<i style="background:${c}"></i>`).join('')}</div>`;
   }
   function frontCrop(x,y,w,h,label) {
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
+  }
+  function frontAvatar(label) {
+    // Rectify the oval portrait in the supplied angled reference before tilting the room once.
+    return `<svg class="sk-photo" viewBox="0 0 160 160" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768" transform="matrix(1.095890411 0 0 1.012658228 -709.0410959 -297.7215190)"/></svg>`;
   }
   function frontCover() {
     // Align the supplied photograph and masi frame before the whole room receives its perspective.
@@ -191,7 +195,7 @@
         <section class="sk-room" aria-label="Sema's example room">
           <div class="sk-browser-bar"><span aria-hidden="true"><i></i><i></i><i></i></span><button type="button" id="sk-room-menu" aria-label="Open room design studio">☰</button></div>
           <div class="sk-cover">${frontCover()}</div>
-          <div class="sk-profile"><div class="sk-avatar">${frontCrop(647,294,153,158,'Sema with natural afro hair and a red hibiscus')}</div><div class="sk-profile-words"><h2>Sema</h2><b>@sema</b><p>Good people. Brighter days.</p><small>⌖ Suva, Fiji</small></div><button type="button" id="sk-edit-profile">Edit profile</button></div>
+          <div class="sk-profile"><div class="sk-avatar">${frontAvatar('Sema with natural afro hair and a red hibiscus')}</div><div class="sk-profile-words"><h2>Sema</h2><b>@sema</b><p>Good people. Brighter days.</p><small>⌖ Suva, Fiji</small></div><button type="button" id="sk-edit-profile">Edit profile</button></div>
           <div class="sk-cards"><section class="sk-talanoa sk-glass"><h3>Talanoa <span aria-hidden="true">›</span></h3><div class="sk-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div><small>2h ago</small></div><div class="sk-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>See you there.</p></div><small>4h ago</small></div></section><section class="sk-mates sk-glass"><h3>Top Mates · 16 <span aria-hidden="true">›</span></h3><div class="sk-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
           <div class="sk-player sk-glass" id="sk-music"><div class="sk-album">${frontCrop(648,644,50,52,'Island afternoon album artwork')}</div><div class="sk-song"><b>Island afternoon</b><small>Sota Kece · original sample</small></div><div class="sk-wave"><svg viewBox="0 0 300 45" preserveAspectRatio="none" aria-hidden="true"><path d="M0 23H300"/><path d="${Array.from({length:75},(_,i)=>{const n=4+Math.round((Math.sin(i*.61)+1)*(Math.sin(i*.19)+1)*8);return `M${i*4} ${23-n/2}v${n}`}).join(' ')}"/></svg><small id="sk-home-status" data-sample-status role="status">Sample melody · tap to play</small></div><button id="sk-home-play" data-sample-play type="button" aria-label="Play sample loop" aria-pressed="false">▶</button></div>
           <small class="sk-example">Example room · photos from your supplied design</small>
