@@ -741,7 +741,11 @@ async function boot(){
   S.me = me;
   document.documentElement.style.setProperty("--accent", me.room_accent||"#4FA8D8");
   sb.rpc("bv_touch");
-  render();
+  let pendingMate='';try{pendingMate=sessionStorage.getItem('sota-find-mate')||'';}catch(_){}
+  if(/^[a-z0-9_]{3,20}$/.test(pendingMate)){
+    S.tab='friends';await render();
+    if($('#s-q')){ $('#s-q').value=pendingMate;try{sessionStorage.removeItem('sota-find-mate');}catch(_){}await search(); }
+  }else render();
 }
 /* Signed in, but no room yet. Never sign them out - let them finish. */
 function finishRoom(){
