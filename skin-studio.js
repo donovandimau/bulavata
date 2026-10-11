@@ -169,6 +169,12 @@
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
   }
   function frontAvatar(label) { return frontCrop(647,294,153,158,label); }
+  function placeOriginalWordmark() {
+    const app=document.querySelector('#app'), logo=app?.querySelector('.bv-wordmark');
+    const mobile=app?.querySelector('.sk-mobile-front'), header=app?.querySelector('.bv-classic-header');
+    if(logo&&mobile&&header)(window.matchMedia('(max-width:760px)').matches?mobile:header).prepend(logo);
+  }
+  window.matchMedia('(max-width:760px)').addEventListener('change',placeOriginalWordmark);
   renderAuth=function(mode='in'){
     reset();originalAuth(mode);
     const authNode=app.querySelector('.authwrap');
@@ -181,7 +187,6 @@
     app.classList.add('bv-welcome');
     app.innerHTML=`<section class="sk-front sk-original-front" aria-label="Sota Kece original supplied design">
       <div class="sk-mobile-front">
-        <a class="sk-brand" href="/" aria-label="Sota Kece home" style="font-size:25px;line-height:1.2;letter-spacing:0">Sota Kece</a>
         <section class="sk-copy" aria-labelledby="sk-mobile-headline"><h1 id="sk-mobile-headline">Create your own<br><span>space with<br>friends.</span></h1><p>Choose your style, share your music,<br>and make space for your friends.</p></section>
         <button class="sk-mobile-room" type="button" data-mobile-studio aria-label="Open room design studio — Sema example room">${frontCrop(610,12,720,740,'Sema example room with the original friends photo, masi, Talanoa, Top Mates and music player')}</button>
         <button class="sk-create" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Create your space <span aria-hidden="true">↗</span></button>
@@ -206,6 +211,7 @@
       <section class="bv-room-entry" id="bv-your-room" aria-label="Design your room"><div><h2>Your room. Your rules.</h2><p>24 skins. Masi borders. Your colours, music and cover art.</p><small>Studio choice · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="btn" id="bv-edit-room">Open the skin studio →</button></section>
       <footer class="bv-classic-footer"><span>Sota Kece · alive together</span><span>Mutual friends · Your own archive · No ads</span><details><summary>Photo credits</summary><p>Sample photography by <a href="https://unsplash.com/photos/i6r5kQMQ9Zk" target="_blank" rel="noopener noreferrer">Ben Collins</a>, <a href="https://unsplash.com/photos/roOETBSa8mA" target="_blank" rel="noopener noreferrer">Samsung UK</a> and <a href="https://unsplash.com/photos/tZhEr2d3oeM" target="_blank" rel="noopener noreferrer">Hoi An and Da Nang Photographer</a>, via Unsplash.</p></details></footer>
     </div></div>`;
+    placeOriginalWordmark();
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').onclick=()=>mode==='up'?signUp():signIn();
     app.querySelectorAll('.authwrap input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')$('#a-go').click();}));

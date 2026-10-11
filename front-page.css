@@ -162,6 +162,8 @@
   .sk-original-design{display:none}
   .sk-mobile-front{display:flex;flex-direction:column;gap:24px;padding:6px var(--sk-page-gutter) 20px;background:linear-gradient(#24142220,#16434b30),url('/assets/fiji-sunset.jpg') 38% center/cover no-repeat}
   .sk-mobile-front .sk-copy{width:100%;padding:0;align-self:stretch}
+  .sk-mobile-front .bv-wordmark a{font-size:clamp(38px,3.8vw,52px);line-height:1}
+  .sk-mobile-front .bv-wordmark small{margin-top:10px}
   .sk-mobile-front .sk-copy h1{font-size:clamp(38px,11vw,46px);line-height:1.02;letter-spacing:-.035em;margin:0 0 14px}
   .sk-mobile-front .sk-copy p{font-size:18px;line-height:1.35;letter-spacing:0;margin:0 0 18px}
   .sk-mobile-front .sk-create{font-size:20px;line-height:1.2;padding:12px 20px;min-height:50px}
