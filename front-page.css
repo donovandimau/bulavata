@@ -27,3 +27,7 @@
 
 /* Sema is the entrance; the classic neon experience follows in document flow. */
 .sk-sunset{height:100%;inset:0;min-height:0}.sk-explore{display:flex;align-items:center;justify-content:center;gap:12px;padding:0 20px 26px;color:#fff;font:600 14px Arial,sans-serif;text-shadow:0 2px 6px #153749}.sk-explore span{font-size:22px}.bv-neon-section{padding:40px 24px;background:radial-gradient(ellipse at top left,#10364788,transparent 60%),radial-gradient(ellipse at right,#48114155,transparent 65%),#110c1d}.bv-neon-section .bv-classic{max-width:1088px;margin:0 auto}.bv-neon-section .bv-classic-footer{margin-bottom:0}@media(max-width:600px){.bv-neon-section{padding:26px 10px}.sk-explore{font-size:13px;padding-bottom:25px}}
+
+/* Match the supplied Sema room's perspective: right edge nearer, whole card tilted together. */
+@media(min-width:761px){.sk-room{transform:perspective(1000px) rotateY(-10deg);transform-origin:center}}
+@media(max-width:760px){.sk-room{width:96%;transform:perspective(1000px) rotateY(-8deg);transform-origin:center}}
