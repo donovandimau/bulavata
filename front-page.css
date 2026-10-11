@@ -137,4 +137,5 @@
 .sk-original-design{display:block;width:100%;height:auto;max-width:none;aspect-ratio:1360/768;object-fit:contain;transform:none}
 .sk-original-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:18px;padding:24px var(--sk-page-gutter);background:#16434b;color:#fff}
 .sk-original-actions>button:not(.sk-create),.sk-original-actions>a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border:1px solid #b2f7ff;border-radius:8px;background:#ffffff15;color:#fff;font-size:14px;text-decoration:none;cursor:pointer}
-@media(max-width:760px){.sk-original-actions{display:grid;grid-template-columns:1fr;gap:14px;padding:20px var(--sk-page-gutter)}.sk-original-actions .sk-create{justify-content:center}}
+.sk-action-short{display:none}
+@media(max-width:760px){.sk-original-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px var(--sk-page-gutter)}.sk-original-actions>button,.sk-original-actions>a{min-width:0;min-height:44px;padding:8px 10px;font-size:14px;line-height:1.2}.sk-original-actions .sk-create{justify-content:center;gap:0;border-radius:12px;box-shadow:0 0 10px #6df0ff70,inset 0 2px 6px #ffffff80}.sk-original-actions .sk-action-full{display:none}.sk-original-actions .sk-action-short{display:inline}}
