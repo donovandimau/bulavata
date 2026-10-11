@@ -9,3 +9,5 @@ Publish this combined design after exact-source, CI and desktop/phone verificati
 The later screenshot feedback is incorporated: replace the emoji-heavy sample board with a real cover, photographic friend portraits, example Talanoa notes and a music strip. The same photo-led preview is used inside the studio.
 
 Studio choice cards now show photographic miniature rooms and four-colour palettes, replacing the Aa pattern swatches. The24 selectable skin IDs and custom design controls are preserved.
+
+Latest steering: Fijian music hero photograph and Fijian community faces in the collage, retaining its lively box composition.
