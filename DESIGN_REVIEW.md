@@ -11,5 +11,3 @@ The later screenshot feedback is incorporated: replace the emoji-heavy sample bo
 Studio choice cards now show photographic miniature rooms and four-colour palettes, replacing the Aa pattern swatches. The24 selectable skin IDs and custom design controls are preserved.
 
 Latest steering: Fijian music hero photograph and Fijian community faces in the collage, retaining its lively box composition.
-
-Latest direction: Viti Roots panel now uses Donovan’s supplied music-studio artwork verbatim with an accessible real sample-play button aligned over the depicted control. Laughing-face collage and photo-led room choices retained. Held preview; no production publication for this later update.
