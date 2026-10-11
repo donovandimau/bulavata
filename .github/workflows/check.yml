@@ -12,3 +12,4 @@ jobs:
         with:
           node-version: '22'
       - run: node tests/sota.test.cjs
+      - run: node tests/kava.test.cjs

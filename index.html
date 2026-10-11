@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sota Kece — alive together</title>
-<meta name="description" content="Sota Kece: a Pacific-first home for your people. Top Mates 16, Talanoa, personal skins and profile music. Low data by default.">
+<meta name="description" content="Sota Kece: a Pacific-first home for your people. Top Mates 16, Talanoa, personal skins, profile music and hosted Kava Circles. Low data by default.">
 <meta name="theme-color" content="#87CEEB">
 <script src="/vendor/supabase-2.45.0.min.js"></script>
 <style>
@@ -165,6 +165,7 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 .seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(20,59,82,.1)}
 </style>
 <link rel="stylesheet" href="/skins.css">
+<link rel="stylesheet" href="/kava.css">
 <script src="/skins.js"></script>
 </head>
 <body>
@@ -211,6 +212,7 @@ function renderAuth(mode="in"){
       <div class="promise"><span class="tick">✓</span><div><b>Your archive is yours.</b> Download the lot, any time, one tap.</div></div>
       <div class="promise"><span class="tick">✓</span><div><b>No followers.</b> Friendship is mutual or it isn't real.</div></div>
     </div>
+    <button class="btn ghost" type="button" onclick="window.SotaKavaUI.preview()" style="margin-bottom:16px">Explore the Digital Kava Circle</button>
     <div class="seg">
       <button class="${mode==='in'?'on':''}" onclick="renderAuth('in')">Sign in</button>
       <button class="${mode==='up'?'on':''}" onclick="renderAuth('up')">Create a room</button>
@@ -267,12 +269,12 @@ function shell(body){
   </header>
   <div id="view">${body}</div>
   <nav class="bottom glass">
-    ${[["pulse","🌊","Pulse"],["moments","🐚","Moments"],["room","🏝","My room"],["crews","🪸","Koro"],["friends","🤝","Friends"]]
+    ${[["pulse","🌊","Pulse"],["moments","🐚","Moments"],["room","🏝","My room"],["circles","🥥","Circles"],["crews","🪸","Koro"],["friends","🤝","Friends"]]
       .map(([k,i,l])=>`<button class="${S.tab===k?'on':''}" onclick="go('${k}')" style="position:relative">
         <em>${i}</em>${l}${k==='friends'&&p?`<span class="badge">${p}</span>`:''}</button>`).join("")}
   </nav>`;
 }
-function go(t){ S.tab=t; S.roomHandle=null; S.crew=null; render(); }
+function go(t){ window.SotaKavaUI?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
 
 /* ================= DATA ================= */
 async function refreshMeta(){
@@ -724,6 +726,7 @@ async function render(){
   if(S.tab==="pulse") return viewPulse();
   if(S.tab==="moments") return viewMoments();
   if(S.tab==="room") return viewRoom();
+  if(S.tab==="circles") return window.SotaKavaUI.view();
   if(S.tab==="crews") return viewCrews();
   if(S.tab==="friends") return viewFriends();
 }
@@ -779,6 +782,8 @@ window.go=go; window.openRoom=openRoom; window.renderAuth=renderAuth; window.sb=
 </script>
 <script src="/skin-studio.js"></script>
 <script src="/offline.js"></script>
-<script>boot();</script>
+<script src="/kava.js"></script>
+<script src="/kava-ui.js"></script>
+<script>window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});boot();</script>
 </body>
 </html>
