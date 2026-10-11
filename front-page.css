@@ -121,12 +121,12 @@
 
 /* Shared UI lettering follows the same 760px breakpoint as the room layout. */
 :root{--sk-ui-font:'Fredoka',Arial,sans-serif;--sk-heading-weight:700}
-.bv-welcome,.bv-welcome :where(*),.bv-studio,.bv-studio :where(*){font-family:var(--sk-ui-font)}
+.bv-welcome,.bv-welcome :where(*),.bv-studio,.bv-studio :where(*){font-family:var(--sk-ui-font)!important}
 .bv-welcome .sk-front,.bv-welcome :is(.sk-copy h1,.sk-brand,.sk-profile-words h2,.sk-cards h3,.sk-note b,.sk-song b,.sk-explore,.bv-wordmark a,.bv-classic-actions h2,.bv-music-copy h1,.bv-circle-feature h2,.bv-room-heading h2,.bv-room-entry h2),.bv-studio :is(h2,h3,h4,p,button,input,select,label,strong,small){font-family:var(--sk-ui-font)}
 .bv-welcome :is(.sk-copy h1,.sk-brand,.sk-profile-words h2,.sk-cards h3,.bv-wordmark a,.bv-classic-actions h2,.bv-music-copy h1,.bv-circle-feature h2,.bv-room-heading h2,.bv-room-entry h2){font-weight:var(--sk-heading-weight);font-style:normal}
 .bv-welcome .sk-copy h1{letter-spacing:-.035em}
 /* Personal room lettering remains controlled by the member's studio choice. */
-.bv-welcome .bv-preview :is(.bv-cover-words,h2,h3),.bv-studio .bv-preview :is(.bv-cover-words,h2,h3){font-family:var(--bv-font,var(--sk-ui-font))}
+.bv-welcome .bv-preview :is(.bv-cover-words,h2,h3),.bv-studio .bv-preview :is(.bv-cover-words,h2,h3){font-family:var(--bv-font,var(--sk-ui-font))!important}
 @media(max-width:760px){:root{--sk-ui-font:'Nunito',Arial,sans-serif;--sk-heading-weight:800}}
 /* Keep photo crops square before the room's single perspective transform. */
 .sk-avatar{aspect-ratio:1;flex-shrink:0}.sk-avatar .sk-photo{width:100%;height:100%}
