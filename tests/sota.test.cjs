@@ -58,5 +58,19 @@ async function pin(rows,readError=null){
   context.sb={rpc:async()=>({data:{found:true,visible:true,is_me:true,profile:{id:'owner',handle:'sina',avatar_emoji:'🌺',display_name:'Sina',created_at:'2026-10-01',room_accent:'#086779'},top:rows(16).map(x=>({...x,handle:x.friend})),moments:[],wall:[]},error:null})};
   await context.viewRoom();assert.equal((rendered.match(/class="topslot /g)||[]).length,16);assert(rendered.includes('manageTop(16,\'remove\')'));assert(rendered.includes('Talanoa · Whiteboard'));
   context.sb={rpc:async()=>({data:null,error:{message:'offline'}})};await context.viewRoom();assert(rendered.includes('Connection interrupted'));assert(!rendered.includes('No room at'));
-  console.log('PASS: 8 skin round trips, contrast, URL/CSS injection guards, Top 16 allocation and cap, duplicate/read-failure handling, sixteen room tiles, tap-only media, connection recovery and all script syntax.');
+  // Public handle searches must wait for an authenticated session and a valid profile.
+  let authenticated=false,stored='mate_123',lookups=0,renders=0,authRenders=0;
+  const input={value:''};
+  const bootContext={S:{},navigator:{onLine:true},document:{documentElement:{style:{setProperty(){}}}},
+    sessionStorage:{getItem:()=>stored,removeItem:()=>{stored='';}},
+    sb:{auth:{getSession:async()=>({data:{session:authenticated?{user:{id:'owner'}}:null}})},
+      from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:{handle:'owner'},error:null})})})}),rpc:()=>{}},
+    renderAuth:()=>{authRenders++;},finishRoom:()=>{},shell:()=>{},render:async()=>{renders++;},
+    $:()=>input,search:async()=>{lookups++;}};
+  vm.createContext(bootContext);
+  vm.runInContext(html.slice(html.indexOf('async function boot()'),html.indexOf('/* Signed in, but no room yet.')),bootContext);
+  await bootContext.boot();assert.equal(authRenders,1);assert.equal(lookups,0);assert.equal(stored,'mate_123');
+  authenticated=true;await bootContext.boot();assert.equal(bootContext.S.tab,'friends');assert.equal(input.value,'mate_123');assert.equal(lookups,1);assert.equal(stored,'');
+  stored='<script>';await bootContext.boot();assert.equal(lookups,1);assert.equal(renders,2);
+  console.log('PASS: 8 skin round trips, contrast, URL/CSS injection guards, Top 16 allocation and cap, duplicate/read-failure handling, sixteen room tiles, tap-only media, connection recovery, authenticated handle-search handoff and all script syntax.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
