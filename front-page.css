@@ -156,19 +156,9 @@
 .bv-studio .bv-studio-preview>p.sub{font-size:12px!important;line-height:1.5}
 @media(max-width:760px){.bv-welcome :is(.bv-circle-feature h2,.bv-classic-actions h2,.bv-room-entry h2){font-size:26px!important}.bv-welcome .bv-music-copy h1{font-size:32px}.bv-welcome .bv-join-strip .btn{font-size:22px}.bv-welcome :is(.bv-home-search,.bv-header-auth,.bv-register) input,.bv-studio .bv-studio-body>div :is(input,select,textarea){font-size:16px;line-height:1.4}.bv-studio .bv-studio-body>div :is(h3,h4){font-size:18px}}
 
-/* Spacious phone composition: readable copy first, then the intact Sema room. */
-.sk-mobile-front{display:none}
+/* Phones use the same original artwork and controls as desktop. */
 @media(max-width:760px){
-  .sk-original-design{display:none}
-  .sk-mobile-front{display:flex;flex-direction:column;gap:24px;padding:6px var(--sk-page-gutter) 20px;background:linear-gradient(#24142220,#16434b30),url('/assets/fiji-sunset.jpg') 38% center/cover no-repeat}
-  .sk-mobile-front .sk-copy{width:100%;padding:0;align-self:stretch}
-  .sk-mobile-front .bv-wordmark a{font-size:clamp(38px,3.8vw,52px);line-height:1}
-  .sk-mobile-front .bv-wordmark small{margin-top:10px}
-  .sk-mobile-front .sk-copy h1{font-size:clamp(38px,11vw,46px);line-height:1.02;letter-spacing:-.035em;margin:0 0 14px}
-  .sk-mobile-front .sk-copy p{font-size:18px;line-height:1.35;letter-spacing:0;margin:0 0 18px}
-  .sk-mobile-front .sk-create{font-size:20px;line-height:1.2;padding:12px 20px;min-height:50px}
-  .sk-mobile-room{display:block;position:relative;width:100%;aspect-ratio:720/740;padding:0;border:0;border-radius:18px;background:transparent;overflow:hidden;cursor:pointer}
-  .sk-mobile-room .sk-photo{width:100%;height:100%}
-  .sk-original-actions>.sk-create{display:none}
-  .sk-original-actions{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .sk-original-front>.bv-wordmark{padding:6px var(--sk-page-gutter) 16px}
+  .sk-original-front>.bv-wordmark a{font-size:clamp(38px,3.8vw,52px);line-height:1}
+  .sk-original-front>.bv-wordmark small{margin-top:10px}
 }

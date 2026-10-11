@@ -171,7 +171,7 @@
   function frontAvatar(label) { return frontCrop(647,294,153,158,label); }
   function placeOriginalWordmark() {
     const app=document.querySelector('#app'), logo=app?.querySelector('.bv-wordmark');
-    const mobile=app?.querySelector('.sk-mobile-front'), header=app?.querySelector('.bv-classic-header');
+    const mobile=app?.querySelector('.sk-original-front'), header=app?.querySelector('.bv-classic-header');
     if(logo&&mobile&&header)(window.matchMedia('(max-width:760px)').matches?mobile:header).prepend(logo);
   }
   window.matchMedia('(max-width:760px)').addEventListener('change',placeOriginalWordmark);
@@ -186,11 +186,6 @@
     const auth=authNode.outerHTML;
     app.classList.add('bv-welcome');
     app.innerHTML=`<section class="sk-front sk-original-front" aria-label="Sota Kece original supplied design">
-      <div class="sk-mobile-front">
-        <section class="sk-copy" aria-labelledby="sk-mobile-headline"><h1 id="sk-mobile-headline">Create your own<br><span>space with<br>friends.</span></h1><p>Choose your style, share your music,<br>and make space for your friends.</p></section>
-        <button class="sk-mobile-room" type="button" data-mobile-studio aria-label="Open room design studio — Sema example room">${frontCrop(610,12,720,740,'Sema example room with the original friends photo, masi, Talanoa, Top Mates and music player')}</button>
-        <button class="sk-create" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Create your space <span aria-hidden="true">↗</span></button>
-      </div>
       <img class="sk-original-design" src="/assets/front-reference.jpg" width="1360" height="768" fetchpriority="high" alt="Sota Kece: Create your own space with friends. The original sunset design with Sema's slanted room, masi border, Talanoa, Top Mates and music player.">
       <nav class="sk-original-actions" aria-label="Get started"><button class="sk-create" type="button" onclick="renderAuth('up');document.querySelector('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'})">Create your space</button><button type="button" id="sk-room-menu"><span class="sk-action-full">Open room design studio</span><span class="sk-action-short">Room studio</span></button><button type="button" id="sk-sign-in">Sign in</button><a href="#bv-music"><span class="sk-action-full">Explore music, mates & rooms</span><span class="sk-action-short">Explore</span></a></nav>
     </section><div class="bv-neon-section" id="bv-neon"><div class="bv-classic">
@@ -219,7 +214,6 @@
     $('#bv-edit-room').addEventListener('click',()=>open());
     $('#bv-home-play').addEventListener('click',playSample);
     $('#sk-room-menu').addEventListener('click',()=>open());
-    app.querySelector('[data-mobile-studio]').addEventListener('click',()=>open());
     $('#sk-sign-in').addEventListener('click',()=>{renderAuth('in');$('#bv-entry').scrollIntoView({behavior:'smooth',block:'center'});$('#a-email').focus();});
     app.querySelectorAll('[data-collage-skin]').forEach(button=>button.addEventListener('click',()=>open({id:button.dataset.collageSkin})));
     $('#bv-home-search').addEventListener('submit',event=>{
