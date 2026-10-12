@@ -14,3 +14,4 @@ jobs:
       - run: node tests/sota.test.cjs
       - run: node tests/kava.test.cjs
       - run: node tests/room-media.test.cjs
+      - run: node tests/local-music.test.cjs

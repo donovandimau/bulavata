@@ -378,3 +378,23 @@
 .bv-neon-section .bv-wordmark a{display:inline-flex;background:none;text-shadow:none;line-height:0}
 .bv-neon-section .bv-brand-logo{display:block;width:104px;height:104px;max-width:100%;object-fit:contain;border-radius:12px}
 @media(max-width:760px){.bv-neon-section .bv-brand-logo{width:96px;height:96px}}
+
+/* Device music uploads use the existing soundtrack area and studio. */
+.bv-music-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.bv-music-actions button{min-height:44px;max-width:100%;white-space:normal}
+.bv-music-copy [data-sample-status],.sk-hero-status{overflow-wrap:anywhere}
+.bv-music-dialog{width:min(680px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;padding:20px;border:1px solid #68547e;border-radius:18px;background:#171321;color:#f6f1ff;font-family:var(--sk-ui-font);box-sizing:border-box}
+.bv-music-dialog::backdrop{background:rgba(0,0,0,.7)}
+.bv-music-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bv-music-dialog h2{margin:0;font-size:24px}.bv-music-dialog h3{font-size:18px;overflow-wrap:anywhere}
+.bv-music-dialog .sub{color:#d0c4de;font-size:13px;line-height:1.6}
+.bv-music-dialog label{display:block;font-weight:700;margin:14px 0 8px}
+.bv-music-dialog input[type=file]{display:block;width:100%;max-width:100%;min-height:44px;font:inherit;color:inherit}
+.bv-music-dialog button{min-height:44px;font:inherit;white-space:normal}
+.bv-music-dialog audio{display:block;width:100%;max-width:100%;margin:12px 0}.bv-music-dialog audio[hidden]{display:none}
+.bv-local-music-status{min-height:1.4em;font-size:13px;line-height:1.5;overflow-wrap:anywhere;color:#ccefa4}
+.bv-local-music-list{display:grid;gap:10px;margin-top:18px}
+.bv-local-music-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:12px;border:1px solid #68547e;border-radius:12px}
+.bv-local-music-row strong,.bv-local-music-row small{display:block;overflow-wrap:anywhere}.bv-local-music-row small{font-size:11px;color:#d0c4de;margin-top:4px}
+.bv-local-music-row [aria-pressed=true]{border-color:#89d6ff}
+@media(max-width:480px){.bv-music-dialog{padding:16px}.bv-local-music-row{grid-template-columns:1fr 1fr}.bv-local-music-row>div{grid-column:1/-1}.bv-local-music-row button{width:100%}}
