@@ -849,6 +849,14 @@ async function boot(){
   S.me = me;
   document.documentElement.style.setProperty("--accent", me.room_accent||"#4FA8D8");
   sb.rpc("bv_touch");
+  try{
+    const sid = new URLSearchParams(location.search).get("sid");
+    if(sid && /^cs_[A-Za-z0-9_]+$/.test(sid)){
+      await walletClaim(sid);
+      history.replaceState({}, "", location.pathname);
+      S.tab = "wallet";
+    }
+  }catch(_){}
   let pendingMate='';try{pendingMate=sessionStorage.getItem('sota-find-mate')||'';}catch(_){}
   if(/^[a-z0-9_]{3,20}$/.test(pendingMate)){
     S.tab='friends';await render();
