@@ -8,6 +8,7 @@
   const example = {display_name:'Sema',handle:'sema',bio:'Good people. Brighter days. Suva, Fiji.'};
   let sampleAudio = null, sampleTimer = null;
   function stopSample() {
+    window.SotaLocalMusic?.pause();
     clearTimeout(sampleTimer);
     if(sampleAudio) { sampleAudio.close().catch(()=>{}); sampleAudio=null; }
     document.querySelectorAll('[data-sample-play]').forEach(button=>{
@@ -17,6 +18,7 @@
     document.querySelector('.bv-mixtape')?.classList.remove('is-playing');
   }
   async function playSample() {
+    if(window.SotaLocalMusic?.hasSelected())return window.SotaLocalMusic.toggle();
     if(sampleAudio) { stopSample();return; }
     const status=document.querySelector('#bv-home-status')||document.querySelector('#bv-sample-status')||document.querySelector('#sk-hero-status');
     try {
@@ -57,7 +59,7 @@
         ${interests.length?`<div class="bv-interests">${interests.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}</div>
       <div class="bv-preview-columns"><section class="bv-mini-card"><h3>Talanoa <small>Example notes</small></h3><div class="bv-photo-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div><small>2h ago</small></div><div class="bv-photo-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>Bring your favourite track. See you there.</p></div><small>4h ago</small></div></section>
       <section class="bv-mini-card"><h3>Top Mates · 16</h3><div class="bv-photo-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
-      ${s.trackUrl||s.trackPath?trackMarkup(s):`<div class="bv-photo-track"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂��▇▃▂��▂▆▃▁</span></div>`}</div>`;
+      ${s.trackUrl||s.trackPath?trackMarkup(s):window.SotaLocalMusic?.hasSelected()?`<div class="bv-track"><span>♫ ${esc(window.SotaLocalMusic.title())}</span><button type="button" class="btn sm ghost" data-local-music-toggle>Play my music</button><small>Saved on this device.</small></div>`:`<div class="bv-photo-track"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂��▇▃▂��▂▆▃▁</span></div>`}</div>`;
   }
   function coverMediaMarkup(settings) {
     return settings.coverPath?`<button type="button" class="bv-cover-load" data-cover-path="${esc(settings.coverPath)}">Load my cover artwork ↗</button>`:'';
@@ -67,6 +69,7 @@
     return attribute?`<div class="bv-track"><span>♫ ${esc(settings.trackTitle||'My profile track')}</span><button type="button" class="btn sm ghost" ${attribute}>Play track</button><small>Tap to load. No autoplay.</small></div>`:'';
   }
   function wireMedia(root) {
+    window.SotaLocalMusic?.mount(root,{beforePlay:stopSample});
     root.querySelectorAll('[data-profile-track]:not([data-bv-bound]),[data-profile-path]:not([data-bv-bound])').forEach(button=>{
       button.dataset.bvBound='true';button.addEventListener('click',async()=>{
         button.disabled=true;button.textContent='Loading…';
@@ -98,7 +101,16 @@
   let mediaUploads=[],mediaBusy=false;
   async function uploadRoomMedia(event) {
     const kind=event.target.id==='bv-music-upload'?'music':'covers',file=event.target.files?.[0];if(!file)return;
-    const dialog=studio,userId=S.user?.id;if(!dialog||!draft||!userId)return;
+    const dialog=studio,userId=S.user?.id;if(!dialog||!draft)return;
+    if(kind==='music'){
+      const status=dialog.querySelector('#bv-upload-status'),saveButton=dialog.querySelector('#bv-save');
+      mediaBusy=true;saveButton.disabled=true;event.target.disabled=true;status.textContent='Saving music on this device…';
+      try{const result=await window.SotaLocalMusic.importFiles(Array.from(event.target.files||[]));if(studio===dialog){status.textContent=result.saved.length?'Music saved on this device. Tap Play in the preview or open Your music.':result.rejected.map(r=>r.reason).join(' ');drawPreview();}}
+      catch(error){if(studio===dialog)status.textContent=error.message;}
+      finally{mediaBusy=false;if(studio===dialog){saveButton.disabled=false;event.target.disabled=false;event.target.value='';}}
+      return;
+    }
+    if(!userId)return;
     const status=dialog.querySelector('#bv-upload-status'),saveButton=dialog.querySelector('#bv-save');
     mediaBusy=true;saveButton.disabled=true;status.textContent=kind==='music'?'Uploading your track…':'Uploading your artwork…';
     dialog.querySelectorAll('input[type=file]').forEach(input=>input.disabled=true);
@@ -110,7 +122,7 @@
       else draft.coverPath=uploaded.path;
       status.textContent=kind==='music'?'Track uploaded. Save your room to add it.':'Cover uploaded. Save your room to use it.';drawPreview();
     }catch(error){if(studio===dialog)status.textContent=error.message||'Upload interrupted. Your design is still here.';}
-    finally{mediaBusy=false;if(studio===dialog){saveButton.disabled=false;dialog.querySelectorAll('input[type=file]').forEach(input=>input.disabled=false);event.target.value='';}}
+    finally{mediaBusy=false;if(studio===dialog){saveButton.disabled=false;dialog.querySelectorAll('input[type=file]').forEach(input=>input.disabled=input.id==='bv-cover-upload');event.target.value='';}}
   }
   function discardUploads(keep=[]) {
     const pending=mediaUploads.filter(file=>!keep.includes(file.path));mediaUploads=[];
@@ -209,7 +221,7 @@
       <nav class="bv-classic-nav" aria-label="Explore Sota Kece"><a href="#bv-music">Music</a><a href="#bv-people">Top Mates</a><a href="#bv-your-room">Talanoa & skins</a><button type="button" onclick="window.SotaKavaUI.preview()">Kava Circle</button><span>Bula! You're home.</span></nav>
       <dialog class="bv-account-dialog" id="bv-entry" aria-labelledby="bv-account-title"><div class="bv-account-head"><h2 id="bv-account-title">${mode==='up'?'Create your room':'Sign in'}</h2><button type="button" id="bv-account-close" aria-label="Close account form">×</button></div>${auth}<button type="button" class="bv-link" onclick="renderAuth('${mode==='up'?'in':'up'}',true)">${mode==='up'?'Already have a room? Sign in':'New here? Sign up'}</button></dialog>
       <div class="bv-classic-panels">
-        <section class="bv-music-feature" id="bv-music" aria-labelledby="bv-music-title"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Fijian singer and friends sharing live music at a seaside gathering" fetchpriority="high"><div class="bv-music-copy"><small>YOUR ROOM. YOUR SOUNDTRACK.</small><h1 id="bv-music-title">Viti roots.<br>Volume up.</h1><p>Your tunes. Your people. Your island energy.</p><button id="bv-home-play" data-sample-play type="button" aria-label="Play sample loop" aria-pressed="false">▶ Try a sample</button><small id="bv-home-status" data-sample-status role="status">Sample melody · tap to play</small></div></section>
+        <section class="bv-music-feature" id="bv-music" aria-labelledby="bv-music-title"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Fijian singer and friends sharing live music at a seaside gathering" fetchpriority="high"><div class="bv-music-copy"><small>YOUR ROOM. YOUR SOUNDTRACK.</small><h1 id="bv-music-title">Viti roots.<br>Volume up.</h1><p>Your tunes. Your people. Your island energy.</p><div class="bv-music-actions"><button id="bv-home-play" data-sample-play type="button" aria-label="Play sample loop" aria-pressed="false">▶ Try a sample</button><button type="button" data-local-music-open>Upload music</button></div><small id="bv-home-status" data-sample-status role="status">Sample melody · tap to play</small></div></section>
         <section class="bv-people-feature" id="bv-people" aria-label="Sample collage and room skins"><div class="bv-people-collage">${peopleCollage()}</div><div class="bv-collage-caption"><b>Your people. Your vibe.</b><span>Sample photos & skins · tap a tile</span></div></section>
       </div>
       <section class="bv-social-stage" id="bv-circle" aria-label="Your circle starts here">        <section class="bv-circle-feature" aria-labelledby="bv-circle-title"><div class="bv-circle-art" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><linearGradient id="bv-circle-gradient" x2="0" y2="1"><stop stop-color="#d9ff82"/><stop offset="1" stop-color="#05bb84"/></linearGradient></defs><g stroke="url(#bv-circle-gradient)" stroke-width="16" stroke-linecap="round"><path d="M60 17V103M23 38L97 82M23 82L97 38"/></g></svg></div><small>SIT DOWN. CATCH UP.</small><h2 id="bv-circle-title">Same circle. New stories.</h2><p>Pull up a seat in the Digital Kava Circle.</p><button type="button" class="bv-link" onclick="window.SotaKavaUI.preview()">Take a look →</button></section>
@@ -218,6 +230,7 @@
       <section class="bv-room-entry" id="bv-your-room" aria-label="Design your room"><div><h2>Your room. Your rules.</h2><p>24 skins. Masi borders. Your colours, music and cover art.</p><small>Studio choice · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="btn" id="bv-edit-room">Open the skin studio →</button></section>
       <footer class="bv-classic-footer"><span>Sota Kece · alive together</span><span>Mutual friends · Your own archive · No ads</span><details><summary>Photo credits</summary><p>Sample photography by <a href="https://unsplash.com/photos/i6r5kQMQ9Zk" target="_blank" rel="noopener noreferrer">Ben Collins</a>, <a href="https://unsplash.com/photos/roOETBSa8mA" target="_blank" rel="noopener noreferrer">Samsung UK</a> and <a href="https://unsplash.com/photos/tZhEr2d3oeM" target="_blank" rel="noopener noreferrer">Hoi An and Da Nang Photographer</a>, via Unsplash.</p></details></footer>
     </div></div>`;
+    window.SotaLocalMusic?.mount(app,{beforePlay:stopSample});
     placeResponsiveNavigation();
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').onclick=()=>mode==='up'?signUp():signIn();
@@ -283,7 +296,7 @@
         <div class="bv-span"><label for="bv-note">Words on your cover</label><input id="bv-note" value="${esc(draft.note)}" maxlength="80" placeholder="Whatever feels like you"></div>
         <div class="bv-span"><label for="bv-interests">Your favourites, separated by commas</label><input id="bv-interests" value="${esc(draft.interests)}" maxlength="160" placeholder="Drua, music, sunsets, good company"></div>
         <div class="bv-span"><label for="bv-trackTitle">Your profile track</label><input id="bv-trackTitle" value="${esc(draft.trackTitle)}" maxlength="80" placeholder="Song name · artist"></div>
-        <div class="bv-upload-box"><h4>Bring your own music & artwork</h4><p>File uploads are being prepared. You can use a direct audio link and try every skin and design control now.</p><label for="bv-music-upload">Upload your track · MP3, M4A, OGG, Opus or WAV · up to 6 MB</label><input id="bv-music-upload" type="file" accept=".mp3,.m4a,.ogg,.opus,.wav" disabled><label for="bv-cover-upload">Upload cover artwork · JPG, PNG or WebP · up to 6 MB</label><input id="bv-cover-upload" type="file" accept=".jpg,.jpeg,.png,.webp" disabled><div class="bv-upload-status" id="bv-upload-status" role="status"></div><div class="bv-upload-actions"><button type="button" class="btn ghost" id="bv-remove-track">Remove track</button><button type="button" class="btn ghost" id="bv-remove-cover">Remove cover</button></div></div>
+        <div class="bv-upload-box"><h4>Bring your own music & artwork</h4><p>Uploaded music is saved on this device, like Fiji 3D Maps. Use a direct audio link below for a track your friends can hear. Cover uploads are being prepared.</p><label for="bv-music-upload">Upload music · MP3, M4A, AAC, WAV, OGG, FLAC or Opus · up to 250 MB per song</label><input id="bv-music-upload" type="file" accept=".mp3,.m4a,.aac,.wav,.ogg,.oga,.flac,.opus" multiple><button type="button" class="btn ghost" data-local-music-open>Your music</button><label for="bv-cover-upload">Upload cover artwork · JPG, PNG or WebP · up to 6 MB</label><input id="bv-cover-upload" type="file" accept=".jpg,.jpeg,.png,.webp" disabled><div class="bv-upload-status" id="bv-upload-status" role="status"></div><div class="bv-upload-actions"><button type="button" class="btn ghost" id="bv-remove-track">Remove track</button><button type="button" class="btn ghost" id="bv-remove-cover">Remove cover</button></div></div>
         <div class="bv-span"><label for="bv-trackUrl">Or paste a direct audio link</label><input id="bv-trackUrl" type="url" value="${esc(draft.trackUrl)}" maxlength="320" placeholder="https://…/your-track.mp3"><p class="sub">Use an HTTPS MP3, M4A, OGG, Opus or WAV file you can share. Loads only when a visitor taps Play.</p></div></div>
       ${S.user&&S.me?`<details><summary>Edit your profile</summary><div class="stack"><div><label for="d-name">Display name</label><input id="d-name" value="${esc(p.display_name||'')}" maxlength="40"></div>
         <div><label for="d-pro">Pronouns</label><input id="d-pro" value="${esc(p.pronouns||'')}" maxlength="24"></div>
@@ -372,6 +385,7 @@
     }catch(e){errorBox.textContent=e.message||'Your room could not be saved. Your changes are still here.';}
     finally{button.disabled=false;button.textContent='Save my room';}
   }
+  window.addEventListener('sota-music-change',()=>{if(studio&&draft)drawPreview();});
   openDecorate=function(){open();};
   window.BulaSkinStudio={apply,reset,open,preview};
 })();

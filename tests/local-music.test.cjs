@@ -1,0 +1,21 @@
+const assert=require('node:assert/strict');
+const music=require('../local-music.js');
+const file=(name,bytes,size=bytes.length)=>({name,size,lastModified:123,slice:()=>({arrayBuffer:async()=>Uint8Array.from(bytes).buffer})});
+(async()=>{
+  const supported=[['song.mp3',[73,68,51]],['SONG.MP3',[255,251]],['song.m4a',[0,0,0,24,102,116,121,112]],['song.aac',[255,241]],['song.wav',[82,73,70,70,0,0,0,0,87,65,86,69]],['song.ogg',[79,103,103,83]],['song.oga',[79,103,103,83]],['song.opus',[79,103,103,83]],['song.flac',[102,76,97,67]]];
+  for(const [name,bytes] of supported)assert((await music.inspect(file(name,bytes))).type.startsWith('audio/'));
+  await assert.rejects(music.inspect(file('fake.mp3',[60,115,99])),/content/);
+  await assert.rejects(music.inspect(file('picture.wav',[137,80,78,71])),/content/);
+  await assert.rejects(music.inspect(file('song.aac',[255,251])),/content/);
+  await assert.rejects(music.inspect(file('script.svg',[60,115,118])),/Use MP3/);
+  await assert.rejects(music.inspect(file('empty.mp3',[])),/empty/);
+  await assert.rejects(music.inspect(file('large.mp3',[73,68,51],music.limit+1)),/250 MB/);
+  assert.equal((await music.inspect(file('boundary.mp3',[73,68,51],music.limit))).type,'audio/mpeg');
+  const unavailable=music.createStore(null);
+  await assert.rejects(unavailable.list(),/cannot save/);
+  await assert.rejects(unavailable.add([file('song.mp3',[73,68,51])]),/cannot save/);
+  await assert.rejects(unavailable.remove('track'),/cannot save/);
+  const invalidOnly=await unavailable.add([file('not music.txt',[60,116])]);
+  assert.equal(invalidOnly.saved.length,0);assert.equal(invalidOnly.rejected.length,1);
+  console.log('PASS: music signatures, supported formats, empty/renamed/oversized rejection, exact size boundary and unavailable device storage.');
+})().catch(e=>{console.error(e);process.exitCode=1;});
