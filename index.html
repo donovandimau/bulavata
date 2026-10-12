@@ -295,6 +295,7 @@ async function refreshMeta(){
     sb.rpc("bv_luv_left"), sb.rpc("bv_pending_requests"), sb.rpc("bv_my_friends")
   ]);
   S.luv = l.data ?? 0; S.pending = pr.data || []; S.friends = fr.data || [];
+  const wl = await sb.rpc("bv_wallet"); S.wallet = wl.data || {has_wallet:false};
 }
 
 /* ================= PULSE ================= */
