@@ -278,6 +278,7 @@ function shell(body){
   <header class="top glass">
     ${LOGO}<div class="brand">Sota Kece<small>alive together</small></div>
     <div class="spacer"></div>
+    <button class="luvchip" onclick="go('wallet')" title="Your wallet" style="border:0;font:inherit;cursor:pointer">💰 <b>${S.wallet&&S.wallet.has_wallet?fjd(S.wallet.balance_minor,S.wallet.currency):"—"}</b></button>
     <div class="luvchip" title="Three Uro a day. That is why one means something.">🫶 <b>${S.luv}</b></div>
   </header>
   <div id="view">${body}</div>
@@ -295,6 +296,99 @@ async function refreshMeta(){
     sb.rpc("bv_luv_left"), sb.rpc("bv_pending_requests"), sb.rpc("bv_my_friends")
   ]);
   S.luv = l.data ?? 0; S.pending = pr.data || []; S.friends = fr.data || [];
+  const wl = await sb.rpc("bv_wallet"); S.wallet = wl.data || {has_wallet:false};
+}
+
+/* ================= WALLET ================= */
+const PAY_URL = "https://xnxmumbvgtmlpenutlii.supabase.co/functions/v1/pay";
+function fjd(minor,cur){
+  try{ return new Intl.NumberFormat(undefined,{style:"currency",currency:cur||"FJD",currencyDisplay:"narrowSymbol"}).format((Number(minor)||0)/100); }
+  catch(_){ return ((Number(minor)||0)/100).toFixed(2); }
+}
+async function viewWallet(){
+  const w = S.wallet || {has_wallet:false};
+  if(!w.has_wallet) return shell(`<div class="glass card"><h3>Your wallet</h3>
+    <div class="empty"><em>💰</em>Your wallet opens together with your room. Pull the page again in a moment.</div></div>`);
+  const left = Math.max(0,(w.daily_limit_minor||0)-(w.spent_today_minor||0));
+  const tx = w.transactions||[];
+  shell(`
+  <div class="grid two"><div class="stack">
+    <div class="glass card">
+      <h3>Your wallet</h3>
+      <div style="font-size:34px;font-weight:800;letter-spacing:-.5px;line-height:1.1">${fjd(w.balance_minor,w.currency)}</div>
+      <div class="sub">${w.status==="active"?"Ready to use":"Add money to wake it up"} · ${fjd(left,w.currency)} left to send today</div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        ${[1000,2500,5000,10000].map(a=>`<button class="btn sm ghost" onclick="walletTopUp(${a})">Add ${fjd(a,w.currency)}</button>`).join("")}
+      </div>
+      <div class="sub" id="w-pay-note" style="margin-top:8px"></div>
+    </div>
+    <div class="glass card">
+      <h3>Send to a mate</h3>
+      <div class="sub" style="margin-bottom:10px">Straight into their wallet. Nothing leaves until you press send.</div>
+      <input id="wl-to" placeholder="their handle, no @" autocomplete="off" spellcheck="false">
+      <input id="wl-amt" placeholder="how much, e.g. 10.00" inputmode="decimal">
+      <input id="wl-memo" placeholder="what it is for (optional)" maxlength="80">
+      <button class="btn" onclick="walletSend()">Send</button>
+      <div class="sub" id="wl-err" style="color:#9b2226"></div>
+    </div>
+  </div>
+  <div class="stack">
+    <div class="glass card"><h3>Money in and out</h3>
+      ${tx.length? tx.map(t=>`
+        <div class="pulse-item">
+          <div class="av">${t.direction==="credit"?"⬇️":"⬆️"}</div>
+          <div style="flex:1;min-width:0">
+            <div class="name">${t.direction==="credit"?"In":"Out"}${t.other?` · @${esc(t.other)}`:""}</div>
+            <div class="handle ellip">${esc(t.memo||String(t.kind||"").replace(/_/g," "))}</div>
+          </div>
+          <div style="text-align:right;flex:none">
+            <div class="name">${t.direction==="credit"?"+":"−"}${fjd(t.amount_minor,w.currency)}</div>
+            <span class="ago">${ago(t.created_at)}</span>
+          </div>
+        </div>`).join("")
+      : `<div class="empty"><em>🧾</em>Nothing yet. Your first top-up will show up here.</div>`}
+    </div>
+  </div></div>`);
+}
+async function walletTopUp(minor){
+  const note = $("#w-pay-note"); if(note) note.textContent = "Opening the payment page…";
+  try{
+    const {data:{session}} = await sb.auth.getSession();
+    if(!session) { if(note) note.textContent = "Sign in again first."; return; }
+    const r = await fetch(PAY_URL,{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+session.access_token},body:JSON.stringify({action:"topup",amount_minor:minor})});
+    const j = await r.json().catch(()=>({}));
+    if(j && j.url){ location.href = j.url; return; }
+    if(note) note.textContent = (j.error==="not_configured"||j.error==="wallet_link_not_configured")
+      ? "Adding money opens soon." : "Could not open the payment page. Try again shortly.";
+  }catch(_){ if(note) note.textContent = "No connection. Try again when your signal is back."; }
+}
+async function walletClaim(sid){
+  try{
+    const r = await fetch(PAY_URL+"?claim="+encodeURIComponent(sid));
+    const j = await r.json().catch(()=>({}));
+    if(j && j.ok) toast("Money added to your wallet.");
+  }catch(_){}
+}
+async function walletSend(){
+  const err = $("#wl-err"); if(err) err.textContent = "";
+  const to = (($("#wl-to")||{}).value||"").trim().replace(/^@/,"").toLowerCase();
+  const amt = Math.round(parseFloat((($("#wl-amt")||{}).value||"0").replace(/[^0-9.]/g,""))*100);
+  const memo = (($("#wl-memo")||{}).value||"").trim()||null;
+  if(!/^[a-z0-9_]{3,20}$/.test(to)) { if(err) err.textContent = "Check the handle."; return; }
+  if(!Number.isInteger(amt)||amt<100) { if(err) err.textContent = "Send at least 1.00."; return; }
+  const {data,error} = await sb.rpc("bv_wallet_send",{p_to_handle:to,p_amount_minor:amt,p_memo:memo,p_idem:S.user.id+"-"+Date.now()});
+  if(error){ if(err) err.textContent = "That did not go through."; return; }
+  if(data && data.status==="error"){
+    const say = {INSUFFICIENT_FUNDS:"Not enough in your wallet.",DAILY_LIMIT_EXCEEDED:"That is over your limit for today.",
+      NO_SUCH_WALLET:"Nobody with that handle.",SELF_SEND:"That is your own wallet.",NO_WALLET:"Your wallet is not open yet.",
+      WALLET_DORMANT:"Add money first to wake your wallet up.",WALLET_FROZEN:"Your wallet is frozen.",
+      WALLET_CLOSED:"Your wallet is closed.",CURRENCY_MISMATCH:"Those two wallets hold different money.",
+      BAD_AMOUNT:"Check the amount.",NOT_SIGNED_IN:"Sign in again first."};
+    if(err) err.textContent = say[data.reason] || "That did not go through.";
+    return;
+  }
+  toast("Sent.");
+  await render();
 }
 
 /* ================= PULSE ================= */
@@ -742,6 +836,7 @@ async function render(){
   if(S.tab==="circles") return window.SotaKavaUI.view();
   if(S.tab==="crews") return viewCrews();
   if(S.tab==="friends") return viewFriends();
+  if(S.tab==="wallet") return viewWallet();
 }
 async function boot(){
   if(!navigator.onLine)return renderAuth();
@@ -754,6 +849,14 @@ async function boot(){
   S.me = me;
   document.documentElement.style.setProperty("--accent", me.room_accent||"#4FA8D8");
   sb.rpc("bv_touch");
+  try{
+    const sid = new URLSearchParams(location.search).get("sid");
+    if(sid && /^cs_[A-Za-z0-9_]+$/.test(sid)){
+      await walletClaim(sid);
+      history.replaceState({}, "", location.pathname);
+      S.tab = "wallet";
+    }
+  }catch(_){}
   let pendingMate='';try{pendingMate=sessionStorage.getItem('sota-find-mate')||'';}catch(_){}
   if(/^[a-z0-9_]{3,20}$/.test(pendingMate)){
     S.tab='friends';await render();
