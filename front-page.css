@@ -373,3 +373,8 @@
 .bv-studio .bv-skin-option .bv-skin-palette{padding:0;gap:6px}
 .bv-studio .bv-skin-option .bv-skin-palette i{width:14px;height:14px}
 .bv-studio .bv-skin-option strong{padding:0;font-size:14px;line-height:1.35}
+
+/* Supplied Sota Kece branding keeps its original square proportions. */
+.bv-neon-section .bv-wordmark a{display:inline-flex;background:none;text-shadow:none;line-height:0}
+.bv-neon-section .bv-brand-logo{display:block;width:104px;height:104px;max-width:100%;object-fit:contain;border-radius:12px}
+@media(max-width:760px){.bv-neon-section .bv-brand-logo{width:96px;height:96px}}

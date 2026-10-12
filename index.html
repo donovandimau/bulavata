@@ -6,9 +6,25 @@
 <title>Sota Kece — alive together</title>
 <meta name="description" content="Sota Kece: a Pacific-first home for your people. Top Mates 16, Talanoa, personal skins, profile music and hosted Kava Circles. Low data by default.">
 <meta name="theme-color" content="#87CEEB">
-<link rel="icon" href="/favicon.ico" sizes="32x32">
-<link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
-<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="canonical" href="https://sotakece.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sota Kece">
+<meta property="og:title" content="Sota Kece — alive together">
+<meta property="og:description" content="Sota Kece: a Pacific-first home for your people. Top Mates 16, Talanoa, personal skins, profile music and hosted Kava Circles. Low data by default.">
+<meta property="og:url" content="https://sotakece.com/">
+<meta property="og:image" content="https://sotakece.com/assets/sota-kece-logo.png">
+<meta property="og:image:secure_url" content="https://sotakece.com/assets/sota-kece-logo.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="256">
+<meta property="og:image:height" content="256">
+<meta property="og:image:alt" content="Sota Kece logo: blue, gold and red figures within a glowing gold circle.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sota Kece — alive together">
+<meta name="twitter:description" content="Sota Kece: a Pacific-first home for your people. Top Mates 16, Talanoa, personal skins, profile music and hosted Kava Circles. Low data by default.">
+<meta name="twitter:image" content="https://sotakece.com/assets/sota-kece-logo.png">
+<meta name="twitter:image:alt" content="Sota Kece logo: blue, gold and red figures within a glowing gold circle.">
+<link rel="icon" type="image/png" sizes="256x256" href="/assets/sota-kece-logo.png">
+<link rel="apple-touch-icon" href="/assets/sota-kece-logo.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <script src="/vendor/supabase-2.45.0.min.js"></script>
 <style>
@@ -49,7 +65,7 @@ a{color:var(--lagoon);text-decoration:none}
 header.top{display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:16px;position:sticky;top:8px;z-index:40}
 .logotile{width:38px;height:38px;border-radius:11px;background:#fff;display:grid;place-items:center;
   box-shadow:0 2px 10px rgba(20,59,82,.14);flex:none;overflow:hidden}
-.logotile img{width:30px;height:30px;object-fit:contain;display:block}
+.logotile img{width:100%;height:100%;object-fit:contain;display:block}
 .logotile span{font-family:Manrope;font-weight:800;color:var(--lagoon);font-size:17px}
 .brand{font-family:Manrope;font-weight:800;font-size:19px;letter-spacing:-.03em;line-height:1}
 .brand small{display:block;font-family:Lexend;font-weight:300;font-size:10.5px;letter-spacing:.09em;
@@ -202,7 +218,7 @@ function toast(m){ const d=document.createElement("div"); d.className="toast"; d
   e.style.animationDuration=(17+Math.random()*26)+"s"; e.style.animationDelay=(-Math.random()*34)+"s";
   e.style.opacity=.14+Math.random()*.3; b.appendChild(e);} })();
 
-const LOGO = `<div class="logotile" aria-label="Sota Kece"><span>SK</span></div>`;
+const LOGO = `<div class="logotile"><img src="/assets/sota-kece-logo.png" width="256" height="256" alt="Sota Kece"></div>`;
 
 /* ================= AUTH ================= */
 function renderAuth(mode="in"){
