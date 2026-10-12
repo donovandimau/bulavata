@@ -743,6 +743,7 @@ async function render(){
   if(S.tab==="circles") return window.SotaKavaUI.view();
   if(S.tab==="crews") return viewCrews();
   if(S.tab==="friends") return viewFriends();
+  if(S.tab==="wallet") return viewWallet();
 }
 async function boot(){
   if(!navigator.onLine)return renderAuth();
