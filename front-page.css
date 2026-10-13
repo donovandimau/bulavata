@@ -377,6 +377,10 @@
 /* Supplied Sota Kece branding keeps its original square proportions. */
 .bv-neon-section .bv-wordmark a{display:inline-flex;background:none;text-shadow:none;line-height:0}
 .bv-neon-section .bv-brand-logo{display:block;width:104px;height:104px;max-width:100%;object-fit:contain;border-radius:12px}
+.bv-wordmark .bv-dimau-tile{display:inline-flex!important;align-items:center;justify-content:center;vertical-align:middle;width:60px;height:60px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(8,20,40,.28);margin:0 16px 0 0;overflow:hidden;font-size:0!important;line-height:0}
+.bv-wordmark .bv-dimau-tile img{width:48px;height:48px;object-fit:contain;display:block}
+.bv-neon-section .bv-wordmark a:not(.bv-dimau-tile){vertical-align:middle}
+@media(max-width:760px){.bv-wordmark .bv-dimau-tile{width:52px;height:52px;margin-right:12px}.bv-wordmark .bv-dimau-tile img{width:42px;height:42px}}
 @media(max-width:760px){.bv-neon-section .bv-brand-logo{width:96px;height:96px}}
 
 /* Device music uploads use the existing soundtrack area and studio. */
