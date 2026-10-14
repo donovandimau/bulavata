@@ -48,18 +48,28 @@
     try { return skins.normalize(JSON.parse(localStorage.getItem('bv-picked-skin')||'{"id":"midnight"}')); }
     catch (_) { return skins.normalize({id:'midnight'}); }
   }
+  function skinScene(settings) {
+    const p=skins.presets.find(p=>p.id===settings.id);
+    if(!p?.artwork)return '';
+    return `<div class="bv-skin-scene" style="background-image:url(&quot;${esc(p.artwork)}&quot;)" role="img" aria-label="${esc(p.artDescription)}"><span>${esc(p.name)}</span></div>`;
+  }
+  function skinSongs(settings) {
+    const p=skins.presets.find(p=>p.id===settings.id);
+    if(!p?.artwork)return '';
+    return `<div class="bv-skin-story"><small>${esc(p.designNote)}</small>${p.songs.length?`<details><summary>Music for this skin</summary><p>Listen at the source, or add your own recording.</p>${p.songs.map(song=>`<a href="${esc(song.url)}" target="_blank" rel="noopener noreferrer">${esc(song.title)} <span>— ${esc(song.performer)}</span> ↗</a>`).join('')}</details>`:''}</div>`;
+  }
   function preview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
     const interests=s.interests.split(',').map(x=>x.trim()).filter(Boolean).slice(0,8);
     const portraits=Array.from({length:14},(_,i)=>originalMate(i,`Example friend ${i+1}`));
     return `<div class="bv-preview bv-photo-room" style="${esc(skins.inline(s))}" data-layout="${s.layout}">
-      <div class="bv-cover" data-pattern="${s.pattern}">${s.coverPath?coverMediaMarkup(s):'<svg class="bv-cover-photo sk-photo" viewBox="137 715 754 228" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Fijian friends from the supplied Sema design"><defs><clipPath id="bv-original-cover-clip" clipPathUnits="userSpaceOnUse"><rect x="137" y="715" width="754" height="228"/></clipPath></defs><image clip-path="url(#bv-original-cover-clip)" href="/assets/mobile-front-reference.png" width="1008" height="1792"/></svg>'}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
+      ${skinScene(s)}<div class="bv-cover" data-pattern="${s.pattern}">${s.coverPath?coverMediaMarkup(s):'<svg class="bv-cover-photo sk-photo" viewBox="137 715 754 228" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Fijian friends from the supplied Sema design"><defs><clipPath id="bv-original-cover-clip" clipPathUnits="userSpaceOnUse"><rect x="137" y="715" width="754" height="228"/></clipPath></defs><image clip-path="url(#bv-original-cover-clip)" href="/assets/mobile-front-reference.png" width="1008" height="1792"/></svg>'}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
       <div class="bv-profile-intro"><div class="bv-profile-avatar">${frontAvatar('Sema — example profile portrait')}</div>
         <h2>${esc(profile.display_name||profile.handle||'Your name')}</h2><p>@${esc(profile.handle||'yourhandle')}</p><p>${esc(profile.bio||'Good people. Brighter days.')}</p>
         ${interests.length?`<div class="bv-interests">${interests.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}</div>
       <div class="bv-preview-columns"><section class="bv-mini-card"><h3>Talanoa <small>Example notes</small></h3><div class="bv-photo-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div><small>2h ago</small></div><div class="bv-photo-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>Bring your favourite track. See you there.</p></div><small>4h ago</small></div></section>
       <section class="bv-mini-card"><h3>Top Mates · 16</h3><div class="bv-photo-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
-      ${s.trackUrl||s.trackPath?trackMarkup(s):window.SotaLocalMusic?.hasSelected()?`<div class="bv-track"><span>♫ ${esc(window.SotaLocalMusic.title())}</span><button type="button" class="btn sm ghost" data-local-music-toggle>Play my music</button><small>Saved on this device.</small></div>`:`<div class="bv-photo-track"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂��▇▃▂��▂▆▃▁</span></div>`}</div>`;
+      ${s.trackUrl||s.trackPath?trackMarkup(s):window.SotaLocalMusic?.hasSelected()?`<div class="bv-track"><span>♫ ${esc(window.SotaLocalMusic.title())}</span><button type="button" class="btn sm ghost" data-local-music-toggle>Play my music</button><small>Saved on this device.</small></div>`:`<div class="bv-photo-track"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂��▇▃▂��▂▆▃▁</span></div>`}${skinSongs(s)}</div>`;
   }
   function coverMediaMarkup(settings) {
     return settings.coverPath?`<button type="button" class="bv-cover-load" data-cover-path="${esc(settings.coverPath)}">Load my cover artwork ↗</button>`:'';
@@ -150,6 +160,7 @@
       const cover=document.createElement('div');cover.className='bv-cover';cover.dataset.pattern=s.pattern;
       cover.innerHTML=`${coverMediaMarkup(s)}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span>`;
       head.prepend(cover);
+      if(p.artwork){head.insertAdjacentHTML('afterbegin',skinScene(s));head.insertAdjacentHTML('beforeend',skinSongs(s));}
       const stats=document.createElement('div');stats.className='bv-profile-stats';
       stats.innerHTML=`<span><b>${(room.top||[]).length}</b>Top friends</span><span><b>${(room.moments||[]).length}</b>Moments</span><span><b>${(room.wall||[]).length}</b>Whiteboard notes</span>`;
       head.appendChild(stats);
@@ -227,7 +238,7 @@
       <section class="bv-social-stage" id="bv-circle" aria-label="Your circle starts here">        <section class="bv-circle-feature" aria-labelledby="bv-circle-title"><div class="bv-circle-art" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><linearGradient id="bv-circle-gradient" x2="0" y2="1"><stop stop-color="#d9ff82"/><stop offset="1" stop-color="#05bb84"/></linearGradient></defs><g stroke="url(#bv-circle-gradient)" stroke-width="16" stroke-linecap="round"><path d="M60 17V103M23 38L97 82M23 82L97 38"/></g></svg></div><small>SIT DOWN. CATCH UP.</small><h2 id="bv-circle-title">Same circle. New stories.</h2><p>Pull up a seat in the Digital Kava Circle.</p><button type="button" class="bv-link" onclick="window.SotaKavaUI.preview()">Take a look →</button></section>
 <section class="bv-community-tools" aria-label="Invite your mates"><p>Moments, music and proper Talanoa. Bring your mates into the circle.</p><button type="button" class="bv-link" id="bv-copy-invite">Copy invite link →</button><small id="bv-invite-status" role="status"></small></section>
       </section>
-      <section class="bv-room-entry" id="bv-your-room" aria-label="Design your room"><div><h2>Your room. Your rules.</h2><p>24 skins. Masi borders. Your colours, music and cover art.</p><small>Studio choice · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="btn" id="bv-edit-room">Open the skin studio →</button></section>
+      <section class="bv-room-entry" id="bv-your-room" aria-label="Design your room"><div><h2>Your room. Your rules.</h2><p>${skins.presets.length} skins. Masi borders. Your colours, music and cover art.</p><small>Studio choice · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="btn" id="bv-edit-room">Open the skin studio →</button></section>
       <footer class="bv-classic-footer"><span>Sota Kece · alive together</span><span>Mutual friends · Your own archive · No ads</span><details><summary>Photo credits</summary><p>Sample photography by <a href="https://unsplash.com/photos/i6r5kQMQ9Zk" target="_blank" rel="noopener noreferrer">Ben Collins</a>, <a href="https://unsplash.com/photos/roOETBSa8mA" target="_blank" rel="noopener noreferrer">Samsung UK</a> and <a href="https://unsplash.com/photos/tZhEr2d3oeM" target="_blank" rel="noopener noreferrer">Hoi An and Da Nang Photographer</a>, via Unsplash.</p></details></footer>
     </div></div>`;
     window.SotaLocalMusic?.mount(app,{beforePlay:stopSample});
@@ -284,7 +295,7 @@
     const p=S.me||example;skinCategory='All';
     studio=document.createElement('dialog');studio.className='bv-studio';studio.setAttribute('aria-labelledby','bv-studio-title');
     studio.innerHTML=`<div class="bv-studio-head"><div><h2 id="bv-studio-title">Make it yours.</h2><p>Pick a skin. Mix the colours. Give your room a personality.</p></div><button type="button" class="bv-close" aria-label="Close skin studio">×</button></div>
-      <div class="bv-studio-body"><div class="bv-studio-controls"><div class="bv-studio-picker"><h3>Choose your room style</h3><p class="bv-style-intro">24 photo-led designs. Start with a palette, then make it yours.</p><div class="bv-skin-categories" id="bv-skin-categories"></div><div class="bv-skin-navigation"><button type="button" id="bv-skins-left" aria-label="Scroll skins left" aria-controls="bv-skin-options">←</button><span>Swipe or browse the colours</span><button type="button" id="bv-skins-right" aria-label="Scroll skins right" aria-controls="bv-skin-options">→</button></div><div class="bv-skin-grid" id="bv-skin-options" tabindex="0" aria-label="Room skins"></div></div>
+      <div class="bv-studio-body"><div class="bv-studio-controls"><div class="bv-studio-picker"><h3>Choose your room style</h3><p class="bv-style-intro">${skins.presets.length} designs. Schools, vanua, celebrations and memories. Make one yours.</p><div class="bv-skin-categories" id="bv-skin-categories"></div><div class="bv-skin-navigation"><button type="button" id="bv-skins-left" aria-label="Scroll skins left" aria-controls="bv-skin-options">←</button><span>Swipe or browse the colours</span><button type="button" id="bv-skins-right" aria-label="Scroll skins right" aria-controls="bv-skin-options">→</button></div><div class="bv-skin-grid" id="bv-skin-options" tabindex="0" aria-label="Room skins"></div></div>
       <div class="bv-studio-custom"><h3>Add your own twist</h3><div class="bv-controls">
         <div><label for="bv-accent">Accent colour</label><input id="bv-accent" type="color" value="${draft.accent}"></div>
         <div><label for="bv-background">Page colour</label><input id="bv-background" type="color" value="${draft.background}"></div>
@@ -340,7 +351,9 @@
     const gallery=studio.querySelector('#bv-skin-options'),previousScroll=gallery.scrollLeft;
     gallery.innerHTML=skins.presets.filter(p=>skinCategory==='All'||p.category===skinCategory).map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<strong>${esc(p.name)}</strong></button>`).join('');
     studio.querySelectorAll('[data-skin]').forEach(b=>b.addEventListener('click',()=>{
-      draft=skins.normalize({id:b.dataset.skin,layout:draft.layout,interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath});
+      const oldPreset=skins.presets.find(p=>p.id===draft.id);
+      const personalNote=draft.note!==oldPreset.note?draft.note:undefined;
+      draft=skins.normalize({id:b.dataset.skin,note:personalNote,layout:draft.layout,interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath});
       for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle'])studio.querySelector('#bv-'+key).value=draft[key];
       drawOptions();drawPreview();studio.querySelector(`[data-skin="${draft.id}"]`).focus({preventScroll:true});
     }));

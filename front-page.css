@@ -402,3 +402,15 @@
 .bv-local-music-row strong,.bv-local-music-row small{display:block;overflow-wrap:anywhere}.bv-local-music-row small{font-size:11px;color:#d0c4de;margin-top:4px}
 .bv-local-music-row [aria-pressed=true]{border-color:#89d6ff}
 @media(max-width:480px){.bv-music-dialog{padding:16px}.bv-local-music-row{grid-template-columns:1fr 1fr}.bv-local-music-row>div{grid-column:1/-1}.bv-local-music-row button{width:100%}}
+
+/* Core collection: selected artwork loads on demand; photographs stay clear. */
+.bv-skin-scene{position:relative;width:100%;height:180px;background-color:var(--bv-bg);background-position:center;background-size:cover;border-bottom:10px solid var(--bv-accent);border-image:var(--bv-border) 12 repeat;box-sizing:border-box;display:flex;align-items:center;padding:20px;color:var(--bv-ink);overflow:hidden}
+.bv-skin-scene>span{max-width:44%;font:700 clamp(18px,3vw,30px)/1.15 var(--bv-font);overflow-wrap:anywhere;text-shadow:0 1px 0 var(--bv-bg)}
+.bv-preview:has(.bv-skin-scene){background-image:var(--bv-art);background-position:center;background-size:cover}
+.bv-preview:has(.bv-skin-scene) .bv-mini-card{background-color:var(--bv-panel);backdrop-filter:none}
+.bv-preview:has(.bv-skin-scene) :is(.bv-profile-intro,.bv-photo-track,.bv-track){border-color:var(--bv-accent)}
+.bv-skin-story{background:var(--bv-panel);color:var(--bv-ink);padding:14px 18px;border-top:1px solid var(--bv-accent);font:400 12px/1.6 system-ui;overflow-wrap:anywhere}
+.bv-skin-story>small{display:block;color:var(--bv-muted);font-size:11px}
+.bv-skin-story details{margin-top:8px}.bv-skin-story summary{min-height:44px;display:list-item;align-content:center;cursor:pointer;font-weight:700}.bv-skin-story a{display:block;padding:9px 0;color:var(--bv-link);min-height:44px;box-sizing:border-box}.bv-skin-story a span{font-size:11px}.bv-skin-story p{margin:0 0 6px}
+#app.bv-home-skinned .bv-neon-section{background-image:var(--bv-art),var(--bv-pattern);background-size:cover,var(--bv-pattern-size);background-position:center top}
+@media(max-width:650px){.bv-skin-scene{height:148px;padding:14px}.bv-skin-scene>span{font-size:18px}.bv-skin-story{padding:12px 14px}}
