@@ -11,3 +11,50 @@
 #app.bv-welcome .sk-original-picture {display:block;overflow:hidden;}
 #app.bv-welcome .sk-original-design {aspect-ratio:auto!important;height:auto!important;margin-top:-4.70588235%;}
 @media(max-width:760px){#app.bv-welcome .sk-original-design {margin-top:-10.31746032%;}}
+
+/* Dimau header lighting â€” 18 October 2026. History's original artwork stays intact. */
+@layer dimau-history-lighting {
+ :root {
+  --dimau-header-rest:0 0 0 1px rgba(135,206,235,.35),0 0 12px rgba(30,144,255,.45),inset 0 0 14px rgba(30,144,255,.18);
+  --dimau-header-lit:0 0 0 2px rgba(255,255,255,.98),0 0 14px 4px rgba(56,189,248,.95),0 0 32px 8px rgba(30,144,255,.72),inset 0 0 18px 3px rgba(240,249,255,.65);
+ }
+ /* A decorative tile around the existing mark preserves its size and header position. */
+ html:root body .dimau-owner-logo-frame {position:relative!important;isolation:isolate;overflow:visible!important;background:transparent!important;}
+ html:root body .dimau-owner-logo-frame::before {
+  content:""!important;position:absolute!important;left:50%!important;top:50%!important;inset:auto auto auto auto;
+  width:48px!important;height:48px!important;transform:translate(-50%,-50%)!important;box-sizing:border-box!important;
+  border:1.5px solid #1e90ff!important;border-radius:14px!important;background:#fff!important;
+  box-shadow:var(--dimau-header-rest)!important;pointer-events:none;z-index:-1;
+ }
+ html:root body .dimau-owner-logo-frame img {position:relative!important;z-index:1;}
+ html:root body .dimau-owner-logo-frame:is(:hover,:focus-within)::before,
+ html:root body a:focus-visible .dimau-owner-logo-frame::before {box-shadow:var(--dimau-header-lit)!important;}
+ /* Some native headers place the original image directly in the brand link. */
+ html:root body :is(img.dimau-owner-logo,img[src*="dimau-owner-logo"],img[src$="/dimau-fintech-logo.png"]):not(.dimau-owner-logo-frame img) {
+  border-color:#1e90ff!important;border-radius:8px!important;outline:1.5px solid #1e90ff!important;outline-offset:4.5px!important;
+  box-shadow:0 0 0 4.5px #fff,0 0 0 6px rgba(135,206,235,.35),0 0 12px 6px rgba(30,144,255,.45),inset 0 0 14px rgba(30,144,255,.18)!important;
+ }
+ html:root body :is(img.dimau-owner-logo,img[src*="dimau-owner-logo"],img[src$="/dimau-fintech-logo.png"]):not(.dimau-owner-logo-frame img):hover,
+ html:root body a:focus-visible :is(img.dimau-owner-logo,img[src*="dimau-owner-logo"],img[src$="/dimau-fintech-logo.png"]):not(.dimau-owner-logo-frame img) {box-shadow:var(--dimau-header-lit)!important;}
+ /* History already has this native48px tile; keep one border and one glow. */
+ html:root body a[class*="visitor-experience_dialogLogo"] .dimau-owner-logo-frame::before {content:none!important;}
+ html:root body a[class*="visitor-experience_dialogLogo"] {border-color:#1e90ff!important;box-shadow:var(--dimau-header-rest)!important;}
+ html:root body a[class*="visitor-experience_dialogLogo"]:is(:hover,:focus-visible) {box-shadow:var(--dimau-header-lit)!important;}
+ html:root body #root#root :is(button.music-mini__play,button.nav-music__play),
+ html:root body #app#app button#sk-hero-play,
+ html:root body button[data-music-toggle][data-music-toggle] {box-shadow:var(--dimau-header-rest)!important;overflow:visible!important;}
+ html:root body #root#root :is(button.music-mini__play,button.nav-music__play):is(:hover,:focus-visible,:active),
+ html:root body #app#app button#sk-hero-play:is(:hover,:focus-visible,:active),
+ html:root body button[data-music-toggle][data-music-toggle]:is(:hover,:focus-visible,:active) {box-shadow:var(--dimau-header-lit)!important;}
+ @media(max-width:720px){
+  html:root body .dimau-owner-logo-frame::before {border-radius:10px!important;}
+  html:root body :is(img.dimau-owner-logo,img[src*="dimau-owner-logo"],img[src$="/dimau-fintech-logo.png"]):not(.dimau-owner-logo-frame img) {border-radius:4px!important;}
+ }
+ @media(prefers-reduced-motion:reduce){html:root body .dimau-owner-logo-frame::before {transition:none!important;}}
+ @media(forced-colors:active){
+  html:root body .dimau-owner-logo-frame::before {background:Canvas!important;border-color:CanvasText!important;box-shadow:none!important;}
+  html:root body :is(img.dimau-owner-logo,img[src*="dimau-owner-logo"],img[src$="/dimau-fintech-logo.png"]) {outline-color:CanvasText!important;box-shadow:none!important;}
+  html:root body #root#root :is(button.music-mini__play,button.nav-music__play),html:root body #app#app button#sk-hero-play,html:root body button[data-music-toggle][data-music-toggle] {box-shadow:none!important;}
+ }
+ @media print{html:root body .dimau-owner-logo-frame::before,html:root body img.dimau-owner-logo {box-shadow:none!important;}}
+}
