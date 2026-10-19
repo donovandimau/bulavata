@@ -19,7 +19,9 @@
  * Any element with data-dimau-install-button (e.g. a "Get the app" button) installs, or shows the steps, when
  * clicked, and is hidden when the app is already running installed.
  *
- * API: window.DimauInstall = {app, label, platform, standalone, canInstall(), install(), help(), status(), save()}
+ * Inside a frame (an app embedded in another page) it stays silent and DimauInstall.framed is true.
+ *
+ * API: window.DimauInstall = {app, label, platform, standalone, framed, canInstall(), install(), help(), status(), save()}
  * Every outcome is announced as a "dimau:install" event on document, detail {app, outcome, platform},
  * so any analytics can count installs without this file knowing about it.
  * Nothing here uploads anything. Visit counts and choices stay in this browser's localStorage.
@@ -38,6 +40,23 @@
   var NOTIFY = !(me && me.dataset.notify === 'off');
   var STORE = 'dimau.install.' + APP;
   var MONTH = 30 * 24 * 3600 * 1000;
+  // Embedded in another page (Ops and MyFiji show apps in frames), the browser can only install the page around it,
+  // so this copy stays silent: no offer, no steps, no notes, no worker, and "Get the app" buttons are hidden.
+  var framed;
+  try { framed = window.self !== window.top; } catch (e) { framed = true; }
+  if (framed) {
+    try { var hideFramed = new CSSStyleSheet(); hideFramed.replaceSync('[data-dimau-install-button]{display:none!important}'); document.adoptedStyleSheets = document.adoptedStyleSheets.concat(hideFramed); } catch (e) {}
+    window.DimauInstall = {
+      app: APP, label: LABEL, platform: 'framed', standalone: false, framed: true,
+      canInstall: function () { return false; },
+      install: function () { return Promise.resolve('framed'); },
+      help: function () {},
+      status: function () { return Promise.resolve(null); },
+      save: function () { return Promise.resolve({status: null, persisted: false}); },
+      registration: function () { return null; }
+    };
+    return;
+  }
   var ua = navigator.userAgent || '';
   var standalone = matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: window-controls-overlay)').matches || navigator.standalone === true;
   var platform =
@@ -273,7 +292,7 @@
   }
 
   window.DimauInstall = {
-    app: APP, label: LABEL, platform: platform, standalone: standalone,
+    app: APP, label: LABEL, platform: platform, standalone: standalone, framed: false,
     canInstall: function () { return !!deferred; },
     install: install,
     help: help,
