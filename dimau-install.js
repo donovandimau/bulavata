@@ -19,9 +19,10 @@
  * Any element with data-dimau-install-button (e.g. a "Get the app" button) installs, or shows the steps, when
  * clicked, and is hidden when the app is already running installed.
  *
- * Inside a frame (an app embedded in another page) it stays silent and DimauInstall.framed is true.
+ * Inside a frame (an app embedded in another page) it stays silent and DimauInstall.framed is true; inside a store
+ * app (Capacitor) it stays silent and DimauInstall.native is true.
  *
- * API: window.DimauInstall = {app, label, platform, standalone, framed, canInstall(), install(), help(), status(), save()}
+ * API: window.DimauInstall = {app, label, platform, standalone, framed, native, canInstall(), install(), help(), status(), save()}
  * Every outcome is announced as a "dimau:install" event on document, detail {app, outcome, platform},
  * so any analytics can count installs without this file knowing about it.
  * Nothing here uploads anything. Visit counts and choices stay in this browser's localStorage.
@@ -41,15 +42,17 @@
   var STORE = 'dimau.install.' + APP;
   var MONTH = 30 * 24 * 3600 * 1000;
   // Embedded in another page (Ops and MyFiji show apps in frames), the browser can only install the page around it,
-  // so this copy stays silent: no offer, no steps, no notes, no worker, and "Get the app" buttons are hidden.
-  var framed;
+  // and inside a store app (Capacitor loading the site) the app is already installed. Either way this copy stays
+  // silent: no offer, no steps, no notes, no worker, and "Get the app" buttons are hidden.
+  var framed, wrapped = false;
   try { framed = window.self !== window.top; } catch (e) { framed = true; }
-  if (framed) {
+  try { wrapped = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()); } catch (e) {}
+  if (framed || wrapped) {
     try { var hideFramed = new CSSStyleSheet(); hideFramed.replaceSync('[data-dimau-install-button]{display:none!important}'); document.adoptedStyleSheets = document.adoptedStyleSheets.concat(hideFramed); } catch (e) {}
     window.DimauInstall = {
-      app: APP, label: LABEL, platform: 'framed', standalone: false, framed: true,
+      app: APP, label: LABEL, platform: framed ? 'framed' : 'native', standalone: !framed, framed: framed, native: !framed,
       canInstall: function () { return false; },
-      install: function () { return Promise.resolve('framed'); },
+      install: function () { return Promise.resolve(framed ? 'framed' : 'native'); },
       help: function () {},
       status: function () { return Promise.resolve(null); },
       save: function () { return Promise.resolve({status: null, persisted: false}); },
@@ -76,12 +79,19 @@
     desktop: 'Click the install icon at the right of the address bar, or open the browser menu and choose “Install”.' + (SHARED ? ' No install option?' : '') + EARLIER
   };
   var asked = new URLSearchParams(location.search).has('install');
-  // Removes ?install=1 so a reload or a shared link does not offer again.
+  // Removes ?install=1 so a reload or a shared link does not offer again. The Next.js App Router ignores an address
+  // change whose state carries its own __NA marker and later writes its stored address, flag included, back; so it
+  // gets a copy without the marker (Next.js adds it back itself). Every other site keeps its history state as it was.
   function dropFlag() {
     var params = new URLSearchParams(location.search);
     if (!params.has('install')) return;
     params.delete('install');
-    try { history.replaceState(history.state, '', location.pathname + (params.toString() ? '?' + params : '') + location.hash); } catch (e) {}
+    var kept = history.state;
+    if (kept && typeof kept === 'object' && kept.__NA) {
+      kept = {};
+      for (var key in history.state) if (key !== '__NA') kept[key] = history.state[key];
+    }
+    try { history.replaceState(kept, '', location.pathname + (params.toString() ? '?' + params : '') + location.hash); } catch (e) {}
   }
   if (asked) {
     dropFlag();
@@ -292,7 +302,7 @@
   }
 
   window.DimauInstall = {
-    app: APP, label: LABEL, platform: platform, standalone: standalone, framed: false,
+    app: APP, label: LABEL, platform: platform, standalone: standalone, framed: false, native: false,
     canInstall: function () { return !!deferred; },
     install: install,
     help: help,
