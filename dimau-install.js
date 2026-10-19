@@ -56,9 +56,21 @@
     inapp: 'You are in an in-app browser. Open the menu (⋯) and choose “Open in browser”, then install from there.',
     desktop: 'Click the install icon at the right of the address bar, or open the browser menu and choose “Install”.' + (SHARED ? ' No install option?' : '') + EARLIER
   };
-  var params = new URLSearchParams(location.search);
-  var asked = params.has('install');
-  if (asked) { params.delete('install'); try { history.replaceState(history.state, '', location.pathname + (params.toString() ? '?' + params : '') + location.hash); } catch (e) {} }
+  var asked = new URLSearchParams(location.search).has('install');
+  // Removes ?install=1 so a reload or a shared link does not offer again.
+  function dropFlag() {
+    var params = new URLSearchParams(location.search);
+    if (!params.has('install')) return;
+    params.delete('install');
+    try { history.replaceState(history.state, '', location.pathname + (params.toString() ? '?' + params : '') + location.hash); } catch (e) {}
+  }
+  if (asked) {
+    dropFlag();
+    // Routers that read the address before this script runs (the Next.js App Router) write it back while
+    // hydrating, so check again once the page has loaded and a moment later.
+    var settle = function () { dropFlag(); setTimeout(dropFlag, 1000); };
+    if (document.readyState === 'complete') settle(); else window.addEventListener('load', settle);
+  }
 
   function load() { try { return JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch (e) { return {}; } }
   function save(patch) { var s = load(); for (var k in patch) s[k] = patch[k]; try { localStorage.setItem(STORE, JSON.stringify(s)); } catch (e) {} return s; }
