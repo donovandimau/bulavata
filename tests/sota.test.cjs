@@ -30,6 +30,7 @@ assert(html.includes('window.BulaSkinStudio?.apply(p,R)'));
 assert(html.indexOf('src="/skin-studio.js"')<html.lastIndexOf('boot();'));
 for(const marker of ['async function postPulse','async function exportArchive','async function viewCrewRoom','async function viewFriends'])assert(html.includes(marker));
 assert(html.includes('<title>Sota Kece'));
+assert(/<link rel="manifest" href="\/manifest\.webmanifest">\s*<script src="\/dimau-install\.js(?:\?v=[\w-]+)?" data-app="bulavata" data-label="Sota Kece" defer><\/script>/.test(html)); // Dimau install kit, no data-sw: sw.js stays the only worker.
 assert(!html.includes('Bula Vata'));assert(!html.includes('Tanoa 8'));
 assert(!html.includes('fonts.googleapis.com'));assert(!html.includes('cdn.jsdelivr.net'));
 for(const bad of ['javascript:alert(1)','http://example.com/song.mp3','https://name:secret@example.com/song.mp3','https://example.com/page'])assert.equal(skins.safeUrl(bad,true),'');
