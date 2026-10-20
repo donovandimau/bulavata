@@ -109,3 +109,6 @@ html:root body:not(#dimau-pill-unused) :is(nav.bottom){scrollbar-color:auto!impo
 }
 
 @media(max-width:360px){#app.bv-welcome .sk-pattern-heading{font-size:32px!important;}}
+
+/* Keep the existing music control at the header top-right inset. */
+#app.bv-welcome .sk-site-header.sk-pattern-masthead .sk-hero-play {align-self:start;}
