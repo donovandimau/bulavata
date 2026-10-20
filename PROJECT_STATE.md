@@ -71,3 +71,8 @@ Owner explicitly rejected the plain-looking90%opaque pale panels and asks for th
 ## Current owner steering — orange light-ups
 
 Owner asked to replace blue light-ups with orange. Panel outlines/rest/hover glows,media-panel borders,real entrance-control glows and header icon lighting now use warm orange #ff8a24 with peach highlights. Retain42%glass/1pxblur,original blue pattern420pxrepeat,navy readable words,pale word edge,layout,all original image colours and playlist handlers. No orange/red font experiment or extra bullets added. Header lighting CSS is local to Sota;Fiji History source remains untouched. CSS/cache versions and record only. Explicit publication HOLD continues.
+
+
+## Current owner step — bigger desktop type and colourful readable action pills
+
+Desktop native copy grows to20/21px,buttons20px,labels18px,captions17px,main heading46px,section headings40px,masthead96–108px. Supporting dialogs/studio controls grow too. Real action labels remain opaque navy and wrap on small widths;Open the skin studio is on its own row below the description. Small translucent action pills use peach,pink,gold,aqua,violet and lime tints with matching coloured dot markers.42%glass/1pxblur panels and blue pattern unchanged. White lettering halos and hot-white hover rings are replaced by warm orange. Original supplied raster design remains exact;all JS/playlist behaviour retained. Phone font sizes retained. CSS/cache/record only. HOLD for review.

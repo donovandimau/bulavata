@@ -436,7 +436,7 @@
  transform:translateY(-50%);margin:0;padding:0;border:0;border-radius:999px;
  background:transparent;box-shadow:none;cursor:pointer;
 }
-#app.bv-welcome .sk-hero-create:is(:hover,:focus-visible) {box-shadow:0 0 0 2px #fff,0 0 18px #ff8a24;}
+#app.bv-welcome .sk-hero-create:is(:hover,:focus-visible) {box-shadow:0 0 0 2px #ff9d37,0 0 18px #ff8a24;}
 #app.bv-welcome .sk-hero-create:focus-visible {outline:2px solid #fff;outline-offset:3px;}
 #app.bv-welcome .bv-classic-header {grid-template-columns:minmax(100px,.7fr) minmax(240px,1fr) auto;}
 #app.bv-welcome .sk-utility-actions {
@@ -466,7 +466,7 @@
 /* Owner: original blue pattern with Fiji History's readable blue-glass panels. */
 #app.bv-welcome {
  --sk-glass:rgba(240,248,255,.42);--sk-glass-ink:#0b2540;--sk-glass-link:#075b94;
- --sk-word-edge:-1px -1px 0 #f0f8ff,1px -1px 0 #f0f8ff,-1px 1px 0 #f0f8ff,1px 1px 0 #f0f8ff;
+ --sk-word-edge:-1px -1px 0 #ffc078,1px -1px 0 #ffc078,-1px 1px 0 #ffc078,1px 1px 0 #ffc078;
  background-color:#123d58;
  background-image:url('/assets/sota-blue-masi-lettering-20261020.png');
  background-position:center top;background-size:420px 420px;background-repeat:repeat;
@@ -492,7 +492,7 @@
 #app.bv-welcome .bv-collage-caption {
  color:var(--sk-glass-ink);text-shadow:var(--sk-word-edge);
 }
-#app.bv-welcome :is(.bv-social-stage,.bv-room-entry) h2 {font-weight:800;text-shadow:var(--sk-word-edge),0 0 8px rgba(240,248,255,.85);}
+#app.bv-welcome :is(.bv-social-stage,.bv-room-entry) h2 {font-weight:800;text-shadow:var(--sk-word-edge),0 0 8px rgba(255,138,36,.85);}
 #app.bv-welcome :is(.bv-social-stage,.bv-room-entry,.bv-classic-footer) :is(.bv-link,a) {color:var(--sk-glass-link);text-shadow:var(--sk-word-edge);font-weight:800;}
 #app.bv-welcome .bv-classic-header .bv-home-search input {background:rgba(255,255,255,.94);color:var(--sk-glass-ink);border-color:#ffad66;}
 #app.bv-welcome .bv-classic-header .bv-home-search input:focus-visible {outline:3px solid #075b94;outline-offset:2px;}
@@ -506,7 +506,7 @@
 #app.bv-welcome .bv-classic-footer {font-size:13px;font-weight:700;line-height:1.5;}
 #app.bv-welcome .bv-collage-caption b {font-size:inherit;}
 #app.bv-welcome .bv-classic-nav :is(a,button,span) {font-weight:800;}
-@media(hover:hover){#app.bv-welcome .bv-neon-section :is(.bv-classic-header,.bv-social-stage,.bv-room-entry):hover{border-color:#ffbd80;box-shadow:0 0 0 1px rgba(255,173,102,.5),0 0 22px rgba(255,138,36,.55),inset 0 1px rgba(255,255,255,.8);}}
+@media(hover:hover){#app.bv-welcome .bv-neon-section :is(.bv-classic-header,.bv-social-stage,.bv-room-entry):hover{border-color:#ffbd80;box-shadow:0 0 0 1px rgba(255,173,102,.5),0 0 22px rgba(255,138,36,.55),inset 0 1px rgba(255,157,55,.8);}}
 @media(prefers-reduced-transparency:reduce){#app.bv-welcome .bv-neon-section :is(.bv-classic-header,.bv-classic-nav,.bv-social-stage,.bv-room-entry,.bv-classic-footer,.bv-collage-caption){background:#eef8ff;-webkit-backdrop-filter:none;backdrop-filter:none;}}
 @media(forced-colors:active){
  #app.bv-welcome{background:Canvas;}
@@ -522,10 +522,77 @@
 }
 #app.bv-welcome .bv-neon-section :is(.btn,.bv-home-search button,.sk-utility-actions>button):is(:hover,:focus-visible,:active) {
  border-color:#ffbd80;
- box-shadow:0 0 0 2px rgba(255,255,255,.98),0 0 14px 4px rgba(255,166,74,.95),0 0 32px 8px rgba(255,138,36,.72),inset 0 0 18px 3px rgba(255,243,230,.65);
+ box-shadow:0 0 0 2px rgba(255,157,55,.98),0 0 14px 4px rgba(255,166,74,.95),0 0 32px 8px rgba(255,138,36,.72),inset 0 0 18px 3px rgba(255,175,76,.65);
 }
 #app.bv-welcome .bv-neon-section :is(.btn,.bv-home-search button,.sk-utility-actions>button):focus-visible {outline:2px solid #ff8a24;outline-offset:3px;}
 @media(forced-colors:active){
  #app.bv-welcome .bv-neon-section :is(.bv-music-feature,.bv-people-collage,.btn,.bv-home-search button,.sk-utility-actions>button){border-color:ButtonText;box-shadow:none;}
  #app.bv-welcome .bv-neon-section :is(.btn,.bv-home-search button,.sk-utility-actions>button):focus-visible{outline-color:Highlight;}
+}
+
+/* Owner: colourful action pills with labels above the surface, never clipped. */
+#app.bv-welcome {--sk-orange-rest:0 0 0 1px #ffad6670,0 0 14px #ff8a2473,inset 0 0 12px #ff8a242e;--sk-orange-lit:0 0 0 2px #ff9d37,0 0 14px 4px #ffa64af2,0 0 32px 8px #ff8a24b8,inset 0 0 18px 3px #ffaf4ca6;}
+#app.bv-welcome :is(.sk-utility-actions>button,.bv-music-actions>button,.bv-circle-feature>.bv-link,.bv-community-tools>.bv-link,#bv-edit-room,.bv-classic-nav>a,.bv-classic-nav>button) {
+ --sk-pill-rgb:255,196,118;--sk-dot:#e56b00;
+ position:relative;isolation:isolate;z-index:1;box-sizing:border-box;
+ display:inline-flex;align-items:center;justify-content:center;gap:.55em;
+ min-width:0;min-height:44px;max-width:100%;height:auto;
+ padding:10px 16px;border:2px solid rgb(var(--sk-pill-rgb));border-radius:9px 22px;
+ background:rgba(var(--sk-pill-rgb),.78);background-image:none;
+ color:#081f35;-webkit-text-fill-color:#081f35;text-shadow:none;
+ opacity:1;font-weight:800;line-height:1.4;white-space:normal;overflow:visible;overflow-wrap:anywhere;
+ text-align:center;text-decoration:none;box-shadow:var(--sk-orange-rest);
+}
+#app.bv-welcome :is(.sk-utility-actions>button,.bv-music-actions>button,.bv-circle-feature>.bv-link,.bv-community-tools>.bv-link,#bv-edit-room,.bv-classic-nav>a,.bv-classic-nav>button)::before {
+ content:'';position:static;display:block;flex:0 0 .5em;width:.5em;height:.5em;
+ border-radius:50%;background:var(--sk-dot);border:1px solid #081f35;box-shadow:none;pointer-events:none;
+}
+#app.bv-welcome :is(.sk-utility-actions>button,.bv-music-actions>button,.bv-circle-feature>.bv-link,.bv-community-tools>.bv-link,#bv-edit-room,.bv-classic-nav>a,.bv-classic-nav>button):is(:hover,:focus-visible,:active) {
+ background:rgba(var(--sk-pill-rgb),.78);color:#081f35;-webkit-text-fill-color:#081f35;
+ opacity:1;text-shadow:none;box-shadow:var(--sk-orange-lit);border-color:#ff8a24;transform:none;
+}
+#app.bv-welcome :is(.sk-utility-actions>button,.bv-music-actions>button,.bv-circle-feature>.bv-link,.bv-community-tools>.bv-link,#bv-edit-room,.bv-classic-nav>a,.bv-classic-nav>button):focus-visible {outline:3px solid #ff8a24;outline-offset:3px;}
+#app.bv-welcome .sk-utility-actions>button:nth-child(2),#app.bv-welcome .bv-circle-feature>.bv-link {--sk-pill-rgb:255,185,220;--sk-dot:#c4146f;}
+#app.bv-welcome .bv-music-actions>button:first-child,#app.bv-welcome .bv-classic-nav>a:first-child {--sk-pill-rgb:255,227,134;--sk-dot:#c47900;}
+#app.bv-welcome .bv-music-actions>button:nth-child(2),#app.bv-welcome .bv-classic-nav>a:nth-child(2) {--sk-pill-rgb:157,241,236;--sk-dot:#008b85;}
+#app.bv-welcome #bv-edit-room,#app.bv-welcome .bv-classic-nav>a:nth-child(3) {--sk-pill-rgb:214,181,255;--sk-dot:#7630cb;}
+#app.bv-welcome .bv-community-tools>.bv-link,#app.bv-welcome .bv-classic-nav>button {--sk-pill-rgb:212,247,133;--sk-dot:#448600;}
+#app.bv-welcome .bv-classic-nav {flex-wrap:wrap;gap:10px;padding:12px;}
+#app.bv-welcome .bv-room-entry {grid-template-columns:minmax(0,1fr);gap:18px;}
+#app.bv-welcome #bv-edit-room {justify-self:start;flex-shrink:1;width:auto;margin:0;}
+#app.bv-welcome .bv-circle-feature>.bv-link {justify-self:start;}
+#app.bv-welcome .bv-circle-feature h2 {color:#3e175f;}
+#app.bv-welcome .bv-room-entry h2 {color:#65153c;}
+#app.bv-welcome .bv-neon-section .bv-home-search input:focus-visible {outline-color:#ff8a24;box-shadow:var(--sk-orange-lit);}
+/* A larger desktop scale; keep phone typography at its current sizes. */
+@media(min-width:761px){
+ #app.bv-welcome {font-size:20px;}
+ #app.bv-welcome .sk-pattern-heading {font-size:clamp(96px,7.2vw,108px)!important;}
+ #app.bv-welcome .bv-classic-header :is(label,small),#app.bv-welcome .bv-wordmark small {font-size:18px;line-height:1.5;}
+ #app.bv-welcome .bv-classic-header .bv-home-search input {font-size:18px;height:auto;min-height:50px;}
+ #app.bv-welcome .bv-classic-header .bv-home-search button {font-size:28px;width:50px;height:50px;}
+ #app.bv-welcome .sk-utility-actions {padding-top:32px;flex-wrap:wrap;}
+ #app.bv-welcome :is(.sk-utility-actions>button,.bv-classic-nav>a,.bv-classic-nav>button,.bv-music-actions>button,.bv-circle-feature>.bv-link,.bv-community-tools>.bv-link,#bv-edit-room) {font-size:20px;min-height:50px;}
+ #app.bv-welcome .bv-classic-nav>span {font-size:18px;line-height:1.5;}
+ #app.bv-welcome .bv-music-feature {height:auto;min-height:355px;}
+ #app.bv-welcome .bv-music-copy {position:relative;inset:auto;padding:26px 18px 18px;}
+ #app.bv-welcome .bv-music-copy h1 {font-size:46px;line-height:1.12;}
+ #app.bv-welcome .bv-music-copy p {font-size:20px;line-height:1.5;}
+ #app.bv-welcome .bv-music-copy>small {font-size:16px;line-height:1.5;}
+ #app.bv-welcome .bv-collage-tile {font-size:16px;}
+ #app.bv-welcome .bv-collage-tile.bv-tile-emoji {font-size:30px;}
+ #app.bv-welcome .bv-collage-caption,#app.bv-welcome .bv-classic-footer {font-size:17px;line-height:1.6;}
+ #app.bv-welcome :is(.bv-social-stage,.bv-room-entry) h2 {font-size:40px!important;line-height:1.2;}
+ #app.bv-welcome :is(.bv-social-stage,.bv-room-entry) p {font-size:21px;line-height:1.6;}
+ #app.bv-welcome :is(.bv-social-stage,.bv-room-entry) small {font-size:17px;line-height:1.5;}
+ #app.bv-welcome :is(.bv-account-dialog,.bv-music-dialog),.sk-playlist,.bv-studio {font-size:20px;}
+ #app.bv-welcome :is(.bv-account-dialog,.bv-music-dialog) :is(input,button,label),.sk-playlist :is(button,input,.sk-playlist-title),.bv-studio :is(button,input,select,textarea,label,strong) {font-size:18px;line-height:1.5;}
+ #app.bv-welcome :is(.bv-account-dialog,.bv-music-dialog) h2,.sk-playlist h2,.bv-studio h2 {font-size:32px;}
+ #app.bv-welcome .bv-music-dialog h3,.bv-studio :is(h3,h4) {font-size:24px;}
+ #app.bv-welcome :is(.bv-account-dialog,.bv-music-dialog) :is(small,.sub),.sk-playlist :is(label,small,.sk-playlist-status),.bv-studio :is(small,.sub) {font-size:17px;line-height:1.5;}
+}
+@media(forced-colors:active){
+ #app.bv-welcome :is(.sk-utility-actions>button,.bv-music-actions>button,.bv-circle-feature>.bv-link,.bv-community-tools>.bv-link,#bv-edit-room,.bv-classic-nav>a,.bv-classic-nav>button){background:ButtonFace;color:ButtonText;-webkit-text-fill-color:ButtonText;border-color:ButtonText;box-shadow:none;text-shadow:none;}
+ #app.bv-welcome :is(.sk-utility-actions>button,.bv-music-actions>button,.bv-circle-feature>.bv-link,.bv-community-tools>.bv-link,#bv-edit-room,.bv-classic-nav>a,.bv-classic-nav>button)::before{background:ButtonText;border-color:ButtonText;}
+ #app.bv-welcome :is(.bv-circle-feature,.bv-room-entry) h2 {color:CanvasText;}
 }
