@@ -465,7 +465,11 @@
 
 /* Owner: carry the supplied blue header pattern through the public page spaces. */
 #app.bv-welcome {
- background:#123d58 linear-gradient(rgba(5,25,43,.68),rgba(5,25,43,.68)),url('/assets/sota-blue-masi-lettering-20261020.png') center top/420px 420px repeat;
+ background-color:#123d58;
+ background-image:linear-gradient(rgba(5,25,43,.68),rgba(5,25,43,.68)),url('/assets/sota-blue-masi-lettering-20261020.png');
+ background-position:center top;
+ background-size:auto,420px 420px;
+ background-repeat:repeat;
 }
 #app.bv-welcome .bv-neon-section,
 #app.bv-welcome .sk-original-front {background:transparent;}
