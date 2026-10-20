@@ -461,3 +461,14 @@
 #app.bv-welcome .bv-classic-header .bv-wordmark {grid-column:1/-1;padding:0;}
 #app.bv-welcome .bv-classic-header .bv-wordmark small {margin:0;}
 @media(max-width:700px){#app.bv-welcome .bv-classic-header{grid-template-columns:minmax(0,1fr);}}
+
+
+/* Owner: carry the supplied blue header pattern through the public page spaces. */
+#app.bv-welcome {
+ background:#123d58 linear-gradient(rgba(5,25,43,.68),rgba(5,25,43,.68)),url('/assets/sota-blue-masi-lettering-20261020.png') center top/420px 420px repeat;
+}
+#app.bv-welcome .bv-neon-section,
+#app.bv-welcome .sk-original-front {background:transparent;}
+#app.bv-welcome .bv-classic::before,
+#app.bv-welcome .bv-classic-footer::after {content:none;display:none;}
+@media(forced-colors:active){#app.bv-welcome{background:Canvas;}}
