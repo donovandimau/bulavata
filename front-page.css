@@ -463,32 +463,45 @@
 @media(max-width:700px){#app.bv-welcome .bv-classic-header{grid-template-columns:minmax(0,1fr);}}
 
 
-/* Owner: keep the supplied pattern's original light blue colours in every gap. */
+/* Owner: original blue pattern with Fiji History's readable blue-glass panels. */
 #app.bv-welcome {
+ --sk-glass:rgba(238,248,255,.9);--sk-glass-ink:#0b2540;--sk-glass-link:#075b94;
  background-color:#123d58;
  background-image:url('/assets/sota-blue-masi-lettering-20261020.png');
- background-position:center top;
- background-size:420px 420px;
- background-repeat:repeat;
+ background-position:center top;background-size:420px 420px;background-repeat:repeat;
 }
-#app.bv-welcome :is(.bv-neon-section,.sk-original-front,.bv-classic-nav,.bv-social-stage,.bv-room-entry) {background:transparent;}
+#app.bv-welcome :is(.bv-neon-section,.sk-original-front) {background:transparent;}
 #app.bv-welcome .bv-classic::before,
 #app.bv-welcome .bv-classic-footer::after,
 #app.bv-welcome .bv-social-stage::before,
 #app.bv-welcome .bv-social-stage::after {content:none;display:none;}
-#app.bv-welcome :is(.bv-wordmark small,.bv-home-search label,.bv-home-search small,.bv-collage-caption,.bv-classic-footer,.bv-classic-footer a) {color:#fff;}
-#app.bv-welcome .bv-neon-section :is(h1,h2,p,small,label,.bv-link,.bv-classic-nav a,.bv-classic-nav button,.bv-classic-nav>span,.bv-classic-footer,.bv-collage-caption) {
- text-shadow:-1px -1px 1px #05253e,1px -1px 1px #05253e,-1px 1px 1px #05253e,1px 1px 1px #05253e,0 0 6px #a7f2ff,0 0 12px rgba(31,213,255,.65);
+#app.bv-welcome .bv-neon-section :is(.bv-classic-header,.bv-classic-nav,.bv-social-stage,.bv-room-entry,.bv-classic-footer,.bv-collage-caption) {
+ box-sizing:border-box;background:var(--sk-glass);color:var(--sk-glass-ink);
+ border:1.5px solid #1e90ff;border-radius:6px 26px;
+ -webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);
+ box-shadow:0 0 0 1px rgba(135,206,235,.35),0 0 18px rgba(30,144,255,.45),inset 0 0 14px rgba(30,144,255,.18);
 }
-#app.bv-welcome .bv-neon-section :is(.bv-social-stage,.bv-room-entry) {
- border:1px solid #a6f2ff;
- box-shadow:0 0 0 1px rgba(222,252,255,.5),0 0 18px rgba(39,215,255,.65),inset 0 0 16px rgba(85,229,255,.2);
+#app.bv-welcome .bv-classic-header {padding:16px;margin-bottom:18px;}
+#app.bv-welcome .bv-classic-footer {padding:16px 20px;}
+#app.bv-welcome .bv-collage-caption {padding:10px 12px;flex-wrap:wrap;font-size:12px;line-height:1.5;}
+#app.bv-welcome .bv-people-feature {height:auto;}
+#app.bv-welcome :is(.bv-classic-header,.bv-social-stage,.bv-room-entry,.bv-classic-footer,.bv-collage-caption) :is(h2,p,small,label,b,span),
+#app.bv-welcome .bv-classic-nav :is(a,button,span),
+#app.bv-welcome .bv-classic-footer,
+#app.bv-welcome .bv-collage-caption {
+ color:var(--sk-glass-ink);text-shadow:none;
 }
+#app.bv-welcome :is(.bv-social-stage,.bv-room-entry) h2 {text-shadow:0 0 12px rgba(30,144,255,.2);}
+#app.bv-welcome :is(.bv-social-stage,.bv-room-entry,.bv-classic-footer) :is(.bv-link,a) {color:var(--sk-glass-link);text-shadow:none;font-weight:700;}
+#app.bv-welcome .bv-classic-header .bv-home-search input {background:rgba(255,255,255,.94);color:var(--sk-glass-ink);border-color:#64caff;}
+#app.bv-welcome .bv-classic-header .bv-home-search input:focus-visible {outline:3px solid #075b94;outline-offset:2px;}
+#app.bv-welcome .bv-classic-header .sk-utility-actions>button {background:rgba(238,248,255,.9);color:var(--sk-glass-ink);border-color:#1e90ff;text-shadow:none;}
+#app.bv-welcome .bv-community-tools {border-color:rgba(41,139,210,.48);}
 #app.bv-welcome .bv-neon-section :is(.bv-music-feature,.bv-people-collage) {box-shadow:0 0 18px rgba(67,225,255,.7),0 0 3px #e1fcff;}
-#app.bv-welcome .bv-classic-nav {border-color:#a6f2ff;box-shadow:0 0 12px rgba(39,215,255,.4);}
-#app.bv-welcome :is(.bv-community-tools,.bv-classic-footer) {border-color:rgba(166,242,255,.8);}
+@media(hover:hover){#app.bv-welcome .bv-neon-section :is(.bv-classic-header,.bv-social-stage,.bv-room-entry):hover{border-color:#63caff;box-shadow:0 0 0 1px rgba(70,173,255,.5),0 0 22px rgba(35,150,245,.55),inset 0 1px rgba(255,255,255,.8);}}
+@media(prefers-reduced-transparency:reduce){#app.bv-welcome .bv-neon-section :is(.bv-classic-header,.bv-classic-nav,.bv-social-stage,.bv-room-entry,.bv-classic-footer,.bv-collage-caption){background:#eef8ff;-webkit-backdrop-filter:none;backdrop-filter:none;}}
 @media(forced-colors:active){
  #app.bv-welcome{background:Canvas;}
- #app.bv-welcome .bv-neon-section :is(h1,h2,p,small,label,.bv-link,.bv-classic-nav a,.bv-classic-nav button,.bv-classic-nav>span,.bv-classic-footer,.bv-collage-caption){text-shadow:none;}
- #app.bv-welcome .bv-neon-section :is(.bv-social-stage,.bv-room-entry,.bv-music-feature,.bv-people-collage,.bv-classic-nav){box-shadow:none;border-color:CanvasText;}
+ #app.bv-welcome .bv-neon-section :is(.bv-classic-header,.bv-classic-nav,.bv-social-stage,.bv-room-entry,.bv-classic-footer,.bv-collage-caption){background:Canvas;color:CanvasText;border-color:CanvasText;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;}
+ #app.bv-welcome :is(.bv-classic-header,.bv-social-stage,.bv-room-entry,.bv-classic-footer,.bv-collage-caption) :is(h2,p,small,label,b,span,a,.bv-link),#app.bv-welcome .bv-classic-nav :is(a,button,span){color:CanvasText;text-shadow:none;}
 }
