@@ -1,6 +1,8 @@
 /* Current header row:36px square mark,48px music target,16px Museum note. */
 #app.bv-welcome .sk-site-header {box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;padding:8px 12px;background:rgba(214,238,250,.96);color:#0b2540;position:relative;z-index:3;}
-#app.bv-welcome .sk-site-brand {display:flex;align-items:center;gap:8px;min-width:0;min-height:48px;padding-left:6px;color:#0b2540;text-decoration:none;font:700 18px/1.2 Manrope,system-ui,sans-serif;}
+/* Keep the native brand independent of the artwork/room font breakpoint. */
+#app.bv-welcome .sk-site-brand {display:flex;align-items:center;gap:14px;min-width:0;min-height:48px;padding-left:6px;color:#0b2540;text-decoration:none;font:800 18px/24px Nunito,Arial,sans-serif;white-space:nowrap;}
+#app.bv-welcome .sk-site-brand,#app.bv-welcome .sk-site-brand span {font-family:Nunito,Arial,sans-serif!important;}
 #app.bv-welcome .sk-site-brand img.dimau-owner-logo {display:block;width:36px!important;height:36px!important;min-width:36px!important;max-width:36px!important;min-height:36px!important;max-height:36px!important;aspect-ratio:1;object-fit:contain;transform:none;padding:0;border:0;}
 #app.bv-welcome .sk-site-header .sk-hero-play {position:relative;inset:auto;width:48px;height:48px;min-width:48px;min-height:48px;flex:0 0 48px;transform:none;margin:0;padding:0;border:0;border-radius:50%;background:transparent;box-shadow:0 2px 8px rgba(11,37,64,.25);}
 #app.bv-welcome .sk-site-header .sk-hero-play::before {inset:2px;background:transparent url('/assets/music-badge-museum-20261018.svg') center/100% 100% no-repeat;box-shadow:none;}
@@ -76,4 +78,9 @@ html:root body:not(#dimau-pill-unused) :is(nav.bottom){scrollbar-color:auto!impo
 }
 @media print{html:root body:not(#dimau-pill-unused) :is(header.top :is(button,summary,a.btn,a.button):not(.brand):not(.brand-symbol):not(.logo-tile):not(.logotile):not(.sk-site-brand):not([class*="music"]):not([class*="flagBadge"]):not([data-music-toggle]):not(#sk-hero-play):not(:has(img.dimau-owner-logo)):not(.danger):not([aria-disabled="true"]):not(:disabled),.sk-site-header :is(button,summary,a.btn,a.button):not(.brand):not(.brand-symbol):not(.logo-tile):not(.logotile):not(.sk-site-brand):not([class*="music"]):not([class*="flagBadge"]):not([data-music-toggle]):not(#sk-hero-play):not(:has(img.dimau-owner-logo)):not(.danger):not([aria-disabled="true"]):not(:disabled),nav.bottom :is(a,button):not(.brand):not(.brand-symbol):not(.logo-tile):not(.logotile):not(.sk-site-brand):not([class*="music"]):not([class*="flagBadge"]):not([data-music-toggle]):not(#sk-hero-play):not(:has(img.dimau-owner-logo)):not(.danger):not([aria-disabled="true"]):not(:disabled),.bw-line button,.bula-btn,button[data-bula-open]){box-shadow:none!important;}
 }
+}
+
+/* Native header mark keeps the same corners on phone and desktop. */
+@layer dimau-history-lighting {
+ #app.bv-welcome .sk-site-brand img.dimau-owner-logo {border-radius:8px!important;flex:none;}
 }
