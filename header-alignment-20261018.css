@@ -86,25 +86,24 @@ html:root body:not(#dimau-pill-unused) :is(nav.bottom){scrollbar-color:auto!impo
  #app.bv-welcome .sk-site-brand img.dimau-owner-logo {border-radius:8px!important;flex:none;}
 }
 
-/* Owner-supplied blue masi fills the masthead letters; the existing live row follows. */
-#app.bv-welcome .sk-pattern-masthead {background:#d6eefa;}
+/* Owner correction: pattern belongs to the header background; text stays solid.
+   One top row contains Dimau, the single Sota Kece title and the existing music control. */
+#app.bv-welcome .sk-site-header.sk-pattern-masthead {
+ display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;
+ gap:12px;margin-bottom:0;
+ background:#123d58 url('/assets/sota-blue-masi-lettering-20261020.png') center/420px 420px repeat;
+}
 #app.bv-welcome .sk-pattern-heading {
- box-sizing:border-box;margin:0;padding:10px 16px 4px;
- background-color:#d6eefa;color:#123d58;text-align:center;
- font:900 clamp(48px,7vw,88px)/1.12 Nunito,Arial,sans-serif!important;
+ box-sizing:border-box;min-width:0;margin:0;padding:0;text-align:center;
+ font:900 clamp(32px,12vw,88px)/1.12 Nunito,Arial,sans-serif!important;
  letter-spacing:-.035em;white-space:nowrap;
+ color:#fff;-webkit-text-fill-color:#fff;-webkit-text-stroke:0;
+ text-shadow:0 2px 5px #08253c;
 }
-@supports ((background-clip:text) or (-webkit-background-clip:text)) {
- #app.bv-welcome .sk-pattern-heading {
-  background-image:url('/assets/sota-blue-masi-lettering-20261020.png');
-  background-size:180px 180px;background-position:center;
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  -webkit-text-fill-color:transparent;-webkit-text-stroke:.45px #123d58;
- }
-}
+/* The original baked brand strips stay cropped below the single live header. */
+#app.bv-welcome .sk-original-design {margin-top:-10.58823529%;}
+@media(max-width:760px){#app.bv-welcome .sk-original-design {margin-top:-21.82539683%;}}
 @media(forced-colors:active){
- #app.bv-welcome .sk-pattern-heading {
-  background-image:none;background-clip:border-box;-webkit-background-clip:border-box;
-  color:CanvasText;-webkit-text-fill-color:CanvasText;-webkit-text-stroke:0;
- }
+ #app.bv-welcome .sk-site-header.sk-pattern-masthead {background:Canvas;}
+ #app.bv-welcome .sk-pattern-heading {color:CanvasText;-webkit-text-fill-color:CanvasText;text-shadow:none;}
 }
