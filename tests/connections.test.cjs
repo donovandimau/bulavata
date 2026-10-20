@@ -57,7 +57,7 @@ function client({fr=friends,gr=crews,members=[],rpcError=false,memberError=false
     for(const n of r.graph.nodes)assert(c.path(r.graph,n.id).length);
   });
   await check('app integration preserves existing routes and adds no remote graph dependency',()=>{
-    const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');assert.match(html,/SotaConnections\.init/);assert.match(html,/go\('connections'\)/);assert.match(html,/if\(S.tab==="connections"\)/);
+    const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');assert.match(html,/SotaConnections\.init/);assert.match(fs.readFileSync(path.join(__dirname,'../skin-studio.js'),'utf8'),/SotaConnections\.preview\(\).*Connections/);assert.match(html,/go\('connections'\)/);assert.match(html,/if\(S.tab==="connections"\)/);
     const js=fs.readFileSync(path.join(__dirname,'../connections.js'),'utf8');assert(!/localStorage|sessionStorage|service_role/.test(js));
     const sw=fs.readFileSync(path.join(__dirname,'../sw.js'),'utf8');assert.match(sw,/v46-connections/);assert.match(sw,/'\/connections.js'/);
   });
