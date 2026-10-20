@@ -76,3 +76,8 @@ Owner asked to replace blue light-ups with orange. Panel outlines/rest/hover glo
 ## Current owner step — bigger desktop type and colourful readable action pills
 
 Desktop native copy grows to20/21px,buttons20px,labels18px,captions17px,main heading46px,section headings40px,masthead96–108px. Supporting dialogs/studio controls grow too. Real action labels remain opaque navy and wrap on small widths;Open the skin studio is on its own row below the description. Small translucent action pills use peach,pink,gold,aqua,violet and lime tints with matching coloured dot markers.42%glass/1pxblur panels and blue pattern unchanged. White lettering halos and hot-white hover rings are replaced by warm orange. Original supplied raster design remains exact;all JS/playlist behaviour retained. Phone font sizes retained. CSS/cache/record only. HOLD for review.
+
+
+## Current owner step — shared link preview uses the new logo
+
+OG/Twitter metadata still referenced14Octoberoldlogo/masi artwork. Reuse the approved supplied20OctoberPNG unchanged as the social share image,with its actual1792x1008dimensions and newlogo alt. Secure-image and Twitter-image URLs agree;canonical/title/description unchanged. No new images or pageUI/handler/style changes. Bump public shell cache so installed app refreshesHTML. Prior14Octoberassets preserved. Canonicalbase64d70458;HOLD for ownerreview before publication.
