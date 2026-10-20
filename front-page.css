@@ -597,3 +597,9 @@
 }
 
 #app.bv-welcome .bv-music-copy h1 {color:#ffd58a;text-shadow:0 2px 2px #803500,0 0 12px #ff8a2480;}
+
+/* Studio field rules are more specific than the shared desktop type defaults. */
+@media(min-width:761px){
+ .bv-studio :is(.bv-studio-body,.bv-studio-head,.bv-studio-footer) :is(label,button,input,select,textarea,strong){font-size:18px!important;line-height:1.5;}
+ .bv-studio :is(.bv-studio-body,.bv-studio-head,.bv-studio-footer) :is(small,.sub){font-size:17px!important;line-height:1.5;}
+}
