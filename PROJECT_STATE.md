@@ -15,3 +15,7 @@ The owner supplied desktop/phone crops and asked to bring the Dimau heading row 
 ## Current owner follow-up — entrance buttons light up
 
 Only the three real Get started buttons below the supplied artwork gain a shared soft cyan resting glow and stronger hover/focus-visible/active lighting. Keyboard focus has an explicit outline;reduced motion removes transitions;forced colors retains a visible system border/focus. Existing layouts,labels,actions,header-cover offsets and image bytes stay unchanged. Front-page stylesheet/shell cache versions advanced. Continue saved a4b2f5d3 as parent on the current leased branch. Publication HOLD remains pending explicit owner approval.
+
+## Current owner follow-up — supplied pattern inside Sota Kece lettering
+
+Owner clarified that the supplied blue pattern belongs inside the fonts, specifically the top Sota Kece heading. A large pattern-filled Sota Kece wordmark now replaces the first heading position; the existing compact logo/title/music row moves directly below it, keeping all native links and controls. The pattern PNG is copied unchanged from the supplied attachment. The pattern is clipped to text, with a plain-color fallback and system-color fallback. Existing artwork crop/header cover, button lighting, personal rooms and action handlers remain intact. Styles/script/public shell cache versions advanced. Saved c2ad9786 remains the parent. Preview HOLD continues for owner approval before publication.

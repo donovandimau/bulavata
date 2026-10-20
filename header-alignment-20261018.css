@@ -85,3 +85,26 @@ html:root body:not(#dimau-pill-unused) :is(nav.bottom){scrollbar-color:auto!impo
 @layer dimau-history-lighting {
  #app.bv-welcome .sk-site-brand img.dimau-owner-logo {border-radius:8px!important;flex:none;}
 }
+
+/* Owner-supplied blue masi fills the masthead letters; the existing live row follows. */
+#app.bv-welcome .sk-pattern-masthead {background:#d6eefa;}
+#app.bv-welcome .sk-pattern-heading {
+ box-sizing:border-box;margin:0;padding:10px 16px 4px;
+ background-color:#d6eefa;color:#123d58;text-align:center;
+ font:900 clamp(48px,7vw,88px)/1.12 Nunito,Arial,sans-serif!important;
+ letter-spacing:-.035em;white-space:nowrap;
+}
+@supports ((background-clip:text) or (-webkit-background-clip:text)) {
+ #app.bv-welcome .sk-pattern-heading {
+  background-image:url('/assets/sota-blue-masi-lettering-20261020.png');
+  background-size:180px 180px;background-position:center;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-fill-color:transparent;-webkit-text-stroke:.45px #123d58;
+ }
+}
+@media(forced-colors:active){
+ #app.bv-welcome .sk-pattern-heading {
+  background-image:none;background-clip:border-box;-webkit-background-clip:border-box;
+  color:CanvasText;-webkit-text-fill-color:CanvasText;-webkit-text-stroke:0;
+ }
+}
