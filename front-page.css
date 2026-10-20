@@ -414,3 +414,17 @@
 .bv-skin-story details{margin-top:8px}.bv-skin-story summary{min-height:44px;display:list-item;align-content:center;cursor:pointer;font-weight:700}.bv-skin-story a{display:block;padding:9px 0;color:var(--bv-link);min-height:44px;box-sizing:border-box}.bv-skin-story a span{font-size:11px}.bv-skin-story p{margin:0 0 6px}
 #app.bv-home-skinned .bv-neon-section{background-image:var(--bv-art),var(--bv-pattern);background-size:cover,var(--bv-pattern-size);background-position:center top}
 @media(max-width:650px){.bv-skin-scene{height:148px;padding:14px}.bv-skin-scene>span{font-size:18px}.bv-skin-story{padding:12px 14px}}
+
+/* The three real entrance controls share the site's interactive lighting. */
+#app.bv-welcome .sk-original-actions>button {
+ border-color:#87e8ff;
+ box-shadow:0 0 0 1px rgba(135,206,235,.35),0 0 12px rgba(30,144,255,.45),inset 0 0 14px rgba(30,144,255,.18);
+ transition:box-shadow .16s ease,border-color .16s ease;
+}
+#app.bv-welcome .sk-original-actions>button:is(:hover,:focus-visible,:active) {
+ border-color:#eeffff;
+ box-shadow:0 0 0 2px rgba(255,255,255,.98),0 0 14px 4px rgba(56,189,248,.95),0 0 32px 8px rgba(30,144,255,.72),inset 0 0 18px 3px rgba(240,249,255,.65);
+}
+#app.bv-welcome .sk-original-actions>button:focus-visible {outline:2px solid #eeffff;outline-offset:3px;}
+@media(prefers-reduced-motion:reduce){#app.bv-welcome .sk-original-actions>button{transition:none;}}
+@media(forced-colors:active){#app.bv-welcome .sk-original-actions>button{box-shadow:none;border-color:ButtonText;}#app.bv-welcome .sk-original-actions>button:focus-visible{outline-color:Highlight;}}

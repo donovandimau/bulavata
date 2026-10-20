@@ -11,3 +11,7 @@ Publication HOLD: show the verified revision and wait for Donovan's explicit app
 ## Current owner follow-up — cover the dead headings
 
 The owner supplied desktop/phone crops and asked to bring the Dimau heading row over the dead headings in the main panel. The live64px row now overlaps the picture with an opaque background. Responsive image offsets align source y144 (desktop1360wide) and y220 (phone1008wide) with the live row bottom, hiding the baked Dimau and Sota/navigation headings while keeping the real title/music row and main headline. Supplied image bytes remain original; only their display offset changes. Native functions, handlers and prior verified row/logo/font proportions remain unchanged. CSS and shell cache versions advanced. Continue the saved d4957ba9 candidate on the new leased branch; the earlier sizing revision remains recoverable history. Publication HOLD continues pending explicit approval.
+
+## Current owner follow-up — entrance buttons light up
+
+Only the three real Get started buttons below the supplied artwork gain a shared soft cyan resting glow and stronger hover/focus-visible/active lighting. Keyboard focus has an explicit outline;reduced motion removes transitions;forced colors retains a visible system border/focus. Existing layouts,labels,actions,header-cover offsets and image bytes stay unchanged. Front-page stylesheet/shell cache versions advanced. Continue saved a4b2f5d3 as parent on the current leased branch. Publication HOLD remains pending explicit owner approval.
