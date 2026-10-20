@@ -81,3 +81,8 @@ Desktop native copy grows to20/21px,buttons20px,labels18px,captions17px,main hea
 ## Current owner step — shared link preview uses the new logo
 
 OG/Twitter metadata still referenced14Octoberoldlogo/masi artwork. Reuse the approved supplied20OctoberPNG unchanged as the social share image,with its actual1792x1008dimensions and newlogo alt. Secure-image and Twitter-image URLs agree;canonical/title/description unchanged. No new images or pageUI/handler/style changes. Bump public shell cache so installed app refreshesHTML. Prior14Octoberassets preserved. Canonicalbase64d70458;HOLD for ownerreview before publication.
+
+
+## Current owner step — aligned responsive header controls
+
+Native Dimau mark and music control now share the vertical centre of the patterned masthead. Remove prior music align-self:start,centre both in equal grid tracks and remove brand padding offset. Desktop controls60pxwith48pxcontained mark;mobile controls48pxwith36pxmark. Original12pxedge spacing,white title,blue pattern,orange light-up/artwork,playlist/accountfunctions and pending new-logo share-previewmetadata retained. OnlyheaderCSS,stylesheet/worker cacheversions and recordchange. Base d6a9d214preserved;HOLD forownerreview.

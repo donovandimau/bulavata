@@ -110,5 +110,26 @@ html:root body:not(#dimau-pill-unused) :is(nav.bottom){scrollbar-color:auto!impo
 
 @media(max-width:360px){#app.bv-welcome .sk-pattern-heading{font-size:32px!important;}}
 
-/* Keep the existing music control at the header top-right inset. */
-#app.bv-welcome .sk-site-header.sk-pattern-masthead .sk-hero-play {align-self:start;}
+/* Both header controls share a centre line and symmetric edge spacing. */
+#app.bv-welcome .sk-site-header.sk-pattern-masthead {
+ --sk-header-control:48px;
+ grid-template-columns:var(--sk-header-control) minmax(0,1fr) var(--sk-header-control);
+}
+#app.bv-welcome .sk-site-header.sk-pattern-masthead .sk-site-brand {
+ display:grid;place-items:center;align-self:center;justify-self:center;
+ box-sizing:border-box;width:var(--sk-header-control);height:var(--sk-header-control);
+ min-height:var(--sk-header-control);padding:0;gap:0;
+}
+#app.bv-welcome .sk-site-header.sk-pattern-masthead .sk-hero-play {
+ align-self:center;justify-self:center;
+ width:var(--sk-header-control);height:var(--sk-header-control);
+ min-width:var(--sk-header-control);min-height:var(--sk-header-control);
+ flex-basis:var(--sk-header-control);
+}
+@media(min-width:761px){
+ #app.bv-welcome .sk-site-header.sk-pattern-masthead {--sk-header-control:60px;}
+ #app.bv-welcome .sk-site-header .sk-site-brand img.dimau-owner-logo {
+  width:48px!important;height:48px!important;min-width:48px!important;max-width:48px!important;min-height:48px!important;max-height:48px!important;
+ }
+}
+
