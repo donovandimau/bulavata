@@ -1,5 +1,5 @@
 // Only the public app shell is cached. Auth, profiles, messages and media never enter this cache.
-const CACHE='sota-kece-shell-20261020-v44-responsive-icons';
+const CACHE='sota-kece-shell-20261021-v45-share-pattern';
 const ASSETS=['/music-playlist.js','/music-playlist.css','/music-playlist.json','/assets/sota-kece-logo-20261020.svg','/assets/sota-kece-logo-20261020.png','/assets/sota-blue-masi-lettering-20261020.png','/header-alignment-20261018.css','/assets/music-badge-museum-20261018.svg','/assets/dimau-owner-logo-20260920.png','/local-music.js','/assets/sota-kece-logo.png','/','/index.html','/skins.css','/skins.js','/skin-studio.js','/room-media.js','/front-page.css','/assets/fiji-music-icon-20261018.svg','/assets/fiji-sunset.jpg','/assets/front-reference.jpg','/assets/fiji-music.jpg','/assets/friends.jpg','/assets/beach.jpg','/assets/masi-band.svg','/assets/masi-supplied.png','/offline.js','/kava.css','/kava.js','/kava-ui.js','/vendor/supabase-2.45.0.min.js'];
 // Download and cache only the face requested by the current viewport.
 const FONT_ASSETS=['/assets/fonts/fredoka-latin-ext.woff2','/assets/fonts/fredoka-latin.woff2','/assets/fonts/nunito-latin-ext.woff2','/assets/fonts/nunito-latin.woff2'];

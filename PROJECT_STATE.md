@@ -86,3 +86,8 @@ OG/Twitter metadata still referenced14Octoberoldlogo/masi artwork. Reuse the app
 ## Current owner step — aligned responsive header controls
 
 Native Dimau mark and music control now share the vertical centre of the patterned masthead. Remove prior music align-self:start,centre both in equal grid tracks and remove brand padding offset. Desktop controls60pxwith48pxcontained mark;mobile controls48pxwith36pxmark. Original12pxedge spacing,white title,blue pattern,orange light-up/artwork,playlist/accountfunctions and pending new-logo share-previewmetadata retained. OnlyheaderCSS,stylesheet/worker cacheversions and recordchange. Base d6a9d214preserved;HOLD forownerreview.
+
+
+## Current owner step — blue patterned share-image bands
+
+New square social image fills the thumbnail top and bottom with supplied blue masi pattern, around the new Sota logo on its cream centre strip. Imagegen built-in compositing output; original logo/pattern assets preserved. OG/Twitter image references, actual dimensions and alt agree; public shell cache advanced. Saved responsive header alignment retained. No site layout, style, script, app icon or playlist changes. Base5015233a;HOLD for owner review.
