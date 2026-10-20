@@ -93,3 +93,8 @@ Native Dimau mark and music control now share the vertical centre of the pattern
 New square social image fills the thumbnail top and bottom with supplied blue masi pattern, around the new Sota logo on its cream centre strip. Imagegen built-in compositing output; original logo/pattern assets preserved. OG/Twitter image references, actual dimensions and alt agree; public shell cache advanced. Saved responsive header alignment retained. No site layout, style, script, app icon or playlist changes. Base5015233a;HOLD for owner review.
 
 The social image uses its immutable public Vercel asset URL so the held revision and later published page both resolve the actual PNG before/after promotion. Canonical page URL stays sotakece.com. No production write.
+
+
+## 21 October 2026 — People and Koro connections
+
+Connections view reachable from Friends and Koro. Caller-scoped accepted friends / own Koro RPCs, plus memberships constrained to those friend and Koro IDs. No strangers, friends-of-friends, public discovery, messages, join codes or database policy changes. Read-only graph with search, filters, selection details, neighbour focus, pan/zoom/reset and equivalent keyboard list. Current refresh snapshot, partial/error/empty states; no social data saved in browser storage or shell cache. Fictional signed-out example clearly labelled. Prior header, artwork, playlist and patterned share thumbnail preserved from7668280f. Working preview HOLD for owner review.
