@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');
+const {validateCatalog}=require('../music-playlist.js');
+const catalog=require('../music-playlist.json');
+const tracks=validateCatalog(catalog);
+assert.equal(tracks.length,catalog.length);
+assert.equal(new Set(tracks.map(t=>t.id)).size,tracks.length);
+assert(tracks.every(t=>t.url.startsWith('https://xnxmumbvgtmlpenutlii.supabase.co/storage/v1/object/public/fiji-audio/')));
+for(const path of ['https://evil.example/song.mp3','//evil.example/song.mp3','../private.mp3','fiji-song-01.mp3?token=secret','fiji-song-01.mp3#x','fiji-song-01.mp3/other','fiji-song-01.svg'])assert.throws(()=>validateCatalog([{...catalog[0],path}]));
+for(const value of [null,{},[],[{...catalog[0],title:''}],[catalog[0],catalog[0]],[{...catalog[0],id:'<script>'}]])assert.throws(()=>validateCatalog(value));
+console.log('PASS: canonical catalogue, unique IDs, fixed public Supabase audio origin and malformed/duplicate/path injection rejection.');

@@ -18,6 +18,7 @@
     document.querySelector('.bv-mixtape')?.classList.remove('is-playing');
   }
   async function playSample() {
+    window.SotaPlaylist?.pause();
     if(window.SotaLocalMusic?.hasSelected())return window.SotaLocalMusic.toggle();
     if(sampleAudio) { stopSample();return; }
     const status=document.querySelector('#bv-home-status')||document.querySelector('#bv-sample-status')||document.querySelector('#sk-hero-status');
@@ -79,7 +80,7 @@
     return attribute?`<div class="bv-track"><span>♫ ${esc(settings.trackTitle||'My profile track')}</span><button type="button" class="btn sm ghost" ${attribute}>Play track</button><small>Tap to load. No autoplay.</small></div>`:'';
   }
   function wireMedia(root) {
-    window.SotaLocalMusic?.mount(root,{beforePlay:stopSample});
+    window.SotaLocalMusic?.mount(root,{beforePlay:()=>{window.SotaPlaylist?.pause();stopSample();}});
     root.querySelectorAll('[data-profile-track]:not([data-bv-bound]),[data-profile-path]:not([data-bv-bound])').forEach(button=>{
       button.dataset.bvBound='true';button.addEventListener('click',async()=>{
         button.disabled=true;button.textContent='Loading…';
@@ -222,7 +223,7 @@
     authNode.querySelector('#a-pass').autocomplete=mode==='up'?'new-password':'current-password';
     const auth=authNode.outerHTML;
     app.classList.add('bv-welcome');
-    app.innerHTML=`<header class="sk-site-header sk-pattern-masthead" aria-label="Sota Kece header"><a class="sk-site-brand" href="/" aria-label="Sota Kece home"><img class="dimau-owner-logo" src="/assets/dimau-owner-logo-20260920.png" alt="Dimau Fintech" width="36" height="36"></a><div class="sk-pattern-heading" aria-hidden="true">Sota Kece</div><button class="sk-hero-play" id="sk-hero-play" type="button" data-sample-play aria-label="Play sample music" aria-pressed="false" aria-describedby="sk-hero-status" title="Play sample music"></button><span class="sk-hero-status" id="sk-hero-status" data-sample-status role="status">Sample music · tap to play</span></header><section class="sk-front sk-original-front" aria-label="Sota Kece original supplied design">
+    app.innerHTML=`<header class="sk-site-header sk-pattern-masthead" aria-label="Sota Kece header"><a class="sk-site-brand" href="/" aria-label="Sota Kece home"><img class="dimau-owner-logo" src="/assets/dimau-owner-logo-20260920.png" alt="Dimau Fintech" width="36" height="36"></a><div class="sk-pattern-heading" aria-hidden="true">Sota Kece</div><button class="sk-hero-play" id="sk-hero-play" type="button" data-playlist-open aria-label="Open music playlist" aria-pressed="false" aria-describedby="sk-hero-status" title="Open music playlist"></button><span class="sk-hero-status" id="sk-hero-status" data-playlist-status role="status">Music playlist · tap to choose a song</span></header><section class="sk-front sk-original-front" aria-label="Sota Kece original supplied design">
       <div class="sk-hero-artwork"><picture class="sk-original-picture"><source media="(max-width:760px)" srcset="/assets/mobile-front-reference-brand.jpg" width="1008" height="1896"><img class="sk-original-design" src="/assets/front-reference-brand.jpg" width="1360" height="832" fetchpriority="high" alt="Sota Kece: Create your own space with friends. The original sunset design with Sema's slanted room, masi border, Talanoa, Top Mates and music player."></picture><button class="sk-hero-create" type="button" onclick="renderAuth('up',true)" aria-label="Create your space" title="Create your space"></button></div>
     </section><div class="bv-neon-section" id="bv-neon"><div class="bv-classic">
       <header class="bv-classic-header"><div class="bv-wordmark" aria-label="Sota Kece"><small>FIJI ROOTS. EVERYWHERE ENERGY.</small></div>
@@ -241,14 +242,14 @@
       <section class="bv-room-entry" id="bv-your-room" aria-label="Design your room"><div><h2>Your room. Your rules.</h2><p>${skins.presets.length} skins. Masi borders. Your colours, music and cover art.</p><small>Studio choice · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="btn" id="bv-edit-room">Open the skin studio →</button></section>
       <footer class="bv-classic-footer"><span>Sota Kece · alive together</span><span>Mutual friends · Your own archive · No ads</span><details><summary>Photo credits</summary><p>Sample photography by <a href="https://unsplash.com/photos/i6r5kQMQ9Zk" target="_blank" rel="noopener noreferrer">Ben Collins</a>, <a href="https://unsplash.com/photos/roOETBSa8mA" target="_blank" rel="noopener noreferrer">Samsung UK</a> and <a href="https://unsplash.com/photos/tZhEr2d3oeM" target="_blank" rel="noopener noreferrer">Hoi An and Da Nang Photographer</a>, via Unsplash.</p></details></footer>
     </div></div>`;
-    window.SotaLocalMusic?.mount(app,{beforePlay:stopSample});
+    window.SotaLocalMusic?.mount(app,{beforePlay:()=>{window.SotaPlaylist?.pause();stopSample();}});
+    window.SotaPlaylist?.mount(app,{beforePlay:stopSample});
     placeResponsiveNavigation();
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').onclick=()=>mode==='up'?signUp():signIn();
     app.querySelectorAll('.authwrap input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')$('#a-go').click();}));
     $('#bv-edit-room').addEventListener('click',()=>open());
     $('#bv-home-play').addEventListener('click',playSample);
-    $('#sk-hero-play').addEventListener('click',playSample);
     $('#sk-room-menu').addEventListener('click',()=>open());
     $('#sk-sign-in').setAttribute('aria-haspopup','dialog');
     $('#sk-sign-in').setAttribute('aria-controls','bv-entry');
