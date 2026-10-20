@@ -475,4 +475,7 @@
 #app.bv-welcome .sk-original-front {background:transparent;}
 #app.bv-welcome .bv-classic::before,
 #app.bv-welcome .bv-classic-footer::after {content:none;display:none;}
+#app.bv-welcome :is(.bv-wordmark small,.bv-home-search label,.bv-home-search small,.bv-collage-caption,.bv-classic-footer,.bv-classic-footer a) {
+ color:#fff;text-shadow:0 1px 2px #061a2b;
+}
 @media(forced-colors:active){#app.bv-welcome{background:Canvas;}}
