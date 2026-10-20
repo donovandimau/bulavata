@@ -23,9 +23,9 @@
 <meta name="twitter:description" content="Make your space your own. Share music, find your Top Mates and catch up over Talanoa.">
 <meta name="twitter:image" content="https://sotakece.com/assets/og-sota-kece-20261014-v3.png">
 <meta name="twitter:image:alt" content="Sota Kece logo and bold title beside Fijian friends sharing live music at sunset, framed by masi.">
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="icon" type="image/png" sizes="256x256" href="/assets/sota-kece-logo.png">
-<link rel="apple-touch-icon" href="/assets/sota-kece-logo.png">
+<link rel="shortcut icon" href="/assets/sota-kece-logo-20261020.svg" type="image/svg+xml">
+<link rel="icon" type="image/svg+xml" sizes="any" href="/assets/sota-kece-logo-20261020.svg">
+<link rel="apple-touch-icon" href="/assets/sota-kece-logo-20261020.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <script src="/dimau-install.js?v=20261019" data-app="bulavata" data-label="Sota Kece" defer></script>
 <script src="/vendor/supabase-2.45.0.min.js"></script>
@@ -189,12 +189,13 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 .seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(20,59,82,.1)}
 </style>
 <link rel="stylesheet" href="/skins.css">
-<link rel="stylesheet" href="/front-page.css?v=20261014-core-skins">
+<link rel="stylesheet" href="/front-page.css?v=20261020-entrance-tidy">
+<link rel="stylesheet" href="/music-playlist.css?v=20261020-supabase-playlist">
 <link rel="stylesheet" href="/kava.css">
 <script src="/room-media.js"></script>
 <script src="/skins.js?v=20261014-core-skins"></script>
 <script async src="https://dimau-ops.vercel.app/api/visit?s=sota-kece"></script>
-<link rel="stylesheet" href="/header-alignment-20261018.css?v=20261018-pills2">
+<link rel="stylesheet" href="/header-alignment-20261018.css?v=20261020-music-top-right">
 </head>
 <body>
 <div class="bubbles" id="bubbles"></div>
@@ -223,7 +224,7 @@ function toast(m){ const d=document.createElement("div"); d.className="toast"; d
   e.style.animationDuration=(17+Math.random()*26)+"s"; e.style.animationDelay=(-Math.random()*34)+"s";
   e.style.opacity=.14+Math.random()*.3; b.appendChild(e);} })();
 
-const LOGO = `<a class="logotile dimau-tile" href="https://dimau-fintech.com/" target="_blank" rel="noopener" aria-label="Dimau Fintech Group"><img src="/assets/dimau-owner-logo-20260920.png?v=6f0562b1" width="144" height="144" alt="Dimau Fintech Group"></a><div class="logotile"><img src="/assets/sota-kece-logo.png" width="256" height="256" alt="Sota Kece"></div>`;
+const LOGO = `<a class="logotile dimau-tile" href="https://dimau-fintech.com/" target="_blank" rel="noopener" aria-label="Dimau Fintech Group"><img src="/assets/dimau-owner-logo-20260920.png?v=6f0562b1" width="144" height="144" alt="Dimau Fintech Group"></a><div class="logotile"><img src="/assets/sota-kece-logo-20261020.svg" width="256" height="256" alt="Sota Kece"></div>`;
 
 /* ================= AUTH ================= */
 function renderAuth(mode="in"){
@@ -922,7 +923,8 @@ function finishRoom(){
 window.go=go; window.openRoom=openRoom; window.renderAuth=renderAuth; window.sb=sb;
 </script>
 <script src="/local-music.js"></script>
-<script src="/skin-studio.js?v=20261018-header"></script>
+<script src="/music-playlist.js?v=20261020-supabase-playlist"></script>
+<script src="/skin-studio.js?v=20261020-supabase-playlist"></script>
 <script src="/offline.js"></script>
 <script src="/kava.js"></script>
 <script src="/kava-ui.js"></script>

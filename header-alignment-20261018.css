@@ -1,16 +1,19 @@
 /* Current header row:36px square mark,48px music target,16px Museum note. */
-#app.bv-welcome .sk-site-header {box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;padding:8px 12px;background:rgba(214,238,250,.96);color:#0b2540;position:relative;z-index:3;}
-#app.bv-welcome .sk-site-brand {display:flex;align-items:center;gap:8px;min-width:0;min-height:48px;padding-left:6px;color:#0b2540;text-decoration:none;font:700 18px/1.2 Manrope,system-ui,sans-serif;}
+#app.bv-welcome .sk-site-header {box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;padding:8px 12px;background:#d6eefa;color:#0b2540;position:relative;z-index:3;margin-bottom:-64px;}
+/* Keep the native brand independent of the artwork/room font breakpoint. */
+#app.bv-welcome .sk-site-brand {display:flex;align-items:center;gap:14px;min-width:0;min-height:48px;padding-left:6px;color:#0b2540;text-decoration:none;font:800 18px/24px Nunito,Arial,sans-serif;white-space:nowrap;}
+#app.bv-welcome .sk-site-brand,#app.bv-welcome .sk-site-brand span {font-family:Nunito,Arial,sans-serif!important;}
 #app.bv-welcome .sk-site-brand img.dimau-owner-logo {display:block;width:36px!important;height:36px!important;min-width:36px!important;max-width:36px!important;min-height:36px!important;max-height:36px!important;aspect-ratio:1;object-fit:contain;transform:none;padding:0;border:0;}
 #app.bv-welcome .sk-site-header .sk-hero-play {position:relative;inset:auto;width:48px;height:48px;min-width:48px;min-height:48px;flex:0 0 48px;transform:none;margin:0;padding:0;border:0;border-radius:50%;background:transparent;box-shadow:0 2px 8px rgba(11,37,64,.25);}
 #app.bv-welcome .sk-site-header .sk-hero-play::before {inset:2px;background:transparent url('/assets/music-badge-museum-20261018.svg') center/100% 100% no-repeat;box-shadow:none;}
 #app.bv-welcome .sk-site-header .sk-hero-play[aria-pressed=true] {box-shadow:0 0 0 2px #87ceeb,0 0 14px rgba(30,144,255,.6);}
 #app.bv-welcome .sk-site-header .sk-hero-play[aria-pressed=true]::after {content:none;}
 #app.bv-welcome .sk-site-header .sk-hero-play:focus-visible {outline:3px solid #1e90ff;outline-offset:3px;}
-/* The new real header replaces only the old branding strip baked into the picture. */
+/* The live64px header covers both old branding/navigation strips in the supplied image.
+   Align image y144/1360 (desktop) or y220/1008 (phone) with the header bottom. */
 #app.bv-welcome .sk-original-picture {display:block;overflow:hidden;}
-#app.bv-welcome .sk-original-design {aspect-ratio:auto!important;height:auto!important;margin-top:-4.70588235%;}
-@media(max-width:760px){#app.bv-welcome .sk-original-design {margin-top:-10.31746032%;}}
+#app.bv-welcome .sk-original-design {aspect-ratio:auto!important;height:auto!important;margin-top:calc(64px - 10.58823529%);}
+@media(max-width:760px){#app.bv-welcome .sk-original-design {margin-top:calc(64px - 21.82539683%);}}
 
 /* Dimau header lighting â€” 18 October 2026. History's original artwork stays intact. */
 @layer dimau-history-lighting {
@@ -77,3 +80,35 @@ html:root body:not(#dimau-pill-unused) :is(nav.bottom){scrollbar-color:auto!impo
 @media print{html:root body:not(#dimau-pill-unused) :is(header.top :is(button,summary,a.btn,a.button):not(.brand):not(.brand-symbol):not(.logo-tile):not(.logotile):not(.sk-site-brand):not([class*="music"]):not([class*="flagBadge"]):not([data-music-toggle]):not(#sk-hero-play):not(:has(img.dimau-owner-logo)):not(.danger):not([aria-disabled="true"]):not(:disabled),.sk-site-header :is(button,summary,a.btn,a.button):not(.brand):not(.brand-symbol):not(.logo-tile):not(.logotile):not(.sk-site-brand):not([class*="music"]):not([class*="flagBadge"]):not([data-music-toggle]):not(#sk-hero-play):not(:has(img.dimau-owner-logo)):not(.danger):not([aria-disabled="true"]):not(:disabled),nav.bottom :is(a,button):not(.brand):not(.brand-symbol):not(.logo-tile):not(.logotile):not(.sk-site-brand):not([class*="music"]):not([class*="flagBadge"]):not([data-music-toggle]):not(#sk-hero-play):not(:has(img.dimau-owner-logo)):not(.danger):not([aria-disabled="true"]):not(:disabled),.bw-line button,.bula-btn,button[data-bula-open]){box-shadow:none!important;}
 }
 }
+
+/* Native header mark keeps the same corners on phone and desktop. */
+@layer dimau-history-lighting {
+ #app.bv-welcome .sk-site-brand img.dimau-owner-logo {border-radius:8px!important;flex:none;}
+}
+
+/* Owner correction: pattern belongs to the header background; text stays solid.
+   One top row contains Dimau, the single Sota Kece title and the existing music control. */
+#app.bv-welcome .sk-site-header.sk-pattern-masthead {
+ display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;
+ gap:12px;margin-bottom:0;
+ background:#123d58 url('/assets/sota-blue-masi-lettering-20261020.png') center/420px 420px repeat;
+}
+#app.bv-welcome .sk-pattern-heading {
+ box-sizing:border-box;min-width:0;margin:0;padding:0;text-align:center;
+ font:900 clamp(32px,12vw,88px)/1.12 Nunito,Arial,sans-serif!important;
+ letter-spacing:-.035em;white-space:nowrap;
+ color:#fff;-webkit-text-fill-color:#fff;-webkit-text-stroke:0;
+ text-shadow:0 2px 5px #08253c;
+}
+/* The original baked brand strips stay cropped below the single live header. */
+#app.bv-welcome .sk-original-design {margin-top:-10.58823529%;}
+@media(max-width:760px){#app.bv-welcome .sk-original-design {margin-top:-21.82539683%;}}
+@media(forced-colors:active){
+ #app.bv-welcome .sk-site-header.sk-pattern-masthead {background:Canvas;}
+ #app.bv-welcome .sk-pattern-heading {color:CanvasText;-webkit-text-fill-color:CanvasText;text-shadow:none;}
+}
+
+@media(max-width:360px){#app.bv-welcome .sk-pattern-heading{font-size:32px!important;}}
+
+/* Keep the existing music control at the header top-right inset. */
+#app.bv-welcome .sk-site-header.sk-pattern-masthead .sk-hero-play {align-self:start;}
