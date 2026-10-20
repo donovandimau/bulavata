@@ -107,3 +107,5 @@ html:root body:not(#dimau-pill-unused) :is(nav.bottom){scrollbar-color:auto!impo
  #app.bv-welcome .sk-site-header.sk-pattern-masthead {background:Canvas;}
  #app.bv-welcome .sk-pattern-heading {color:CanvasText;-webkit-text-fill-color:CanvasText;text-shadow:none;}
 }
+
+@media(max-width:360px){#app.bv-welcome .sk-pattern-heading{font-size:32px!important;}}
