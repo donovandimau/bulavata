@@ -531,9 +531,8 @@
 }
 
 /* Owner: colourful action pills with labels above the surface, never clipped. */
-#app.bv-welcome {--sk-orange-rest:0 0 0 1px #ffad6670,0 0 14px #ff8a2473,inset 0 0 12px #ff8a242e;--sk-orange-lit:0 0 0 2px #ff9d37,0 0 14px 4px #ffa64af2,0 0 32px 8px #ff8a24b8,inset 0 0 18px 3px #ffaf4ca6;}
+#app.bv-welcome {--sk-pill-rgb:255,196,118;--sk-dot:#e56b00;--sk-orange-rest:0 0 0 1px #ffad6670,0 0 14px #ff8a2473,inset 0 0 12px #ff8a242e;--sk-orange-lit:0 0 0 2px #ff9d37,0 0 14px 4px #ffa64af2,0 0 32px 8px #ff8a24b8,inset 0 0 18px 3px #ffaf4ca6;}
 #app.bv-welcome :is(.sk-utility-actions>button,.bv-music-actions>button,.bv-circle-feature>.bv-link,.bv-community-tools>.bv-link,#bv-edit-room,.bv-classic-nav>a,.bv-classic-nav>button) {
- --sk-pill-rgb:255,196,118;--sk-dot:#e56b00;
  position:relative;isolation:isolate;z-index:1;box-sizing:border-box;
  display:inline-flex;align-items:center;justify-content:center;gap:.55em;
  min-width:0;min-height:44px;max-width:100%;height:auto;
@@ -596,3 +595,5 @@
  #app.bv-welcome :is(.sk-utility-actions>button,.bv-music-actions>button,.bv-circle-feature>.bv-link,.bv-community-tools>.bv-link,#bv-edit-room,.bv-classic-nav>a,.bv-classic-nav>button)::before{background:ButtonText;border-color:ButtonText;}
  #app.bv-welcome :is(.bv-circle-feature,.bv-room-entry) h2 {color:CanvasText;}
 }
+
+#app.bv-welcome .bv-music-copy h1 {color:#ffd58a;text-shadow:0 2px 2px #803500,0 0 12px #ff8a2480;}
