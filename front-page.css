@@ -603,3 +603,9 @@
  .bv-studio :is(.bv-studio-body,.bv-studio-head,.bv-studio-footer) :is(label,button,input,select,textarea,strong){font-size:18px!important;line-height:1.5;}
  .bv-studio :is(.bv-studio-body,.bv-studio-head,.bv-studio-footer) :is(small,.sub){font-size:17px!important;line-height:1.5;}
 }
+
+@media(min-width:761px){
+ #app.bv-welcome .sk-site-header .sk-pattern-heading {font-size:clamp(96px,7.2vw,108px)!important;}
+ .sk-playlist.sk-playlist h2 {font-size:32px;}
+ #app.bv-welcome .bv-account-head>button {font-size:32px;}
+}
