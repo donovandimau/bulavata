@@ -91,3 +91,5 @@ Native Dimau mark and music control now share the vertical centre of the pattern
 ## Current owner step — blue patterned share-image bands
 
 New square social image fills the thumbnail top and bottom with supplied blue masi pattern, around the new Sota logo on its cream centre strip. Imagegen built-in compositing output; original logo/pattern assets preserved. OG/Twitter image references, actual dimensions and alt agree; public shell cache advanced. Saved responsive header alignment retained. No site layout, style, script, app icon or playlist changes. Base5015233a;HOLD for owner review.
+
+The social image uses its immutable public Vercel asset URL so the held revision and later published page both resolve the actual PNG before/after promotion. Canonical page URL stays sotakece.com. No production write.
