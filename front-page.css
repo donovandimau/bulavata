@@ -428,3 +428,36 @@
 #app.bv-welcome .sk-original-actions>button:focus-visible {outline:2px solid #eeffff;outline-offset:3px;}
 @media(prefers-reduced-motion:reduce){#app.bv-welcome .sk-original-actions>button{transition:none;}}
 @media(forced-colors:active){#app.bv-welcome .sk-original-actions>button{box-shadow:none;border-color:ButtonText;}#app.bv-welcome .sk-original-actions>button:focus-visible{outline-color:Highlight;}}
+
+/* Use the pictured entrance button itself; no second button strip below the hero. */
+#app.bv-welcome .sk-hero-create {
+ position:absolute;z-index:2;left:4.41176471%;top:58.13953488%;
+ width:18.75%;height:8.13953488%;min-width:44px;min-height:44px;
+ transform:translateY(-50%);margin:0;padding:0;border:0;border-radius:999px;
+ background:transparent;box-shadow:none;cursor:pointer;
+}
+#app.bv-welcome .sk-hero-create:is(:hover,:focus-visible) {box-shadow:0 0 0 2px #fff,0 0 18px #44ddff;}
+#app.bv-welcome .sk-hero-create:focus-visible {outline:2px solid #fff;outline-offset:3px;}
+#app.bv-welcome .bv-classic-header {grid-template-columns:minmax(100px,.7fr) minmax(240px,1fr) auto;}
+#app.bv-welcome .sk-utility-actions {
+ display:flex;flex-wrap:nowrap;justify-content:flex-start;align-items:center;
+ align-self:start;gap:8px;padding:24px 0 0;margin:0;background:transparent;min-width:0;
+}
+#app.bv-welcome .sk-utility-actions>button {min-height:44px;white-space:nowrap;}
+@media(max-width:760px){
+ #app.bv-welcome .sk-hero-create {left:9.32539683%;top:28.40095465%;width:44.84126984%;height:5.48926014%;}
+}
+@media(max-width:700px){
+ #app.bv-welcome .bv-classic-header {grid-template-columns:minmax(0,1fr);}
+ #app.bv-welcome .sk-utility-actions {padding-top:0;justify-content:center;}
+}
+@media(forced-colors:active){#app.bv-welcome .sk-hero-create:focus-visible{outline-color:Highlight;}}
+
+/* The supplied product logo replaces the old green Kava Circle symbol. */
+#app.bv-welcome .bv-circle-art {border:0;background:none;box-shadow:none;border-radius:12px;}
+#app.bv-welcome .bv-circle-art .bv-circle-logo {display:block;width:100%;height:100%;object-fit:contain;border-radius:12px;}
+/* Retain the roots line without reserving a second product-logo block. */
+#app.bv-welcome .bv-classic-header {grid-template-columns:minmax(240px,1fr) auto;row-gap:12px;}
+#app.bv-welcome .bv-classic-header .bv-wordmark {grid-column:1/-1;padding:0;}
+#app.bv-welcome .bv-classic-header .bv-wordmark small {margin:0;}
+@media(max-width:700px){#app.bv-welcome .bv-classic-header{grid-template-columns:minmax(0,1fr);}}
