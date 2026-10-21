@@ -1,3 +1,7 @@
+## 2026-10-21 — Dimau logo Home links
+
+Donovan confirmed every Dimau logo should return to its own app Home page. Existing logo placements now use accessible local Home links; external owner-site destinations and new-tab behavior are removed where applicable. Existing native Home actions are retained. This scoped revision preserves saved designs, original image markup/assets, inline styles, content, authentication and data behavior. All changed inline scripts and JSX parse; image tags and inline style blocks compare unchanged. Canonical hosted checks and actual link navigation verification are recorded in Ops. Publication HOLD pending explicit owner approval.
+
 # Sota Kece — 20 October 2026
 
 Current requested step: consistent native header logo/title row on phone and desktop.
@@ -103,3 +107,9 @@ Connections view reachable from Friends and Koro. Caller-scoped accepted friends
 ##21October2026 —Publish connection map as an example
 
 Owner explicitly requested publication as an example. Public home label Connections example;Friends/Koro graph entry points also show the same fictional map. Real graph loader is preserved but unrouted pending account verification. Example links work before auth,Back returns to normal boot,and notice/footer make clear no real members are loaded. Existing artwork/header/music/share revision retained. Publication authorised for this example;no live social records or policies changed.
+
+## Current owner step — tidy header proportions (21 October 2026)
+
+Resumed exact published source d259e4ac76961583b63521871e0564dd053ea341. Tidy only the masthead shown in the owner's screenshot: cap the solid-white title at64px on desktop with a104px row,24px side gutters and16px gaps. Phone title is28–40px with an80px row,16px side gutters and8px gaps. Keep the saved shared centre line,60px desktop/48px phone controls and48px desktop/36px phone Dimau image. Original blue pattern,orange lighting,all supplied artwork,cropping,Connections example,playlist,account and other page styling/handlers stay intact. Stylesheet/public shell cache versions advanced so older cached header styling refreshes. Task652 lease1;assigned branch agent/codex/tidy-sota-kece-header-proportions-and-spacing/1. Publication HOLD for owner review and explicit approval.
+
+Existing Connections integration check now accepts the versioned public-shell cache name rather than hard-coding v47; it still requires Connections in the cached app shell. The cache refresh for this header therefore no longer fails an unrelated exact-version assertion. All five existing regression suites pass locally.

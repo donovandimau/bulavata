@@ -59,7 +59,7 @@ function client({fr=friends,gr=crews,members=[],rpcError=false,memberError=false
   await check('app integration preserves existing routes and adds no remote graph dependency',()=>{
     const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');assert.match(html,/SotaConnections\.init/);assert.match(fs.readFileSync(path.join(__dirname,'../skin-studio.js'),'utf8'),/SotaConnections\.preview\(\).*Connections/);assert.match(html,/go\('connections'\)/);assert.match(html,/if\(S.tab==="connections"\)/);
     const js=fs.readFileSync(path.join(__dirname,'../connections.js'),'utf8');assert(!/localStorage|sessionStorage|service_role/.test(js));
-    const sw=fs.readFileSync(path.join(__dirname,'../sw.js'),'utf8');assert.match(sw,/v47-connections-example/);assert.match(sw,/'\/connections.js'/);
+    const sw=fs.readFileSync(path.join(__dirname,'../sw.js'),'utf8');assert.match(sw,/const CACHE='sota-kece-shell-\d{8}-v\d+-[a-z-]+';/);assert.match(sw,/'\/connections.js'/);
   });
   await check('public example opens before any session or member lookup',async()=>{
     const vm=require('node:vm');const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
