@@ -85,27 +85,29 @@
   function init(context){ctx=context;}
   function stop(){epoch++;if(mounted)mounted.dispose();mounted=null;}
   const hero=()=>`<section class="glass sc-hero"><p class="sc-kicker">Sota Kece · Connections</p><h1>Our people. Our circles.</h1>
-    <p>See the friendships and Koro that bring your community together.</p></section>`;
+    <p>Explore how friendships and Koro bring a community together.</p></section>`;
   function preview(){
     stop();const run=epoch;
     ctx.app.innerHTML=`<div class="sc-preview"><button class="btn sm ghost" id="sc-back">← Back to Sota Kece</button>${hero()}<div id="sc-root"></div></div>`;
-    document.querySelector('#sc-back').onclick=()=>{stop();if(location.hash==='#connections=example')history.replaceState(null,'',location.pathname+location.search);ctx.auth();};
+    document.querySelector('#sc-back').onclick=()=>{stop();if(location.hash==='#connections=example')history.replaceState(null,'',location.pathname+location.search);if(ctx.home)ctx.home();else ctx.auth();};
     mounted=mount(document.querySelector('#sc-root'),example(),{demo:true,valid:()=>run===epoch});
   }
-  async function view(){
+  // Public release is example-only. Keep account-backed exploration unrouted until verified.
+  function view(){return preview();}
+  async function viewLive(){
     stop();const run=epoch,user=ctx.state.user?.id;
     if(!user)return ctx.auth();
     ctx.shell(`${hero()}<div id="sc-root" class="glass card" role="status">Loading your connections…</div>`);
     try{
       const result=await load(ctx.client,ctx.state);
       if(run!==epoch||ctx.state.tab!=='connections'||ctx.state.user?.id!==user)return;
-      mounted=mount(document.querySelector('#sc-root'),result,{demo:false,valid:()=>run===epoch,reload:view,
+      mounted=mount(document.querySelector('#sc-root'),result,{demo:false,valid:()=>run===epoch,reload:viewLive,
         open:n=>{stop();if(n.type==='group'){ctx.state.tab='crews';ctx.state.crew=Number(n.key);ctx.render();}else ctx.openRoom(n.handle);}});
     }catch(err){
       if(run!==epoch||ctx.state.tab!=='connections')return;
       const box=document.querySelector('#sc-root');if(!box)return;
       box.innerHTML='<h2>Connection interrupted</h2><p>We could not load your connections. Try again when your signal returns.</p><button class="btn sm" id="sc-retry">Try again</button>';
-      document.querySelector('#sc-retry').onclick=view;
+      document.querySelector('#sc-retry').onclick=viewLive;
     }
   }
   function mount(host,result,options){
@@ -113,7 +115,7 @@
     let selected=graph.self,filter='all',query='',focus=false,scale=1,pan={x:0,y:0},drag=null,disposed=false;
     const listeners=[];
     function on(el,type,fn){el.addEventListener(type,fn);listeners.push(()=>el.removeEventListener(type,fn));}
-    host.innerHTML=`${options.demo?'<div class="sc-notice"><b>Example community</b> · These people, groups and connections are fictional. Sign in for your own map.</div>':''}
+    host.innerHTML=`${options.demo?'<div class="sc-notice"><b>Example community</b> · These people, groups and connections are fictional. Explore the example with search, filters and selection.</div>':''}
       <div class="sc-toolbar glass"><div class="sc-search"><label for="sc-search">Find a person or Koro</label><input id="sc-search" type="search" maxlength="80" placeholder="Search names…" autocomplete="off"></div>
       <fieldset class="sc-filters"><legend>Show connections</legend><button type="button" data-filter="all" aria-pressed="true">Everyone</button><button type="button" data-filter="people" aria-pressed="false">Friends</button><button type="button" data-filter="groups" aria-pressed="false">Koro</button></fieldset>
       <button class="btn sm ghost" id="sc-refresh" ${options.demo?'hidden':''}>Refresh</button></div>
@@ -125,7 +127,7 @@
       <p class="sc-hint">Tap a name to explore. Drag the background to move the map. The list offers the same connections.</p>
       <div class="sc-list-area"><h3>People &amp; Koro</h3><div class="sc-list" id="sc-list"></div></div></section>
       <aside class="glass sc-detail"><p class="sc-kicker">Connection details</p><div id="sc-detail" aria-live="polite"></div></aside></div>
-      <div class="glass sc-privacy"><strong>Your view of the community</strong><p>Only your accepted friends and Koro you belong to appear here. Shared memberships appear when available to your account. A shared Koro does not mean two people are friends. This is not a map of every member.</p>
+      <div class="glass sc-privacy"><strong>${options.demo?'About this example':'Your view of the community'}</strong><p>${options.demo?'All names and connections are made up. Circles represent people and diamonds represent Koro. Solid lines show friendships; dashed lines show group membership. A shared group does not imply friendship. This example never loads member records.':'Only your accepted friends and Koro you belong to appear here. Shared memberships appear when available to your account. A shared Koro does not mean two people are friends. This is not a map of every member.'}</p>
       <p id="sc-fresh">${options.demo?'Fictional example · no member data is loaded.':'Loaded '+esc(result.updated.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}))+'. Refresh to check for changes.'}</p>
       ${result.notices.map(n=>`<p class="sc-warning" role="status">${esc(n)}</p>`).join('')}</div>`;
     const q=s=>host.querySelector(s),svg=q('#sc-svg'),camera=q('#sc-camera');
@@ -141,7 +143,7 @@
       const n=byId.get(selected)||byId.get(graph.self),related=graph.edges.filter(e=>e.source===n.id||e.target===n.id);
       const neighbours=related.map(e=>({node:byId.get(e.source===n.id?e.target:e.source),type:e.type}));
       const route=path(graph,n.id).map(id=>byId.get(id).label);
-      q('#sc-detail').innerHTML=`<div class="sc-avatar" aria-hidden="true">${esc(n.type==='you'?'🏝':n.emoji)}</div><h2>${esc(n.label)}</h2><p>${n.type==='group'?'Your Koro':n.type==='you'?'Your place in the community':'Your accepted friend'}${n.type!=='group'&&n.handle?' · @'+esc(n.handle):''}</p>
+      q('#sc-detail').innerHTML=`<div class="sc-avatar" aria-hidden="true">${esc(n.type==='you'?'🏝':n.emoji)}</div><h2>${esc(n.label)}</h2><p>${n.type==='group'?(options.demo?'Example Koro':'Your Koro'):n.type==='you'?(options.demo?'You in the example':'Your place in the community'):(options.demo?'Example friend':'Your accepted friend')}${n.type!=='group'&&n.handle?' · @'+esc(n.handle):''}</p>
         ${n.id!==graph.self?`<p class="sc-route"><b>How you connect</b><br>${route.map(esc).join(' → ')}</p>`:'<p>Select a person or group to see what connects you.</p>'}
         ${!options.demo&&n.type!=='you'&&(n.type==='group'||n.handle)?'<button class="btn sm" id="sc-open">'+(n.type==='group'?'Open Koro':'Visit room')+'</button>':''}
         <h3>Visible connections (${neighbours.length})</h3><div class="sc-neighbours">${neighbours.map(({node:x,type})=>`<button type="button" data-select="${esc(x.id)}"><strong>${esc(x.label)}</strong><span>${type==='friend'?'Accepted friendship':'Koro membership'}</span></button>`).join('')||'<p>No connections yet. Add a friend or join a Koro to grow your map.</p>'}</div>
