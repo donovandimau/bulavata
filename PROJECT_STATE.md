@@ -76,3 +76,25 @@ Owner asked to replace blue light-ups with orange. Panel outlines/rest/hover glo
 ## Current owner step — bigger desktop type and colourful readable action pills
 
 Desktop native copy grows to20/21px,buttons20px,labels18px,captions17px,main heading46px,section headings40px,masthead96–108px. Supporting dialogs/studio controls grow too. Real action labels remain opaque navy and wrap on small widths;Open the skin studio is on its own row below the description. Small translucent action pills use peach,pink,gold,aqua,violet and lime tints with matching coloured dot markers.42%glass/1pxblur panels and blue pattern unchanged. White lettering halos and hot-white hover rings are replaced by warm orange. Original supplied raster design remains exact;all JS/playlist behaviour retained. Phone font sizes retained. CSS/cache/record only. HOLD for review.
+
+
+## Current owner step — shared link preview uses the new logo
+
+OG/Twitter metadata still referenced14Octoberoldlogo/masi artwork. Reuse the approved supplied20OctoberPNG unchanged as the social share image,with its actual1792x1008dimensions and newlogo alt. Secure-image and Twitter-image URLs agree;canonical/title/description unchanged. No new images or pageUI/handler/style changes. Bump public shell cache so installed app refreshesHTML. Prior14Octoberassets preserved. Canonicalbase64d70458;HOLD for ownerreview before publication.
+
+
+## Current owner step — aligned responsive header controls
+
+Native Dimau mark and music control now share the vertical centre of the patterned masthead. Remove prior music align-self:start,centre both in equal grid tracks and remove brand padding offset. Desktop controls60pxwith48pxcontained mark;mobile controls48pxwith36pxmark. Original12pxedge spacing,white title,blue pattern,orange light-up/artwork,playlist/accountfunctions and pending new-logo share-previewmetadata retained. OnlyheaderCSS,stylesheet/worker cacheversions and recordchange. Base d6a9d214preserved;HOLD forownerreview.
+
+
+## Current owner step — blue patterned share-image bands
+
+New square social image fills the thumbnail top and bottom with supplied blue masi pattern, around the new Sota logo on its cream centre strip. Imagegen built-in compositing output; original logo/pattern assets preserved. OG/Twitter image references, actual dimensions and alt agree; public shell cache advanced. Saved responsive header alignment retained. No site layout, style, script, app icon or playlist changes. Base5015233a;HOLD for owner review.
+
+The social image uses its immutable public Vercel asset URL so the held revision and later published page both resolve the actual PNG before/after promotion. Canonical page URL stays sotakece.com. No production write.
+
+
+## 21 October 2026 — People and Koro connections
+
+Connections view reachable from Friends and Koro. Caller-scoped accepted friends / own Koro RPCs, plus memberships constrained to those friend and Koro IDs. No strangers, friends-of-friends, public discovery, messages, join codes or database policy changes. Read-only graph with search, filters, selection details, neighbour focus, pan/zoom/reset and equivalent keyboard list. Current refresh snapshot, partial/error/empty states; no social data saved in browser storage or shell cache. Fictional signed-out example clearly labelled. Prior header, artwork, playlist and patterned share thumbnail preserved from7668280f. Working preview HOLD for owner review.
