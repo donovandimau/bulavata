@@ -103,3 +103,7 @@ Connections view reachable from Friends and Koro. Caller-scoped accepted friends
 ##21October2026 —Publish connection map as an example
 
 Owner explicitly requested publication as an example. Public home label Connections example;Friends/Koro graph entry points also show the same fictional map. Real graph loader is preserved but unrouted pending account verification. Example links work before auth,Back returns to normal boot,and notice/footer make clear no real members are loaded. Existing artwork/header/music/share revision retained. Publication authorised for this example;no live social records or policies changed.
+
+## Current owner step — tidy header proportions (21 October 2026)
+
+Resumed exact published source d259e4ac76961583b63521871e0564dd053ea341. Tidy only the masthead shown in the owner's screenshot: cap the solid-white title at64px on desktop with a104px row,24px side gutters and16px gaps. Phone title is28–40px with an80px row,16px side gutters and8px gaps. Keep the saved shared centre line,60px desktop/48px phone controls and48px desktop/36px phone Dimau image. Original blue pattern,orange lighting,all supplied artwork,cropping,Connections example,playlist,account and other page styling/handlers stay intact. Stylesheet/public shell cache versions advanced so older cached header styling refreshes. Task652 lease1;assigned branch agent/codex/tidy-sota-kece-header-proportions-and-spacing/1. Publication HOLD for owner review and explicit approval.
