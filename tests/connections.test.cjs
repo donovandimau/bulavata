@@ -59,7 +59,13 @@ function client({fr=friends,gr=crews,members=[],rpcError=false,memberError=false
   await check('app integration preserves existing routes and adds no remote graph dependency',()=>{
     const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');assert.match(html,/SotaConnections\.init/);assert.match(fs.readFileSync(path.join(__dirname,'../skin-studio.js'),'utf8'),/SotaConnections\.preview\(\).*Connections/);assert.match(html,/go\('connections'\)/);assert.match(html,/if\(S.tab==="connections"\)/);
     const js=fs.readFileSync(path.join(__dirname,'../connections.js'),'utf8');assert(!/localStorage|sessionStorage|service_role/.test(js));
-    const sw=fs.readFileSync(path.join(__dirname,'../sw.js'),'utf8');assert.match(sw,/v46-connections/);assert.match(sw,/'\/connections.js'/);
+    const sw=fs.readFileSync(path.join(__dirname,'../sw.js'),'utf8');assert.match(sw,/v47-connections-example/);assert.match(sw,/'\/connections.js'/);
+  });
+  await check('public example opens before any session or member lookup',async()=>{
+    const vm=require('node:vm');const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
+    const source=html.slice(html.indexOf('async function boot(){'),html.indexOf('/* Signed in, but no room yet.'));
+    let examples=0,queries=0;const context=vm.createContext({location:{hash:'#connections=example'},window:{SotaConnections:{preview(){examples++;}}},sb:{auth:{getSession(){queries++;throw Error('Example must not look up a session');}}}});
+    vm.runInContext(source+';this.openExample=boot;',context);await context.openExample();assert.equal(examples,1);assert.equal(queries,0);
   });
   console.log(`${passed} Connections checks passed`);
 })().catch(err=>{console.error(err);process.exitCode=1;});

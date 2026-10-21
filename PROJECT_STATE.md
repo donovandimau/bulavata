@@ -98,3 +98,8 @@ The social image uses its immutable public Vercel asset URL so the held revision
 ## 21 October 2026 — People and Koro connections
 
 Connections view reachable from Friends and Koro. Caller-scoped accepted friends / own Koro RPCs, plus memberships constrained to those friend and Koro IDs. No strangers, friends-of-friends, public discovery, messages, join codes or database policy changes. Read-only graph with search, filters, selection details, neighbour focus, pan/zoom/reset and equivalent keyboard list. Current refresh snapshot, partial/error/empty states; no social data saved in browser storage or shell cache. Fictional signed-out example clearly labelled. Prior header, artwork, playlist and patterned share thumbnail preserved from7668280f. Working preview HOLD for owner review.
+
+
+##21October2026 —Publish connection map as an example
+
+Owner explicitly requested publication as an example. Public home label Connections example;Friends/Koro graph entry points also show the same fictional map. Real graph loader is preserved but unrouted pending account verification. Example links work before auth,Back returns to normal boot,and notice/footer make clear no real members are loaded. Existing artwork/header/music/share revision retained. Publication authorised for this example;no live social records or policies changed.

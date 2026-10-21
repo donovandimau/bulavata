@@ -9,3 +9,8 @@ The map is a refreshable snapshot, not a realtime subscription. It is cleared wh
 Bounded at 120 accepted friends and 40 Koro with explicit truncation notice. Membership pages are read up to5,000, scoped to those nodes; partial failures clear membership edges. Dense graphs hide most SVG labels and retain the complete visible-node list. Mobile stacks controls, map, list and inspector. Touch targets44px; zoom/reset buttons avoid reliance on gestures. No animation and no external fonts/scripts added.
 
 Validation: pure graph/permission-boundary/API-contract tests in `tests/connections.test.cjs`, DOM interaction tests with a test-only jsdom runtime, saved social regression suite and actual desktop/mobile browser preview. Live signed-in RLS results need a real account session; no test claims database ACL verification from frontend fixtures. No database changes required.
+
+
+## Public example release —21October2026
+
+Owner requested publication as an example. All visible graph entry points now open the fictional10-person/group-node,18-edge example. Live account-backed view remains in source but is not routed or exported as a public view. No graph member queries occur in example mode. Public #connections=example is checked before authentication/offline lookup so existing sessions can open it too. Back clears the example hash and boots the existing normal app. Navigation explicitly says Connections example,all claims to sign in for your own map removed,and footer describes fictional edges. No actual account validation is claimed;that remains a separate future step. Existing app friendships/Koro/account functions remain unchanged.
