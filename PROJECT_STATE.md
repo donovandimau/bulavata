@@ -1,3 +1,7 @@
+## 2026-10-21 — Island music player visual refresh
+
+Owner asked to make the phone music playlist more visually entertaining. Refresh only the native playlist dialog: island-night gradients, subtle reuse of the supplied blue masi, a CSS vinyl record, playback-linked decorative motion, mint primary Play/Pause control, clearer track cards and coloured queue numbers. Motion stops on pause and respects reduced motion; forced colours, focus outlines, native seeking/volume and 44px targets remain available. Preserve the exact 81-song catalogue, audio origin/order, search, previous/next, auto-advance, close/reopen playback and surrounding page design. Playlist asset URLs and public shell cache advanced. Canonical main 1bacd89cec764ce4793aad9a193c67cfc66a3521 is the parent. Publication HOLD pending explicit owner review; this request does not authorize publishing.
+
 ## 2026-10-21 — Dimau logo Home links
 
 Donovan confirmed every Dimau logo should return to its own app Home page. Existing logo placements now use accessible local Home links; external owner-site destinations and new-tab behavior are removed where applicable. Existing native Home actions are retained. This scoped revision preserves saved designs, original image markup/assets, inline styles, content, authentication and data behavior. All changed inline scripts and JSX parse; image tags and inline style blocks compare unchanged. Canonical hosted checks and actual link navigation verification are recorded in Ops. Publication HOLD pending explicit owner approval.
