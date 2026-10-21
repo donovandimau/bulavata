@@ -1,3 +1,7 @@
+## 2026-10-21 — Dimau logo Home links
+
+Donovan confirmed every Dimau logo should return to its own app Home page. Existing logo placements now use accessible local Home links; external owner-site destinations and new-tab behavior are removed where applicable. Existing native Home actions are retained. This scoped revision preserves saved designs, original image markup/assets, inline styles, content, authentication and data behavior. All changed inline scripts and JSX parse; image tags and inline style blocks compare unchanged. Canonical hosted checks and actual link navigation verification are recorded in Ops. Publication HOLD pending explicit owner approval.
+
 # Sota Kece — 20 October 2026
 
 Current requested step: consistent native header logo/title row on phone and desktop.
