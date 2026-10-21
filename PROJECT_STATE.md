@@ -1,3 +1,7 @@
+## 2026-10-21 — Supplied blue-and-white page background
+
+Replace only the public page and masthead background pattern with Donovan's attached blue-and-white PNG, preserved byte-for-byte. Keep existing 420px repeat size, original sunset artwork, glass panels, typography, controls, personal room skins and newly published island playlist unchanged. Advance both changed stylesheet URLs and the public shell cache; cache the new public image. Resumed canonical d6a180fce44d2334d6ff6e6f2bca28765c91cb7c. Publication HOLD: show the verified preview for explicit owner review.
+
 ## 2026-10-21 — Island music player visual refresh
 
 Owner asked to make the phone music playlist more visually entertaining. Refresh only the native playlist dialog: island-night gradients, subtle reuse of the supplied blue masi, a CSS vinyl record, playback-linked decorative motion, mint primary Play/Pause control, clearer track cards and coloured queue numbers. Motion stops on pause and respects reduced motion; forced colours, focus outlines, native seeking/volume and 44px targets remain available. Preserve the exact 81-song catalogue, audio origin/order, search, previous/next, auto-advance, close/reopen playback and surrounding page design. Playlist asset URLs and public shell cache advanced. Canonical main 1bacd89cec764ce4793aad9a193c67cfc66a3521 is the parent. Publication HOLD pending explicit owner review; this request does not authorize publishing.
