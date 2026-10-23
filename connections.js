@@ -7,7 +7,7 @@
   const MAX_FRIENDS=120,MAX_GROUPS=40;
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pid=id=>'person:'+id, gid=id=>'group:'+id;
-  let ctx,epoch=0,mounted=null;
+  let ctx,epoch=0,mounted=null,liveOwner=null,authSubscription=null;
   function model(me,friends,groups,memberships){
     const nodes=[],edges=[],people=new Set(),crews=new Set(),seenEdges=new Set();
     const self=pid(me.id);
@@ -33,12 +33,27 @@
   }
   async function load(client,state){
     if(!state.user?.id||!state.me)throw new Error('Sign in to see your connections.');
+    const owner=String(state.user.id),auth=await client.auth.getUser();
+    if(auth.error||String(auth.data?.user?.id||'')!==owner){const error=new Error('Sign in again to see your connections.');error.code='AUTH_REQUIRED';throw error;}
+    if(state.me.id&&String(state.me.id)!==owner)throw new Error('Your profile is changing. Please try again.');
     const [fr,gr]=await Promise.all([client.rpc('bv_my_friends'),client.rpc('bv_my_crews')]);
     if(fr.error||gr.error)throw new Error('Your connections could not be loaded. Please try again.');
     const notices=[];
     const allFriends=fr.data||[],allGroups=gr.data||[];
-    const friends=allFriends.filter(f=>f.id).slice(0,MAX_FRIENDS),groups=allGroups.slice(0,MAX_GROUPS);
-    if(allFriends.some(f=>!f.id))notices.push('Some friend records could not be mapped.');
+    if(!Array.isArray(allFriends)||!Array.isArray(allGroups))throw new Error('Your connections could not be loaded. Please try again.');
+    const bounded=allFriends.slice(0,MAX_FRIENDS),groups=allGroups.filter(c=>c.id!=null).slice(0,MAX_GROUPS);
+    const missing=bounded.filter(f=>!f.id&&typeof f.handle==='string'&&/^[a-z0-9_]{3,20}$/.test(f.handle));
+    let resolved=[];
+    if(missing.length){
+      // Older friend RPC shapes can omit the profile UUID. Resolve only the
+      // exact handles already returned as accepted friends,using existing RLS.
+      const r=await client.from('bv_profiles').select('id,handle').in('handle',[...new Set(missing.map(f=>f.handle))]).limit(MAX_FRIENDS);
+      if(r.error)notices.push('Some friend records could not be mapped.');else resolved=r.data||[];
+    }
+    const handles=new Map(resolved.map(p=>[p.handle,p.id]));
+    const friends=bounded.map(f=>({...f,id:f.id||handles.get(f.handle)})).filter(f=>f.id&&String(f.id)!==owner);
+    if(friends.length<bounded.filter(f=>String(f.id||'')!==owner).length&&!notices.length)notices.push('Some friend records could not be mapped.');
+    if(groups.length<Math.min(allGroups.length,MAX_GROUPS))notices.push('Some Koro records could not be mapped.');
     if(allFriends.length>MAX_FRIENDS||allGroups.length>MAX_GROUPS)notices.push('Showing up to 120 friends and 40 Koro.');
     const memberships=[];
     if(friends.length&&groups.length){
@@ -82,32 +97,49 @@
       {member:'lani',crew_id:2},{member:'mere',crew_id:2},{member:'jone',crew_id:3},{member:'tevita',crew_id:3},{member:'mere',crew_id:3}]),
       notices:[],updated:null};
   }
-  function init(context){ctx=context;}
-  function stop(){epoch++;if(mounted)mounted.dispose();mounted=null;}
-  const hero=()=>`<section class="glass sc-hero"><p class="sc-kicker">Sota Kece · Connections</p><h1>Our people. Our circles.</h1>
+  function init(context){
+    authSubscription?.unsubscribe();ctx=context;
+    authSubscription=ctx.client.auth?.onAuthStateChange?.((event,session)=>{
+      if(!liveOwner)return;
+      if(event==='SIGNED_OUT'||String(session?.user?.id||'')!==liveOwner){stop();ctx.state.user=null;ctx.state.me=null;ctx.auth();}
+    })?.data?.subscription||null;
+  }
+  function stop(){epoch++;liveOwner=null;if(mounted)mounted.dispose();mounted=null;}
+  function clearRoute(){if(/^#connections=(?:example|mine)$/.test(location.hash))history.replaceState(null,'',location.pathname+location.search);}
+  function back(){stop();clearRoute();if(ctx.state.user&&ctx.state.me)ctx.go('pulse');else if(ctx.home)ctx.home();else ctx.auth();}
+  function openPersonal(){
+    history.replaceState(null,'',location.pathname+location.search+'#connections=mine');
+    if(ctx.state.user&&ctx.state.me)return ctx.go('connections');
+    return ctx.auth('in',true);
+  }
+  function entryHtml(){return `<section class="sc-entry" id="sota-connections" aria-labelledby="sc-entry-title"><img src="/assets/dimau-visuals-icon.svg" alt="" width="88" height="88"><div><p class="sc-kicker">Dimau Visuals · Connections</p><h2 id="sc-entry-title">See how we’re connected.</h2><p>Your friends. Your Koro. The links that bring you together.</p><p class="sc-entry-note">Sign in for your own map,or explore a fictional community first. Your personal map stays inside Sota Kece.</p><div class="sc-entry-actions"><button type="button" onclick="window.SotaConnections.openPersonal()">See my connections</button><button type="button" class="sc-entry-example" onclick="window.SotaConnections.preview()">Explore the example</button></div><a class="sc-tool-link" href="https://dimau-visuals.vercel.app/#explorer" target="_blank" rel="noopener noreferrer">Open Dimau Visuals for your own data ↗</a></div></section>`;}
+  const hero=()=>`<section class="glass sc-hero"><p class="sc-kicker">Sota Kece · Dimau Visuals</p><h1>Our people. Our circles.</h1>
     <p>Explore how friendships and Koro bring a community together.</p></section>`;
   function preview(){
     stop();const run=epoch;
+    history.replaceState(null,'',location.pathname+location.search+'#connections=example');
     ctx.app.innerHTML=`<div class="sc-preview"><button class="btn sm ghost" id="sc-back">← Back to Sota Kece</button>${hero()}<div id="sc-root"></div></div>`;
-    document.querySelector('#sc-back').onclick=()=>{stop();if(location.hash==='#connections=example')history.replaceState(null,'',location.pathname+location.search);if(ctx.home)ctx.home();else ctx.auth();};
+    document.querySelector('#sc-back').onclick=back;
     mounted=mount(document.querySelector('#sc-root'),example(),{demo:true,valid:()=>run===epoch});
   }
-  // Public release is example-only. Keep account-backed exploration unrouted until verified.
-  function view(){return preview();}
+  function view(){return viewLive();}
   async function viewLive(){
     stop();const run=epoch,user=ctx.state.user?.id;
-    if(!user)return ctx.auth();
-    ctx.shell(`${hero()}<div id="sc-root" class="glass card" role="status">Loading your connections…</div>`);
+    if(!user)return openPersonal();
+    liveOwner=String(user);
+    ctx.shell(`<button class="btn sm ghost sc-back" id="sc-back">← Back to Sota Kece</button>${hero()}<div id="sc-root" class="glass card" role="status">Loading your connections…</div>`);
+    document.querySelector('#sc-back').onclick=back;
     try{
       const result=await load(ctx.client,ctx.state);
       if(run!==epoch||ctx.state.tab!=='connections'||ctx.state.user?.id!==user)return;
       mounted=mount(document.querySelector('#sc-root'),result,{demo:false,valid:()=>run===epoch,reload:viewLive,
         open:n=>{stop();if(n.type==='group'){ctx.state.tab='crews';ctx.state.crew=Number(n.key);ctx.render();}else ctx.openRoom(n.handle);}});
     }catch(err){
-      if(run!==epoch||ctx.state.tab!=='connections')return;
+      if(run!==epoch||ctx.state.tab!=='connections'||ctx.state.user?.id!==user)return;
       const box=document.querySelector('#sc-root');if(!box)return;
-      box.innerHTML='<h2>Connection interrupted</h2><p>We could not load your connections. Try again when your signal returns.</p><button class="btn sm" id="sc-retry">Try again</button>';
-      document.querySelector('#sc-retry').onclick=viewLive;
+      const expired=err.code==='AUTH_REQUIRED';
+      box.innerHTML=expired?'<h2>Sign in to see your connections</h2><p>Your map needs a current Sota Kece session.</p><button class="btn sm" id="sc-retry">Sign in again</button>':'<h2>Connection interrupted</h2><p>We could not load your connections. Try again when your signal returns.</p><button class="btn sm" id="sc-retry">Try again</button>';
+      document.querySelector('#sc-retry').onclick=expired?()=>{stop();ctx.auth('in',true);}:viewLive;
     }
   }
   function mount(host,result,options){
@@ -177,5 +209,5 @@
     on(svg,'pointerup',()=>{drag=null;});on(svg,'pointercancel',()=>{drag=null;});
     draw();return {dispose(){disposed=true;listeners.forEach(fn=>fn());host.replaceChildren();}};
   }
-  return {init,view,preview,stop,model,load,path,layout,example,mount};
+  return {init,view,preview,openPersonal,entryHtml,stop,model,load,path,layout,example,mount};
 });
