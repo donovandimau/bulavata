@@ -121,3 +121,18 @@ Owner explicitly requested publication as an example. Public home label Connecti
 Resumed exact published source d259e4ac76961583b63521871e0564dd053ea341. Tidy only the masthead shown in the owner's screenshot: cap the solid-white title at64px on desktop with a104px row,24px side gutters and16px gaps. Phone title is28–40px with an80px row,16px side gutters and8px gaps. Keep the saved shared centre line,60px desktop/48px phone controls and48px desktop/36px phone Dimau image. Original blue pattern,orange lighting,all supplied artwork,cropping,Connections example,playlist,account and other page styling/handlers stay intact. Stylesheet/public shell cache versions advanced so older cached header styling refreshes. Task652 lease1;assigned branch agent/codex/tidy-sota-kece-header-proportions-and-spacing/1. Publication HOLD for owner review and explicit approval.
 
 Existing Connections integration check now accepts the versioned public-shell cache name rather than hard-coding v47; it still requires Connections in the cached app shell. The cache refresh for this header therefore no longer fails an unrelated exact-version assertion. All five existing regression suites pass locally.
+
+##23October2026 —Dimau Visuals connections at the bottom (review candidate)
+
+Resume registered2bf0e77d49f4fb6afc99195d29d197d23c6dd662. Owner asks to add
+Dimau Visuals for people/group connections,and explicitly says place it at the
+bottom of Sota Kece. Add one home/Pulse section below existing content,move the
+home-nav example entry there,and offer personal-map/example actions. Keep the
+current header/background/artwork/84skins/music/account functions. Reuse existing
+Sota graph with a local Dimau Visuals mark and static external tool link;no member
+graph transfer. Personal map uses validated current account,existing accepted
+friend/Koro RPCs,exact-handle UUID compatibility and scoped membership reads.
+Logout/account change/route ownership clear pending/private graphs. Existing
+public fictional example remains independent. No DB/policy/data changes. Public
+shell cachev51 refreshes only static assets. Task709lease1;working preview HOLD
+for owner review;actual member-session validation requires signing in.

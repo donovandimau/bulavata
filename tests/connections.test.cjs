@@ -8,10 +8,10 @@ const friends=[{id:'a',handle:'ana',display_name:'Ana'},{id:'b',handle:'jone',di
 const crews=[{id:1,name:'Village'},{id:2,name:'Stories'}];
 let passed=0;
 async function check(name,fn){await fn();passed++;console.log('PASS',name);}
-function client({fr=friends,gr=crews,members=[],rpcError=false,memberError=false}={}){
+function client({fr=friends,gr=crews,members=[],profiles=[],user=me,authError=false,rpcError=false,memberError=false}={}){
   const calls=[];
-  return {calls,rpc:async name=>{calls.push({rpc:name});return {data:name==='bv_my_friends'?fr:gr,error:rpcError?{}:null};},
-    from(table){const call={table,filters:{}};calls.push(call);return {select(columns){call.columns=columns;return this;},in(key,values){call.filters[key]=values;return this;},async range(start,end){call.range=[start,end];return {data:members.slice(start,end+1),error:memberError?{}:null};}};}};
+  return {calls,auth:{getUser:async()=>({data:{user},error:authError?{}:null})},rpc:async name=>{calls.push({rpc:name});return {data:name==='bv_my_friends'?fr:gr,error:rpcError?{}:null};},
+    from(table){const call={table,filters:{}};calls.push(call);return {select(columns){call.columns=columns;return this;},in(key,values){call.filters[key]=values;return this;},async limit(n){call.limit=n;return {data:profiles,error:null};},async range(start,end){call.range=[start,end];return {data:members.slice(start,end+1),error:memberError?{}:null};}};}};
 }
 (async()=>{
   await check('only accepted-friend and own-Koro IDs can create membership edges',()=>{
@@ -37,6 +37,21 @@ function client({fr=friends,gr=crews,members=[],rpcError=false,memberError=false
   await check('RPC errors fail closed rather than showing a false empty community',async()=>{
     await assert.rejects(c.load(client({rpcError:true}),{user:me,me}),/could not be loaded/);
   });
+  await check('server-validated account must match the current graph owner before social reads',async()=>{
+    for(const options of [{user:{id:'other'}},{authError:true},{user:null}]){
+      const api=client(options);await assert.rejects(c.load(api,{user:me,me}),/Sign in again/);assert.equal(api.calls.length,0);
+    }
+    const api=client();await assert.rejects(c.load(api,{user:me,me:{...me,id:'different'}}),/profile is changing/);assert.equal(api.calls.length,0);
+  });
+  await check('legacy friend rows resolve UUIDs only through exact already-accepted handles',async()=>{
+    const api=client({fr:[{handle:'ana',display_name:'Ana'},{handle:'jone',display_name:'Jone'}],profiles:[{id:'a',handle:'ana'},{id:'b',handle:'jone'},{id:'stranger',handle:'unrequested'}],members:[{member:'a',crew_id:1}]});
+    const r=await c.load(api,{user:me,me});assert.equal(r.graph.nodes.length,5);assert(!JSON.stringify(r.graph).includes('stranger'));
+    assert.equal(api.calls[2].table,'bv_profiles');assert.equal(api.calls[2].columns,'id,handle');assert.deepEqual(api.calls[2].filters,{handle:['ana','jone']});assert.equal(api.calls[2].limit,120);
+    assert.deepEqual(api.calls[3].filters,{crew_id:[1,2],member:['a','b']});
+  });
+  await check('malformed RPC payloads fail rather than drawing an empty personal graph',async()=>{
+    await assert.rejects(c.load(client({fr:{bad:'shape'}}),{user:me,me}),/could not be loaded/);
+  });
   await check('membership permission failure gives an explicit partial view',async()=>{
     const r=await c.load(client({memberError:true}),{user:me,me});assert.equal(r.graph.edges.length,4);assert.match(r.notices[0],/unavailable/);
   });
@@ -57,7 +72,7 @@ function client({fr=friends,gr=crews,members=[],rpcError=false,memberError=false
     for(const n of r.graph.nodes)assert(c.path(r.graph,n.id).length);
   });
   await check('app integration preserves existing routes and adds no remote graph dependency',()=>{
-    const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');assert.match(html,/SotaConnections\.init/);assert.match(fs.readFileSync(path.join(__dirname,'../skin-studio.js'),'utf8'),/SotaConnections\.preview\(\).*Connections/);assert.match(html,/go\('connections'\)/);assert.match(html,/if\(S.tab==="connections"\)/);
+    const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');assert.match(html,/SotaConnections\.init/);const studio=fs.readFileSync(path.join(__dirname,'../skin-studio.js'),'utf8');assert.match(studio,/SotaConnections\?\.entryHtml/);assert(studio.indexOf('SotaConnections?.entryHtml')<studio.indexOf('<footer class="bv-classic-footer">'));assert(!studio.includes('>Connections example</button>'));assert.match(html,/go\('connections'\)/);assert.match(html,/if\(S.tab==="connections"\)/);
     const js=fs.readFileSync(path.join(__dirname,'../connections.js'),'utf8');assert(!/localStorage|sessionStorage|service_role/.test(js));
     const sw=fs.readFileSync(path.join(__dirname,'../sw.js'),'utf8');assert.match(sw,/const CACHE='sota-kece-shell-\d{8}-v\d+-[a-z-]+';/);assert.match(sw,/'\/connections.js'/);
   });

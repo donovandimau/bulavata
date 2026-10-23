@@ -5,3 +5,18 @@
 .sc-node .sc-hit{fill:transparent!important;stroke:none!important}@media(max-width:760px){.sc-node .sc-hit{r:64px!important}.sc-node circle:not(.sc-hit){r:38px}.sc-node rect{transform:rotate(45deg) scale(1.3)}.sc-symbol{font-size:40px}.sc-label{font-size:30px}}
 .sc-dense .sc-person circle:not(.sc-hit){r:9px}.sc-dense .sc-person .sc-hit{r:14px!important}
 .sc-preview #sc-back,.sc-workspace .btn.ghost{color:#173f58;background:#fff;border:1px solid #c2d5de}.sc-workspace input[type=search]{color:#173f58;background:#fff;border-color:#c2d5de}.sc-workspace input[type=search]::placeholder{color:#526c7b}.sc-workspace .btn:not(.ghost){color:#fff;background:#17485f}
+
+/* One entry at the bottom of Home/Pulse;member data loads only on request. */
+#app .sc-entry{display:grid;grid-template-columns:88px minmax(0,1fr);gap:24px;align-items:start;margin:28px 0 0;padding:30px;border:1px solid #b9cfd8;border-radius:20px;background:#f4fafb;color:#173f58;text-align:left;clear:both;min-width:0}
+#app .sc-entry>img{width:88px;height:88px;border-radius:19px;margin:3px 0 0;max-width:100%}
+#app .sc-entry h2{color:#173f58;font-size:clamp(24px,3.5vw,34px);line-height:1.2;margin:0 0 12px;text-transform:none;letter-spacing:-.02em}
+#app .sc-entry p{color:#355b70;font-size:15px;line-height:1.7;margin:0 0 10px}
+#app .sc-entry .sc-kicker{font-size:11px;line-height:1.6;font-weight:800;margin-bottom:9px;color:#28526b}
+#app .sc-entry .sc-entry-note{font-size:13px;max-width:65ch}
+.sc-entry-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 14px}
+#app .sc-entry-actions button{font:inherit;font-weight:800;font-size:14px;border:1px solid #17485f;border-radius:12px;background:#17485f;color:white;min-height:46px;padding:11px 16px;cursor:pointer;white-space:normal;text-align:center}
+#app .sc-entry-actions .sc-entry-example{background:white;color:#17485f}
+#app .sc-entry .sc-tool-link{display:inline-block;font-size:13px;font-weight:800;color:#175b71;text-decoration:underline;text-underline-offset:3px;line-height:1.7;overflow-wrap:anywhere;padding:5px 0}
+.sc-entry button:focus-visible,.sc-entry a:focus-visible{outline:3px solid #187b78;outline-offset:4px}
+.sc-back{margin:0 0 16px}
+@media(max-width:600px){#app .sc-entry{grid-template-columns:minmax(0,1fr);padding:22px 18px;gap:16px;margin-top:22px}#app .sc-entry>img{width:64px;height:64px;border-radius:14px}#app .sc-entry-actions{display:grid;grid-template-columns:minmax(0,1fr)}#app .sc-entry-actions button{width:100%}}

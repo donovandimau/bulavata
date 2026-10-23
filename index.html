@@ -192,7 +192,7 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <link rel="stylesheet" href="/front-page.css?v=20261021-blue-white-background">
 <link rel="stylesheet" href="/music-playlist.css?v=20261021-woven-mat">
 <link rel="stylesheet" href="/kava.css">
-<link rel="stylesheet" href="/connections.css?v=20261021">
+<link rel="stylesheet" href="/connections.css?v=20261023-bottom-map">
 <script src="/room-media.js"></script>
 <script src="/skins.js?v=20261014-core-skins"></script>
 <script async src="https://dimau-ops.vercel.app/api/visit?s=sota-kece"></script>
@@ -311,7 +311,7 @@ function shell(body){
         <em>${i}</em>${l}${k==='friends'&&p?`<span class="badge">${p}</span>`:''}</button>`).join("")}
   </nav>`;
 }
-function go(t){ window.SotaConnections?.stop(); window.SotaKavaUI?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
+function go(t){ if(t!=='connections'&&/^#connections=(?:mine|example)$/.test(location.hash))history.replaceState(null,'',location.pathname+location.search); window.SotaConnections?.stop(); window.SotaKavaUI?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
 
 /* ================= DATA ================= */
 async function refreshMeta(){
@@ -480,7 +480,7 @@ async function viewPulse(){
         </div>
       </div>
     </div>
-  </div>`);
+  </div>${window.SotaConnections?.entryHtml?.()||''}`);
 }
 async function postPulse(){
   const t=$("#p-text").value.trim(); if(!t) return;
@@ -734,7 +734,7 @@ async function viewCrews(){
   const {data:crews}=await sb.rpc("bv_my_crews");
   shell(`<div class="grid two"><div class="stack">
     <div class="glass card"><h3>Your Koro</h3>
-      <button class="btn sm ghost" style="margin:10px 0" onclick="go('connections')">View connections example</button>
+      <button class="btn sm ghost" style="margin:10px 0" onclick="go('connections')">See my connections</button>
       <div class="sub" style="margin-bottom:12px">Villages. Small, closed, invite-only. No discovery, no public anything.</div>
       ${(crews||[]).length? crews.map(c=>`
         <div class="pulse-item" onclick="S.crew=${c.id};render()">
@@ -809,7 +809,7 @@ async function viewFriends(){
         <button class="btn sm" onclick="respond(${r.friendship_id},'accepted')">Accept</button>
         <button class="btn sm ghost" onclick="respond(${r.friendship_id},'reject')">No</button>
       </div>`).join("")}</div>`:''}
-    <div class="glass card"><h3>Connections example</h3><p class="sub">Explore a fictional community of people and Koro.</p><button class="btn" style="margin-top:12px" onclick="go('connections')">Explore example connections</button></div>
+    <div class="glass card"><h3>Your connections</h3><p class="sub">See your accepted friends and Koro together,with Dimau Visuals.</p><button class="btn" style="margin-top:12px" onclick="go('connections')">See my connections</button></div>
     <div class="glass card"><h3>Your friends</h3>
       <div class="sub" style="margin-bottom:10px">${S.friends.length} ${S.friends.length===1?'person':'people'}. Mutual, always.</div>
       ${S.friends.length? S.friends.map(f=>`
@@ -854,6 +854,7 @@ async function respond(id,act){
 
 /* ================= ROUTER ================= */
 async function render(){
+  if(S.tab==="connections") return window.SotaConnections.view();
   await refreshMeta();
   if(S.tab==="pulse") return viewPulse();
   if(S.tab==="moments") return viewMoments();
@@ -861,14 +862,14 @@ async function render(){
   if(S.tab==="circles") return window.SotaKavaUI.view();
   if(S.tab==="crews") return viewCrews();
   if(S.tab==="friends") return viewFriends();
-  if(S.tab==="connections") return window.SotaConnections.view();
   if(S.tab==="wallet") return viewWallet();
 }
 async function boot(){
   if(typeof location==='object'&&location.hash==="#connections=example")return window.SotaConnections.preview();
-  if(!navigator.onLine)return renderAuth();
+  const personal=typeof location==='object'&&location.hash==='#connections=mine';
+  if(!navigator.onLine)return renderAuth('in',personal);
   const {data:{session}} = await sb.auth.getSession();
-  if(!session) return renderAuth();
+  if(!session) return renderAuth('in',personal);
   S.user = session.user;
   const {data:me,error:profileError} = await sb.from("bv_profiles").select("*").eq("id",S.user.id).maybeSingle();
   if(profileError)return shell(`<div class="glass card"><h3>Your room is still yours.</h3><p>Connection interrupted. Try loading it again when your signal returns.</p><button class="btn" onclick="boot()">Try again</button></div>`);
@@ -884,6 +885,7 @@ async function boot(){
       S.tab = "wallet";
     }
   }catch(_){}
+  if(personal){S.tab='connections';return render();}
   let pendingMate='';try{pendingMate=sessionStorage.getItem('sota-find-mate')||'';}catch(_){}
   if(/^[a-z0-9_]{3,20}$/.test(pendingMate)){
     S.tab='friends';await render();
@@ -929,11 +931,11 @@ window.go=go; window.openRoom=openRoom; window.renderAuth=renderAuth; window.sb=
 </script>
 <script src="/local-music.js"></script>
 <script src="/music-playlist.js?v=20261021-island-player"></script>
-<script src="/skin-studio.js?v=20261021-island-player"></script>
+<script src="/skin-studio.js?v=20261023-bottom-map"></script>
 <script src="/offline.js"></script>
 <script src="/kava.js"></script>
 <script src="/kava-ui.js"></script>
-<script src="/connections.js?v=20261021"></script>
+<script src="/connections.js?v=20261023-bottom-map"></script>
 <script>window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});boot();</script>
 </body>
 </html>
