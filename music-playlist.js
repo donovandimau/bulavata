@@ -10,6 +10,7 @@
     });
   }
   let dialog=null,audio=null,tracks=[],current=-1,loading=null,attempt=0,beforePlay=()=>{},focusBefore=null,message='Choose a song to start listening.';
+  root.SotaPlayback?.register('playlist',pause);
   let list,filter,count,status,title,play,previous,next,retry,mood,subtitle;
   function el(tag,text,cls){const node=root.document.createElement(tag);if(text)node.textContent=text;if(cls)node.className=cls;return node;}
   function button(text,action){const node=el('button',text);node.type='button';node.addEventListener('click',action);return node;}
@@ -75,7 +76,7 @@
     title=el('strong','Your island soundtrack','sk-playlist-title');subtitle=el('span','Pick a song. Find your rhythm.','sk-playlist-subtitle');
     const bars=el('span','','sk-playlist-bars');bars.setAttribute('aria-hidden','true');for(let i=0;i<5;i++)bars.append(el('i'));
     details.append(mood,title,subtitle,bars);hero.append(record,details);
-    audio=el('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label','Playlist audio');
+    audio=el('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label','Playlist audio');audio.setAttribute('data-sota-playback-source','playlist');
     const transport=el('div','','sk-playlist-transport');transport.setAttribute('role','group');transport.setAttribute('aria-label','Playlist playback controls');
     previous=button('Previous',()=>move(-1));play=button('Play',()=>live()?pause():playTrack(current<0?0:current));play.className='sk-playlist-play';next=button('Next',()=>move(1));transport.append(previous,play,next);
     status=el('p','','sk-playlist-status');status.setAttribute('role','status');retry=button('Retry playlist',load);retry.hidden=true;
@@ -84,6 +85,7 @@
     const queue=el('div','','sk-playlist-queue');queue.append(el('span','THE PLAYLIST'),count);
     dialog.append(head,hero,audio,transport,status,retry,search,queue,list);root.document.body.append(dialog);
     audio.addEventListener('play',()=>{
+      root.SotaPlayback?.activate('playlist',audio);
       beforePlay();root.document.querySelectorAll('audio').forEach(other=>{if(other!==audio)other.pause();});
       message='Playing · '+(tracks[current]?.title||'');sync();
     });

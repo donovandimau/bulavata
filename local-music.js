@@ -36,14 +36,16 @@
   }
   const store=createStore();
   let tracks=[],selected=null,audio=null,objectUrl='',ready=null,dialog=null,busy=false,beforePlay=()=>{},message='',focusBefore=null;
+  root.SotaPlayback?.register('local',pause);
   function el(tag,text,className){const node=root.document.createElement(tag);if(text)node.textContent=text;if(className)node.className=className;return node;}
   function button(text,action){const node=el('button',text,'btn ghost');node.type='button';node.addEventListener('click',action);return node;}
   function remember(){try{if(selected)root.localStorage.setItem('sota.music.selected',selected.id);else root.localStorage.removeItem('sota.music.selected');}catch(_){} }
   function changed(){root.dispatchEvent(new root.CustomEvent('sota-music-change'));}
   function getAudio(){
     if(audio)return audio;
-    audio=root.document.createElement('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label','Your uploaded music');
-    for(const event of ['play','pause','ended'])audio.addEventListener(event,sync);
+    audio=root.document.createElement('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label','Your uploaded music');audio.setAttribute('data-sota-playback-source','local');
+    audio.addEventListener('play',()=>{root.SotaPlayback?.activate('local',audio);sync();});
+    for(const event of ['pause','ended'])audio.addEventListener(event,sync);
     audio.addEventListener('error',()=>{message='This track could not play. Choose another audio file.';sync();});
     return audio;
   }

@@ -116,6 +116,7 @@
   const hero=()=>`<section class="glass sc-hero"><p class="sc-kicker">Sota Kece · Dimau Visuals</p><h1>Our people. Our circles.</h1>
     <p>Explore how friendships and Koro bring a community together.</p></section>`;
   function preview(){
+    if(typeof window==='object')window.SotaView?.invalidate();
     stop();const run=epoch;
     history.replaceState(null,'',location.pathname+location.search+'#connections=example');
     ctx.app.innerHTML=`<div class="sc-preview"><button class="btn sm ghost" id="sc-back">← Back to Sota Kece</button>${hero()}<div id="sc-root"></div></div>`;

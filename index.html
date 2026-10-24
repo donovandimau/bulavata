@@ -197,6 +197,9 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <script src="/skins.js?v=20261014-core-skins"></script>
 <script async src="https://dimau-ops.vercel.app/api/visit?s=sota-kece"></script>
 <link rel="stylesheet" href="/header-alignment-20261018.css?v=20261021-blue-white-background">
+<link rel="stylesheet" href="/quality.css?v=20261024-quality">
+<link rel="preload" as="image" href="/assets/front-reference-brand.jpg" media="(min-width:761px)">
+<link rel="preload" as="image" href="/assets/mobile-front-reference-brand.jpg" media="(max-width:760px)">
 </head>
 <body>
 <div class="bubbles" id="bubbles"></div>
@@ -215,7 +218,7 @@ const esc = t => String(t??"").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;'
 const ago = t => { const s=(Date.now()-new Date(t))/1000;
   if(s<60) return "now"; if(s<3600) return Math.floor(s/60)+"m"; if(s<86400) return Math.floor(s/3600)+"h";
   if(s<604800) return Math.floor(s/86400)+"d"; return new Date(t).toLocaleDateString(undefined,{day:'numeric',month:'short'}); };
-function toast(m){ const d=document.createElement("div"); d.className="toast"; d.textContent=m;
+function toast(m){ const d=document.createElement("div"); d.className="toast"; d.setAttribute('role','status'); d.textContent=m;
   document.body.appendChild(d); setTimeout(()=>d.remove(),2600); }
 
 /* bubbles */
@@ -229,6 +232,7 @@ const LOGO = `<a class="logotile dimau-tile" href="/" aria-label="Sota Kece home
 
 /* ================= AUTH ================= */
 function renderAuth(mode="in"){
+  viewRun();
   app.innerHTML = `
   <div class="glass authwrap">
     <div class="row" style="gap:12px">${LOGO}
@@ -251,12 +255,12 @@ function renderAuth(mode="in"){
       ${mode==='up'?`<div><label>Your handle</label><input id="a-handle" placeholder="bula_sina" maxlength="20" autocapitalize="off">
         <div class="sub" style="margin-top:5px">Lowercase letters, numbers and underscores. This is your room address.</div></div>
       <div><label>Display name</label><input id="a-name" placeholder="Sina" maxlength="40"></div>`:''}
-      <div><label>Email</label><input id="a-email" type="email" placeholder="you@email.com" autocapitalize="off"></div>
-      <div><label>Password</label><input id="a-pass" type="password" placeholder="At least 8 characters"></div>
+      <div><label for="a-email">Email</label><input id="a-email" type="email" placeholder="you@email.com" autocapitalize="off"></div>
+      <div><label for="a-pass">Password</label><input id="a-pass" type="password" placeholder="At least 8 characters"></div>
       ${mode==='up'?`<div><label>Year you were born</label><input id="a-year" type="number" inputmode="numeric" placeholder="e.g. 2004" min="1900" max="${new Date().getFullYear()}">
         <div class="sub" style="margin-top:5px">Sota Kece is 16+. We ask once, store only an age band, and never a document.</div></div>`:''}
       <button class="btn" id="a-go">${mode==='up'?'Create my room':'Sign in'}</button>
-      <div class="sub" id="a-err" style="color:var(--coral);text-align:center"></div>
+      <div class="sub" id="a-err" role="alert" style="color:var(--coral);text-align:center"></div>
     </div>
   </div>`;
   $("#a-go").onclick = () => mode==='up' ? signUp() : signIn();
@@ -297,29 +301,39 @@ async function signUp(){
 /* ================= SHELL ================= */
 function shell(body){
   const p = S.pending.length;
+  const active=document.activeElement,navFocused=active?.closest?.('nav.bottom'),viewFocused=active&&app.contains(active);
   app.innerHTML = `
+  <a class="sota-skip-link" href="#view">Skip to content</a>
   <header class="top glass">
     ${LOGO}<div class="brand">Sota Kece<small>alive together</small></div>
     <div class="spacer"></div>
     <button class="luvchip" onclick="go('wallet')" title="Your wallet" style="border:0;font:inherit;cursor:pointer">💰 <b>${S.wallet&&S.wallet.has_wallet?fjd(S.wallet.balance_minor,S.wallet.currency):"—"}</b></button>
     <div class="luvchip" title="Three Uro a day. That is why one means something.">🫶 <b>${S.luv}</b></div>
   </header>
-  <div id="view">${body}</div>
-  <nav class="bottom glass">
+  <main id="view" tabindex="-1">${body}</main>
+  <nav class="bottom glass" aria-label="Main navigation">
     ${[["pulse","🌊","Pulse"],["moments","🐚","Moments"],["room","🏝","My room"],["circles","🥥","Circles"],["crews","🪸","Koro"],["friends","🤝","Friends"]]
-      .map(([k,i,l])=>`<button class="${S.tab===k?'on':''}" onclick="go('${k}')" style="position:relative">
-        <em>${i}</em>${l}${k==='friends'&&p?`<span class="badge">${p}</span>`:''}</button>`).join("")}
+      .map(([k,i,l])=>`<button class="${S.tab===k?'on':''}" data-tab="${k}" aria-current="${S.tab===k?'page':'false'}" onclick="go('${k}')" style="position:relative">
+        <em aria-hidden="true">${i}</em>${l}${k==='friends'&&p?`<span class="badge" aria-label="${p} pending friend requests">${p}</span>`:''}</button>`).join("")}
   </nav>`;
+  if(navFocused)app.querySelector(`nav.bottom [data-tab="${S.tab}"]`)?.focus({preventScroll:true});
+  else if(viewFocused)$('#view')?.focus({preventScroll:true});
 }
 function go(t){ if(t!=='connections'&&/^#connections=(?:mine|example)$/.test(location.hash))history.replaceState(null,'',location.pathname+location.search); window.SotaConnections?.stop(); window.SotaKavaUI?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
 
 /* ================= DATA ================= */
 async function refreshMeta(){
+  const run=viewRun(false);
   const [l,pr,fr] = await Promise.all([
-    sb.rpc("bv_luv_left"), sb.rpc("bv_pending_requests"), sb.rpc("bv_my_friends")
+    requestResult(sb.rpc("bv_luv_left")), requestResult(sb.rpc("bv_pending_requests")), requestResult(sb.rpc("bv_my_friends"))
   ]);
-  S.luv = l.data ?? 0; S.pending = pr.data || []; S.friends = fr.data || [];
-  const wl = await sb.rpc("bv_wallet"); S.wallet = wl.data || {has_wallet:false};
+  const wl = await requestResult(sb.rpc("bv_wallet"));
+  if(!currentView(run))return;
+  if(!l.error)S.luv = l.data ?? 0;
+  if(!pr.error)S.pending = pr.data || [];
+  if(!fr.error)S.friends = fr.data || [];
+  if(!wl.error)S.wallet = wl.data || {has_wallet:false};
+  S.metaErrors={pending:pr.error||null,friends:fr.error||null,wallet:wl.error||null};
 }
 
 /* ================= WALLET ================= */
@@ -329,6 +343,8 @@ function fjd(minor,cur){
   catch(_){ return ((Number(minor)||0)/100).toFixed(2); }
 }
 async function viewWallet(){
+  viewRun();
+  if(S.metaErrors?.wallet)return viewError('your wallet','render()');
   const w = S.wallet || {has_wallet:false};
   if(!w.has_wallet) return shell(`<div class="glass card"><h3>Your wallet</h3>
     <div class="empty"><em>💰</em>Your wallet opens together with your room. Pull the page again in a moment.</div></div>`);
@@ -348,11 +364,11 @@ async function viewWallet(){
     <div class="glass card">
       <h3>Send to a mate</h3>
       <div class="sub" style="margin-bottom:10px">Straight into their wallet. Nothing leaves until you press send.</div>
-      <input id="wl-to" placeholder="their handle, no @" autocomplete="off" spellcheck="false">
-      <input id="wl-amt" placeholder="how much, e.g. 10.00" inputmode="decimal">
-      <input id="wl-memo" placeholder="what it is for (optional)" maxlength="80">
+      <input id="wl-to" aria-label="Recipient handle" placeholder="their handle, no @" autocomplete="off" spellcheck="false">
+      <input id="wl-amt" aria-label="Amount to send" placeholder="how much, e.g. 10.00" inputmode="decimal">
+      <input id="wl-memo" aria-label="Payment note (optional)" placeholder="what it is for (optional)" maxlength="80">
       <button class="btn" onclick="walletSend()">Send</button>
-      <div class="sub" id="wl-err" style="color:#9b2226"></div>
+      <div class="sub" id="wl-err" role="alert" style="color:#9b2226"></div>
     </div>
   </div>
   <div class="stack">
@@ -416,19 +432,26 @@ async function walletSend(){
 
 /* ================= PULSE ================= */
 async function viewPulse(){
-  shell(`<div class="empty glass card"><em>🌊</em>Loading the pulse…</div>`);
+  const run=viewRun();
+  shell(`<div class="empty glass card" role="status"><em>🌊</em>Loading the pulse…</div>`);
   const today = new Date().toISOString().slice(0,10);
   const [pf, sp] = await Promise.all([
-    sb.rpc("bv_pulse_feed"),
-    sb.from("bv_sparks").select("*").eq("for_date",today).maybeSingle()
+    requestResult(sb.rpc("bv_pulse_feed")),
+    requestResult(sb.from("bv_sparks").select("*").eq("for_date",today).maybeSingle())
   ]);
+  if(!currentView(run))return;
+  if(pf.error||sp.error)return viewError('the Pulse','viewPulse()');
   const pulses = (pf.data||[]).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
   let spark = sp.data, mine=null, answers=[];
   if(spark){
-    const {data:ans} = await sb.from("bv_spark_answers").select("*").eq("spark_id",spark.id);
+    const {data:ans,error:answerError} = await requestResult(sb.from("bv_spark_answers").select("*").eq("spark_id",spark.id));
+    if(!currentView(run))return;
+    if(answerError)return viewError("today's Spark",'viewPulse()');
     answers = ans||[]; mine = answers.find(a=>a.author===S.user.id);
     if(mine){ const ids=answers.map(a=>a.author);
-      const {data:ppl} = await sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji").in("id",ids);
+      const {data:ppl,error:peopleError} = await requestResult(sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji").in("id",ids));
+      if(!currentView(run))return;
+      if(peopleError)return viewError("today's Spark",'viewPulse()');
       const map=Object.fromEntries((ppl||[]).map(p=>[p.id,p]));
       answers = answers.map(a=>({...a,p:map[a.author]||{}})); }
   }
@@ -438,23 +461,23 @@ async function viewPulse(){
       <div class="glass card">
         <h3>Say where you're at</h3>
         <div class="sub" style="margin-bottom:11px">One line. Your friends see it. It replaces the last one.</div>
-        <textarea id="p-text" maxlength="140" placeholder="knackered but the sun's out" style="min-height:62px"></textarea>
+        <textarea id="p-text" aria-label="Your Pulse update" maxlength="140" placeholder="knackered but the sun's out" style="min-height:62px"></textarea>
         <div class="row" style="margin-top:9px">
-          <input id="p-mood" placeholder="mood (optional) 🌤" maxlength="16" style="max-width:170px">
+          <input id="p-mood" aria-label="Mood (optional)" placeholder="mood (optional) 🌤" maxlength="16" style="max-width:170px">
           <div class="spacer"></div><button class="btn sm" onclick="postPulse()">Post</button>
         </div>
       </div>
       <div class="glass card">
         <h3>The Pulse</h3><div class="sub" style="margin-bottom:8px">Everyone, right now. Newest first.</div>
         ${pulses.length? pulses.map(p=>`
-          <div class="pulse-item" onclick="openRoom('${esc(p.handle)}')">
+          <button type="button" class="pulse-item" onclick="openRoom('${esc(p.handle)}')" aria-label="Visit ${esc(p.display_name||p.handle)}'s room">
             <div class="av" style="background:${esc(p.accent)}18">${esc(p.avatar_emoji||'🌺')}</div>
             <div style="flex:1;min-width:0">
               <div class="row" style="gap:7px"><span class="name">${esc(p.display_name||p.handle)}</span>
                 ${p.mood?`<span class="pill">${esc(p.mood)}</span>`:''}
                 <div class="spacer"></div><span class="ago">${ago(p.created_at)}</span></div>
               <div class="pulse-text">${esc(p.text)}</div>
-            </div></div>`).join("")
+            </div></button>`).join("")
           : `<div class="empty"><em>🌊</em>Quiet in here. Add a friend, or post the first line.</div>`}
       </div>
     </div>
@@ -467,7 +490,7 @@ async function viewPulse(){
             <div class="scrawl" style="border-left-color:var(--sun)">
               <b style="font-weight:600">${esc(a.p.display_name||a.p.handle||'friend')}:</b> ${esc(a.body)}</div>`).join("")
             || `<div class="sub" style="margin-top:9px">No friends have answered yet today.</div>`}`
-        : `<textarea id="sp-a" maxlength="300" placeholder="Answer to unlock everyone else's…"></textarea>
+        : `<textarea id="sp-a" aria-label="Your answer to today's Spark" maxlength="300" placeholder="Answer to unlock everyone else's…"></textarea>
            <button class="btn sm" style="margin-top:9px" onclick="answerSpark(${spark.id})">Unlock</button>`}
       </div>`:''}
       <div class="glass card">
@@ -495,16 +518,19 @@ async function answerSpark(id){
 
 /* ================= MOMENTS ================= */
 async function viewMoments(){
-  shell(`<div class="empty glass card"><em>🐚</em>Loading…</div>`);
-  const {data} = await sb.rpc("bv_moments_feed",{lim:60});
+  const run=viewRun();
+  shell(`<div class="empty glass card" role="status"><em>🐚</em>Loading…</div>`);
+  const {data,error} = await requestResult(sb.rpc("bv_moments_feed",{lim:60}));
+  if(!currentView(run))return;
+  if(error)return viewError('your moments','viewMoments()');
   shell(`
   <div class="grid two">
     <div class="stack">
       <div class="glass card">
         <h3>Post a moment</h3>
         <div class="sub" style="margin-bottom:11px">Kept forever unless you delete it. We never will.</div>
-        <textarea id="m-body" placeholder="what happened…"></textarea>
-        <input id="m-url" placeholder="Image link (optional)" style="margin-top:9px">
+        <textarea id="m-body" aria-label="Your moment" placeholder="what happened…"></textarea>
+        <input id="m-url" aria-label="Moment image link (optional)" placeholder="Image link (optional)" style="margin-top:9px">
         <div class="row" style="margin-top:9px"><div class="spacer"></div>
           <button class="btn sm" onclick="postMoment()">Post</button></div>
       </div>
@@ -514,7 +540,7 @@ async function viewMoments(){
             <div class="av sm" style="background:${esc(m.accent)}18">${esc(m.avatar_emoji||'🌺')}</div>
             <div style="flex:1;min-width:0"><div class="name ellip">${esc(m.display_name||m.handle)}</div>
               <div class="handle">@${esc(m.handle)} · ${ago(m.created_at)}</div></div>
-            ${m.author===S.user.id?`<button class="luvbtn" onclick="delMoment(${m.id})">🗑</button>`:''}
+            ${m.author===S.user.id?`<button class="luvbtn" aria-label="Delete this moment" onclick="delMoment(${m.id})">🗑</button>`:''}
           </div>
           ${m.body?`<div class="body">${esc(m.body)}</div>`:''}
           ${mediaMarkup(m.media_url)}
@@ -549,10 +575,12 @@ async function giveLuv(kind,id){
 /* ================= ROOM ================= */
 async function openRoom(h){ S.tab="room"; S.roomHandle=h; render(); }
 async function viewRoom(){
+  const run=viewRun();
   const h = S.roomHandle || S.me.handle;
-  shell(`<div class="empty glass card"><em>🏝</em>Opening the room…</div>`);
-  const {data:R,error:roomError} = await sb.rpc("bv_room",{p_handle:h});
-  if(roomError)return shell(`<div class="glass card"><h3>Connection interrupted.</h3><p>We could not load this room. Try again when your signal returns.</p><button class="btn" onclick="viewRoom()">Try again</button></div>`);
+  shell(`<div class="empty glass card" role="status"><em>🏝</em>Opening the room…</div>`);
+  const {data:R,error:roomError} = await requestResult(sb.rpc("bv_room",{p_handle:h}));
+  if(!currentView(run))return;
+  if(roomError)return viewError('this room','viewRoom()');
   if(!R || !R.found) return shell(`<div class="glass card empty"><em>🤷</em>No room at @${esc(h)}.</div>`);
   const p = R.profile, me = R.is_me;
   document.documentElement.style.setProperty("--accent", p.room_accent || "#4FA8D8");
@@ -621,8 +649,8 @@ async function viewRoom(){
         <h3>Top Mates 16</h3><div class="sub" style="margin-bottom:12px">Sixteen close friends. Ranked, visible to your mates, and yes — people notice.</div>
         <div class="topgrid">
           ${Array.from({length:16},(_,i)=>{ const t=(R.top||[]).find(x=>x.slot===i+1);
-            return `<div class="bv-mate"><div class="topslot ${t?'filled':''}" ${t?`onclick="openRoom('${esc(t.handle)}')" title="@${esc(t.handle)}"`:''}>
-              <b>${i+1}</b>${t?esc(t.avatar_emoji||'🌺'):'<span style="opacity:.3">+</span>'}</div>${me&&t?`<div class="bv-mate-tools"><button class="btn sm ghost" onclick="manageTop(${i+1},'up')" aria-label="Move mate ${i+1} up" ${i===0?'disabled':''}>↑</button><button class="btn sm ghost" onclick="manageTop(${i+1},'down')" aria-label="Move mate ${i+1} down" ${i===15?'disabled':''}>↓</button><button class="btn sm ghost" onclick="manageTop(${i+1},'remove')" aria-label="Remove mate ${i+1}">×</button></div>`:''}</div>`;}).join("")}
+            return `<div class="bv-mate"><${t?'button type="button"':'div'} class="topslot ${t?'filled':''}" ${t?`onclick="openRoom('${esc(t.handle)}')" title="@${esc(t.handle)}" aria-label="Visit @${esc(t.handle)}'s room, Top Mate ${i+1}"`:''}>
+              <b>${i+1}</b>${t?esc(t.avatar_emoji||'🌺'):'<span style="opacity:.3">+</span>'}</${t?'button':'div'}>${me&&t?`<div class="bv-mate-tools"><button class="btn sm ghost" onclick="manageTop(${i+1},'up')" aria-label="Move mate ${i+1} up" ${i===0?'disabled':''}>↑</button><button class="btn sm ghost" onclick="manageTop(${i+1},'down')" aria-label="Move mate ${i+1} down" ${i===15?'disabled':''}>↓</button><button class="btn sm ghost" onclick="manageTop(${i+1},'remove')" aria-label="Remove mate ${i+1}">×</button></div>`:''}</div>`;}).join("")}
         </div>
         ${me?`<div class="sub" style="margin-top:11px">Open a friend's room and tap "Add to Top Mates 16".</div>`:''}
       </div>
@@ -636,6 +664,42 @@ async function viewRoom(){
     </div>
   </div>`);
   window.BulaSkinStudio?.apply(p,R);
+}
+// Every view owns its pending reads; older responses cannot replace a newer route.
+function viewRun(restart=true){
+  if(restart)S.viewRevision=(S.viewRevision||0)+1;
+  return {revision:S.viewRevision,tab:S.tab,room:S.roomHandle,crew:S.crew,user:S.user?.id};
+}
+function currentView(run){
+  return run.revision===S.viewRevision&&run.tab===S.tab&&run.room===S.roomHandle&&run.crew===S.crew&&run.user===S.user?.id;
+}
+async function requestResult(request){
+  try{return await request;}catch(error){return {data:null,error};}
+}
+function viewError(subject,retry){
+  return shell(`<section class="glass card view-error" role="alert"><h3>Connection interrupted.</h3><p>We could not load ${esc(subject)}. Try again when your signal returns.</p><button type="button" class="btn" onclick="${retry}">Try again</button></section>`);
+}
+async function copyText(value,success,fallbackId,inputId){
+  try{await navigator.clipboard.writeText(value);toast(success);}
+  catch(_){const fallback=document.getElementById(fallbackId),input=document.getElementById(inputId);if(fallback)fallback.hidden=false;if(input){input.focus();input.select();}else toast('Copy this: '+value);}
+}
+function installAuthLifecycle(){
+  S.authSubscription?.unsubscribe();
+  let owner=S.user?.id||null,change=0;
+  const result=sb.auth.onAuthStateChange((event,session)=>{
+    const next=session?.user?.id||null,previous=owner||S.user?.id||null;
+    if(event==='INITIAL_SESSION'&&(!previous||next===previous)){owner=next;return;}
+    if(event!=='SIGNED_OUT'&&next===previous){owner=next;return;}
+    owner=next;const revision=++change;
+    viewRun();
+    S.user=null;S.me=null;S.friends=[];S.pending=[];S.wallet=null;S.crew=null;S.roomHandle=null;S.tab='pulse';S.luv=0;S.metaErrors={};S.sendingMessage=false;
+    S.searchRevision=(S.searchRevision||0)+1;
+    window.SotaConnections?.stop();window.SotaKavaUI?.stop();window.BulaSkinStudio?.closeForOwnerChange?.();
+    app.replaceChildren();
+    // Supabase work runs after its synchronous auth callback has returned.
+    setTimeout(()=>{if(revision!==change)return;if(next)boot();else renderAuth();},0);
+  });
+  S.authSubscription=result?.data?.subscription||null;
 }
 function mediaMarkup(value){
   const url=window.BulaSkins.safeUrl(value);
@@ -730,25 +794,28 @@ async function exportArchive(){
 /* ================= KORO ================= */
 async function viewCrews(){
   if(S.crew) return viewCrewRoom();
-  shell(`<div class="empty glass card"><em>🪸</em>Loading…</div>`);
-  const {data:crews}=await sb.rpc("bv_my_crews");
+  const run=viewRun();
+  shell(`<div class="empty glass card" role="status"><em>🪸</em>Loading…</div>`);
+  const {data:crews,error}=await requestResult(sb.rpc("bv_my_crews"));
+  if(!currentView(run))return;
+  if(error)return viewError('your Koro','viewCrews()');
   shell(`<div class="grid two"><div class="stack">
     <div class="glass card"><h3>Your Koro</h3>
       <button class="btn sm ghost" style="margin:10px 0" onclick="go('connections')">See my connections</button>
       <div class="sub" style="margin-bottom:12px">Villages. Small, closed, invite-only. No discovery, no public anything.</div>
       ${(crews||[]).length? crews.map(c=>`
-        <div class="pulse-item" onclick="S.crew=${c.id};render()">
+        <button type="button" class="pulse-item" onclick="S.crew=${c.id};render()" aria-label="Open ${esc(c.name)} Koro">
           <div class="av" style="background:${esc(c.accent)}22">${esc(c.emoji)}</div>
           <div style="flex:1;min-width:0"><div class="name">${esc(c.name)}</div>
             <div class="handle">${c.members} member${c.members==1?'':'s'}${c.last_at?' · '+ago(c.last_at):''}</div></div>
-        </div>`).join("") : `<div class="empty"><em>🪸</em>No Koro yet.</div>`}
+        </button>`).join("") : `<div class="empty"><em>🪸</em>No Koro yet.</div>`}
     </div></div>
     <div class="stack">
       <div class="glass card"><h3>Start a Koro</h3>
-        <div class="row" style="margin-top:11px"><input id="c-name" placeholder="Village name" maxlength="40">
+        <div class="row" style="margin-top:11px"><input id="c-name" aria-label="New Koro name" placeholder="Village name" maxlength="40">
           <button class="btn sm" onclick="makeCrew()">Make</button></div></div>
       <div class="glass card"><h3>Join with a code</h3>
-        <div class="row" style="margin-top:11px"><input id="c-code" placeholder="paste join code" autocapitalize="off">
+        <div class="row" style="margin-top:11px"><input id="c-code" aria-label="Koro join code" placeholder="paste join code" autocapitalize="off">
           <button class="btn sm ghost" onclick="joinCrew()">Join</button></div></div>
     </div></div>`);
 }
@@ -764,22 +831,33 @@ async function joinCrew(){
   if(error) return toast("No Koro with that code"); S.crew=data; render();
 }
 async function viewCrewRoom(){
-  const {data:cs}=await sb.rpc("bv_my_crews"); const c=(cs||[]).find(x=>x.id===S.crew);
+  const run=viewRun();
+  shell(`<div class="empty glass card" role="status"><em>🪸</em>Opening your Koro…</div>`);
+  const {data:cs,error:crewError}=await requestResult(sb.rpc("bv_my_crews"));
+  if(!currentView(run))return;
+  if(crewError)return viewError('this Koro','viewCrewRoom()');
+  const c=(cs||[]).find(x=>x.id===S.crew);
   if(!c){ S.crew=null; return render(); }
-  const {data:msgs}=await sb.from("bv_crew_messages").select("*").eq("crew_id",c.id).order("created_at",{ascending:false}).limit(80);
+  const {data:msgs,error:messageError}=await requestResult(sb.from("bv_crew_messages").select("*").eq("crew_id",c.id).order("created_at",{ascending:false}).limit(80));
+  if(!currentView(run))return;
+  if(messageError)return viewError('your Koro messages','viewCrewRoom()');
   const list=(msgs||[]);   /* newest first - latest at the top, no scrolling back up */
   const ids=[...new Set(list.map(m=>m.author))];
-  const {data:ppl}=ids.length?await sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji").in("id",ids):{data:[]};
+  const {data:ppl,error:peopleError}=ids.length?await requestResult(sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji").in("id",ids)):{data:[]};
+  if(!currentView(run))return;
+  if(peopleError)return viewError('your Koro messages','viewCrewRoom()');
   const map=Object.fromEntries((ppl||[]).map(p=>[p.id,p]));
   shell(`<div class="glass card">
-    <div class="row"><button class="btn sm ghost" onclick="S.crew=null;render()">←</button>
+    <div class="row"><button class="btn sm ghost" aria-label="Back to your Koro" onclick="S.crew=null;render()">←</button>
       <div class="av" style="background:${esc(c.accent)}22">${esc(c.emoji)}</div>
       <div style="flex:1;min-width:0"><div class="name">${esc(c.name)}</div>
         <div class="handle">${c.members} member${c.members==1?'':'s'}</div></div>
-      <button class="btn sm ghost" onclick="navigator.clipboard.writeText('${esc(c.join_code)}');toast('Join code copied')">🔗 Invite</button>
+      <button class="btn sm ghost" onclick="copyText('${esc(c.join_code)}','Join code copied','crew-invite-fallback','crew-invite-code')">🔗 Invite</button>
     </div><hr class="hr">
-    <div class="row" style="margin-bottom:12px"><input id="cm" placeholder="Message…" maxlength="900">
-      <button class="btn sm" onclick="sendMsg(${c.id})">Send</button></div>
+    <div id="crew-invite-fallback" role="status" hidden><label for="crew-invite-code">Copy this Koro join code</label><input id="crew-invite-code" readonly value="${esc(c.join_code)}"></div>
+    <div class="row" style="margin-bottom:12px"><input id="cm" aria-label="Message your Koro" aria-describedby="cm-error" placeholder="Message…" maxlength="900">
+      <button class="btn sm" id="cm-send" onclick="sendMsg(${c.id})">Send</button></div>
+    <p id="cm-error" role="alert" hidden></p>
     <div class="msgs" id="msgs">
       ${list.length? list.map(m=>{const p=map[m.author]||{};return `
         <div class="msg ${m.author===S.user.id?'mine':''}">
@@ -792,16 +870,27 @@ async function viewCrewRoom(){
   $("#cm").addEventListener("keydown",e=>{if(e.key==="Enter")sendMsg(c.id)});
 }
 async function sendMsg(cid){
-  const b=$("#cm").value.trim(); if(!b) return; $("#cm").value="";
-  const {error}=await sb.from("bv_crew_messages").insert({crew_id:cid,author:S.user.id,body:b});
-  if(error) toast(error.message); render();
+  const input=$("#cm");if(!input||S.sendingMessage)return;
+  const raw=input.value,b=raw.trim();if(!b)return;
+  const run=viewRun(false),button=$('#cm-send'),errorBox=$('#cm-error'),sendToken={};
+  S.sendingMessage=sendToken;input.disabled=true;if(button)button.disabled=true;
+  if(errorBox){errorBox.hidden=true;errorBox.textContent='';}
+  try{
+    const {error}=await sb.from("bv_crew_messages").insert({crew_id:cid,author:S.user.id,body:b});
+    if(error)throw error;
+    if(input.value===raw)input.value='';
+    if(currentView(run))await render();
+  }catch(_){
+    if(currentView(run)){const message='Message did not send. Your text is still here. Try again.';if(errorBox){errorBox.textContent=message;errorBox.hidden=false;}else toast(message);}
+  }finally{if(S.sendingMessage===sendToken)S.sendingMessage=false;input.disabled=false;if(button)button.disabled=false;}
 }
 
 /* ================= FRIENDS ================= */
 async function viewFriends(){
+  viewRun();
   shell(`
   <div class="grid two"><div class="stack">
-    ${S.pending.length?`<div class="glass card"><h3>Asking to be friends</h3>
+    ${S.metaErrors?.pending?`<section class="glass card" role="alert"><h3>Friend requests could not load.</h3><button type="button" class="btn sm" onclick="render()">Try again</button></section>`:S.pending.length?`<div class="glass card"><h3>Asking to be friends</h3>
       ${S.pending.map(r=>`<div class="pulse-item">
         <div class="av">${esc(r.avatar_emoji||'🌺')}</div>
         <div style="flex:1;min-width:0"><div class="name">${esc(r.display_name||r.handle)}</div>
@@ -811,25 +900,26 @@ async function viewFriends(){
       </div>`).join("")}</div>`:''}
     <div class="glass card"><h3>Your connections</h3><p class="sub">See your accepted friends and Koro together,with Dimau Visuals.</p><button class="btn" style="margin-top:12px" onclick="go('connections')">See my connections</button></div>
     <div class="glass card"><h3>Your friends</h3>
-      <div class="sub" style="margin-bottom:10px">${S.friends.length} ${S.friends.length===1?'person':'people'}. Mutual, always.</div>
+      ${S.metaErrors?.friends?`<p role="alert">Your friends could not load. <button type="button" class="btn sm" onclick="render()">Try again</button></p>`:`<div class="sub" style="margin-bottom:10px">${S.friends.length} ${S.friends.length===1?'person':'people'}. Mutual, always.</div>
       ${S.friends.length? S.friends.map(f=>`
-        <div class="pulse-item" onclick="openRoom('${esc(f.handle)}')">
+        <button type="button" class="pulse-item" onclick="openRoom('${esc(f.handle)}')" aria-label="Visit ${esc(f.display_name||f.handle)}'s room">
           <div class="av" style="background:${esc(f.accent)}18">${esc(f.avatar_emoji||'🌺')}</div>
           <div style="flex:1;min-width:0"><div class="name">${esc(f.display_name||f.handle)}</div>
             <div class="handle">@${esc(f.handle)}</div></div>
-          <span class="ago">${ago(f.last_seen)}</span></div>`).join("")
-        : `<div class="empty"><em>🤝</em>Nobody yet. Search a handle to send the first ask.</div>`}
+          <span class="ago">${ago(f.last_seen)}</span></button>`).join("")
+        : `<div class="empty"><em>🤝</em>Nobody yet. Search a handle to send the first ask.</div>`}`}
     </div></div>
     <div class="stack">
       <div class="glass card"><h3>Find someone</h3>
         <div class="sub" style="margin-bottom:11px">By handle only. There is no people-you-may-know here.</div>
-        <div class="row"><input id="s-q" placeholder="handle" autocapitalize="off">
+        <div class="row"><input id="s-q" aria-label="Find a friend by handle" placeholder="handle" autocapitalize="off">
           <button class="btn sm" onclick="search()">Find</button></div>
-        <div id="s-res" style="margin-top:12px"></div>
+        <div id="s-res" role="status" aria-live="polite" style="margin-top:12px"></div>
       </div>
       <div class="glass card"><h3>Your handle</h3>
         <div class="row" style="margin-top:9px"><span class="pill" style="font-size:14px">@${esc(S.me.handle)}</span>
-          <button class="btn sm ghost" onclick="navigator.clipboard.writeText('@${esc(S.me.handle)}');toast('Copied')">Copy</button></div>
+          <button class="btn sm ghost" onclick="copyText('@${esc(S.me.handle)}','Handle copied','handle-copy-fallback','handle-copy-value')">Copy</button></div>
+        <div id="handle-copy-fallback" role="status" hidden><label for="handle-copy-value">Copy your handle</label><input id="handle-copy-value" readonly value="@${esc(S.me.handle)}"></div>
       </div>
       <div class="glass card"><button class="btn ghost" onclick="sb.auth.signOut().then(()=>location.reload())">Sign out</button></div>
     </div></div>`);
@@ -837,9 +927,13 @@ async function viewFriends(){
 }
 async function search(){
   const q=$("#s-q").value.trim().toLowerCase().replace(/^@/,""); if(!q) return;
-  const {data}=await sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji")
-    .ilike("handle",`%${q}%`).neq("id",S.user.id).limit(10);
-  $("#s-res").innerHTML=(data||[]).length? data.map(p=>`
+  const run=viewRun(false),results=$('#s-res'),searchRevision=(S.searchRevision||0)+1;S.searchRevision=searchRevision;
+  results.textContent='Finding your people…';
+  const {data,error}=await requestResult(sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji")
+    .ilike("handle",`%${q}%`).neq("id",S.user.id).limit(10));
+  if(!currentView(run)||S.searchRevision!==searchRevision||$('#s-res')!==results)return;
+  if(error){results.innerHTML='<p role="alert">Search could not load. Your connection may be interrupted.</p><button type="button" class="btn sm" onclick="search()">Try again</button>';return;}
+  results.innerHTML=(data||[]).length? data.map(p=>`
     <div class="pulse-item"><div class="av sm">${esc(p.avatar_emoji||'🌺')}</div>
       <div style="flex:1;min-width:0"><div class="name">${esc(p.display_name||p.handle)}</div>
         <div class="handle">@${esc(p.handle)}</div></div>
@@ -854,8 +948,10 @@ async function respond(id,act){
 
 /* ================= ROUTER ================= */
 async function render(){
+  const run=viewRun();
   if(S.tab==="connections") return window.SotaConnections.view();
   await refreshMeta();
+  if(!currentView(run))return;
   if(S.tab==="pulse") return viewPulse();
   if(S.tab==="moments") return viewMoments();
   if(S.tab==="room") return viewRoom();
@@ -866,12 +962,16 @@ async function render(){
 }
 async function boot(){
   if(typeof location==='object'&&location.hash==="#connections=example")return window.SotaConnections.preview();
+  const run=typeof viewRun==='function'?viewRun():null,stillHere=()=>!run||currentView(run);
   const personal=typeof location==='object'&&location.hash==='#connections=mine';
   if(!navigator.onLine)return renderAuth('in',personal);
   const {data:{session}} = await sb.auth.getSession();
+  if(!stillHere())return;
   if(!session) return renderAuth('in',personal);
   S.user = session.user;
+  if(run)run.user=S.user.id;
   const {data:me,error:profileError} = await sb.from("bv_profiles").select("*").eq("id",S.user.id).maybeSingle();
+  if(!stillHere())return;
   if(profileError)return shell(`<div class="glass card"><h3>Your room is still yours.</h3><p>Connection interrupted. Try loading it again when your signal returns.</p><button class="btn" onclick="boot()">Try again</button></div>`);
   if(!me) return finishRoom();
   S.me = me;
@@ -881,6 +981,7 @@ async function boot(){
     const sid = new URLSearchParams(location.search).get("sid");
     if(sid && /^cs_[A-Za-z0-9_]+$/.test(sid)){
       await walletClaim(sid);
+      if(!stillHere())return;
       history.replaceState({}, "", location.pathname);
       S.tab = "wallet";
     }
@@ -894,6 +995,7 @@ async function boot(){
 }
 /* Signed in, but no room yet. Never sign them out - let them finish. */
 function finishRoom(){
+  viewRun();
   let pre={}; try{ pre=JSON.parse(localStorage.getItem("bv_pending")||"{}"); }catch(_){}
   app.innerHTML=`
   <div class="glass authwrap">
@@ -902,12 +1004,12 @@ function finishRoom(){
     <p class="tagline">You are signed in as <b style="font-weight:600;color:var(--ink)">${esc(S.user.email||"you")}</b>,
       but you have not made your room yet. One screen and you are in.</p>
     <div class="stack">
-      <div><label>Your handle</label><input id="f-handle" value="${esc(pre.handle||'')}" placeholder="bula_sina" maxlength="20" autocapitalize="off">
+      <div><label for="f-handle">Your handle</label><input id="f-handle" value="${esc(pre.handle||'')}" placeholder="bula_sina" maxlength="20" autocapitalize="off">
         <div class="sub" style="margin-top:5px">Lowercase letters, numbers and underscores.</div></div>
-      <div><label>Display name</label><input id="f-name" value="${esc(pre.name||'')}" placeholder="Sina" maxlength="40"></div>
-      <div><label>Year you were born</label><input id="f-year" type="number" inputmode="numeric" placeholder="e.g. 2004" min="1900" max="${new Date().getFullYear()}"></div>
+      <div><label for="f-name">Display name</label><input id="f-name" value="${esc(pre.name||'')}" placeholder="Sina" maxlength="40"></div>
+      <div><label for="f-year">Year you were born</label><input id="f-year" type="number" inputmode="numeric" placeholder="e.g. 2004" min="1900" max="${new Date().getFullYear()}"></div>
       <button class="btn" id="f-go">Make my room</button>
-      <div class="sub" id="f-err" style="color:var(--coral);text-align:center"></div>
+      <div class="sub" id="f-err" role="alert" style="color:var(--coral);text-align:center"></div>
       <button class="btn ghost" onclick="sb.auth.signOut().then(()=>location.reload())">Sign out instead</button>
     </div>
   </div>`;
@@ -928,15 +1030,17 @@ function finishRoom(){
   app.querySelectorAll("input").forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter")$("#f-go").click()}));
 }
 window.go=go; window.openRoom=openRoom; window.renderAuth=renderAuth; window.sb=sb;
+window.SotaView={invalidate:()=>viewRun()};
 </script>
-<script src="/local-music.js"></script>
-<script src="/music-playlist.js?v=20261021-island-player"></script>
-<script src="/skin-studio.js?v=20261023-bottom-map"></script>
-<script src="/offline.js"></script>
+<script src="/playback.js?v=20261024-quality"></script>
+<script src="/local-music.js?v=20261024-quality"></script>
+<script src="/music-playlist.js?v=20261024-quality"></script>
+<script src="/skin-studio.js?v=20261024-quality"></script>
+<script src="/offline.js?v=20261024-quality"></script>
 <script src="/kava.js"></script>
-<script src="/kava-ui.js"></script>
+<script src="/kava-ui.js?v=20261024-quality"></script>
 <script src="/dimau-charts-core.js?v=20261024"></script><script src="/dimau-visuals.js?v=20261024"></script>
-<script src="/connections.js?v=20261024-visual-summary"></script>
-<script>window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});boot();</script>
+<script src="/connections.js?v=20261024-quality"></script>
+<script>window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});boot();installAuthLifecycle();</script>
 </body>
 </html>

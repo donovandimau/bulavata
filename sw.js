@@ -1,18 +1,51 @@
-// Only the public app shell is cached. Auth, profiles, messages and media never enter this cache.
-const CACHE='sota-kece-shell-20261024-v52-visual-summary';
-const ASSETS=['/dimau-charts-core.js','/dimau-visuals.js','/dimau-visuals.css','/assets/dimau-visuals-icon.svg','/assets/sota-blue-white-background-20261021.png','/connections.js','/connections.css','/music-playlist.js','/music-playlist.css','/music-playlist.json','/assets/sota-kece-logo-20261020.svg','/assets/sota-kece-logo-20261020.png','/assets/sota-blue-masi-lettering-20261020.png','/header-alignment-20261018.css','/assets/music-badge-museum-20261018.svg','/assets/dimau-owner-logo-20260920.png','/local-music.js','/assets/sota-kece-logo.png','/','/index.html','/skins.css','/skins.js','/skin-studio.js','/room-media.js','/front-page.css','/assets/fiji-music-icon-20261018.svg','/assets/fiji-sunset.jpg','/assets/front-reference.jpg','/assets/fiji-music.jpg','/assets/friends.jpg','/assets/beach.jpg','/assets/masi-band.svg','/assets/masi-supplied.png','/offline.js','/kava.css','/kava.js','/kava-ui.js','/vendor/supabase-2.45.0.min.js'];
-// Download and cache only the face requested by the current viewport.
+// Only known public app files are cached. Auth, profiles, messages and uploaded media never enter this cache.
+const CACHE='sota-kece-shell-20261024-v54-quality';
+// Keep installation small and reliable: artwork and fonts are saved only after they are requested.
+const ASSETS=['/quality.css','/playback.js','/','/manifest.webmanifest','/dimau-install.js','/vendor/supabase-2.45.0.min.js','/skins.css','/skins.js','/room-media.js','/front-page.css','/header-alignment-20261018.css','/local-music.js','/music-playlist.js','/music-playlist.css','/music-playlist.json','/skin-studio.js','/offline.js','/kava.css','/kava.js','/kava-ui.js','/connections.js','/connections.css','/dimau-charts-core.js','/dimau-visuals.js','/dimau-visuals.css'];
+const PUBLIC_IMAGES=['/assets/dimau-visuals-icon.svg','/assets/sota-blue-white-background-20261021.png','/assets/sota-kece-logo-20261020.svg','/assets/sota-kece-logo-20261020.png','/assets/sota-blue-masi-lettering-20261020.png','/assets/music-badge-museum-20261018.svg','/assets/dimau-owner-logo-20260920.png','/assets/sota-kece-logo.png','/assets/fiji-music-icon-20261018.svg','/assets/fiji-sunset.jpg','/assets/front-reference.jpg','/assets/front-reference-brand.jpg','/assets/mobile-front-reference.png','/assets/mobile-front-reference-brand.jpg','/assets/fiji-music.jpg','/assets/friends.jpg','/assets/beach.jpg','/assets/masi-band.svg','/assets/masi-supplied.png','/assets/og-sota-wide-20261022.jpg'];
 const FONT_ASSETS=['/assets/fonts/fredoka-latin-ext.woff2','/assets/fonts/fredoka-latin.woff2','/assets/fonts/nunito-latin-ext.woff2','/assets/fonts/nunito-latin.woff2'];
-self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));});
+const PUBLIC_PATHS=new Set([...ASSETS,...PUBLIC_IMAGES,...FONT_ASSETS]);
+function versionOnly(url){return !url.search||([...url.searchParams.keys()].length===1&&url.searchParams.has('v')&&/^[a-z0-9._-]{1,128}$/i.test(url.searchParams.get('v')));}
+function cacheable(response){return response&&response.status===200&&response.type!=='opaque'&&response.type!=='opaqueredirect'&&(!response.url||new URL(response.url).origin===self.location.origin)&&!/(?:^|,)\s*(?:private|no-store)\b/i.test(response.headers.get('cache-control')||'');}
+self.addEventListener('install',event=>{event.waitUntil((async()=>{
+  // Validate the whole public shell before writing. A failed update leaves the current worker active.
+  const files=await Promise.all(ASSETS.map(async asset=>{
+    const request=new Request(new URL(asset,self.location.origin).href,{cache:'reload',credentials:'omit'});
+    const response=await fetch(request);
+    if(!cacheable(response))throw new Error('Public shell file cannot be saved: '+asset);
+    return {asset,response};
+  }));
+  const cache=await caches.open(CACHE);
+  await Promise.all(files.map(({asset,response})=>cache.put(asset,response)));
+  await self.skipWaiting();
+})());});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('sota-kece-shell-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',event=>{
-  const url=new URL(event.request.url);
-  if(event.request.method!=='GET'||url.origin!==self.location.origin||(!ASSETS.includes(url.pathname)&&!FONT_ASSETS.includes(url.pathname)&&!/^\/assets\/skins\/core\/[a-z0-9-]+(?:-border)?\.svg$/.test(url.pathname)))return;
-  if(event.request.mode==='navigate'){
-    event.respondWith(fetch(event.request).then(response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put('/',copy)));}return response;}).catch(()=>caches.match('/')));return;
+  const request=event.request,url=new URL(request.url);
+  if(request.method!=='GET'||url.origin!==self.location.origin||request.headers.has('authorization')||request.headers.has('range'))return;
+  if(request.mode==='navigate'){
+    if(url.pathname!=='/'&&url.pathname!=='/index.html')return;
+    event.respondWith((async()=>{
+      const cache=await caches.open(CACHE);
+      try{
+        const response=await fetch(request);
+        if(cacheable(response)&&!url.search)event.waitUntil(cache.put('/',response.clone()));
+        if(response.ok)return response;
+        return await cache.match('/')||response;
+      }catch(_){return await cache.match('/')||Response.error();}
+    })());
+    return;
   }
-  event.respondWith(caches.match(event.request).then(cached=>{
-    const fresh=fetch(event.request).then(response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put(event.request,copy)));}return response;});
-    if(cached){event.waitUntil(fresh.catch(()=>{}));return cached;}return fresh;
-  }));
+  if(!versionOnly(url)||(!PUBLIC_PATHS.has(url.pathname)&&!/^\/assets\/skins\/core\/[a-z0-9-]+\.svg$/.test(url.pathname)))return;
+  // Version labels select deployments; the allowlisted public file has one offline cache entry.
+  const key=url.origin+url.pathname;
+  event.respondWith((async()=>{
+    const cache=await caches.open(CACHE),cached=await cache.match(key);
+    const fresh=fetch(request).then(response=>{
+      if(cacheable(response))event.waitUntil(cache.put(key,response.clone()));
+      return response;
+    });
+    if(cached){event.waitUntil(fresh.catch(()=>{}));return cached;}
+    return fresh;
+  })());
 });
