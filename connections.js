@@ -142,6 +142,7 @@
       document.querySelector('#sc-retry').onclick=expired?()=>{stop();ctx.auth('in',true);}:viewLive;
     }
   }
+  function summaryRows(v){return [{Category:'Friends',Count:v.nodes.filter(n=>n.type==='person').length},{Category:'Koro',Count:v.nodes.filter(n=>n.type==='group').length},{Category:'Friendship links',Count:v.edges.filter(e=>e.type==='friend').length},{Category:'Membership links',Count:v.edges.filter(e=>e.type==='member').length}];}
   function mount(host,result,options){
     host.className='sc-workspace';const graph=result.graph,byId=new Map(graph.nodes.map(n=>[n.id,n]));
     let selected=graph.self,filter='all',query='',focus=false,scale=1,pan={x:0,y:0},drag=null,disposed=false;
@@ -159,6 +160,7 @@
       <p class="sc-hint">Tap a name to explore. Drag the background to move the map. The list offers the same connections.</p>
       <div class="sc-list-area"><h3>People &amp; Koro</h3><div class="sc-list" id="sc-list"></div></div></section>
       <aside class="glass sc-detail"><p class="sc-kicker">Connection details</p><div id="sc-detail" aria-live="polite"></div></aside></div>
+      <details class="dv-summary" id="sc-visual-summary"><summary>See your connections at a glance</summary><p>Counts follow the current search, category and focus filters. Only connections already shown in this map are counted. Personal records stay inside Sota Kece.</p><div id="sc-visual-chart"></div></details>
       <div class="glass sc-privacy"><strong>${options.demo?'About this example':'Your view of the community'}</strong><p>${options.demo?'All names and connections are made up. Circles represent people and diamonds represent Koro. Solid lines show friendships; dashed lines show group membership. A shared group does not imply friendship. This example never loads member records.':'Only your accepted friends and Koro you belong to appear here. Shared memberships appear when available to your account. A shared Koro does not mean two people are friends. This is not a map of every member.'}</p>
       <p id="sc-fresh">${options.demo?'Fictional example · no member data is loaded.':'Loaded '+esc(result.updated.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}))+'. Refresh to check for changes.'}</p>
       ${result.notices.map(n=>`<p class="sc-warning" role="status">${esc(n)}</p>`).join('')}</div>`;
@@ -196,7 +198,14 @@
       setCamera();q('#sc-count').textContent=`${v.nodes.filter(n=>n.type==='person').length} friends · ${v.nodes.filter(n=>n.type==='group').length} Koro · ${v.edges.length} connections shown`;
       q('#sc-list').innerHTML=v.nodes.map(n=>`<button type="button" data-select="${esc(n.id)}" aria-pressed="${n.id===selected}"><span aria-hidden="true">${esc(n.type==='you'?'🏝':n.emoji)}</span><span>${esc(n.label)}<small>${n.type==='group'?'Koro':n.type==='you'?'You':'Friend'}</small></span></button>`).join('')+(v.nodes.length<=1&&query?'<p>No matching people or Koro.</p>':'');
       detail();
+      if(q('#sc-visual-summary').open)drawSummary(v);
     }
+    function drawSummary(v){
+      const target=q('#sc-visual-chart'),visuals=typeof window==='object'?window.DimauVisuals:globalThis.DimauVisuals;if(!visuals||!target)return;
+      const rows=summaryRows(v);
+      visuals.mount(target,{rows,spec:{type:'bar',x:'Category',y:'Count',aggregate:'sum'},title:options.demo?'Fictional community summary':'Your visible connections',description:'People, groups and relationship counts are different measures; they are not a total of unique people.',source:options.demo?'Fictional Sota community example':'Your authorised Sota connection map, current filters'});
+    }
+    on(q('#sc-visual-summary'),'toggle',()=>{if(q('#sc-visual-summary').open&&!disposed&&options.valid())drawSummary(visible());});
     on(host,'click',event=>{const button=event.target.closest('[data-select]');if(button&&host.contains(button)){selected=button.dataset.select;draw();}});
     on(svg,'keydown',event=>{const node=event.target.closest('[data-select]');if(node&&(event.key==='Enter'||event.key===' ')){event.preventDefault();selected=node.dataset.select;draw();Array.from(q('#sc-list').querySelectorAll('[data-select]')).find(b=>b.dataset.select===selected)?.focus();}});
     on(q('#sc-search'),'input',event=>{query=event.target.value.trim().toLocaleLowerCase();draw();});
@@ -209,5 +218,5 @@
     on(svg,'pointerup',()=>{drag=null;});on(svg,'pointercancel',()=>{drag=null;});
     draw();return {dispose(){disposed=true;listeners.forEach(fn=>fn());host.replaceChildren();}};
   }
-  return {init,view,preview,openPersonal,entryHtml,stop,model,load,path,layout,example,mount};
+  return {init,view,preview,openPersonal,entryHtml,stop,model,load,path,layout,example,mount,summaryRows};
 });
