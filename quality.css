@@ -86,6 +86,16 @@ button.pulse-item:focus-visible,button.topslot:focus-visible{outline:3px solid v
  #app.bv-welcome .bv-account-dialog{padding:18px;width:calc(100% - 24px)}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Keep all account actions readable on the light dialog surface. */
+#app.bv-welcome .bv-account-dialog label{color:#385b70;font-weight:800}
+#app.bv-welcome .bv-account-dialog .sub{color:#385b70}
+#app.bv-welcome .bv-account-dialog #a-err{color:#a92d34}
+#app.bv-welcome .bv-account-dialog .bv-link{color:#145d7a;background:transparent;text-decoration:underline;text-underline-offset:3px;text-shadow:none}
+#app.bv-welcome .bv-account-dialog .bv-account-head>button{color:#173f58;background:#e7f3fa;border:1px solid #aac8d9;width:44px;min-height:44px;border-radius:12px;font:700 28px/1 Nunito,system-ui,sans-serif}
+#app.bv-welcome .bv-account-dialog :is(input,textarea,select):focus-visible{outline:3px solid #086582;outline-offset:2px;box-shadow:none}
+#app.bv-welcome .bv-neon-section :is(button,a){-webkit-text-fill-color:currentColor}
+
 @media(forced-colors:active){
  :focus-visible{outline-color:Highlight}
  #app.bv-welcome .bv-neon-section :is(.bv-classic-header,.bv-classic-nav,.bv-social-stage,.bv-room-entry,.bv-classic-footer,.bv-collage-caption){background:Canvas!important;color:CanvasText!important;border-color:CanvasText!important;box-shadow:none!important}
