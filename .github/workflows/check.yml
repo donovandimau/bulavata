@@ -11,8 +11,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node tests/sota.test.cjs
-      - run: node tests/kava.test.cjs
-      - run: node tests/room-media.test.cjs
-      - run: node tests/local-music.test.cjs
-      - run: node tests/connections.test.cjs
+      - run: node --test tests/*.test.cjs

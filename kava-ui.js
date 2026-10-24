@@ -131,6 +131,7 @@
     },7000);
   }
   function preview(){
+    root.SotaView?.invalidate();
     stop();guest=true;current=null;amount=200;
     snapshot={circle:{title:'Stories that connect us',topic:'A space for an elder’s wisdom, a musician’s song, or a question that deserves a proper conversation.',capacity:6,host:'preview',status:'planned'},people:[{member:'preview',seat:1}],comments:[],profiles:{preview:{display_name:'Your host seat',avatar_emoji:'🌺'}}};
     const old=ctx.state.tab;ctx.state.tab='circles';ctx.shell(frame(true));ctx.state.tab=old;
