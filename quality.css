@@ -79,6 +79,7 @@ button.pulse-item:focus-visible,button.topslot:focus-visible{outline:3px solid v
  #app.bv-welcome .bv-room-entry{grid-template-columns:1fr;padding:22px 18px;margin-top:20px}
  #app.bv-welcome .bv-room-entry h2{font-size:27px!important}
  #app.bv-welcome #bv-edit-room{width:100%}
+ #app.bv-welcome .bv-music-feature{width:100%;max-width:100%;margin-inline:0}
  #app.bv-welcome .bv-music-actions{flex-wrap:wrap}
  #app.bv-welcome .bv-music-actions>button{flex:1 1 130px;padding:10px;font-size:15px}
  #app.bv-welcome .bv-classic-footer{font-size:13px;padding:18px;gap:10px}
