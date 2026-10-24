@@ -82,5 +82,11 @@ function client({fr=friends,gr=crews,members=[],profiles=[],user=me,authError=fa
     let examples=0,queries=0;const context=vm.createContext({location:{hash:'#connections=example'},window:{SotaConnections:{preview(){examples++;}}},sb:{auth:{getSession(){queries++;throw Error('Example must not look up a session');}}}});
     vm.runInContext(source+';this.openExample=boot;',context);await context.openExample();assert.equal(examples,1);assert.equal(queries,0);
   });
+  await check('visual summaries count only supplied visible graph and contain no member identifiers',()=>{
+    const r=c.summaryRows(c.example().graph);assert.deepEqual(r.map(x=>x.Count),[6,3,6,12]);assert.deepEqual(Object.keys(r[0]),['Category','Count']);assert(!JSON.stringify(r).includes('sina'));
+    const reduced={nodes:[{type:'you'},{type:'group'}],edges:[{type:'member'}]};assert.deepEqual(c.summaryRows(reduced).map(x=>x.Count),[0,1,0,1]);
+    assert.deepEqual(c.summaryRows({nodes:[],edges:[]}).map(x=>x.Count),[0,0,0,0]);
+    const charts=require('../dimau-charts-core.js');assert.equal(charts.prepare(r,{x:'Category',y:'Count'}).points.reduce((n,p)=>n+p.y,0),27);
+  });
   console.log(`${passed} Connections checks passed`);
 })().catch(err=>{console.error(err);process.exitCode=1;});

@@ -136,3 +136,7 @@ Logout/account change/route ownership clear pending/private graphs. Existing
 public fictional example remains independent. No DB/policy/data changes. Public
 shell cachev51 refreshes only static assets. Task709lease1;working preview HOLD
 for owner review;actual member-session validation requires signing in.
+
+
+24October2026 — Dimau Visuals chart component integration
+Portable Dimau Visuals core/SDK/CSS,served locally with no data network requests. Sota visible connection counts track existing map filters and lifecycle;no new member-data reads.
