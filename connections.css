@@ -20,3 +20,46 @@
 .sc-entry button:focus-visible,.sc-entry a:focus-visible{outline:3px solid #187b78;outline-offset:4px}
 .sc-back{margin:0 0 16px}
 @media(max-width:600px){#app .sc-entry{grid-template-columns:minmax(0,1fr);padding:22px 18px;gap:16px;margin-top:22px}#app .sc-entry>img{width:64px;height:64px;border-radius:14px}#app .sc-entry-actions{display:grid;grid-template-columns:minmax(0,1fr)}#app .sc-entry-actions button{width:100%}}
+
+/* Personal inline friend graph. The full Connections explorer keeps its own layout. */
+#app .sc-friends{margin:28px 0 0;padding:28px;border:1px solid #b8d3d4;border-radius:22px;background:#fffefb;color:#153e4c;min-width:0;clear:both;text-align:left}
+#app .scf-heading{display:flex;justify-content:space-between;gap:20px;align-items:start;margin-bottom:24px}
+#app .scf-heading h2{font-size:clamp(26px,3vw,36px);font-weight:800;line-height:1.15;letter-spacing:-.035em;color:#153e4c;margin:0 0 9px}
+#app .scf-heading p{font-size:15px;color:#46636c;line-height:1.6;margin:0}
+#app .scf-heading .scf-kicker{font-size:10px;letter-spacing:.14em;font-weight:800;color:#376b6b;margin-bottom:10px}
+#app .scf-private{font-size:12px;font-weight:800;color:#32615c;background:#e8f3ed;border:1px solid #cfdfd3;padding:8px 12px;border-radius:30px;white-space:nowrap}
+#app .scf-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid #dde7e4;color:#254d59;font-size:14px}
+#app .scf-meta>div{display:flex;align-items:center;gap:14px}
+#app [data-friend-status]{font-size:12px;color:#4b666d}
+#app .scf-body{display:grid;grid-template-columns:minmax(0,1fr) 245px;gap:26px;padding-top:20px}
+#app .scf-map{background:#f3f8f5;border:1px solid #d8e6de;border-radius:16px;overflow:hidden;position:relative;min-width:0}
+#app .scf-map svg{display:block;width:100%;height:auto;min-height:260px;max-height:440px}
+#app .scf-map line{stroke:#6f9d93;stroke-width:1.8;opacity:.65}
+#app .scf-person circle{fill:#fff;stroke:#45877b;stroke-width:2.5}
+#app .scf-you circle{fill:#184c4e;stroke:#d9e8dc;stroke-width:8}
+#app .scf-symbol{font:25px sans-serif}
+#app .scf-label{font:800 21px Nunito,sans-serif;fill:#234d54;paint-order:stroke;stroke:#f3f8f5;stroke-width:5;stroke-linejoin:round}
+#app .scf-map>p{font-size:14px;line-height:1.6;color:#45645f;text-align:center;margin:0;padding:0 18px 22px}
+#app .scf-list-wrap{min-width:0;align-self:start}
+#app .scf-list-wrap h3{font-size:16px;color:#254d59;margin:0 0 5px}
+#app .scf-list-hint{font-size:12px;line-height:1.6;color:#526e73;margin:0 0 14px}
+#app .scf-list{display:grid;gap:7px;max-height:294px;overflow:auto;padding:3px;margin:-3px}
+#app .sc-friends button{font:inherit;cursor:pointer;min-height:44px;box-shadow:none;border-radius:10px}
+#app .scf-list button{display:flex;align-items:center;gap:10px;text-align:left;padding:9px 10px;color:#254d59;background:#fff;border:1px solid #dce7e2;font-size:14px;min-width:0;overflow-wrap:anywhere;width:100%}
+#app .scf-list button>span:first-child{font-size:22px;flex-shrink:0}
+#app .scf-list small{display:block;font-size:11px;color:#55736f;margin-top:3px}
+#app .scf-list button:hover{border-color:#438579;background:#f3f8f5}
+#app .scf-list button:disabled{cursor:default;opacity:1}
+#app .scf-refresh{font-size:12px;font-weight:800;border:1px solid #c9dcd4;background:#fff;color:#2c5c55;padding:8px 12px;white-space:nowrap}
+#app .scf-find{font-size:13px;font-weight:800;border:0;background:transparent;color:#1d655b;padding:9px 0;margin-top:10px;text-align:left}
+#app .scf-note{font-size:12px;color:#557069;line-height:1.7;margin:16px 0 0}
+#app .scf-warning{font-size:13px;line-height:1.6;color:#71521c;background:#fff5dc;padding:10px 14px;border-radius:9px;margin:12px 0 0}
+#app .scf-gate{border:1px dashed #b4cfc2;border-radius:16px;text-align:center;background:#f3f8f5;padding:35px 20px}
+#app .scf-gate>span{font-size:34px}
+#app .scf-gate h3{font-size:21px;color:#264f51;margin:12px 0 6px}
+#app .scf-gate p{font-size:14px;line-height:1.6;color:#4f6d68;margin:0 0 20px}
+#app .scf-primary{font-size:14px;font-weight:800;color:#fff;background:#215c56;border:1px solid #215c56;padding:10px 22px}
+#app .sc-friends button:focus-visible{outline:3px solid #296f63;outline-offset:3px}
+#app .sc-friends [hidden]{display:none!important}
+@media(max-width:760px){#app .sc-friends{padding:22px 18px;border-radius:18px}#app .scf-heading{flex-wrap:wrap;gap:12px;margin-bottom:20px}#app .scf-private{font-size:11px;padding:6px 10px}#app .scf-body{grid-template-columns:minmax(0,1fr);gap:20px}#app .scf-meta{align-items:start;flex-direction:column;gap:4px}#app .scf-meta>div{width:100%;justify-content:space-between;gap:8px}#app .scf-map svg{min-height:210px}#app .scf-list{grid-template-columns:repeat(2,minmax(0,1fr));max-height:270px}#app .scf-list button{font-size:14px}#app .scf-note{font-size:12px}}
+@media(max-width:380px){#app .sc-friends{padding:20px 14px}#app .scf-list{grid-template-columns:minmax(0,1fr)}#app .scf-heading h2{font-size:26px}#app .scf-map svg{min-height:190px}}

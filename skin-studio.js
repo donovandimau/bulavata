@@ -297,6 +297,7 @@
   }
   window.matchMedia('(max-width:760px)').addEventListener('change',placeResponsiveNavigation);
   renderAuth=function(mode='in',expanded=false){
+    window.SotaConnections?.stopEntry();
     reset();originalAuth(mode);
     const authNode=app.querySelector('.authwrap');
     authNode.querySelectorAll(':scope > .row,:scope > .tagline,:scope > .promises,:scope > .btn').forEach(node=>node.remove());
@@ -326,6 +327,7 @@
       ${window.SotaConnections?.entryHtml?.()||''}
       <footer class="bv-classic-footer"><span>Sota Kece · alive together</span><span>Mutual friends · Your own archive · No ads</span><details><summary>Photo credits</summary><p>Sample photography by <a href="https://unsplash.com/photos/i6r5kQMQ9Zk" target="_blank" rel="noopener noreferrer">Ben Collins</a>, <a href="https://unsplash.com/photos/roOETBSa8mA" target="_blank" rel="noopener noreferrer">Samsung UK</a> and <a href="https://unsplash.com/photos/tZhEr2d3oeM" target="_blank" rel="noopener noreferrer">Hoi An and Da Nang Photographer</a>, via Unsplash.</p></details></footer>
     </div></main>`;
+    window.SotaConnections?.mountEntry();
     window.SotaLocalMusic?.mount(app,{beforePlay:()=>{window.SotaPlaylist?.pause();stopSample();}});
     window.SotaPlaylist?.mount(app,{beforePlay:stopSample});
     placeResponsiveNavigation();

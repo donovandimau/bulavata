@@ -58,6 +58,32 @@ function client({fr=friends,gr=crews,members=[],profiles=[],user=me,authError=fa
   await check('empty network needs no membership query',async()=>{
     const api=client({fr:[],gr:[]});const r=await c.load(api,{user:me,me});assert.equal(r.graph.nodes.length,1);assert.equal(r.graph.edges.length,0);assert.equal(api.calls.length,2);
   });
+  await check('inline friend graph reads only accepted friends, never Koro or memberships',async()=>{
+    const api=client({gr:[{id:1,name:'Private Koro'}],members:[{member:'a',crew_id:1}]});
+    const r=await c.load(api,{user:me,me},{friendsOnly:true});
+    assert.deepEqual(api.calls,[{rpc:'bv_my_friends'}]);
+    assert.equal(r.graph.nodes.length,3);assert.equal(r.graph.edges.length,2);
+    assert(r.graph.edges.every(e=>e.type==='friend'&&e.source===r.graph.self));
+    assert(!JSON.stringify(r.graph).includes('Private Koro'));
+  });
+  await check('inline positions stay stable through addition, removal and RPC reordering',()=>{
+    const slots=new Map(),first=c.model(me,friends,[],[]),a=c.friendPositions(first,slots);
+    const next=c.model(me,[friends[1],{id:'c',display_name:'New friend'},friends[0]],[],[]),b=c.friendPositions(next,slots);
+    assert.deepEqual(a.get('person:a'),b.get('person:a'));assert.deepEqual(a.get('person:b'),b.get('person:b'));
+    const after=c.friendPositions(c.model(me,[friends[0],{id:'c'}],[],[]),slots);
+    assert.deepEqual(after.get('person:a'),a.get('person:a'));assert(!slots.has('person:b'));
+    const many=c.friendPositions(c.model(me,Array.from({length:120},(_,i)=>({id:'f'+i})),[],[]));
+    assert.equal(many.size,121);for(const p of many.values())assert(Number.isFinite(p.x)&&p.x>=0&&p.x<=720&&p.y>=0&&p.y<=480);
+  });
+  await check('inline polling retries transient auth failures but clears on lost identity',async()=>{
+    const api=client();api.auth.getUser=async()=>({data:{user:null},error:{name:'AuthRetryableFetchError',status:503}});
+    await assert.rejects(c.load(api,{user:me,me},{friendsOnly:true}),err=>!err.code&&/refreshed/.test(err.message));assert.equal(api.calls.length,0);
+    const switched=client({user:{id:'other'}});
+    await assert.rejects(c.load(switched,{user:me,me},{friendsOnly:true}),err=>err.code==='AUTH_REQUIRED');assert.equal(switched.calls.length,0);
+  });
+  await check('inline entry has no fictional example or external export call to action',()=>{
+    const entry=c.entryHtml();assert.match(entry,/data-friend-graph/);assert(!/Explore the example|dimau-visuals\.vercel|openPersonal\(\)/.test(entry));
+  });
   await check('truncation is explicit and queries only the bounded graph',async()=>{
     const api=client({fr:Array.from({length:130},(_,i)=>({id:String(i)})),gr:Array.from({length:45},(_,i)=>({id:i}))});
     const r=await c.load(api,{user:me,me});assert.equal(r.graph.nodes.length,161);assert.match(r.notices[0],/120/);assert.equal(api.calls[2].filters.member.length,120);assert.equal(api.calls[2].filters.crew_id.length,40);
