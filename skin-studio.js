@@ -308,7 +308,7 @@
     });
   }
   renderAuth=function(mode='in',expanded=false){
-    window.SotaConnections?.stopEntry();
+    guestPreviewToken++;window.SotaConnections?.stopEntry();
     reset();originalAuth(mode);
     const authNode=app.querySelector('.authwrap');
     authNode.querySelectorAll(':scope > .row,:scope > .tagline,:scope > .promises,:scope > .btn').forEach(node=>node.remove());
