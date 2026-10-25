@@ -852,7 +852,7 @@ async function viewCrews(){
     </aside></div></div>`);
   window.SotaCircles.mountCreate($('#koro-create'),group=>{if(currentView(run)){S.crew=group.id;render();}});
 }
-function makeCrew(){
+async function makeCrew(){
   $('#koro-create form')?.requestSubmit();
 }
 async function joinCrew(){

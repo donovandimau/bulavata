@@ -270,3 +270,16 @@ domTest('a matching initial session retains a public graph opened before the pri
     h.state.user={id:other};h.authChange(other);assert.equal(h.dialog,null);assert(!h.w.document.body.textContent.includes('Alice'));assert.deepEqual(h.calls.map(call=>call.name),['bv_public_circle_graph']);
   }finally{h.close();}
 });
+domTest('Close remains usable during a pending owner save and late completion cannot reopen or steal focus',async()=>{
+  const gate=deferred(),saved=group(),h=harness({responses:{bv_circle_groups:{data:[saved],error:null},bv_circle_update_group:()=>gate.promise}});try{
+    const opener=h.q('#opener');opener.focus();await h.api.openInvite(saved);h.q('[data-tc-owner-type]').value='lotu';h.submit('[data-tc-owner-form]');await flush();assert.equal(h.calls.filter(call=>call.name==='bv_circle_update_group').length,1);assert.equal(h.q('[data-tc-owner-type]').disabled,true);assert.equal(h.q('[data-tc-close]').disabled,false);
+    h.q('[data-tc-close]').click();assert.equal(h.dialog,null);assert.equal(h.w.document.activeElement,opener);const otherControl=h.w.document.createElement('input');h.w.document.body.append(otherControl);otherControl.focus();
+    gate.resolve({data:{id:42,circle_type:'lotu',skin_id:'masi-white',graph_visibility:'private'},error:null});await flush();assert.equal(h.dialog,null);assert.equal(h.w.document.activeElement,otherControl);assert.equal(saved.circle_type,'koro');assert.equal(h.rendered.length,0);assert(!h.w.document.body.textContent.includes('Circle settings saved'));
+  }finally{h.close();}
+});
+domTest('saved and recipient invitations use the correct article without changing the circle type label',async()=>{
+  const saved=group({circle_type:'old-boys',skin_id:'occasion-school-reunion'}),h=harness({responses:{bv_circle_groups:{data:[saved],error:null},bv_circle_invitation:{data:saved,error:null}}});try{
+    await h.api.openInvite(saved);assert(h.q('[data-tc-invitation-kind]').textContent.includes('to an Old Boys Circle.'));h.q('[data-tc-copy]').click();await flush();assert(h.copied[0].includes(', an Old Boys Circle on Sota Kece.'));
+    h.q('[data-tc-close]').click();h.w.location.hash='#circle-invite=INVITE_1234';h.api.route();await flush();assert(h.dialog.textContent.includes('invited to an Old Boys Circle.'));assert(h.dialog.textContent.includes('Old Boys Circle'));
+  }finally{h.close();}
+});

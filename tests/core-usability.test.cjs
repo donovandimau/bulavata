@@ -3,13 +3,16 @@ const fs=require('node:fs');
 const path=require('node:path');
 const vm=require('node:vm');
 const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
-const section=(start,end)=>html.slice(html.indexOf(start),html.indexOf(end));
+const section=(start,end)=>{const a=html.indexOf(start),b=html.indexOf(end,a);assert(a>=0&&b>a,'Current source section: '+start+' → '+end);return html.slice(a,b);};
 const helpers=section('// Every view owns its pending reads','function mediaMarkup');
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function deferred(){let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});return {promise,resolve,reject};}
 function harness(extra={}){
   const ctx={S:{tab:'moments',user:{id:'owner'},me:{handle:'sina'},roomHandle:null,crew:null,pending:[],friends:[]},esc,
-    shell:body=>{ctx.screen=body;},screen:'',ago:()=>'',mediaMarkup:()=>'',toast:()=>{},...extra};
+    shell:body=>{ctx.screen=body;},screen:'',ago:()=>'',mediaMarkup:()=>'',toast:()=>{},window:{},...extra};
+  // These tests own the app's view logic. The circle module boundary delegates
+  // to the existing RPC fixture so failures still exercise the real view catch.
+  ctx.window.SotaCircles??={stop(){},list:async()=>{const result=await ctx.sb.rpc('bv_circle_groups');if(result.error)throw result.error;return result.data;}};
   vm.createContext(ctx);vm.runInContext(helpers,ctx);return ctx;
 }
 function load(ctx,start,end){vm.runInContext(section(start,end),ctx);}
@@ -34,7 +37,7 @@ check('Moments and Koro failures expose a retry instead of a false empty state',
   const ctx=harness({sb:{rpc:async()=>({data:null,error:{message:'offline'}})}});
   load(ctx,'async function viewMoments()','async function postMoment()');
   await ctx.viewMoments();assert.match(ctx.screen,/Connection interrupted/);assert.match(ctx.screen,/onclick="viewMoments\(\)"/);assert(!ctx.screen.includes('Nothing yet'));
-  ctx.S.tab='crews';load(ctx,'async function viewCrews()','async function makeCrew()');await ctx.viewCrews();
+  ctx.S.tab='crews';load(ctx,'async function circleGroupsResult()','function circleGroupChanged(');load(ctx,'async function viewCrews()','async function makeCrew()');await ctx.viewCrews();
   assert.match(ctx.screen,/onclick="viewCrews\(\)"/);assert(!ctx.screen.includes('No Koro yet'));
   ctx.sb.rpc=async()=>{throw new Error('Connection lost');};await ctx.viewCrews();assert.match(ctx.screen,/Connection interrupted/);
 });
@@ -121,24 +124,24 @@ check('late boot profile reads cannot replace a newer sign-in screen',async()=>{
 });
 
 check('auth owner changes immediately clear member state and defer boot beyond the callback',async()=>{
-  let callback,boots=0,authScreens=0,clears=0,studioCloses=0,stops=0,insideCallback=false;
+  let callback,boots=0,authScreens=0,clears=0,studioCloses=0,stops=0,circleStops=0,insideCallback=false;
   const tasks=[];
   const ctx=harness({sb:{auth:{onAuthStateChange:fn=>{callback=fn;return {data:{subscription:{unsubscribe(){}}}};}}},
-    window:{SotaConnections:{stop(){stops++;}},SotaKavaUI:{stop(){stops++;}},BulaSkinStudio:{closeForOwnerChange(){studioCloses++;}}},
+    window:{SotaCircles:{stop(){circleStops++;}},SotaConnections:{stop(){stops++;}},SotaKavaUI:{stop(){stops++;}},BulaSkinStudio:{closeForOwnerChange(){studioCloses++;}}},
     app:{replaceChildren(){clears++;}},setTimeout:fn=>tasks.push(fn),
     boot:()=>{assert(!insideCallback);boots++;},renderAuth:()=>{assert(!insideCallback);authScreens++;}});
   ctx.S.friends=[{handle:'private-friend'}];ctx.S.pending=[{id:1}];ctx.S.crew=42;ctx.S.wallet={balance_minor:1234};
   ctx.viewRun();const oldView=ctx.viewRun(false);ctx.installAuthLifecycle();
   const emit=(event,id)=>{insideCallback=true;callback(event,id?{user:{id}}:null);insideCallback=false;};
   emit('INITIAL_SESSION','owner');emit('TOKEN_REFRESHED','owner');emit('SIGNED_IN','owner');
-  assert.equal(clears,0);assert.equal(tasks.length,0);assert.equal(ctx.S.friends.length,1);assert(ctx.currentView(oldView));
+  assert.equal(clears,0);assert.equal(circleStops,0);assert.equal(tasks.length,0);assert.equal(ctx.S.friends.length,1);assert(ctx.currentView(oldView));
   emit('SIGNED_IN','new-owner');
   assert.equal(ctx.S.user,null);assert.equal(ctx.S.me,null);assert.equal(ctx.S.friends.length,0);assert.equal(ctx.S.pending.length,0);assert.equal(ctx.S.wallet,null);assert.equal(ctx.S.crew,null);assert.equal(ctx.S.roomHandle,null);
-  assert.equal(clears,1);assert.equal(studioCloses,1);assert.equal(stops,2);assert.equal(boots,0);assert(!ctx.currentView(oldView));
+  assert.equal(clears,1);assert.equal(studioCloses,1);assert.equal(stops,2);assert.equal(circleStops,1);assert.equal(boots,0);assert(!ctx.currentView(oldView));
   tasks.shift()();assert.equal(boots,1);assert.equal(authScreens,0);
   ctx.S.user={id:'new-owner'};ctx.S.me={handle:'new-owner'};ctx.S.friends=[{handle:'private'}];
   emit('SIGNED_OUT');assert.equal(ctx.S.user,null);assert.equal(ctx.S.me,null);assert.equal(ctx.S.friends.length,0);assert.equal(authScreens,0);
-  tasks.shift()();assert.equal(authScreens,1);assert.equal(boots,1);
+  tasks.shift()();assert.equal(authScreens,1);assert.equal(boots,1);assert.equal(circleStops,2);
 });
 
 check('a sign-out supersedes a queued account-switch boot',async()=>{
@@ -153,7 +156,15 @@ check('core markup keeps a main landmark, native social controls, named inputs a
   assert.match(html,/<nav class="bottom glass" aria-label="Main navigation">/);assert.match(html,/aria-current="\$\{S\.tab===k\?'page':'false'\}"/);
   assert.match(html,/<button type="button" class="pulse-item" onclick="openRoom/);
   assert.match(html,/<button type="button" class="pulse-item" onclick="S\.crew=/);
-  for(const id of ['p-text','p-mood','sp-a','m-body','m-url','c-name','c-code','cm','s-q'])assert.match(html,new RegExp('id="'+id+'" aria-label="'));
+  for(const id of ['p-text','p-mood','sp-a','m-body','m-url','c-code','cm','s-q'])assert.match(html,new RegExp('id="'+id+'" aria-label="'));
+  // Circle name/type/privacy inputs now come from the actual shared factory.
+  const circleContext=vm.createContext({SotaCircleTypes:require('../circle-types.js')});
+  vm.runInContext(fs.readFileSync(path.join(__dirname,'../circle-groups.js'),'utf8'),circleContext);
+  circleContext.SotaCircles.init({state:{user:{id:'owner'}},client:{auth:{}}});
+  const circleForm=circleContext.SotaCircles.createHTML();
+  const circleName=/<input\b[^>]*\bid="([^"]+)"[^>]*\bdata-tc-name\b/.exec(circleForm);assert(circleName,'Named native circle input is rendered');
+  assert(circleForm.includes('<label for="'+circleName[1]+'">Circle name</label>'));
+  for(const field of ['type','visibility']){const select=new RegExp('<select\\b[^>]*\\bid="([^"]+)"[^>]*\\bdata-tc-'+field+'\\b').exec(circleForm);assert(select,'Native '+field+' select is rendered');assert(circleForm.includes('<label for="'+select[1]+'">'));}
   for(const id of ['f-handle','f-name','f-year'])assert.match(html,new RegExp('<label for="'+id+'">'));
   assert.match(html,/id="a-err" role="alert"/);assert.match(html,/id="f-err" role="alert"/);assert.match(html,/id="cm-error" role="alert"/);
   const ctx=harness({document:{documentElement:{style:{setProperty(){}}}},window:{BulaSkinStudio:{apply(){}}},sb:{rpc:async()=>({data:{found:true,visible:true,is_me:true,profile:{handle:'sina'},top:[{slot:1,handle:'mate',avatar_emoji:'🌺'}]},error:null})}});
