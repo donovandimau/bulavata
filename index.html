@@ -210,6 +210,7 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <body>
 <div class="bubbles" id="bubbles"></div>
 <div id="app"></div>
+<script src="/communications-core.js?v=20261025-1"></script>
 <script>
 /* ---------- config ---------- */
 const SB_URL = "https://aqfzpaczyodhugsgqvxi.supabase.co";
@@ -253,6 +254,7 @@ function renderAuth(mode="in"){
       <div class="promise"><span class="tick">✓</span><div><b>No followers.</b> Friendship is mutual or it isn't real.</div></div>
     </div>
     <button class="btn ghost" type="button" onclick="window.SotaKavaUI.preview()" style="margin-bottom:16px">Explore the Digital Kava Circle</button>
+    <a class="btn ghost" href="/communications.html?app=sota-kece" style="display:block;text-align:center;margin-bottom:16px">Open Communications · Chat, boards and calls</a>
     <div class="seg">
       <button class="${mode==='in'?'on':''}" onclick="renderAuth('in')">Sign in</button>
       <button class="${mode==='up'?'on':''}" onclick="renderAuth('up')">Create a room</button>
@@ -808,6 +810,7 @@ async function viewCrews(){
   shell(`<div class="grid two"><div class="stack">
     <div class="glass card"><h3>Your Koro</h3>
       <button class="btn sm ghost" style="margin:10px 0" onclick="go('connections')">See my connections</button>
+      <a class="btn sm ghost" href="/communications.html?app=sota-kece" style="display:inline-block;margin:10px 0">Chat, discussions, boards and call invitations ↗</a>
       <div class="sub" style="margin-bottom:12px">Villages. Small, closed, invite-only. No discovery, no public anything.</div>
       ${(crews||[]).length? crews.map(c=>`
         <button type="button" class="pulse-item" onclick="S.crew=${c.id};render()" aria-label="Open ${esc(c.name)} Koro">
@@ -868,7 +871,7 @@ async function viewCrewRoom(){
       ${list.length? list.map(m=>{const p=map[m.author]||{};return `
         <div class="msg ${m.author===S.user.id?'mine':''}">
           ${m.author!==S.user.id?`<span class="who">${esc(p.avatar_emoji||'🌺')} ${esc(p.display_name||p.handle||'')}</span>`:''}
-          ${esc(m.body)}</div>`}).join("")
+          ${esc(window.DimauCommsCore?.summary(m.body)??m.body)}</div>`}).join("")
         : `<div class="empty"><em>🪸</em>Say something first.</div>`}
     </div>
   </div>`);
@@ -1054,4 +1057,5 @@ window.SotaView={invalidate:()=>viewRun()};
 <script>window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});boot();installAuthLifecycle();</script>
 </body>
 </html>
+
 

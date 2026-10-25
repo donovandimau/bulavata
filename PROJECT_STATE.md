@@ -1,3 +1,9 @@
+## 2026-10-25 — Shared Koro communications workspace
+
+Owner requests calling, chat, groups and boards across the apps. Add `/communications.html` as the shared Sota Kece workspace, reusing its existing account session and invite-only Koro backend without schema or permission changes. Persistent chat, discussions/replies and collaborative task cards use strict versioned events in existing crew messages. Video/audio invitations open the external Jitsi service only after a user chooses the explicit link; the Calls panel discloses that anyone with its link may join and recommends a host lobby. No native private-call service is claimed. Existing Koro controls and plain messages remain, with escaped summaries for structured events. Public shell cache gains only the parser asset and a version refresh; private data stays out of browser/offline storage.
+
+Seven core regressions, JavaScript syntax checks, CSS parsing and SDK-mocked DOM checks pass. Independent review reproduced/fixed stale auth/group operations, transient-profile render recovery, pending-save failure recovery, card cancel and launcher views. No live two-account database write, RLS execution, real call media, hosted preview or production result is pre-claimed. Exact candidate/deployment checks belong to the scoped PR. Source, behavior and limits: `docs/COMMUNICATIONS_2026-10-25.md`. Existing unrelated saved revisions and publication holds remain. Next: verify the exact hosted candidate and use the existing checked release route within owner authorization.
+
 ## 2026-10-25 — Verify identity skins and repair phone title clipping
 
 Owner asks to complete the rebuilt collections. Check the current canonical live release, preserving the photographic design, six collection entries, 94 skin IDs, 73 listening references and the shared music visualiser. Browser checks confirmed the RKS school recording plays at its published YouTube source; the native 81-track player streams its first track with advancing time and no media error; the chosen RKS skin and soundtrack survive a signed-out browser reload; all six music-community cards show their attributed song reference. Signed-in profile persistence remains untested because no account session is available.
@@ -192,4 +198,5 @@ for owner review;actual member-session validation requires signing in.
 
 24October2026 — Dimau Visuals chart component integration
 Portable Dimau Visuals core/SDK/CSS,served locally with no data network requests. Sota visible connection counts track existing map filters and lifecycle;no new member-data reads.
+
 
