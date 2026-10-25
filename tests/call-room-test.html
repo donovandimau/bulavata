@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0b2233">
+<title id="crTitle">Call · Sota Kece</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/sota-favicon-32-20261025.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/icons/sota-apple-touch-icon-20261025.png">
+<link rel="stylesheet" href="/native-call-stage.css?v=20261025-3">
+<link rel="stylesheet" href="/call-room.css?v=20261025-1">
+</head>
+<body class="cr">
+<div id="nativeCalls">
+<section id="ncLive" hidden aria-label="Call">
+<div class="nc-live-heading"><h4 id="ncLiveTitle">Call</h4><span id="ncConnection">Starting…</span></div>
+<div id="ncRecordingNotice" hidden></div><p id="ncMutedWarning" hidden></p>
+<div id="ncGrid" class="nc-grid">
+<article class="nc-tile nc-self"><video id="ncSelf" autoplay muted playsinline></video><span class="nc-person-label">You</span></article>
+<div id="crWaiting" class="cr-waiting"><strong>You're in the call</strong><span>Send the link to anyone you want to join.</span><button type="button" id="crInvite2" class="cr-invite-btn">Invite people</button></div>
+</div>
+<div class="nc-toolbar">
+<button type="button" id="ncMute" class="secondary">Mute</button>
+<button type="button" id="ncVideo" class="secondary">Turn camera off</button>
+<button type="button" id="ncShare" class="secondary">Share screen</button>
+<button type="button" id="crInvite" class="nc-round cr-invite" aria-label="Invite people">Invite</button>
+<button type="button" id="ncLeave" class="nc-danger">Leave call</button>
+<button type="button" id="ncEnd" class="text-button" hidden>End</button>
+</div>
+<section class="cr-settings">
+<label class="cr-label" for="crName">Your name in this call</label>
+<input id="crName" class="cr-input" maxlength="40" autocomplete="nickname" placeholder="Guest">
+<div id="crLink" class="cr-linkbox" hidden><label class="cr-label" for="crLinkField">Call link</label><input id="crLinkField" class="cr-input" readonly></div>
+<p class="cr-note">Anyone with this call's link can join, up to 6 people. Video and sound go directly between the people in the call and are not recorded. Your camera and microphone stop when you leave.</p>
+</section>
+</section>
+</div>
+<section id="crEnded" class="cr-ended" hidden><div class="cr-ended-card"><h1 id="crEndedText">You left the call.</h1><div class="cr-ended-actions"><button type="button" id="crRejoin" class="cr-invite-btn">Rejoin</button></div></div></section>
+<button type="button" id="crSound" class="cr-sound" hidden>Tap to hear the call</button>
+<div id="crToast" class="cr-toast" role="status" aria-live="polite" hidden></div>
+<script>
+/* Test only: replaces camera and microphone with generated video and silence, so calls can be checked without devices. */
+(function(){const colours=['#4f8fbf','#c0734f','#5a9b6e','#9a6bb5'];const pick=colours[Math.floor(Math.random()*colours.length)];
+function fake(c){const s=new MediaStream();if(c&&c.video){const cv=document.createElement('canvas');cv.width=640;cv.height=480;const g=cv.getContext('2d');let t=0;(function d(){t+=.04;g.fillStyle=pick;g.fillRect(0,0,640,480);g.fillStyle='rgba(255,255,255,.9)';g.beginPath();g.arc(320+Math.sin(t)*40,190,72,0,7);g.fill();g.fillRect(215+Math.sin(t)*40,285,210,195);g.fillStyle='#fff';g.font='bold 28px system-ui';g.fillText(new Date().toLocaleTimeString(),20,40);requestAnimationFrame(d);})();cv.captureStream(15).getVideoTracks().forEach(x=>s.addTrack(x));}
+if(c&&c.audio){try{const ac=new AudioContext(),o=ac.createOscillator(),gn=ac.createGain(),dst=ac.createMediaStreamDestination();gn.gain.value=0;o.connect(gn).connect(dst);o.start();dst.stream.getAudioTracks().forEach(x=>s.addTrack(x));}catch(_){}}return s;}
+navigator.mediaDevices.getUserMedia=async c=>fake(c);})();
+</script><script src="/vendor/supabase-2.45.0.min.js"></script>
+<script src="/native-call-media.js?v=20261025-2"></script>
+<script src="/native-call-stage.js?v=20261025-1"></script>
+<script src="/call-room.js?v=20261025-3"></script>
+</body>
+</html>
