@@ -73,6 +73,18 @@
       <section class="bv-mini-card"><h3>Top Mates · 16</h3><div class="bv-photo-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
       ${s.trackUrl||s.trackPath?trackMarkup(s):window.SotaLocalMusic?.hasSelected()?`<div class="bv-track"><span>♫ ${esc(window.SotaLocalMusic.title())}</span><button type="button" class="btn sm ghost" data-local-music-toggle>Play my music</button><small>Saved on this device.</small></div>`:`<div class="bv-photo-track"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂��▇▃▂��▂▆▃▁</span></div>`}${skinSongs(s)}</div>`;
   }
+  function chatPreview(profile, settings) {
+    const s=skins.normalize(settings);
+    return `<section class="bv-chat-preview" style="${esc(skins.inline(s))}" aria-label="Chat skin preview">
+      <header class="bv-chat-heading"><span class="bv-chat-avatar" aria-hidden="true">✦</span><div><h3>Your circle</h3><p>Example Koro · ${esc(profile.display_name||profile.handle||'You')}</p></div></header>
+      <div class="bv-chat-messages"><p class="bv-chat-caption">Example conversation</p>
+        <div class="msg"><span class="who">Donu</span>Same time, same sunset?</div>
+        <div class="msg mine"><span class="who">You</span>Absolutely. I’ll bring the playlist.</div>
+        <div class="msg"><span class="who">Jo</span>See you there! 🌺</div>
+      </div><div class="bv-chat-compose" aria-label="Example composer"><span>Write a message…</span><button type="button" disabled aria-label="Send (preview only)">↑</button></div>
+      <p class="bv-chat-caption">Preview only · your saved skin also styles your Koro chats.</p>
+    </section>`;
+  }
   function coverMediaMarkup(settings) {
     return settings.coverPath?`<button type="button" class="bv-cover-load" data-cover-path="${esc(settings.coverPath)}">Load my cover artwork ↗</button>`:'';
   }
@@ -144,7 +156,7 @@
   function reset() {
     window.SotaPlayback?.pauseSource('profile');
     stopSample();
-    document.body.classList.remove('bv-room-active');
+    document.body.classList.remove('bv-room-active','bv-chat-active');
     document.querySelector('#bv-active-skin')?.remove();
     app.classList.remove('bv-welcome');
     document.documentElement.style.setProperty('--accent',S.me?.room_accent||'#086779');
@@ -181,6 +193,15 @@
       about.querySelector('#bv-borrow-skin')?.addEventListener('click',()=>open(s));
     }
     wireMedia(view);
+  }
+  function applyChat(profile) {
+    if(!profile||!document.querySelector('#msgs'))return;
+    const s=skins.read(profile.room_css).settings;
+    if(!String(profile.room_css||'').startsWith('/* bv-skin:v1 '))s.accent=/^#[0-9a-f]{6}$/i.test(profile.room_accent)?profile.room_accent:s.accent;
+    document.querySelector('#bv-active-skin')?.remove();
+    const style=document.createElement('style');style.id='bv-active-skin';
+    style.textContent='body.bv-room-active{'+skins.inline(s)+'}';
+    document.head.appendChild(style);document.body.classList.add('bv-room-active','bv-chat-active');
   }
   const originalShell=shell;
   shell=function(body){reset();originalShell(body);wireMedia(app);};
@@ -296,7 +317,7 @@
     const current=String(S.me?.room_css||'');
     draft=skins.normalize(initial||(!S.user||!current?picked():current.startsWith('/* bv-skin:v1 ')?parsed.settings:{...parsed.settings,accent:S.me.room_accent}));
     legacy=parsed.legacy;focusBefore=document.activeElement;
-    const p=S.me||example;skinCategory='All';
+    const p=S.me||example;skinCategory='New picks';studioPreviewMode='profile';
     studio=document.createElement('dialog');studio.className='bv-studio';studio.setAttribute('aria-labelledby','bv-studio-title');
     studio.innerHTML=`<div class="bv-studio-head"><div><h2 id="bv-studio-title">Make it yours.</h2><p>Pick a skin. Mix the colours. Give your room a personality.</p></div><button type="button" class="bv-close" aria-label="Close skin studio">×</button></div>
       <div class="bv-studio-body"><div class="bv-studio-controls"><div class="bv-studio-picker"><h3>Choose your room style</h3><p class="bv-style-intro">${skins.presets.length} designs. Schools, vanua, celebrations and memories. Make one yours.</p><div class="bv-skin-categories" id="bv-skin-categories"></div><div class="bv-skin-navigation"><button type="button" id="bv-skins-left" aria-label="Scroll skins left" aria-controls="bv-skin-options">←</button><span>Swipe or browse the colours</span><button type="button" id="bv-skins-right" aria-label="Scroll skins right" aria-controls="bv-skin-options">→</button></div><div class="bv-skin-grid" id="bv-skin-options" tabindex="0" aria-label="Room skins"></div></div>
@@ -318,12 +339,15 @@
         <div><label for="d-bio">Bio</label><textarea id="d-bio" maxlength="400">${esc(p.bio||'')}</textarea></div>
         <div><label for="d-emo">Your emoji</label><input id="d-emo" value="${esc(p.avatar_emoji||'🌺')}" maxlength="8"></div></div></details>
         <details><summary>Advanced: your custom CSS</summary><p class="sub">Style room cards and text. External files and page overlays are excluded.</p><label for="d-css">Room CSS</label><textarea id="d-css" maxlength="3000" placeholder=".scrawl { border-radius: 20px; }">${esc(legacy)}</textarea></details>`:''}</div></div>
-      <aside class="bv-studio-preview"><div class="bv-example-label"><span>${S.user?'Your room · live preview':'Example room · live preview'}</span><span id="bv-preview-name"></span></div><div id="bv-studio-preview"></div><p class="sub" style="font-size:11px;line-height:1.7;margin-top:14px">${S.user?'Your friends will see this skin when they visit your room.':'These are example details. Your own name, friends and posts appear when you make a room.'}</p></aside></div>
+      <aside class="bv-studio-preview"><div class="bv-example-label"><span>${S.user?'Your room · live preview':'Example room · live preview'}</span><span id="bv-preview-name"></span></div><div class="bv-preview-modes" role="group" aria-label="Preview surface"><button type="button" data-preview-mode="profile" aria-pressed="true">Profile</button><button type="button" data-preview-mode="chat" aria-pressed="false">Chat</button></div><div id="bv-studio-preview"></div><p class="sub" style="font-size:11px;line-height:1.7;margin-top:14px">${S.user?'Your friends will see this skin when they visit your room.':'These are example details. Your own name, friends and posts appear when you make a room.'}</p></aside></div>
       <div class="bv-studio-footer"><div class="bv-studio-error" id="bv-studio-error" role="status" aria-live="polite"></div><div class="row"><button type="button" class="btn ghost" id="bv-cancel">Cancel</button><button type="button" class="btn" id="bv-save">${S.user?'Save my room':'Use this skin'}</button></div></div>`;
     document.body.appendChild(studio);
     studio.querySelector('.bv-close').addEventListener('click',close);
     studio.querySelector('#bv-cancel').addEventListener('click',close);
     studio.querySelector('#bv-save').addEventListener('click',save);
+    studio.querySelectorAll('[data-preview-mode]').forEach(button=>button.addEventListener('click',()=>{
+      studioPreviewMode=button.dataset.previewMode;drawPreview();
+    }));
     studio.addEventListener('cancel',event=>{event.preventDefault();close();});
     const opened=studio,returnFocus=focusBefore;
     studio.addEventListener('close',()=>{
@@ -345,7 +369,7 @@
     const resize=new ResizeObserver(updateSkinNavigation);resize.observe(gallery);studio.addEventListener('close',()=>resize.disconnect(),{once:true});
   }
   function close() {if(!saving)studio?.close();}
-  let skinCategory='All';
+  let skinCategory='New picks',studioPreviewMode='profile';
   function updateSkinNavigation() {
     if(!studio)return;
     const gallery=studio.querySelector('#bv-skin-options');
@@ -353,7 +377,7 @@
     studio.querySelector('#bv-skins-right').disabled=gallery.scrollLeft+gallery.clientWidth>=gallery.scrollWidth-2;
   }
   function drawOptions() {
-    const categories=['All',...new Set(skins.presets.map(p=>p.category))];
+    const categories=['New picks','All',...new Set(skins.presets.map(p=>p.category).filter(category=>category!=='New picks'))];
     studio.querySelector('#bv-skin-categories').innerHTML=categories.map(category=>`<button type="button" data-skin-category="${esc(category)}" aria-pressed="${category===skinCategory}">${esc(category)}</button>`).join('');
     studio.querySelectorAll('[data-skin-category]').forEach(button=>button.addEventListener('click',()=>{skinCategory=button.dataset.skinCategory;drawOptions();studio.querySelector(`[data-skin-category="${skinCategory}"]`).focus();}));
     const gallery=studio.querySelector('#bv-skin-options'),previousScroll=gallery.scrollLeft;
@@ -376,7 +400,8 @@
   function drawPreview() {
     const profile={...(S.me||example)};
     for(const [id,field] of [['d-name','display_name'],['d-bio','bio'],['d-emo','avatar_emoji']]){const el=studio.querySelector('#'+id);if(el)profile[field]=el.value;}
-    studio.querySelector('#bv-studio-preview').innerHTML=preview(profile,draft);
+    studio.querySelector('#bv-studio-preview').innerHTML=studioPreviewMode==='chat'?chatPreview(profile,draft):preview(profile,draft);
+    studio.querySelectorAll('[data-preview-mode]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.previewMode===studioPreviewMode)));
     wireMedia(studio.querySelector('#bv-studio-preview'));
     studio.querySelector('#bv-preview-name').textContent=skins.presets.find(p=>p.id===draft.id).name;
     if(!S.user)showWelcome(draft);
@@ -419,5 +444,6 @@
     if(pending.length)setTimeout(()=>pending.forEach(file=>window.SotaRoomMedia.api(sb,file.userId).remove(file.path).catch(()=>{})),0);
   }
   window.SotaPlayback?.register('sample',stopSampleOnly);
-  window.BulaSkinStudio={apply,reset,open,preview,closeForOwnerChange};
+  window.BulaSkinStudio={apply,applyChat,reset,open,preview,chatPreview,closeForOwnerChange};
 })();
+

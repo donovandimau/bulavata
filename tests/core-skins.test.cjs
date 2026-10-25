@@ -6,8 +6,8 @@ const root = path.join(__dirname,'..');
 const manifest = JSON.parse(fs.readFileSync(path.join(root,'assets/skins/core/manifest.json'),'utf8'));
 const core = skins.presets.filter(p=>p.artwork);
 assert.equal(core.length,60);
-assert.equal(skins.presets.length,84);
-assert.equal(new Set(skins.presets.map(p=>p.id)).size,84);
+assert.equal(skins.presets.length,88);
+assert.equal(new Set(skins.presets.map(p=>p.id)).size,88);
 assert.equal(manifest.catalogue.length,222);
 assert.equal(manifest.catalogue.filter(p=>p.status==='integrated').length,60);
 assert.equal(manifest.catalogue.filter(p=>p.status!=='integrated').length,162);
@@ -41,4 +41,5 @@ assert(studio.includes('note:personalNote'));
 assert(studio.includes('rel="noopener noreferrer"'));
 const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
 assert(!sw.match(/const ASSETS=.*assets\/skins\/core/));
-console.log('PASS: 60 unique safe SVG designs, 84 stable IDs, 222 tracked concepts, contrast, saved personal settings, required horse/rooster/dalo themes, song attribution and lazy public-only asset caching.');
+console.log('PASS: 60 unique safe SVG designs, 88 stable IDs, 222 tracked concepts, contrast, saved personal settings, required horse/rooster/dalo themes, song attribution and lazy public-only asset caching.');
+
