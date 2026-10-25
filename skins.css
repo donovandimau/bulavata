@@ -183,3 +183,27 @@ body:has(#app.bv-welcome){background:#080713;background-image:radial-gradient(el
 /* Apply the same scale to the studio without overriding members' custom room fonts. */
 .bv-studio{font-size:14px;line-height:1.5}.bv-studio-head h2{font-size:24px}.bv-studio h3,.bv-studio h4{font-size:16px}.bv-studio label,.bv-studio .bv-example-label,.bv-studio .bv-skin-tag,.bv-studio small,.bv-studio .bv-skin-categories button{font-size:12px;line-height:1.4}.bv-studio p,.bv-studio .bv-style-intro,.bv-studio input,.bv-studio select,.bv-studio textarea,.bv-studio .bv-skin-option strong,.bv-studio .btn,.bv-studio .bv-upload-actions button{font-size:14px;line-height:1.5}.bv-studio .sub{font-size:14px!important;line-height:1.5!important}.bv-studio .bv-skin-option small{font-size:12px;line-height:1.4}.bv-studio .bv-profile-intro h2{font-size:24px}.bv-studio .bv-mini-card h3{font-size:14px}.bv-studio .bv-mini-card h3 small,.bv-studio .bv-photo-note>small,.bv-studio .bv-photo-track small{font-size:12px}.bv-studio .bv-photo-note b,.bv-studio .bv-photo-note p,.bv-studio .bv-profile-intro p,.bv-studio .bv-photo-track b{font-size:14px;line-height:1.5}
 @media(max-width:700px){.bv-studio{font-size:12px}.bv-studio-head h2{font-size:22px}.bv-studio h3,.bv-studio h4{font-size:14px}.bv-studio p,.bv-studio .bv-style-intro,.bv-studio input,.bv-studio select,.bv-studio textarea,.bv-studio .bv-skin-option strong,.bv-studio .btn,.bv-studio .bv-photo-note b,.bv-studio .bv-photo-note p,.bv-studio .bv-profile-intro p,.bv-studio .bv-photo-track b{font-size:12px}.bv-studio .sub{font-size:12px!important}.bv-studio label,.bv-studio small,.bv-studio .bv-example-label,.bv-studio .bv-skin-tag,.bv-studio .bv-skin-option small,.bv-studio .bv-mini-card h3 small,.bv-studio .bv-photo-note>small,.bv-studio .bv-photo-track small,.bv-studio .bv-skin-categories button{font-size:11px}}
+
+
+/* One saved palette follows the member from their profile to Koro chat. */
+.bv-preview-modes{display:flex;gap:6px;margin:0 0 12px}
+.bv-preview-modes button{min-height:44px;flex:1;padding:8px 14px;border:1px solid #aac4c5;border-radius:999px;background:#fff;color:#173e49;font:700 14px system-ui;cursor:pointer}
+.bv-preview-modes button[aria-pressed=true]{background:#086779;color:#fff;border-color:#086779}
+.bv-chat-preview{overflow:hidden;border:1px solid var(--bv-accent);border-radius:var(--bv-radius);background-color:var(--bv-bg);background-image:var(--bv-pattern);background-size:var(--bv-pattern-size);color:var(--bv-ink);font:400 14px/1.6 var(--bv-font);box-shadow:var(--bv-surface-card-shadow)}
+.bv-chat-heading{display:flex;align-items:center;gap:12px;padding:18px;background:var(--bv-panel);border-bottom:1px solid var(--bv-accent)}
+.bv-chat-heading h3{margin:0;color:var(--bv-ink);font-family:var(--bv-font)}
+.bv-chat-heading p{margin:2px 0 0;color:var(--bv-muted);font-size:12px}
+.bv-chat-avatar{display:grid;place-items:center;width:44px;height:44px;flex:none;border-radius:50%;background:var(--bv-accent);color:var(--bv-on-accent)}
+.bv-chat-messages{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:18px}
+.bv-chat-preview .msg,body.bv-chat-active .msg{max-width:85%;margin:0;padding:12px 16px;border:1px solid var(--bv-accent);border-radius:var(--bv-radius);background:var(--bv-chat-in);color:var(--bv-chat-in-ink);font-family:var(--bv-font);overflow-wrap:anywhere;box-shadow:var(--bv-card-shadow)}
+.bv-chat-preview .msg.mine,body.bv-chat-active .msg.mine{align-self:flex-end;background:var(--bv-chat-out);color:var(--bv-chat-out-ink);border-color:var(--bv-chat-out);border-bottom-right-radius:3px}
+.bv-chat-preview .msg:not(.mine),body.bv-chat-active .msg:not(.mine){border-bottom-left-radius:3px}
+.bv-chat-preview .msg .who,body.bv-chat-active .msg .who{display:block;color:inherit;font-size:12px;font-weight:800;margin-bottom:4px}
+.bv-chat-compose{display:flex;gap:10px;align-items:center;padding:14px 18px;background:var(--bv-panel);border-top:1px solid var(--bv-accent)}
+.bv-chat-compose>span{flex:1;min-width:0;padding:10px 12px;border:1px solid var(--bv-muted);border-radius:var(--bv-radius);color:var(--bv-muted)}
+.bv-chat-compose button{min-width:44px;min-height:44px;border:0;border-radius:50%;background:var(--bv-accent);color:var(--bv-on-accent);font:800 20px system-ui}
+.bv-chat-preview .bv-chat-caption{margin:0;padding:10px 14px;background:var(--bv-panel);color:var(--bv-muted);font:600 12px/1.6 system-ui;text-align:center}
+body.bv-chat-active .msgs{display:flex;flex-direction:column;align-items:flex-start;gap:14px;background-color:var(--bv-bg);background-image:var(--bv-pattern);background-size:var(--bv-pattern-size);border-radius:var(--bv-radius);padding:16px;font-family:var(--bv-font)}
+body.bv-chat-active #cm,body.bv-chat-active #cm-send{min-height:44px;border-radius:var(--bv-radius);font-family:var(--bv-font)}
+@media(max-width:650px){.bv-chat-messages{padding:14px}.bv-chat-preview .msg,body.bv-chat-active .msg{max-width:92%}.bv-chat-heading,.bv-chat-compose{padding:14px}.bv-chat-preview{font-size:14px}}
+@media(forced-colors:active){.bv-chat-preview,.bv-chat-preview .msg,body.bv-chat-active .msg,.bv-preview-modes button{border:1px solid CanvasText;box-shadow:none}.bv-preview-modes button[aria-pressed=true]{outline:2px solid Highlight;outline-offset:2px}}

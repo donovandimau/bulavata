@@ -1,3 +1,13 @@
+## 2026-10-25 — Shared profile and chat skins
+
+Owner requested the proposed Ocean, Masi, Coral Sunset and Bebo Retro skins. The canonical live app is donovandimau/bulavata at ec95a9eac7c5cc3a6c8339d461028f1693561370 (sotakece.com), confirmed by Ops Projects and Vercel project sotakece. The separate donovandimau/sota-kece React demo is not the production source and was not changed.
+
+Append four original palette presets without reordering the existing 84 saved IDs. New picks opens first in the existing studio; all prior categories remain available. Add Profile and Chat previews, with clearly fictional messages and a disabled sample composer. Each member's saved room skin now styles their existing Koro message bubbles, background, font, corners and controls. Incoming/outgoing text colours meet 4.5:1 contrast across all 88 presets and tested custom palettes. Route changes remove the previous chat palette. Existing profile save, social reads/sends, music, supplied artwork, privacy rules and backend remain unchanged. Version the three changed shell assets and public worker cache.
+
+Verification: node --test tests/*.test.cjs passes all 26 reported test entries, including existing social, upload, playback, offline and save-recovery suites, plus new profile/chat round-trip, contrast, escaping and palette lifecycle checks. Browser preview validation and deployment receipts belong to the current PR.
+
+Ops browser access and current card were verified. Authenticated memory.start failed because DIMAU_OPS_KEY is not configured for this executor; no task lease, memory or continuity receipt is claimed. Continue through connected GitHub/Vercel tools under Donovan's 24 October standing order that missing Ops access must not stop implementation. No raw merge or direct production push; use the existing checked publishing flow after review.
+
 ## 2026-10-21 — Supplied blue-and-white page background
 
 Replace only the public page and masthead background pattern with Donovan's attached blue-and-white PNG, preserved byte-for-byte. Keep existing 420px repeat size, original sunset artwork, glass panels, typography, controls, personal room skins and newly published island playlist unchanged. Advance both changed stylesheet URLs and the public shell cache; cache the new public image. Resumed canonical d6a180fce44d2334d6ff6e6f2bca28765c91cb7c. Publication HOLD: show the verified preview for explicit owner review.
@@ -140,3 +150,4 @@ for owner review;actual member-session validation requires signing in.
 
 24October2026 — Dimau Visuals chart component integration
 Portable Dimau Visuals core/SDK/CSS,served locally with no data network requests. Sota visible connection counts track existing map filters and lifecycle;no new member-data reads.
+

@@ -1798,6 +1798,13 @@
     ]
   }
 ]);
+  // Append only: existing saved IDs and the home collage keep their order.
+  presets.push(
+    {id:'studio-ocean',name:'Ocean',category:'New picks',note:'Good company. Open horizons.',bg:'#dff6f5',panel:'#ffffff',ink:'#123d50',muted:'#496575',accent:'#046e86',cover:'#82d9d5',pattern:'waves',font:'rounded',cardStyle:'round'},
+    {id:'studio-masi',name:'Masi',category:'New picks',note:'Your roots. Your own story.',bg:'#efe4cc',panel:'#fffaf0',ink:'#30281f',muted:'#655440',accent:'#665034',cover:'#e3cba2',pattern:'masi',font:'serif',material:'paper',cardStyle:'square'},
+    {id:'studio-coral',name:'Coral Sunset',category:'New picks',note:'Stay for one more story.',bg:'#fff0e7',panel:'#fffaf7',ink:'#412b3b',muted:'#735560',accent:'#b7384b',cover:'#f5a486',pattern:'waves',font:'rounded',material:'raised',cardStyle:'round'},
+    {id:'studio-retro',name:'Bebo Retro',category:'New picks',note:'Your space. Your people. Your playlist.',bg:'#ede5ff',panel:'#fffbff',ink:'#2f174d',muted:'#6b547c',accent:'#7130a4',cover:'#efb0da',pattern:'checker',font:'rounded',material:'paper',cardStyle:'soft',effect:'sticker'}
+  );
   const patterns = ['waves','dots','stars','flowers','stripes','checker','grid','masi','plain'];
   const fonts = ['rounded','serif','mono'];
   const marker = /^\/\* bv-skin:v1 ([^\n]*?) \*\/\n?/;
@@ -1825,7 +1832,7 @@
       trackPath:safeMediaPath(input.trackPath,'music'),coverPath:safeMediaPath(input.coverPath,'covers'),
       panel:hex(input.panel,preset.panel),cover:hex(input.cover,preset.cover),
       cardStyle:['soft','square','round'].includes(input.cardStyle)?input.cardStyle:(preset.cardStyle||'soft'),
-      effect:['flat','glow','sticker'].includes(input.effect)?input.effect:'flat'};
+      effect:['flat','glow','sticker'].includes(input.effect)?input.effect:(preset.effect||'flat')};
   }
   function read(css) {
     const text = String(css??'').slice(0,4000), match = text.match(marker);
@@ -1874,6 +1881,8 @@
     return {'--bv-art':p.artwork?`url("${p.artwork}")`:'none','--bv-border':p.border?`url("${p.border}")`:'none',
       '--bv-bg':s.background,'--bv-panel':s.panel,'--bv-ink':s.panel===p.panel?p.ink:foreground(s.panel),'--bv-muted':s.panel===p.panel?p.muted:foreground(s.panel),
       '--bv-accent':s.accent,'--bv-on-accent':foreground(s.accent),
+      '--bv-chat-in':s.panel,'--bv-chat-in-ink':s.panel===p.panel?p.ink:foreground(s.panel),
+      '--bv-chat-out':s.accent,'--bv-chat-out-ink':foreground(s.accent),
       '--bv-link':contrast(s.accent,s.panel)>=4.5?s.accent:s.panel===p.panel?p.ink:foreground(s.panel),
       '--bv-cover':s.cover,'--bv-cover-ink':foreground(s.cover),
       '--bv-radius':s.cardStyle==='square'?'2px':s.cardStyle==='round'?'22px':'10px',
@@ -1903,3 +1912,4 @@
   }
   return {presets,patterns,fonts,normalize,read,encode,tokens,inline,safeLegacy,contrast,foreground,safeUrl};
 });
+
