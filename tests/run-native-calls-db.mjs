@@ -1,0 +1,16 @@
+import { readFile } from 'node:fs/promises';
+const {PGlite}=await import(process.env.PGLITE_MODULE||'@electric-sql/pglite');
+process.on('uncaughtException',error=>{console.error(JSON.stringify({message:error.message,code:error.code,position:error.position,where:error.where},null,2));process.exit(1)});
+const db=new PGlite();
+await db.exec(`create role anon;create role authenticated;create schema auth;create schema bulavata;
+create table auth.users(id uuid primary key,email text);
+create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
+grant usage on schema auth,bulavata to authenticated,anon;
+create table bulavata.profiles(id uuid primary key references auth.users(id),handle text unique,display_name text,age_band text);
+create table bulavata.crews(id bigint primary key,name text,owner uuid references bulavata.profiles(id));
+create table bulavata.crew_members(crew_id bigint references bulavata.crews(id),member uuid references bulavata.profiles(id),primary key(crew_id,member));`);
+const migration=await readFile(new URL('../supabase/migrations/20261025190921_native_calls.sql',import.meta.url),'utf8');
+await db.exec(migration);
+const results=await db.exec(await readFile(new URL('./native-calls-db.sql',import.meta.url),'utf8'));
+console.log(JSON.stringify({checks:results.flatMap(r=>r.rows).filter(r=>r.result),fixturesRemaining:(await db.query('select count(*)::int n from auth.users')).rows[0].n},null,2));
+await db.close();
