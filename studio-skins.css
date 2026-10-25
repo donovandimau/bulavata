@@ -208,6 +208,7 @@ body.bv-room-active{background-image:linear-gradient(color-mix(in srgb,var(--bv-
 .bv-studio.bv-studio :where(*){font-family:system-ui,sans-serif!important}
 .bv-studio.bv-studio :is(.bv-art-room,.bv-chat-preview) :where(*){font-family:var(--bv-font,system-ui,sans-serif)!important}
 .bv-studio.bv-studio .bv-art-room[data-look=varsity] .bv-cover-words,.bv-studio.bv-studio .bv-art-room[data-look=retro] .bv-cover-words{font-family:Impact,'Arial Black',system-ui,sans-serif!important}
+.bv-studio.bv-studio .bv-art-room[data-look=varsity] .bv-cover-words,.bv-room[data-bv-look=varsity] #room-head .bv-cover-words{font-family:'Arial Black',Arial,sans-serif!important;letter-spacing:0;line-height:1.15}
 .bv-studio.bv-studio .bv-art-room:is([data-look=rain],[data-look=coral],[data-look=masi],[data-look=music]) .bv-cover-words{font-family:Georgia,serif!important}
 @media(max-width:760px){.bv-studio .bv-skin-filters{top:-14px}}
 @media(forced-colors:active){.bv-studio,.bv-studio :is(.bv-studio-head,.bv-studio-footer,.bv-studio-controls,.bv-studio-preview,.bv-skin-option,.bv-preview-modes),.bv-art-room,.bv-art-room :is(.bv-cover,.bv-mini-card,.bv-profile-intro){background:Canvas;color:CanvasText;border:1px solid CanvasText;box-shadow:none}.bv-art-room .bv-cover::before{display:none}.bv-art-room .bv-cover-words{color:CanvasText;text-shadow:none}.bv-studio .bv-skin-option[aria-pressed=true]{outline-color:Highlight}}
