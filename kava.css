@@ -178,3 +178,15 @@ nav.bottom{max-width:540px}nav.bottom button{min-width:0}button:focus-visible{ou
  #app .kava-lobby .kava-lobby-features article{padding:18px 20px}
 }
 @media(forced-colors:active){#app .kava-lobby :is(.kava-setup-badge,.kava-circle-illustration,.kava-ring-seat,.kava-lobby-features article){background:Canvas!important;color:CanvasText!important;border-color:CanvasText;box-shadow:none}#app .kava-lobby .kava-mini-bowl{background:ButtonText;box-shadow:none}}
+/* A live written session inherits its group's built-in skin, never a member's profile. */
+#app .kava-room[data-circle-skin]{--kava-ink:var(--bv-ink);--kava-muted:var(--bv-muted);--kava-line:color-mix(in srgb,var(--bv-ink) 22%,transparent);--kava-mint:var(--bv-accent);padding:20px;border-radius:22px;background-color:var(--bv-bg);background-image:var(--bv-art),var(--bv-pattern);background-size:cover,var(--bv-pattern-size);background-position:center;color:var(--bv-ink)}
+#app .kava-room[data-circle-skin] .glass.card{background:var(--bv-panel);color:var(--bv-ink)}
+#app .kava-room[data-circle-skin] .kava-hero{background:var(--bv-cover);color:var(--bv-cover-ink)}
+#app .kava-room[data-circle-skin] .kava-hero :is(h1,p,.kava-eyebrow,.kava-hero-values span){color:var(--bv-cover-ink)}
+#app .kava-room[data-circle-skin] .kava-hero:before{border-color:var(--bv-accent)}
+#app .kava-room[data-circle-skin] .btn{background:var(--bv-accent);color:var(--bv-on-accent);border-color:var(--bv-accent);text-shadow:none;box-shadow:none}
+#app .kava-room[data-circle-skin] .btn.ghost{background:var(--bv-panel);color:var(--bv-ink);border-color:var(--kava-line)}
+#app .kava-room .tc-session-kind{font-size:13px;line-height:1.65;overflow-wrap:anywhere;margin:0 0 14px;color:var(--kava-muted)}
+#app .kava-room-toolbar{flex-wrap:wrap}
+@media(max-width:600px){#app .kava-room[data-circle-skin]{padding:12px}#app .kava-room-toolbar>span{order:3;flex-basis:100%}}
+@media(forced-colors:active){#app .kava-room[data-circle-skin],#app .kava-room[data-circle-skin] :is(.glass.card,.kava-hero,.btn){background:Canvas;color:CanvasText;border-color:CanvasText}#app .kava-room[data-circle-skin] .kava-hero :is(h1,p,.kava-eyebrow,.kava-hero-values span){color:CanvasText}}

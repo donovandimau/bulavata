@@ -11,7 +11,7 @@
     try{await fn();}catch(err){error(err);}finally{busy=false;if(button?.isConnected)button.disabled=false;}
   }
   const hero=()=>`<section class="glass kava-hero" aria-labelledby="kc-lobby-title"><div class="kava-eyebrow">Talanoa • Stories • Music • Wisdom</div>
-    <h1 id="kc-lobby-title">The Digital Kava Circle</h1><p>Good stories. Familiar voices. A place to bring your Koro together, share what you know and make space for each other.</p>
+    <h1 id="kc-lobby-title">Our Talanoa Circle</h1><p>Good stories. Familiar voices. A place to bring your Koro together, share what you know and make space for each other.</p>
     <div class="kava-hero-values"><span>Take turns</span><span>Listen generously</span><span>Everyone belongs</span></div></section>`;
   const lobby=content=>`<div class="kava-room kava-lobby">${hero()}${content}</div>`;
   function landingState(setup){
@@ -31,7 +31,7 @@
     ctx.shell(lobby(`<div class="kava-state" role="status">Loading your Koro circles…</div>`));
     const run=epoch;
     try{
-      const [crews,circles]=await Promise.all([service.crews(),service.list()]);if(run!==epoch||ctx.state.tab!=='circles')return;
+      const [crews,circles]=await Promise.all([root.SotaCircles?root.SotaCircles.list():service.crews(),service.list()]);if(run!==epoch||ctx.state.tab!=='circles')return;
       const names=Object.fromEntries(crews.map(c=>[c.id,c.name]));
       ctx.shell(lobby(`<div class="kava-columns"><section class="glass card"><h2 style="font-size:20px">Your circles</h2>
         <p class="sub">Invite-only through your Koro. Listed newest first.</p><div class="kava-list">${circles.length?circles.map(c=>`
@@ -59,7 +59,7 @@
     }
   }
   function frame(demo){
-    return `<div class="kava-room" data-preview="${demo}"><div class="kava-room-toolbar"><button class="btn sm ghost kava-back" id="kc-back">← ${demo?'Back to sign in':'Your circles'}</button><span>Digital Kava Circle</span></div>
+    return `<div class="kava-room" data-preview="${demo}"><div class="kava-room-toolbar"><button class="btn sm ghost kava-back" id="kc-back">← ${demo?'Back to sign in':'Your circles'}</button><span>Our Talanoa Circle</span>${demo?'':'<button type="button" class="tc-button" id="kc-group-invite">Invite friends</button>'}</div><p id="kc-group-type" class="tc-session-kind" hidden></p>
       <section class="glass kava-hero"><div class="kava-hero-top"><div class="kava-eyebrow">A place for proper talanoa</div><span class="kava-session-badge">${demo?'Layout preview · no live session':'Your Koro · circle room'}</span></div>
       <h1 id="kc-heading"></h1><p id="kc-topic-text" class="kava-topic"></p><div class="kava-hero-values"><span>Listen generously</span><span>Make space for each other</span></div><div id="kc-host-actions" class="kava-actions"></div></section>
       <div class="kava-columns"><div class="stack"><section class="glass card kava-stage-card"><div class="kava-close"><h2 style="font-size:18px">Around the bowl</h2><span id="kc-capacity" class="pill"></span></div>
@@ -85,15 +85,28 @@
     q('#kc-tip-value').textContent=core().tipSelection(amount,currency).label;
     document.querySelectorAll('[data-tip]').forEach(b=>b.onclick=()=>{amount=Number(b.dataset.tip);updateTip();});
   }
+  async function groupList(){return root.SotaCircles?root.SotaCircles.list():service.crews();}
+  function applySessionSkin(group){
+    const host=q('.kava-room'),banner=q('#kc-group-type');if(!host||!group||!root.SotaCircleTypes||!root.BulaSkins)return;
+    const type=root.SotaCircleTypes.get(group.circle_type),settings=root.SotaCircleTypes.theme(type.id,root.BulaSkins);
+    host.dataset.circleSkin=type.id;
+    for(const [key,value] of Object.entries(root.BulaSkins.tokens(settings)))host.style.setProperty(key,value);
+    const preset=root.BulaSkins.presets.find(p=>p.id===type.skin);
+    if(banner){banner.hidden=false;banner.textContent=type.label+' · '+group.name+' · '+(preset?.name||'Shared group skin');}
+    const invite=q('#kc-group-invite');if(invite)invite.onclick=()=>root.SotaCircles?.openInvite(group);
+  }
+  function updateGroupAppearance(group){
+    if(!guest&&snapshot&&String(snapshot.circle.crew_id)===String(group.id))applySessionSkin(group);
+  }
   async function open(id){
     stop();guest=false;current=id;const run=epoch;
     ctx.shell('<div class="glass card" role="status">Opening your circle…</div>');
     try{
-      let data=await service.load(id);if(run!==epoch)return;
+      let [data,groups]=await Promise.all([service.load(id),groupList()]);if(run!==epoch)return;
       if(data.circle.status!=='ended'&&!data.people.some(p=>p.member===ctx.state.user.id)){
         await service.join(id,ctx.state.user.id);data=await service.load(id);if(run!==epoch)return;
       }
-      snapshot=data;ctx.shell(frame(false));bind();paint();poll(run);
+      snapshot=data;ctx.shell(frame(false));bind();paint();applySessionSkin(groups.find(g=>String(g.id)===String(data.circle.crew_id)));poll(run);
     }catch(err){if(run!==epoch)return;ctx.shell('<section class="glass card"><h2>This circle could not load.</h2><p id="kava-error" class="kava-error" role="alert"></p><button class="btn" id="kc-retry">Try again</button> <button class="btn ghost" id="kc-back">Your circles</button></section>');error(err);q('#kc-retry').onclick=()=>open(id);q('#kc-back').onclick=view;}
   }
   function bind(){
@@ -133,8 +146,8 @@
     document.querySelectorAll('[data-pause]').forEach(b=>b.onclick=()=>action(b,async()=>{const p=snapshot.people.find(p=>p.member===b.dataset.pause);await service.moderate(current,p.member,{comments_paused:!p.comments_paused,seat:null});await refresh(epoch);}));
   }
   async function refresh(run){
-    const id=current;const data=await service.load(id);if(run!==epoch||id!==current||ctx.state.tab!=='circles')return;
-    snapshot=data;paint();const box=q('#kava-error');if(box)box.hidden=true;
+    const id=current;const [data,groups]=await Promise.all([service.load(id),groupList()]);if(run!==epoch||id!==current||ctx.state.tab!=='circles')return;
+    snapshot=data;paint();applySessionSkin(groups.find(g=>String(g.id)===String(data.circle.crew_id)));const box=q('#kava-error');if(box)box.hidden=true;
   }
   function poll(run){
     timer=setTimeout(async()=>{if(run!==epoch||guest||ctx.state.tab!=='circles')return;
@@ -148,5 +161,5 @@
     const old=ctx.state.tab;ctx.state.tab='circles';ctx.shell(frame(true));ctx.state.tab=old;
     q('nav.bottom').hidden=true;q('nav.bottom').style.setProperty('display','none','important');q('.luvchip').style.display='none';bind();paint();
   }
-  root.SotaKavaUI={init,view,stop,preview};
+  root.SotaKavaUI={init,view,stop,preview,updateGroupAppearance};
 })(window);

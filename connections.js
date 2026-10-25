@@ -114,7 +114,7 @@
     if(ctx.state.user&&ctx.state.me)return ctx.go('connections');
     return ctx.auth('in',true);
   }
-  function entryHtml(){return `<section class="sc-friends" id="sota-connections" aria-labelledby="sc-entry-title"><header class="scf-heading"><div><p class="scf-kicker">YOUR PEOPLE · YOUR CONNECTIONS</p><h2 id="sc-entry-title">Your circle, growing.</h2><p>A new friendship. A new connection.</p></div><span class="scf-private">Only visible to you</span></header><div data-friend-graph><p class="scf-message" role="status">Loading your friend graph…</p></div><noscript>Sign in with JavaScript enabled to see your personal friend graph.</noscript></section>`;}
+  function entryHtml(){return `<section class="sc-friends" id="sota-connections" aria-labelledby="sc-entry-title"><header class="scf-heading"><div><p class="scf-kicker">YOUR PEOPLE · YOUR CONNECTIONS</p><h2 id="sc-entry-title">Your circle, growing.</h2><p>A new friendship. A new connection.</p></div><span class="scf-private">Your private view</span></header><div data-friend-graph><p class="scf-message" role="status">Loading your friend graph…</p></div><noscript>Sign in with JavaScript enabled to see your personal friend graph.</noscript></section>`;}
   function signIn(){stop();clearRoute();ctx.auth('in',true);}
   // Slots belong to this mounted owner only. Adding/removing a friend never moves existing nodes.
   function friendPositions(graph,slots=new Map()){
@@ -137,8 +137,9 @@
     stop();entryMounted=true;liveOwner=owner;const run=epoch;
     const valid=()=>run===epoch&&String(ctx.state.user?.id||'')===owner&&host.isConnected&&ctx.app.contains(host);
     const snapshot={user:{id:owner},me:{...ctx.state.me}};
-    host.innerHTML=`<div class="scf-meta"><strong data-friend-count role="status" aria-live="polite">Your accepted friends</strong><div><span data-friend-status role="status" aria-live="polite">Checking your friends…</span><button type="button" class="scf-refresh" data-friend-refresh aria-label="Refresh friend graph">↻ Refresh</button></div></div><div class="scf-body"><div class="scf-map"><svg viewBox="0 0 720 480" role="img" aria-label="Your accepted friendships" data-friend-svg><g data-friend-lines></g><g data-friend-nodes></g></svg><p data-friend-empty hidden>Your friends will appear here as you connect.</p></div><div class="scf-list-wrap"><h3>Your friends</h3><p class="scf-list-hint">Choose a friend to visit their room.</p><div class="scf-list" data-friend-list></div><button type="button" class="scf-find" data-friend-find>Find friends →</button></div></div><p class="scf-note" data-friend-note>Each line is an accepted friendship with you. Checks for changes every 15 seconds while this page is open.</p><p class="scf-warning" data-friend-warning role="status" hidden></p>`;
+    host.innerHTML=`<div class="scf-meta"><strong data-friend-count role="status" aria-live="polite">Your accepted friends</strong><div><span data-friend-status role="status" aria-live="polite">Checking your friends…</span><button type="button" class="scf-refresh" data-friend-refresh aria-label="Refresh friend graph">↻ Refresh</button></div></div><div class="scf-body"><div class="scf-map"><svg viewBox="0 0 720 480" role="img" aria-label="Your accepted friendships" data-friend-svg><g data-friend-lines></g><g data-friend-nodes></g></svg><p data-friend-empty hidden>Your friends will appear here as you connect.</p></div><div class="scf-list-wrap"><h3>Your friends</h3><p class="scf-list-hint">Choose a friend to visit their room.</p><div class="scf-list" data-friend-list></div><button type="button" class="scf-find" data-friend-find>Find friends →</button></div></div><p class="scf-note" data-friend-note>Each line is an accepted friendship with you. Checks for changes every 15 seconds while this page is open.</p><p class="scf-warning" data-friend-warning role="status" hidden></p><div data-friend-privacy></div>`;
     const q=s=>host.querySelector(s),slots=new Map(),buttons=new Map();let signature='',lastUpdated=null,disposed=false;
+    const privacyCleanup=window.SotaCircles?.mountPersonalSettings(q('[data-friend-privacy]'));
     function data(result){
       if(!valid())return;
       lastUpdated=result.updated;
@@ -174,7 +175,7 @@
     }
     const listeners=[];let feed;
     function on(el,event,fn){el.addEventListener(event,fn);listeners.push(()=>el.removeEventListener(event,fn));}
-    mounted={dispose(){disposed=true;feed?.stop();listeners.forEach(fn=>fn());buttons.clear();slots.clear();host.replaceChildren();}};
+    mounted={dispose(){disposed=true;privacyCleanup?.();feed?.stop();listeners.forEach(fn=>fn());buttons.clear();slots.clear();host.replaceChildren();}};
     feed=window.SotaFriendFeed.watchFriends({read:()=>load(ctx.client,snapshot,{friendsOnly:true}),valid:()=>!disposed&&valid(),active:()=>!document.hidden&&navigator.onLine!==false,onData:data,onStatus:status});
     on(q('[data-friend-refresh]'),'click',()=>feed.refresh());on(q('[data-friend-find]'),'click',()=>{if(valid())ctx.go('friends');});
     on(document,'visibilitychange',()=>feed.refresh());on(window,'online',()=>feed.refresh());on(window,'offline',()=>feed.refresh());on(window,'focus',()=>feed.refresh());
@@ -194,7 +195,8 @@
     stop();const run=epoch,user=ctx.state.user?.id;
     if(!user)return openPersonal();
     liveOwner=String(user);
-    ctx.shell(`<button class="btn sm ghost sc-back" id="sc-back">← Back to Sota Kece</button>${hero()}<div id="sc-root" class="glass card" role="status">Loading your connections…</div>`);
+    ctx.shell(`<button class="btn sm ghost sc-back" id="sc-back">← Back to Sota Kece</button>${hero()}<div data-personal-graph-settings></div><div id="sc-root" class="glass card" role="status">Loading your connections…</div>`);
+    window.SotaCircles?.mountPersonalSettings(document.querySelector('[data-personal-graph-settings]'));
     document.querySelector('#sc-back').onclick=back;
     try{
       const result=await load(ctx.client,ctx.state);

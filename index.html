@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sota Kece — alive together</title>
-<meta name="description" content="Sota Kece: a Pacific-first home for your people. Top Mates 16, Talanoa, personal skins, profile music and hosted Kava Circles. Low data by default.">
+<meta name="description" content="Sota Kece: a Pacific-first home for your people. Top Mates 16, Talanoa, personal skins, profile music and Our Talanoa Circle. Low data by default.">
 <meta name="theme-color" content="#87CEEB">
 <link rel="canonical" href="https://sotakece.com/">
 <meta property="og:type" content="website">
@@ -189,9 +189,9 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 .seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(20,59,82,.1)}
 </style>
 <link rel="stylesheet" href="/skins.css?v=20261025-art-skins">
-<link rel="stylesheet" href="/front-page.css?v=20261025-home-groups">
+<link rel="stylesheet" href="/front-page.css?v=20261025-talanoa-circles">
 <link rel="stylesheet" href="/music-playlist.css?v=20261021-woven-mat">
-<link rel="stylesheet" href="/kava.css?v=20261025-circle-landing">
+<link rel="stylesheet" href="/kava.css?v=20261025-talanoa-circles"><link rel="stylesheet" href="/circle-groups.css?v=20261025-talanoa-circles">
 <link rel="stylesheet" href="/connections.css?v=20261025-personal-graph"><link rel="stylesheet" href="/dimau-visuals.css?v=20261024">
 <script src="/room-media.js"></script>
 <script src="/skin-identities.js?v=20261025-identity"></script>
@@ -254,7 +254,7 @@ function renderAuth(mode="in"){
       <div class="promise"><span class="tick">✓</span><div><b>Your archive is yours.</b> Download the lot, any time, one tap.</div></div>
       <div class="promise"><span class="tick">✓</span><div><b>No followers.</b> Friendship is mutual or it isn't real.</div></div>
     </div>
-    <button class="btn ghost" type="button" onclick="window.SotaKavaUI.preview()" style="margin-bottom:16px">Explore the Digital Kava Circle</button>
+    <button class="btn ghost" type="button" onclick="window.SotaKavaUI.preview()" style="margin-bottom:16px">Explore Our Talanoa Circle</button>
     <a class="btn ghost" href="/communications.html?app=sota-kece" style="display:block;text-align:center;margin-bottom:16px">Open Communications · Chat, boards and calls</a>
     <div class="seg">
       <button class="${mode==='in'?'on':''}" onclick="renderAuth('in')">Sign in</button>
@@ -329,7 +329,7 @@ function shell(body){
   if(navFocused)app.querySelector(`nav.bottom [data-tab="${S.tab}"]`)?.focus({preventScroll:true});
   else if(viewFocused)$('#view')?.focus({preventScroll:true});
 }
-function go(t){ if(t!=='connections'&&/^#connections=(?:mine|example)$/.test(location.hash))history.replaceState(null,'',location.pathname+location.search); window.SotaConnections?.stop(); window.SotaKavaUI?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
+function go(t){ if((t!=='connections'&&/^#connections=(?:mine|example)$/.test(location.hash))||/^#(?:circle-invite|circle-graph|friends-graph)=/.test(location.hash))history.replaceState(null,'',location.pathname+location.search); window.SotaCircles?.stop(); window.SotaConnections?.stop(); window.SotaKavaUI?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
 
 /* ================= DATA ================= */
 async function refreshMeta(){
@@ -588,7 +588,7 @@ async function giveLuv(kind,id){
 }
 
 /* ================= ROOM ================= */
-async function openRoom(h){ S.tab="room"; S.roomHandle=h; render(); }
+async function openRoom(h){ if(/^#(?:circle-invite|circle-graph|friends-graph)=/.test(location.hash))history.replaceState(null,'',location.pathname+location.search); window.SotaCircles?.stop(); S.tab="room"; S.roomHandle=h; render(); }
 async function viewRoom(){
   const run=viewRun();
   const h = S.roomHandle || S.me.handle;
@@ -709,7 +709,7 @@ function installAuthLifecycle(){
     viewRun();
     S.user=null;S.me=null;S.friends=[];S.pending=[];S.wallet=null;S.crew=null;S.roomHandle=null;S.tab='pulse';S.luv=0;S.metaErrors={};S.sendingMessage=false;
     S.searchRevision=(S.searchRevision||0)+1;
-    window.SotaConnections?.stop();window.SotaKavaUI?.stop();window.BulaSkinStudio?.closeForOwnerChange?.();
+    window.SotaCircles?.stop();window.SotaConnections?.stop();window.SotaKavaUI?.stop();window.BulaSkinStudio?.closeForOwnerChange?.();
     app.replaceChildren();
     // Supabase work runs after its synchronous auth callback has returned.
     setTimeout(()=>{if(revision!==change)return;if(next)boot();else renderAuth();},0);
@@ -807,15 +807,34 @@ async function exportArchive(){
 }
 
 /* ================= KORO ================= */
+async function circleGroupsResult(){
+  try{return {data:await window.SotaCircles.list(),error:null};}catch(error){return {data:null,error};}
+}
+function circleGroupChanged(group){
+  if(S.tab==='circles'){window.SotaKavaUI?.updateGroupAppearance?.(group);return;}
+  if(S.tab!=='crews'||String(S.crew)!==String(group.id))return;
+  const type=window.SotaCircleTypes.get(group.circle_type),label=$('#crew-type-label'),avatar=$('#crew-avatar');
+  if(label)label.textContent=type.label+' · '+(window.BulaSkins.presets.find(p=>p.id===type.skin)?.name||'Shared group skin');
+  if(avatar){avatar.textContent=type.emoji;avatar.style.background=type.accent+'22';}
+  window.SotaCircles.applyGroupSkin(group);
+  const graph=$('#crew-graph');if(graph)window.SotaCircles.mountGroupGraph(graph,group);
+}
+function openCircleMember(handle){
+  if(!S.user||String(S.me?.id)!==String(S.user.id)){
+    try{sessionStorage.setItem('sota-find-mate',handle);}catch(_){}
+    history.replaceState(null,'',location.pathname+location.search);return boot();
+  }
+  return openRoom(handle);
+}
 async function viewCrews(){
   if(S.crew) return viewCrewRoom();
   const run=viewRun();
   shell(`<div class="empty glass card" role="status"><em>🪸</em>Loading…</div>`);
-  const {data:crews,error}=await requestResult(sb.rpc("bv_my_crews"));
+  const {data:crews,error}=await circleGroupsResult();
   if(!currentView(run))return;
   if(error)return viewError('your Koro','viewCrews()');
   shell(`<div class="koro-page">
-    <section class="koro-hero" aria-labelledby="koro-title"><div class="koro-hero-top"><span class="koro-eyebrow">YOUR COMMUNITY, CLOSE BY</span><span class="koro-private"><span aria-hidden="true">◇</span> Private & invite-only</span></div><h1 id="koro-title">Your people. Your Koro.</h1><p>A small, private place for friends, family or your community. Start a Koro or join one with an invitation.</p></section>
+    <section class="koro-hero" aria-labelledby="koro-title"><div class="koro-hero-top"><span class="koro-eyebrow">YOUR COMMUNITY, CLOSE BY</span><span class="koro-private"><span aria-hidden="true">◇</span> Invite-only groups</span></div><h1 id="koro-title">Your people. Your Koro.</h1><p>A small, private place for friends, family or your community. Start a Koro or join one with an invitation.</p></section>
     <div class="koro-layout"><section class="glass card koro-communities" aria-labelledby="koro-list-title">
       <div class="koro-section-head"><div><span class="koro-section-kicker">A PLACE TO BELONG</span><h2 id="koro-list-title">Your Koro</h2></div>${(crews||[]).length?`<span class="koro-count">${crews.length} Koro</span>`:''}</div>
       ${(crews||[]).length? `<div class="koro-list">${crews.map(c=>`
@@ -823,33 +842,39 @@ async function viewCrews(){
           <div class="av" style="background:${esc(c.accent)}22">${esc(c.emoji)}</div>
           <div style="flex:1;min-width:0"><div class="name">${esc(c.name)}</div>
             <div class="handle">${c.members} member${c.members==1?'':'s'}${c.last_at?' · '+ago(c.last_at):''}</div></div><span class="koro-open-arrow" aria-hidden="true">↗</span>
-        </button>`).join("")}</div>` : `<div class="koro-empty"><div class="koro-empty-art" aria-hidden="true"><span>🪸</span></div><h3>Your Koro starts with you.</h3><p>Bring your people into one private space.<br>Create your first Koro, or join with a code shared with you.</p><div class="koro-empty-actions"><button type="button" class="btn" onclick="$('#c-name').focus()">Start your first Koro <span aria-hidden="true">↗</span></button><button type="button" class="koro-text-button" onclick="$('#c-code').focus()">I have an invite code</button></div></div>`}
+        </button>`).join("")}</div>` : `<div class="koro-empty"><div class="koro-empty-art" aria-hidden="true"><span>🪸</span></div><h3>Your Koro starts with you.</h3><p>Bring your people into one private space.<br>Create your first Koro, or join with a code shared with you.</p><div class="koro-empty-actions"><button type="button" class="btn" onclick="$('#koro-create input').focus()">Start your first Koro <span aria-hidden="true">↗</span></button><button type="button" class="koro-text-button" onclick="$('#c-code').focus()">I have an invite code</button></div></div>`}
       <div class="koro-tools" aria-label="More ways to connect"><button type="button" class="btn sm ghost" onclick="go('connections')">See my connections <span aria-hidden="true">↗</span></button><a class="btn sm ghost" href="/communications.html?app=sota-kece">Chat, discussions & calls <span aria-hidden="true">↗</span></a></div>
-      <p class="koro-privacy-note"><span aria-hidden="true">◇</span> Small, closed communities. No public discovery.</p>
+      <p class="koro-privacy-note"><span aria-hidden="true">◇</span> Membership stays invite-only. You choose whether the graph is public.</p>
     </section>
     <aside class="koro-forms" aria-label="Create or join a Koro">
-      <section class="glass card koro-form-card" id="koro-create" aria-labelledby="koro-create-title"><span class="koro-form-icon" aria-hidden="true">+</span><h2 id="koro-create-title">Start a Koro</h2><p>Give your people a place of their own.</p><label for="c-name">Koro name</label><input id="c-name" aria-label="New Koro name" placeholder="Give your Koro a name" maxlength="40"><button type="button" class="btn koro-submit" onclick="makeCrew()">Create Koro <span aria-hidden="true">↗</span></button><small>Choose a name your people will recognise.</small></section>
+      <section class="glass card koro-form-card" id="koro-create" aria-label="Start a circle">${window.SotaCircles.createHTML()}</section>
       <section class="glass card koro-form-card koro-join-card" aria-labelledby="koro-join-title"><span class="koro-form-icon" aria-hidden="true">↗</span><h2 id="koro-join-title">Join with a code</h2><p>Already invited? Your place is waiting.</p><label for="c-code">Koro join code</label><input id="c-code" aria-label="Koro join code" placeholder="Paste your invite code" autocapitalize="off"><button type="button" class="btn ghost koro-submit" onclick="joinCrew()">Join Koro <span aria-hidden="true">↗</span></button><small>Use the code shared with you.</small></section>
     </aside></div></div>`);
+  window.SotaCircles.mountCreate($('#koro-create'),group=>{if(currentView(run)){S.crew=group.id;render();}});
 }
-async function makeCrew(){
-  const n=$("#c-name").value.trim(); if(!n) return;
-  const {data,error}=await sb.from("bv_crews").insert({name:n,owner:S.user.id}).select().single();
-  if(error) return toast(error.message);
-  await sb.from("bv_crew_members").insert({crew_id:data.id,member:S.user.id});
-  S.crew=data.id; render();
+function makeCrew(){
+  $('#koro-create form')?.requestSubmit();
 }
 async function joinCrew(){
-  const {data,error}=await sb.rpc("bv_join_crew",{p_code:$("#c-code").value.trim()});
-  if(error) return toast("No Koro with that code"); S.crew=data; render();
+  const input=$('#c-code');if(!input||input.disabled)return;
+  const run=viewRun(false),owner=S.user?.id,code=input.value.trim();if(!owner||!code)return;
+  input.disabled=true;
+  try{
+    const checked=await sb.auth.getUser();if(checked.error||checked.data?.user?.id!==owner||!currentView(run))return;
+    const {data,error}=await sb.rpc('bv_join_circle',{p_code:code,p_show_on_graph:false,p_expected_owner:owner});
+    if(!currentView(run))return;
+    if(error)return toast('This circle could not be joined. Check the invitation and try again.');
+    S.crew=data;render();
+  }catch(_){if(currentView(run))toast('This circle could not be joined. Your code is still here.');}
+  finally{if(input.isConnected)input.disabled=false;}
 }
 async function viewCrewRoom(){
   const run=viewRun();
   shell(`<div class="empty glass card" role="status"><em>🪸</em>Opening your Koro…</div>`);
-  const {data:cs,error:crewError}=await requestResult(sb.rpc("bv_my_crews"));
+  const {data:cs,error:crewError}=await circleGroupsResult();
   if(!currentView(run))return;
   if(crewError)return viewError('this Koro','viewCrewRoom()');
-  const c=(cs||[]).find(x=>x.id===S.crew);
+  const c=(cs||[]).find(x=>String(x.id)===String(S.crew));
   if(!c){ S.crew=null; return render(); }
   const {data:msgs,error:messageError}=await requestResult(sb.from("bv_crew_messages").select("*").eq("crew_id",c.id).order("created_at",{ascending:false}).limit(80));
   if(!currentView(run))return;
@@ -862,12 +887,13 @@ async function viewCrewRoom(){
   const map=Object.fromEntries((ppl||[]).map(p=>[p.id,p]));
   shell(`<div class="glass card">
     <div class="row"><button class="btn sm ghost" aria-label="Back to your Koro" onclick="S.crew=null;render()">←</button>
-      <div class="av" style="background:${esc(c.accent)}22">${esc(c.emoji)}</div>
+      <div class="av" id="crew-avatar" style="background:${esc(c.accent)}22">${esc(c.emoji)}</div>
       <div style="flex:1;min-width:0"><div class="name">${esc(c.name)}</div>
         <div class="handle">${c.members} member${c.members==1?'':'s'}</div></div>
-      <button class="btn sm ghost" onclick="copyText('${esc(c.join_code)}','Join code copied','crew-invite-fallback','crew-invite-code')">🔗 Invite</button>
+      <button type="button" class="btn sm ghost" id="crew-invite">Invite friends</button>
     </div><hr class="hr">
-    <div id="crew-invite-fallback" role="status" hidden><label for="crew-invite-code">Copy this Koro join code</label><input id="crew-invite-code" readonly value="${esc(c.join_code)}"></div>
+    <p class="sub" id="crew-type-label">${esc(window.SotaCircleTypes.get(c.circle_type).label)} · ${esc(window.BulaSkins.presets.find(p=>p.id===window.SotaCircleTypes.get(c.circle_type).skin)?.name||'Shared group skin')}</p>
+    <details class="tc-group-graph"><summary>Circle graph & visibility</summary><div id="crew-graph"></div></details>
     <div class="row" style="margin-bottom:12px"><input id="cm" aria-label="Message your Koro" aria-describedby="cm-error" placeholder="Message…" maxlength="900">
       <button class="btn sm" id="cm-send" onclick="sendMsg(${c.id})">Send</button></div>
     <p id="cm-error" role="alert" hidden></p>
@@ -879,7 +905,9 @@ async function viewCrewRoom(){
         : `<div class="empty"><em>🪸</em>Say something first.</div>`}
     </div>
   </div>`);
-  window.BulaSkinStudio?.applyChat(S.me);
+  window.SotaCircles.applyGroupSkin(c);
+  $('#crew-invite').onclick=()=>window.SotaCircles.openInvite(c);
+  window.SotaCircles.mountGroupGraph($('#crew-graph'),c);
   const box=$("#msgs"); if(box) box.scrollTop=0;
   $("#cm").addEventListener("keydown",e=>{if(e.key==="Enter")sendMsg(c.id)});
 }
@@ -978,17 +1006,27 @@ async function boot(){
   if(typeof location==='object'&&location.hash==="#connections=example")return window.SotaConnections.preview();
   const run=typeof viewRun==='function'?viewRun():null,stillHere=()=>!run||currentView(run);
   const personal=typeof location==='object'&&location.hash==='#connections=mine';
-  if(!navigator.onLine)return renderAuth('in',personal);
+  const circleRoute=typeof location==='object'&&/^#(?:circle-invite|circle-graph|friends-graph)=/.test(location.hash);
+  const publicGraphRoute=typeof location==='object'&&/^#(?:circle-graph|friends-graph)=/.test(location.hash);
+  if(!navigator.onLine){renderAuth('in',personal);if(circleRoute)window.SotaCircles?.route();return;}
   const {data:{session}} = await sb.auth.getSession();
   if(!stillHere())return;
-  if(!session) return renderAuth('in',personal);
+  if(!session){renderAuth('in',personal);if(circleRoute)window.SotaCircles?.route();return;}
   S.user = session.user;
   if(run)run.user=S.user.id;
+  if(publicGraphRoute){
+    shell('<section class="glass card"><h1>Our Talanoa Circle</h1><p>A public view, shared by people who chose to appear.</p><a class="btn" href="/">Back to Sota Kece</a></section>');
+    window.SotaCircles?.route();return;
+  }
   const {data:me,error:profileError} = await sb.from("bv_profiles").select("*").eq("id",S.user.id).maybeSingle();
   if(!stillHere())return;
   if(profileError)return shell(`<div class="glass card"><h3>Your room is still yours.</h3><p>Connection interrupted. Try loading it again when your signal returns.</p><button class="btn" onclick="boot()">Try again</button></div>`);
   if(!me) return finishRoom();
   S.me = me;
+  if(circleRoute){
+    shell('<section class="glass card"><h1>Our Talanoa Circle</h1><p>Your circle link is ready to open.</p><button type="button" class="btn" onclick="go(\'crews\')">Your circles</button></section>');
+    window.SotaCircles?.route();return;
+  }
   document.documentElement.style.setProperty("--accent", me.room_accent||"#4FA8D8");
   sb.rpc("bv_touch");
   try{
@@ -1005,7 +1043,8 @@ async function boot(){
   if(/^[a-z0-9_]{3,20}$/.test(pendingMate)){
     S.tab='friends';await render();
     if($('#s-q')){ $('#s-q').value=pendingMate;try{sessionStorage.removeItem('sota-find-mate');}catch(_){}await search(); }
-  }else render();
+  }else await render();
+  await window.SotaCircles?.resumeDraft?.();
 }
 /* Signed in, but no room yet. Never sign them out - let them finish. */
 function finishRoom(){
@@ -1052,14 +1091,14 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/music-playlist.js?v=20261025-visuals"></script>
 <script src="/skin-discovery.js?v=20261025-community-design"></script>
 <script src="/room-atmosphere.js?v=20261025-1"></script>
-<script src="/skin-studio.js?v=20261025-guest-preview"></script>
+<script src="/skin-studio.js?v=20261025-talanoa-circles"></script>
 <script src="/offline.js?v=20261024-quality"></script>
 <script src="/kava.js"></script>
-<script src="/kava-ui.js?v=20261025-circle-landing"></script>
+<script src="/circle-types.js?v=20261025-talanoa-circles"></script><script src="/circle-groups.js?v=20261025-talanoa-circles"></script><script src="/kava-ui.js?v=20261025-talanoa-circles"></script>
 <script src="/dimau-charts-core.js?v=20261024"></script><script src="/dimau-visuals.js?v=20261024"></script>
 <script src="/friend-feed.js?v=20261025-personal-graph"></script>
-<script src="/connections.js?v=20261025-home-collections"></script>
-<script>window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});boot();installAuthLifecycle();</script>
+<script src="/connections.js?v=20261025-talanoa-circles"></script>
+<script>window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261025b" data-app="sota-kece" defer></script>
 </body>
 </html>
