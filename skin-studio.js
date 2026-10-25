@@ -2,6 +2,7 @@
   'use strict';
   const skins = window.BulaSkins;
   if (!skins) return;
+  const discovery = window.SotaSkinDiscovery;
   let studio = null, draft = null, legacy = '', focusBefore = null;
   let homeSkinChosen=false;
   try{homeSkinChosen=!!localStorage.getItem('bv-picked-skin');}catch(_){}
@@ -50,6 +51,12 @@
     try { return skins.normalize(JSON.parse(localStorage.getItem('bv-picked-skin')||'{"id":"midnight"}')); }
     catch (_) { return skins.normalize({id:'midnight'}); }
   }
+  function remix(settings,id) {
+    const oldPreset=skins.presets.find(p=>p.id===settings.id);
+    return skins.normalize({id,note:settings.note!==oldPreset.note?settings.note:undefined,
+      layout:settings.layout,interests:settings.interests,trackUrl:settings.trackUrl,trackTitle:settings.trackTitle,
+      trackPath:settings.trackPath,coverPath:settings.coverPath,songRef:settings.songRef});
+  }
   function skinScene(settings) {
     const p=skins.presets.find(p=>p.id===settings.id);
     if(!p?.artwork)return '';
@@ -73,17 +80,20 @@
   }
   function preview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
+    const roomLayout=discovery?.layout(p)||'social';
     const interests=s.interests.split(',').map(x=>x.trim()).filter(Boolean).slice(0,8);
     const portraits=Array.from({length:16},(_,i)=>originalMate(i%14,`Example friend ${i+1}`));
     const avatar=profile.avatar_emoji?`<span class="bv-avatar-emoji">${esc(profile.avatar_emoji)}</span>`:frontAvatar('Sema — example profile portrait');
-    return `<div class="bv-preview bv-art-room" style="${esc(skins.inline(s))}" data-layout="${s.layout}" data-look="${p.look}">
+    const soundtrack=`${s.trackUrl||s.trackPath||s.songRef?trackMarkup(s):window.SotaLocalMusic?.hasSelected()?`<div class="bv-track"><span>♫ ${esc(window.SotaLocalMusic.title())}</span><button type="button" class="btn sm ghost" data-local-music-toggle>Play my music</button><small>Saved on this device.</small></div>`:`<div class="bv-skin-player"><span class="bv-vinyl" aria-hidden="true"></span><div><small>THE SOUND OF YOUR ROOM</small><b>Your own mixtape</b><p>Add a track in Fine-tune your skin.</p></div><span class="bv-player-wave" aria-hidden="true">▂▅▃▇▂▆▃</span></div>`}${skinSongs(s)}`;
+    return `<div class="bv-preview bv-art-room" style="${esc(skins.inline(s))}" data-layout="${s.layout}" data-look="${p.look}" data-identity-layout="${roomLayout}">
       <div class="bv-cover" data-pattern="${s.pattern}">${coverContent(s)}</div>
       <div class="bv-profile-intro"><div class="bv-profile-avatar">${avatar}</div><div class="bv-room-identity"><h2>${esc(profile.display_name||profile.handle||'Your name')}</h2><p class="bv-room-handle">@${esc(profile.handle||'yourhandle')}</p></div><span class="bv-room-sticker" aria-hidden="true">✦</span><p class="bv-room-bio">${esc(profile.bio||'Good people. Brighter days.')}</p>
         ${interests.length?`<div class="bv-interests">${interests.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}</div>
       <div class="bv-room-tabs"><span>Talanoa</span><span>Top Mates · 16</span><span>My soundtrack</span></div>
-      <div class="bv-preview-columns"><section class="bv-mini-card"><h3>Talanoa <small>Example notes</small></h3><div class="bv-photo-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div></div><div class="bv-photo-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>Bring your favourite track.</p></div></div></section>
-      <section class="bv-mini-card"><h3>My people <small>Example Top Mates</small></h3><div class="bv-photo-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
-      ${s.trackUrl||s.trackPath||s.songRef?trackMarkup(s):window.SotaLocalMusic?.hasSelected()?`<div class="bv-track"><span>♫ ${esc(window.SotaLocalMusic.title())}</span><button type="button" class="btn sm ghost" data-local-music-toggle>Play my music</button><small>Saved on this device.</small></div>`:`<div class="bv-skin-player"><span class="bv-vinyl" aria-hidden="true"></span><div><small>THE SOUND OF YOUR ROOM</small><b>Your own mixtape</b><p>Add a track in Fine-tune your skin.</p></div><span class="bv-player-wave" aria-hidden="true">▂▅▃▇▂▆▃</span></div>`}${skinSongs(s)}</div>`;
+      ${roomLayout==='music'?`<div class="bv-soundstage">${soundtrack}</div>`:''}
+      <div class="bv-preview-columns"><section class="bv-mini-card bv-preview-wall"><h3>Talanoa <small>Example notes</small></h3><div class="bv-photo-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div></div><div class="bv-photo-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>Bring your favourite track.</p></div></div></section>
+      <section class="bv-mini-card bv-preview-mates"><h3>My people <small>Example Top Mates</small></h3><div class="bv-photo-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
+      ${roomLayout!=='music'?soundtrack:''}</div>`;
   }
   function chatPreview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
@@ -188,6 +198,7 @@
     const view=document.querySelector('#view');
     if(!view)return;
     view.classList.add('bv-room');view.dataset.layout=s.layout;view.dataset.bvLook=skins.presets.find(p=>p.id===s.id).look;
+    view.dataset.bvIdentity=discovery?.layout(skins.presets.find(p=>p.id===s.id))||'social';
     const style=document.createElement('style');style.id='bv-active-skin';
     style.textContent='body.bv-room-active{'+skins.inline(s)+'}\n'+skins.safeLegacy(parsed.legacy);
     document.head.appendChild(style);document.body.classList.add('bv-room-active');
@@ -196,11 +207,13 @@
       const cover=document.createElement('div');cover.className='bv-cover';cover.dataset.pattern=s.pattern;
       cover.innerHTML=coverContent(s);
       head.prepend(cover);
-      head.insertAdjacentHTML('beforeend',skinSongs(s));
+      const soundtrack=document.createElement('div');soundtrack.className='bv-room-soundstage';
+      if(s.trackUrl||s.trackPath||s.songRef)soundtrack.innerHTML=trackMarkup(s);
+      soundtrack.insertAdjacentHTML('beforeend',skinSongs(s));
+      head.appendChild(soundtrack);
       const stats=document.createElement('div');stats.className='bv-profile-stats';
       stats.innerHTML=`<span><b>${(room.top||[]).length}</b>Top friends</span><span><b>${(room.moments||[]).length}</b>Moments</span><span><b>${(room.wall||[]).length}</b>Whiteboard notes</span>`;
       head.appendChild(stats);
-      if(s.trackUrl||s.trackPath||s.songRef){const track=document.createElement('div');track.innerHTML=trackMarkup(s);head.appendChild(track.firstElementChild);}
     }
     const side=view.querySelector('.grid.two>.stack:nth-child(2)');
     if(side){
@@ -236,6 +249,16 @@
   function skinThumbnail(p) {
     const art=p.coverArt||p.artwork;
     return `<span class="bv-visual-thumb" style="${esc(skins.inline({id:p.id}))}" data-look="${p.look}" aria-hidden="true"><span class="bv-thumb-art">${art?`<img src="${esc(art)}" loading="lazy" alt="">`:''}<b>${esc(p.note)}</b></span><span class="bv-thumb-person"><i>✦</i><span>Your room</span></span><span class="bv-thumb-cards"><i></i><i></i></span></span>`;
+  }
+  function collectionMarkup(compact=false) {
+    if(!discovery)return '';
+    return discovery.collections(skins.presets).map(group=>`<button type="button" class="bv-collection-card" data-collection="${group.id}" ${compact?`aria-pressed="${skinCategory===group.id}"`:''} aria-label="Browse ${esc(group.name)} · ${group.count} skins">
+      <span class="bv-collection-art" aria-hidden="true">${group.featured.map(p=>`<img src="${esc(p.coverArt||p.artwork)}" alt="" loading="lazy" decoding="async" width="600" height="300">`).join('')}</span>
+      <span class="bv-collection-copy"><span class="bv-collection-count">${group.count} skins</span><strong>${esc(group.name)}</strong>${compact?'':`<span class="bv-collection-line">${esc(group.line)}</span>`}</span><span class="bv-collection-arrow" aria-hidden="true">↗</span></button>`).join('');
+  }
+  function discoveryMarkup() {
+    if(!discovery)return '';
+    return `<section class="bv-discovery" aria-labelledby="bv-discovery-title"><header><div><span class="bv-discovery-kicker">FIND YOUR PEOPLE. MAKE IT YOURS.</span><h2 id="bv-discovery-title">A little more you.</h2><p>Start with your school, your vanua or the music you love.</p></div><button type="button" class="bv-discovery-all">Explore all ${skins.presets.length} skins <span aria-hidden="true">↗</span></button></header><div class="bv-collection-grid">${collectionMarkup()}</div><p class="bv-discovery-note">Community-made room designs. Preview a skin, then make it your own.</p></section>`;
   }
   function originalCrop(x,y,w,h,label) {
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(label)}"><image href="/assets/mobile-front-reference.png" width="1008" height="1792"/></svg>`;
@@ -286,6 +309,7 @@
 <section class="bv-community-tools" aria-label="Invite your mates"><p>Moments, music and proper Talanoa. Bring your mates into the circle.</p><button type="button" class="bv-link" id="bv-copy-invite">Copy invite link →</button><small id="bv-invite-status" role="status"></small></section>
       </section>
       <section class="bv-room-entry" id="bv-your-room" aria-label="Design your room"><div><h2>Your room. Your rules.</h2><p>${skins.presets.length} skins. Masi borders. Your colours, music and cover art.</p><small>Studio choice · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="btn" id="bv-edit-room">Open the skin studio →</button></section>
+      ${discoveryMarkup()}
       ${window.SotaConnections?.entryHtml?.()||''}
       <footer class="bv-classic-footer"><span>Sota Kece · alive together</span><span>Mutual friends · Your own archive · No ads</span><details><summary>Photo credits</summary><p>Sample photography by <a href="https://unsplash.com/photos/i6r5kQMQ9Zk" target="_blank" rel="noopener noreferrer">Ben Collins</a>, <a href="https://unsplash.com/photos/roOETBSa8mA" target="_blank" rel="noopener noreferrer">Samsung UK</a> and <a href="https://unsplash.com/photos/tZhEr2d3oeM" target="_blank" rel="noopener noreferrer">Hoi An and Da Nang Photographer</a>, via Unsplash.</p></details></footer>
     </div></main>`;
@@ -296,6 +320,8 @@
     $('#a-go').onclick=()=>mode==='up'?signUp():signIn();
     app.querySelectorAll('.authwrap input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')$('#a-go').click();}));
     $('#bv-edit-room').addEventListener('click',()=>open());
+    app.querySelector('.bv-discovery-all')?.addEventListener('click',()=>open(null,'All'));
+    app.querySelectorAll('[data-collection]').forEach(button=>button.addEventListener('click',()=>open(null,button.dataset.collection)));
     $('#bv-home-play').addEventListener('click',playSample);
     $('#sk-room-menu').addEventListener('click',()=>open());
     $('#sk-sign-in').setAttribute('aria-haspopup','dialog');
@@ -334,16 +360,18 @@
       delete root.dataset.homeSkin;
     }
   }
-  function open(initial) {
+  function open(initial,collection) {
     if(studio)return;
     const parsed=skins.read(S.me?.room_css);
     const current=String(S.me?.room_css||'');
     draft=skins.normalize(initial||(!S.user||!current?picked():current.startsWith('/* bv-skin:v1 ')?parsed.settings:{...parsed.settings,accent:S.me.room_accent}));
+    const group=discovery?.collections(skins.presets).find(g=>g.id===collection);
+    if(group&&!group.categories.includes(skins.presets.find(p=>p.id===draft.id).category))draft=remix(draft,group.featured[0].id);
     legacy=parsed.legacy;focusBefore=document.activeElement;
-    const p=S.me||example;skinCategory=initial?.id?skins.presets.find(p=>p.id===draft.id).category:'New picks';skinQuery='';studioPreviewMode='profile';
+    const p=S.me||example;skinCategory=collection||(initial?.id?skins.presets.find(p=>p.id===draft.id).category:discovery?'Discover':'New picks');skinQuery='';studioPreviewMode='profile';
     studio=document.createElement('dialog');studio.className='bv-studio';studio.setAttribute('aria-labelledby','bv-studio-title');
     studio.innerHTML=`<div class="bv-studio-head"><div><span class="bv-studio-kicker">YOUR SPACE, REMIXED</span><h2 id="bv-studio-title">Find your skin.</h2><p>Artwork, atmosphere and a room that feels like you.</p></div><button type="button" class="bv-close" aria-label="Close skin studio">×</button></div>
-      <div class="bv-studio-body"><div class="bv-studio-controls"><div class="bv-studio-picker"><div class="bv-skin-filters"><label class="bv-search-label" for="bv-skin-search">Find a skin<input id="bv-skin-search" type="search" placeholder="Ocean, school, love…" autocomplete="off"></label><label for="bv-skin-category">Collection<select id="bv-skin-category" aria-label="Skin collection"></select></label><p id="bv-skin-count" role="status"></p></div><div class="bv-skin-grid" id="bv-skin-options" tabindex="0" aria-label="Room skins"></div></div>
+      <div class="bv-studio-body"><div class="bv-studio-controls"><nav class="bv-collection-shortcuts" aria-label="Browse identity collections">${collectionMarkup(true)}</nav><div class="bv-studio-picker"><div class="bv-skin-filters"><label class="bv-search-label" for="bv-skin-search">Find a skin<input id="bv-skin-search" type="search" placeholder="School, artist, song or place…" autocomplete="off"></label><label for="bv-skin-category">Collection<select id="bv-skin-category" aria-label="Skin collection"></select></label><p id="bv-skin-count" role="status"></p></div><div class="bv-skin-grid" id="bv-skin-options" tabindex="0" aria-label="Room skins"></div></div>
       <details class="bv-studio-custom"><summary>Fine-tune your skin <span>Colours · lettering · music</span></summary><div class="bv-custom-content"><div class="bv-controls">
         <div><label for="bv-accent">Accent colour</label><input id="bv-accent" type="color" value="${draft.accent}"></div>
         <div><label for="bv-background">Page colour</label><input id="bv-background" type="color" value="${draft.background}"></div>
@@ -386,7 +414,11 @@
     studio.querySelector('#bv-remove-cover').addEventListener('click',()=>{draft.coverPath='';drawPreview();});
     const gallery=studio.querySelector('#bv-skin-options');
     const category=studio.querySelector('#bv-skin-category');
-    category.innerHTML=['New picks','All',...new Set(skins.presets.map(p=>p.category).filter(c=>c!=='New picks'))].map(c=>`<option value="${esc(c)}" ${c===skinCategory?'selected':''}>${esc(c)}</option>`).join('');
+    const groups=discovery?.collections(skins.presets)||[];
+    category.innerHTML=[{id:'Discover',name:'Discover'},{id:'All',name:'All skins'},...groups.map(g=>({id:g.id,name:g.name})),...[...new Set(skins.presets.map(p=>p.category))].map(c=>({id:c,name:c}))].map(c=>`<option value="${esc(c.id)}" ${c.id===skinCategory?'selected':''}>${esc(c.name)}</option>`).join('');
+    studio.querySelectorAll('[data-collection]').forEach(button=>button.addEventListener('click',()=>{
+      skinCategory=button.dataset.collection;category.value=skinCategory;skinQuery='';studio.querySelector('#bv-skin-search').value='';drawOptions();
+    }));
     category.addEventListener('change',()=>{skinCategory=category.value;skinQuery='';studio.querySelector('#bv-skin-search').value='';drawOptions();});
     studio.querySelector('#bv-skin-search').addEventListener('input',event=>{
       skinQuery=event.target.value.trim().toLowerCase();
@@ -403,16 +435,16 @@
     drawOptions();drawPreview();studio.showModal();
   }
   function close() {if(!saving)studio?.close();}
-  let skinCategory='New picks',skinQuery='',studioPreviewMode='profile';
+  let skinCategory='Discover',skinQuery='',studioPreviewMode='profile';
   function drawOptions() {
     const gallery=studio.querySelector('#bv-skin-options');
-    const choices=skins.presets.filter(p=>skinQuery?`${p.name} ${p.category} ${p.note}`.toLowerCase().includes(skinQuery):skinCategory==='All'||p.category===skinCategory);
-    studio.querySelector('#bv-skin-count').textContent=`${choices.length} ${choices.length===1?'skin':'skins'} · ${skinQuery?'searching all collections':skinCategory}`;
+    const choices=discovery?discovery.matching(skins.presets,skinCategory,skinQuery):skins.presets.filter(p=>skinQuery?`${p.name} ${p.category} ${p.note}`.toLowerCase().includes(skinQuery):skinCategory==='All'||p.category===skinCategory);
+    const collectionName=discovery?.collections(skins.presets).find(g=>g.id===skinCategory)?.name||skinCategory;
+    studio.querySelector('#bv-skin-count').textContent=`${choices.length} ${choices.length===1?'skin':'skins'} · ${skinQuery?'searching all collections':collectionName}`;
+    studio.querySelectorAll('[data-collection]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.collection===skinCategory)));
     gallery.innerHTML=choices.length?choices.map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<span class="bv-choice-label"><strong>${esc(p.name)}</strong><small>${esc(p.category)}</small></span></button>`).join(''):'<p class="bv-no-skins">No skins match. Try another name or clear your search.</p>';
     studio.querySelectorAll('[data-skin]').forEach(b=>b.addEventListener('click',()=>{
-      const oldPreset=skins.presets.find(p=>p.id===draft.id);
-      const personalNote=draft.note!==oldPreset.note?draft.note:undefined;
-      draft=skins.normalize({id:b.dataset.skin,note:personalNote,layout:draft.layout,interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath,songRef:draft.songRef});
+      draft=remix(draft,b.dataset.skin);
       for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle'])studio.querySelector('#bv-'+key).value=draft[key];
       drawOptions();drawPreview();studio.querySelector(`[data-skin="${draft.id}"]`).focus({preventScroll:true});
       if(window.matchMedia('(max-width:760px)').matches)studio.querySelector('.bv-studio-preview').scrollIntoView({block:'start',behavior:'auto'});

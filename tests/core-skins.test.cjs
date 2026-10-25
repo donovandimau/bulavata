@@ -36,8 +36,14 @@ assert(core.find(p=>p.catalogueId==='memory-childhood-memory').songs.some(s=>/La
 assert.equal(skins.normalize({id:'masi'}).id,'masi');
 assert.equal(skins.normalize({id:'drua'}).id,'drua');
 const studio=fs.readFileSync(path.join(root,'skin-studio.js'),'utf8');
-assert(studio.includes('trackPath:draft.trackPath,coverPath:draft.coverPath'));
-assert(studio.includes('note:personalNote'));
+const context=require('node:vm').createContext({skins});
+require('node:vm').runInContext(studio.slice(studio.indexOf('  function remix('),studio.indexOf('  function skinScene(')),context);
+const personal=skins.normalize({id:'lagoon',note:'My own words',interests:'My people',trackTitle:'My recording',trackPath:'11111111-1111-1111-1111-111111111111/music/22222222-2222-2222-2222-222222222222.mp3',coverPath:'11111111-1111-1111-1111-111111111111/covers/22222222-2222-2222-2222-222222222222.jpg',songRef:'music-knox:0',layout:'wide'});
+const remixed=context.remix(personal,'school-usp');
+for(const key of ['note','interests','trackTitle','trackPath','coverPath','songRef','layout'])assert.equal(remixed[key],personal[key]);
+assert.equal(remixed.id,'school-usp');
+assert.equal(remixed.accent,skins.presets.find(p=>p.id==='school-usp').accent);
+assert.equal(context.remix(skins.normalize({id:'lagoon'}),'school-usp').note,skins.presets.find(p=>p.id==='school-usp').note);
 assert(studio.includes('rel="noopener noreferrer"'));
 const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
 assert(!sw.match(/const ASSETS=.*assets\/skins\/core/));
