@@ -84,6 +84,16 @@ function client({fr=friends,gr=crews,members=[],profiles=[],user=me,authError=fa
   await check('inline entry has no fictional example or external export call to action',()=>{
     const entry=c.entryHtml();assert.match(entry,/data-friend-graph/);assert(!/Explore the example|dimau-visuals\.vercel|openPersonal\(\)/.test(entry));
   });
+  await check('Pulse initial request errors still mount the independent personal graph',async()=>{
+    const vm=require('node:vm'),html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
+    const source=html.slice(html.indexOf('async function viewPulse(){'),html.indexOf('async function postPulse(){'));
+    let mounts=0,errors=0,inserted='',current=true;
+    const context=vm.createContext({Date,viewRun:()=>1,currentView:()=>current,shell(){},requestResult:async p=>p,
+      sb:{rpc:async()=>({data:[]}),from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({error:Error('Unavailable Spark')})})})})},
+      viewError(){errors++;},$:()=>({insertAdjacentHTML(where,value){inserted=value;}}),window:{SotaConnections:{entryHtml:()=>'<section data-friend-graph></section>',mountEntry(){mounts++;}}}});
+    vm.runInContext(source+';this.testPulse=viewPulse;',context);await context.testPulse();assert.equal(errors,1);assert.equal(mounts,1);assert.match(inserted,/data-friend-graph/);
+    current=false;await context.testPulse();assert.equal(mounts,1);
+  });
   await check('truncation is explicit and queries only the bounded graph',async()=>{
     const api=client({fr:Array.from({length:130},(_,i)=>({id:String(i)})),gr:Array.from({length:45},(_,i)=>({id:i}))});
     const r=await c.load(api,{user:me,me});assert.equal(r.graph.nodes.length,161);assert.match(r.notices[0],/120/);assert.equal(api.calls[2].filters.member.length,120);assert.equal(api.calls[2].filters.crew_id.length,40);
