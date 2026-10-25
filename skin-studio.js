@@ -5,7 +5,7 @@
   const discovery = window.SotaSkinDiscovery;
   const visuals = window.SotaSkinVisuals;
   let studio = null, draft = null, legacy = '', focusBefore = null;
-  let homeSkinChosen=false;
+  let homeSkinChosen=false,guestPreviewToken=0;
   try{homeSkinChosen=!!localStorage.getItem('bv-picked-skin');}catch(_){}
   const example = {display_name:'Sema',handle:'sema',bio:'Good people. Brighter days. Suva, Fiji.'};
   let sampleAudio = null, sampleTimer = null;
