@@ -7,7 +7,7 @@
   const base='/assets/skins/editorial/';
   const image=key=>base+key+'-20261025.webp';
   const categories={Schools:'school',Provinces:'vanua',Places:'vanua','Music & bands':'music',Culture:'heritage','Masi-inspired':'heritage',Celebrations:'memories','Love & Memories':'memories',Island:'vanua',Sport:'school',Dark:'music',Bright:'fresh',Classic:'fresh',Soft:'fresh','New picks':'fresh'};
-  const special={'province-ra':'ra','province-nadroga-navosa':'nadroga','memory-childhood-memory':'dalo'};
+  const special={'province-ra':'ra','province-nadroga-navosa':'nadroga','memory-childhood-memory':'dalo','school-natabua-high-school':'natabua','school-marist-brothers-high-school':'marist','school-suva-grammar-school':'grammar','school-queen-victoria-school':'qvs','school-adi-cakobau-school':'acs','school-fnu':'fnu','school-usp':'usp'};
   const collectionKeys={'school-pride':'school','vanua-islands':'vanua','music-crowd':'music','masi-culture':'heritage','life-memories':'memories','fresh-looks':'fresh'};
   function cover(preset){
     if(!preset)return image('fresh');
@@ -19,5 +19,5 @@
   }
   function collection(id){return image(collectionKeys[id]||'fresh');}
   function position(preset){return preset?.id==='province-ra'?'65% 35%':preset?.id==='province-nadroga-navosa'?'65% 42%':'60% center';}
-  return {cover,collection,position,images:['school','vanua','music','heritage','memories','fresh','ra','nadroga','dalo'].map(image)};
+  return {cover,collection,position,images:['school','vanua','music','heritage','memories','fresh','ra','nadroga','dalo','natabua','marist','grammar','qvs','acs','fnu','usp'].map(image)};
 });

@@ -16,4 +16,12 @@ Shared prompt constraints: photorealistic natural editorial photography, landsca
 | `assets/skins/editorial/nadroga-20261025.webp` | Black horse in a lush coastal paddock with palms and warm rim light; original community motif. | `exec-9a877864-00bb-4e2f-9ad1-c7e00636aac1.png` |
 | `assets/skins/editorial/dalo-20261025.webp` | Dew-covered taro leaves, fresh corms, woven basket and garden spade in morning light; original childhood-garden motif. | `exec-3e274d49-ab2e-4434-bfad-372f19af639e.png` |
 
-The generated source PNGs are preserved in the task outputs. These WebP derivatives are the deployed project assets. The supplied homepage image, brand marks and original vector library are untouched.
+| `assets/skins/editorial/natabua-20261025.webp` | Navy sprint shoes, pale-blue sports jacket and bronze medal beside an empty blue running track; original tropical athletics memory. | `exec-c0a83256-9ef4-47f1-8c3a-ad286e83367b.png` |
+| `assets/skins/editorial/marist-20261025.webp` | Burgundy unmarked rugby jersey and leather rugby ball on a timber stadium bench; rich evening sports-pavilion still life. | `exec-1b71561d-a510-415b-ad4e-9591950b779f.png` |
+| `assets/skins/editorial/grammar-20261025.webp` | Gold athletics trophy, navy-and-gold plain ribbon and exercise books on a tropical school-pavilion bench. | `exec-b7ba18f2-772b-45d6-a680-e05fc6c465ff.png` |
+| `assets/skins/editorial/qvs-20261025.webp` | Pale-blue blazer fabric, leather rugby ball and navy notebook on a timber desk beside tropical louvres. | `exec-c67d4bbe-42e4-4d07-bd9a-f069b7daea61.png` |
+| `assets/skins/editorial/acs-20261025.webp` | Maroon blazer, cream academic notebook, silver medal with maroon ribbon and pink ginger flowers beside a garden window. | `exec-c44b96fe-5e83-4a40-a6d9-422e98a148e9.png` |
+| `assets/skins/editorial/fnu-20261025.webp` | Brass-and-black microscope, unmarked navy and cream textbooks, pencil and blue notebook on a timber laboratory bench. | `exec-220743ae-6d3f-4b1a-8591-22ea7f5315fc.png` |
+| `assets/skins/editorial/usp-20261025.webp` | Cream journals, teal notebooks, ceramic mug and a small wooden canoe sculpture on an ocean-view study table. | `exec-4a34db79-65a8-4288-84c3-193cfed7ade0.png` |
+
+The generated source PNGs are preserved in the task outputs. These WebP derivatives are the deployed project assets. The sixteen deployed WebPs total 3,249,106 bytes; they load on demand. The supplied homepage image, brand marks and original vector library are untouched.

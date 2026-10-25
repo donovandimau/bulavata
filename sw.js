@@ -1,5 +1,5 @@
 // Only known public app files are cached. Auth, profiles, messages and uploaded media never enter this cache.
-const CACHE='sota-kece-shell-20261025-v58-editorial';
+const CACHE='sota-kece-shell-20261025-v61-editorial-type';
 // Keep installation small and reliable: artwork and fonts are saved only after they are requested.
 const ASSETS=['/skin-visuals.js','/editorial-design.css','/skin-discovery.js','/community-design.css','/skin-identities.js','/studio-skins.css','/quality.css','/playback.js','/','/manifest.webmanifest','/dimau-install.js','/vendor/supabase-2.45.0.min.js','/skins.css','/skins.js','/room-media.js','/front-page.css','/header-alignment-20261018.css','/local-music.js','/music-playlist.js','/music-playlist.css','/music-playlist.json','/skin-studio.js','/offline.js','/kava.css','/kava.js','/kava-ui.js','/connections.js','/connections.css','/dimau-charts-core.js','/dimau-visuals.js','/dimau-visuals.css'];
 const PUBLIC_IMAGES=['/assets/skins/studio/ocean-20261025.webp','/assets/skins/studio/coral-20261025.webp','/assets/skins/studio/rain-20261025.webp','/assets/skins/studio/retro-20261025.svg','/assets/dimau-visuals-icon.svg','/assets/sota-blue-white-background-20261021.png','/assets/sota-kece-logo-20261020.svg','/assets/sota-kece-logo-20261020.png','/assets/sota-blue-masi-lettering-20261020.png','/assets/music-badge-museum-20261018.svg','/assets/dimau-owner-logo-20260920.png','/assets/sota-kece-logo.png','/assets/fiji-music-icon-20261018.svg','/assets/fiji-sunset.jpg','/assets/front-reference.jpg','/assets/front-reference-brand.jpg','/assets/mobile-front-reference.png','/assets/mobile-front-reference-brand.jpg','/assets/fiji-music.jpg','/assets/friends.jpg','/assets/beach.jpg','/assets/masi-band.svg','/assets/masi-supplied.png','/assets/og-sota-wide-20261022.jpg'];
@@ -36,7 +36,7 @@ self.addEventListener('fetch',event=>{
     })());
     return;
   }
-  if(!versionOnly(url)||(!PUBLIC_PATHS.has(url.pathname)&&!/^\/assets\/skins\/(?:core|identity)\/[a-z0-9-]+\.svg$/.test(url.pathname)&&!/^\/assets\/skins\/editorial\/(?:school|vanua|music|heritage|memories|fresh|ra|nadroga|dalo)-20261025\.webp$/.test(url.pathname)))return;
+  if(!versionOnly(url)||(!PUBLIC_PATHS.has(url.pathname)&&!/^\/assets\/skins\/(?:core|identity)\/[a-z0-9-]+\.svg$/.test(url.pathname)&&!/^\/assets\/skins\/editorial\/(?:school|vanua|music|heritage|memories|fresh|ra|nadroga|dalo|natabua|marist|grammar|qvs|acs|fnu|usp)-20261025\.webp$/.test(url.pathname)))return;
   // Version labels select deployments; the allowlisted public file has one offline cache entry.
   const key=url.origin+url.pathname;
   event.respondWith((async()=>{
