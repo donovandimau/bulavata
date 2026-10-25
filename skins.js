@@ -1823,9 +1823,23 @@
     return s&&safeUrl(s.url)?{...s,ref:match[0],skinName:p.name}:null;
   }
   const patterns = ['waves','dots','stars','flowers','stripes','checker','grid','masi','plain'];
-  const fonts = ['rounded','serif','mono'];
+  const fonts = ['rounded','serif','mono','sans','display','handwritten'];
+  const fontStacks = {rounded:'Manrope, system-ui, sans-serif',serif:'Georgia, serif',mono:'ui-monospace, monospace',
+    sans:'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+    display:'Impact, "Arial Black", sans-serif',handwritten:'"Segoe Print", "Bradley Hand", "Comic Sans MS", cursive'};
+  const customizationDefaults={customName:'',showArtwork:true,textScale:100,headingScale:100,coverHeight:195,coverX:0,coverY:100,textAlign:'left',musicPosition:'auto'};
   const marker = /^\/\* bv-skin:v1 ([^\n]*?) \*\/\n?/;
   const hex = (v, fallback) => /^#[0-9a-f]{6}$/i.test(String(v)) ? String(v).toLowerCase() : fallback;
+  function boundedNumber(value,min,max,fallback) {
+    if(typeof value!=='number'&&(typeof value!=='string'||!value.trim()))return fallback;
+    const number=Number(value);return Number.isFinite(number)?Math.min(max,Math.max(min,number)):fallback;
+  }
+  function customName(value) {
+    if(typeof value!=='string')return '';
+    // Drop unpaired surrogates, including a pair cut by the 40-code-unit limit,
+    // so a pasted/imported label cannot make encodeURIComponent throw.
+    return Array.from(value).filter(char=>char.length===2||!/[\uD800-\uDFFF]/.test(char)).join('').slice(0,40).replace(/[\uD800-\uDBFF]$/,'');
+  }
   function safeUrl(value, audio=false) {
     try {
       const u=new URL(String(value||'').trim());
@@ -1843,7 +1857,12 @@
     return {id:preset.id,accent:hex(input.accent,preset.accent),background:hex(input.background,preset.bg),
       pattern:patterns.includes(input.pattern)?input.pattern:preset.pattern,
       font:fonts.includes(input.font)?input.font:preset.font,
-      layout:input.layout==='wide'?'wide':'classic',
+      layout:['wide','reverse','stacked'].includes(input.layout)?input.layout:'classic',
+      customName:customName(input.customName),showArtwork:typeof input.showArtwork==='boolean'?input.showArtwork:true,
+      textScale:boundedNumber(input.textScale,90,140,100),headingScale:boundedNumber(input.headingScale,80,150,100),
+      coverHeight:boundedNumber(input.coverHeight,180,420,195),coverX:boundedNumber(input.coverX,0,100,0),coverY:boundedNumber(input.coverY,0,100,100),
+      textAlign:['center','right'].includes(input.textAlign)?input.textAlign:'left',
+      musicPosition:['top','bottom'].includes(input.musicPosition)?input.musicPosition:'auto',
       note:String(input.note??preset.note).slice(0,80),interests:String(input.interests??'').slice(0,160),
       songRef:song(input.songRef)?String(input.songRef):'',trackUrl:safeUrl(input.trackUrl,true),trackTitle:String(input.trackTitle??'').slice(0,80),
       trackPath:safeMediaPath(input.trackPath,'music'),coverPath:safeMediaPath(input.coverPath,'covers'),
@@ -1860,7 +1879,11 @@
     catch (_) { return {settings:normalize(),legacy:text.replace(marker,'')}; }
   }
   function encode(settings, legacy='') {
-    const header = `/* bv-skin:v1 ${encodeURIComponent(JSON.stringify(normalize(settings)))} */\n`;
+    const saved=normalize(settings);
+    // Old skins retain their exact header footprint and custom-CSS allowance.
+    // read()/normalize() rehydrate omitted new defaults without a v1 migration.
+    for(const [key,value] of Object.entries(customizationDefaults))if(saved[key]===value)delete saved[key];
+    const header = `/* bv-skin:v1 ${encodeURIComponent(JSON.stringify(saved))} */\n`;
     if (header.length > 4000) throw new Error('Skin settings are too long.');
     if (header.length + String(legacy).length > 4000) throw new Error('Your custom CSS is too long. Shorten it before saving.');
     return header + String(legacy);
@@ -1899,9 +1922,9 @@
       `linear-gradient(135deg,${light?'#ffffff99':'#ffffff14'},transparent 55%,${s.accent}0d)`;
     const finish=s.effect==='glow'?`,0 0 16px ${s.accent}44`:s.effect==='sticker'?`,4px 4px 0 ${s.accent}`:'';
     const controlShadow=`0 3px 8px ${s.accent}24,inset 0 1px 0 #ffffff40,inset 0 -2px 0 #00000012`;
-    return {'--bv-hero':hero?`url("${hero}")`:motif(s.pattern),
+    return {'--bv-hero':!s.showArtwork?'none':hero?`url("${hero}")`:motif(s.pattern),
       '--bv-hero-size':visuals?'cover':p.coverRepeat?'240px auto':'cover','--bv-hero-repeat':!visuals&&p.coverRepeat?'repeat':'no-repeat','--bv-hero-position':visuals?.position(p)||'center',
-      '--bv-art':p.artwork?`url("${p.artwork}")`:'none','--bv-border':p.border?`url("${p.border}")`:'none',
+      '--bv-art':s.showArtwork&&p.artwork?`url("${p.artwork}")`:'none','--bv-border':p.border?`url("${p.border}")`:'none',
       '--bv-bg':s.background,'--bv-panel':s.panel,'--bv-ink':s.panel===p.panel?p.ink:foreground(s.panel),'--bv-muted':s.panel===p.panel?p.muted:foreground(s.panel),
       '--bv-accent':s.accent,'--bv-on-accent':foreground(s.accent),
       '--bv-chat-in':s.panel,'--bv-chat-in-ink':s.panel===p.panel?p.ink:foreground(s.panel),
@@ -1918,7 +1941,10 @@
       '--bv-control-shadow':controlShadow,'--bv-control-card-shadow':controlShadow+finish,
       '--bv-cover-sheen':`linear-gradient(135deg,#ffffff30,transparent 48%,${s.accent}18)`,
       '--bv-pattern':motif(s.pattern),'--bv-pattern-size':['dots','stars','grid'].includes(s.pattern)?'24px 24px':s.pattern==='checker'?'48px 48px':s.pattern==='masi'?'120px 32px':'160px 140px',
-      '--bv-font':s.font==='mono'?'ui-monospace, monospace':s.font==='serif'?'Georgia, serif':'Manrope, system-ui, sans-serif'};
+      '--bv-font':fontStacks[s.font],
+      '--bv-text-scale':String(s.textScale/100),'--bv-heading-scale':String(s.headingScale/100),
+      '--bv-cover-height':s.coverHeight+'px','--bv-cover-x':s.coverX+'%','--bv-cover-y':s.coverY+'%',
+      '--bv-cover-shift-x':(-s.coverX)+'%','--bv-cover-shift-y':(-s.coverY)+'%','--bv-text-align':s.textAlign};
   }
   function inline(raw) { return Object.entries(tokens(raw)).map(([k,v])=>`${k}:${v}`).join(';'); }
   function safeLegacy(css) {
