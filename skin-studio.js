@@ -519,9 +519,9 @@
     if(S.user&&!S.me){errorBox.textContent='Finish setting up your room before saving a skin.';return;}
     if(!S.user){
       try{localStorage.setItem('bv-picked-skin',JSON.stringify(settings));}catch(_){errorBox.textContent='This browser could not keep your choice. You can still pick it after signing in.';return;}
-      homeSkinChosen=true;const origin=app.firstElementChild;
-      // Run after the studio close listener clears its draft,media and focus state.
-      dialog.addEventListener('close',()=>{if(!S.user&&studio===null&&app.firstElementChild===origin)showGuestRoom(settings);},{once:true});
+      homeSkinChosen=true;const chosenSkin=settings,previewToken=++guestPreviewToken;
+      // One-shot token: the pending preview runs unless another flow bumps the token.
+      dialog.addEventListener('close',()=>{if(S.user||previewToken!==guestPreviewToken)return;showGuestRoom(chosenSkin);},{once:true});
       close();return;
     }
     const name=dialog.querySelector('#d-name').value.trim();
