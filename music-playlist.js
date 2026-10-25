@@ -75,15 +75,16 @@
     const details=el('div','','sk-playlist-details');mood=el('span','Turn up the island vibes','sk-playlist-mood');
     title=el('strong','Your island soundtrack','sk-playlist-title');subtitle=el('span','Pick a song. Find your rhythm.','sk-playlist-subtitle');
     const bars=el('span','','sk-playlist-bars');bars.setAttribute('aria-hidden','true');for(let i=0;i<5;i++)bars.append(el('i'));
-    details.append(mood,title,subtitle,bars);hero.append(record,details);
-    audio=el('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label','Playlist audio');audio.setAttribute('data-sota-playback-source','playlist');
+    details.append(mood,title,subtitle);hero.append(record,details);
+    audio=el('audio');audio.id='sota-playlist-audio';audio.crossOrigin='anonymous';audio.controls=true;audio.preload='none';audio.setAttribute('aria-label','Playlist audio');audio.setAttribute('data-sota-playback-source','playlist');
     const transport=el('div','','sk-playlist-transport');transport.setAttribute('role','group');transport.setAttribute('aria-label','Playlist playback controls');
     previous=button('Previous',()=>move(-1));play=button('Play',()=>live()?pause():playTrack(current<0?0:current));play.className='sk-playlist-play';next=button('Next',()=>move(1));transport.append(previous,play,next);
     status=el('p','','sk-playlist-status');status.setAttribute('role','status');retry=button('Retry playlist',load);retry.hidden=true;
     const search=el('div','','sk-playlist-search'),label=el('label','Find your next favourite');label.htmlFor='sk-playlist-filter';filter=el('input');filter.id='sk-playlist-filter';filter.type='search';filter.placeholder='Search song or artist';filter.addEventListener('input',render);search.append(label,filter);
     count=el('small','Loading playlist…');count.setAttribute('aria-live','polite');list=el('ol','','sk-playlist-songs');list.setAttribute('aria-label','Playlist songs');
     const queue=el('div','','sk-playlist-queue');queue.append(el('span','THE PLAYLIST'),count);
-    dialog.append(head,hero,audio,transport,status,retry,search,queue,list);root.document.body.append(dialog);
+    const visuals=el('dimau-music-visualiser');visuals.setAttribute('for','sota-playlist-audio');
+    dialog.append(head,hero,audio,transport,visuals,status,retry,search,queue,list);root.document.body.append(dialog);
     audio.addEventListener('play',()=>{
       root.SotaPlayback?.activate('playlist',audio);
       beforePlay();root.document.querySelectorAll('audio').forEach(other=>{if(other!==audio)other.pause();});
