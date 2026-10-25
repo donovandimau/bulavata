@@ -51,7 +51,7 @@ body.nc-in-call #ncLeave{--icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http
 body.nc-in-call #ncLeave:hover{background:#d13438}
 body.nc-in-call #ncLeave::before{width:30px;height:30px}
 @media(max-width:380px){body.nc-in-call #ncLive .nc-round{width:48px;height:48px}body.nc-in-call #ncLeave{width:56px;height:56px}body.nc-in-call #ncLive .nc-round::before{width:22px;height:22px}}
-@media(hover:none),(max-width:700px){body.nc-in-call #ncShare{display:none}}
+@media(hover:none),(max-width:700px){body.nc-in-call #ncLive #ncShare{display:none}}
 /* Reactions. */
 body.nc-in-call #ncLive .nc-picker{align-self:center;display:flex;gap:6px;padding:6px 8px;margin:0 0 2px;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(0,0,0,.3)}
 body.nc-in-call #ncLive .nc-picker[hidden]{display:none}
