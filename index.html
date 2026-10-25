@@ -912,7 +912,7 @@ async function viewFriends(){
         <button class="btn sm" onclick="respond(${r.friendship_id},'accepted')">Accept</button>
         <button class="btn sm ghost" onclick="respond(${r.friendship_id},'reject')">No</button>
       </div>`).join("")}</div>`:''}
-    <div class="glass card"><h3>Your connections</h3><p class="sub">See your accepted friends and Koro together,with Dimau Visuals.</p><button class="btn" style="margin-top:12px" onclick="go('connections')">See my connections</button></div>
+    <div class="glass card"><h3>Your connections</h3><p class="sub">See your accepted friends and Koro together.</p><button class="btn" style="margin-top:12px" onclick="go('connections')">See my connections</button></div>
     <div class="glass card"><h3>Your friends</h3>
       ${S.metaErrors?.friends?`<p role="alert">Your friends could not load. <button type="button" class="btn sm" onclick="render()">Try again</button></p>`:`<div class="sub" style="margin-bottom:10px">${S.friends.length} ${S.friends.length===1?'person':'people'}. Mutual, always.</div>
       ${S.friends.length? S.friends.map(f=>`
@@ -1052,13 +1052,13 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/music-playlist.js?v=20261025-visuals"></script>
 <script src="/skin-discovery.js?v=20261025-community-design"></script>
 <script src="/room-atmosphere.js?v=20261025-1"></script>
-<script src="/skin-studio.js?v=20261025-home-groups"></script>
+<script src="/skin-studio.js?v=20261025-home-collections"></script>
 <script src="/offline.js?v=20261024-quality"></script>
 <script src="/kava.js"></script>
 <script src="/kava-ui.js?v=20261025-circle-landing"></script>
 <script src="/dimau-charts-core.js?v=20261024"></script><script src="/dimau-visuals.js?v=20261024"></script>
 <script src="/friend-feed.js?v=20261025-personal-graph"></script>
-<script src="/connections.js?v=20261025-personal-graph"></script>
+<script src="/connections.js?v=20261025-home-collections"></script>
 <script>window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261025b" data-app="sota-kece" defer></script>
 </body>

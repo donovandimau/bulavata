@@ -179,7 +179,7 @@
     on(q('[data-friend-refresh]'),'click',()=>feed.refresh());on(q('[data-friend-find]'),'click',()=>{if(valid())ctx.go('friends');});
     on(document,'visibilitychange',()=>feed.refresh());on(window,'online',()=>feed.refresh());on(window,'offline',()=>feed.refresh());on(window,'focus',()=>feed.refresh());
   }
-  const hero=()=>`<section class="glass sc-hero"><p class="sc-kicker">Sota Kece · Dimau Visuals</p><h1>Our people. Our circles.</h1>
+  const hero=()=>`<section class="glass sc-hero"><p class="sc-kicker">Sota Kece</p><h1>Our people. Our circles.</h1>
     <p>Explore how friendships and Koro bring a community together.</p></section>`;
   function preview(){
     if(typeof window==='object')window.SotaView?.invalidate();
