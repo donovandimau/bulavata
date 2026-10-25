@@ -271,8 +271,7 @@
       <span class="bv-collection-copy"><span class="bv-collection-count">${group.count} skins</span><strong>${esc(group.name)}</strong>${compact?'':`<span class="bv-collection-line">${esc(group.line)}</span><span class="bv-collection-members">${group.featured.map(p=>esc(p.name)).join(' / ')}</span>`}</span><span class="bv-collection-arrow" aria-hidden="true">↗</span></button>`).join('');
   }
   function discoveryMarkup() {
-    if(!discovery)return '';
-    return `<section class="bv-discovery" aria-labelledby="bv-discovery-title"><header><div><span class="bv-discovery-kicker">THE SOTA KECE COLLECTIONS</span><h2 id="bv-discovery-title">Where you belong.</h2><p>Your school. Your vanua. The music that takes you home.</p></div><button type="button" class="bv-discovery-all">Explore ${skins.presets.length} room designs <span aria-hidden="true">↗</span></button></header><div class="bv-collection-grid">${collectionMarkup()}</div><p class="bv-discovery-note">Original cover artwork. Community-made designs. A space to make your own.</p></section>`;
+    return `<section class="bv-discovery" id="bv-your-room" tabindex="-1" aria-labelledby="bv-discovery-title"><header><div><span class="bv-discovery-kicker">MAKE IT YOURS</span><h2 id="bv-discovery-title">Skins for your room.</h2><p>Your school. Your vanua. The music that takes you home.</p><small class="bv-discovery-selected">Selected skin · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="bv-discovery-all">Explore all ${skins.presets.length} skins <span aria-hidden="true">↗</span></button></header>${discovery?`<div class="bv-collection-grid">${collectionMarkup()}</div>`:''}<p class="bv-discovery-note">Original cover artwork. Community-made designs. A space to make your own.</p></section>`;
   }
   function originalCrop(x,y,w,h,label) {
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(label)}"><image href="/assets/mobile-front-reference.png" width="1008" height="1792"/></svg>`;
@@ -288,14 +287,6 @@
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(label)}"><image href="/assets/front-reference.jpg" width="1360" height="768"/></svg>`;
   }
   function frontAvatar(label) { return originalCrop(121,951,215,215,label); }
-  function placeResponsiveNavigation() {
-    const app=document.querySelector('#app'), nav=app?.querySelector('.bv-classic-nav');
-    const classic=app?.querySelector('.bv-classic'), panels=app?.querySelector('.bv-classic-panels');
-    if(!nav||!classic||!panels)return;
-    if(window.matchMedia('(max-width:760px)').matches)panels.insertBefore(nav,panels.querySelector('.bv-people-feature'));
-    else classic.insertBefore(nav,classic.querySelector('.bv-register')||panels);
-  }
-  window.matchMedia('(max-width:760px)').addEventListener('change',placeResponsiveNavigation);
   async function shareApp(copyOnly=false) {
     const url='https://sotakece.com/';
     if(!copyOnly&&typeof navigator.share==='function'){
@@ -336,15 +327,13 @@
         <section class="bv-entry-invite" aria-labelledby="bv-entry-invite-title"><h3 id="bv-entry-invite-title">Better with your friends.</h3><p>Share Sota Kece and bring your mates into the circle.</p><div class="bv-entry-share-actions"><button type="button" class="bv-entry-button bv-entry-share" id="sk-share-app">Share app</button><button type="button" class="bv-entry-button" id="sk-copy-invite">Copy invite link</button></div><small class="bv-entry-status" id="sk-share-status" role="status" aria-live="polite"></small><div class="bv-entry-copy-link" hidden><label for="sk-invite-url">Invite link</label><input id="sk-invite-url" type="text" value="https://sotakece.com/" readonly></div></section>
         <form class="bv-home-search" id="bv-home-search" role="search" aria-label="Find a mate"><label for="bv-find-mate">Find your people</label><div><input id="bv-find-mate" placeholder="Find a mate by @handle" value="${esc(pendingMate)}" maxlength="21" autocapitalize="off" spellcheck="false" autocomplete="off" aria-describedby="bv-search-status"><button type="submit" aria-label="Find a mate">⌕</button></div><small id="bv-search-status" role="status">Already know someone here? Find them by @handle.</small></form>
       </header>
-      <nav class="bv-classic-nav" aria-label="Explore Sota Kece"><a href="#bv-music">Music</a><button type="button" id="bv-open-skins">Skins</button><a href="#bv-your-room">Talanoa & skins</a><button type="button" onclick="window.SotaKavaUI.preview()">Kava Circle</button><span>Bula! You're home.</span></nav>
+      <nav class="bv-home-section-nav" aria-label="On this page"><span>On this page</span><a href="#bv-music">Music</a><a href="#bv-circle">Kava Circle</a><a href="#bv-your-room">Skins</a></nav>
       <dialog class="bv-account-dialog" id="bv-entry" aria-labelledby="bv-account-title"><div class="bv-account-head"><h2 id="bv-account-title">${mode==='up'?'Create your account':'Sign in'}</h2><button type="button" id="bv-account-close" aria-label="Close account form">×</button></div>${auth}<button type="button" class="bv-link" onclick="renderAuth('${mode==='up'?'in':'up'}',true)">${mode==='up'?'Already have an account? Sign in':'New here? Sign up'}</button></dialog>
       <div class="bv-classic-panels">
-        <section class="bv-music-feature" id="bv-music" aria-labelledby="bv-music-title"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Fijian singer and friends sharing live music at a seaside gathering" loading="lazy" decoding="async"><div class="bv-music-copy"><small>YOUR ROOM. YOUR SOUNDTRACK.</small><h1 id="bv-music-title">Viti roots.<br>Volume up.</h1><p>Your tunes. Your people. Your island energy.</p><div class="bv-music-actions"><button id="bv-home-play" data-sample-play type="button" aria-label="Play sample loop" aria-pressed="false">▶ Try a sample</button><button type="button" data-local-music-open>Upload music</button></div><small id="bv-home-status" data-sample-status role="status">Sample melody · tap to play</small></div></section>
+        <section class="bv-music-feature" id="bv-music" tabindex="-1" aria-labelledby="bv-music-title"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Fijian singer and friends sharing live music at a seaside gathering" loading="lazy" decoding="async"><div class="bv-music-copy"><small>YOUR ROOM. YOUR SOUNDTRACK.</small><h1 id="bv-music-title">Viti roots.<br>Volume up.</h1><p>Your tunes. Your people. Your island energy.</p><div class="bv-music-actions"><button id="bv-home-play" data-sample-play type="button" aria-label="Play sample loop" aria-pressed="false">▶ Try a sample</button><button type="button" data-local-music-open>Upload music</button></div><small id="bv-home-status" data-sample-status role="status">Sample melody · tap to play</small></div></section>
       </div>
-      <section class="bv-social-stage" id="bv-circle" aria-label="Your circle starts here">        <section class="bv-circle-feature" aria-labelledby="bv-circle-title"><div class="bv-circle-art"><img class="bv-circle-logo" src="/assets/sota-kece-logo-20261020.svg" width="256" height="256" alt="Sota Kece" loading="lazy" decoding="async"></div><small>SIT DOWN. CATCH UP.</small><h2 id="bv-circle-title">Same circle. New stories.</h2><p>Pull up a seat in the Digital Kava Circle.</p><button type="button" class="bv-link" onclick="window.SotaKavaUI.preview()">Take a look →</button></section>
-<section class="bv-community-tools" aria-label="Invite your mates"><p>Moments, music and proper Talanoa. Bring your mates into the circle.</p><button type="button" class="bv-link" id="bv-copy-invite">Copy invite link →</button><small id="bv-invite-status" role="status"></small></section>
+      <section class="bv-social-stage bv-home-call-group" id="bv-circle" tabindex="-1" aria-label="Kava Circle"><section class="bv-circle-feature" aria-labelledby="bv-circle-title"><div class="bv-circle-art"><img class="bv-circle-logo" src="/assets/sota-kece-logo-20261020.svg" width="256" height="256" alt="Sota Kece" loading="lazy" decoding="async"></div><small>SIT DOWN. CATCH UP.</small><h2 id="bv-circle-title">Same circle. New stories.</h2><p>Pull up a seat in the Digital Kava Circle.</p><button type="button" class="bv-circle-explore" onclick="window.SotaKavaUI.preview()">Explore Kava Circle →</button></section>
       </section>
-      <section class="bv-room-entry" id="bv-your-room" aria-label="Design your room"><div><h2>Your room. Your rules.</h2><p>${skins.presets.length} skins. Masi borders. Your colours, music and cover art.</p><small>Studio choice · <span id="bv-welcome-skin-name"></span></small></div><button type="button" class="btn" id="bv-edit-room">Open the skin studio →</button></section>
       ${discoveryMarkup()}
       ${window.SotaConnections?.entryHtml?.()||''}
       <footer class="bv-classic-footer"><span>Sota Kece · alive together</span><span>Mutual friends · Your own archive · No ads</span><details><summary>Photo credits</summary><p>Sample photography by <a href="https://unsplash.com/photos/i6r5kQMQ9Zk" target="_blank" rel="noopener noreferrer">Ben Collins</a>, <a href="https://unsplash.com/photos/roOETBSa8mA" target="_blank" rel="noopener noreferrer">Samsung UK</a> and <a href="https://unsplash.com/photos/tZhEr2d3oeM" target="_blank" rel="noopener noreferrer">Hoi An and Da Nang Photographer</a>, via Unsplash.</p></details></footer>
@@ -352,12 +341,10 @@
     window.SotaConnections?.mountEntry();
     window.SotaLocalMusic?.mount(app,{beforePlay:()=>{window.SotaPlaylist?.pause();stopSample();}});
     window.SotaPlaylist?.mount(app,{beforePlay:stopSample});
-    placeResponsiveNavigation();
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').textContent=mode==='up'?'Create account':'Sign in';
     $('#a-go').onclick=()=>mode==='up'?signUp():signIn();
     app.querySelectorAll('.authwrap input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')$('#a-go').click();}));
-    $('#bv-edit-room').addEventListener('click',()=>open());
     app.querySelector('.bv-discovery-all')?.addEventListener('click',()=>open(null,'All'));
     app.querySelectorAll('[data-collection]').forEach(button=>button.addEventListener('click',()=>open(null,button.dataset.collection)));
     $('#bv-home-play').addEventListener('click',playSample);
@@ -369,7 +356,6 @@
     $('#bv-account-close').addEventListener('click',()=>account.close());
     account.addEventListener('close',()=>$(mode==='up'?'#sk-sign-up':'#sk-sign-in').focus({preventScroll:true}));
     if(expanded){account.showModal();$(mode==='up'?'#a-handle':'#a-email').focus();}
-    $('#bv-open-skins').addEventListener('click',()=>open());
     $('#bv-home-search').addEventListener('submit',event=>{
       event.preventDefault();pendingMate=$('#bv-find-mate').value.trim().toLowerCase().replace(/^@/,'');
       if(!/^[a-z0-9_]{3,20}$/.test(pendingMate)){ $('#bv-search-status').textContent='Use a handle: 3–20 letters, numbers or underscores.';return; }
@@ -380,7 +366,6 @@
     });
     wireInvite($('#sk-share-app'),$('#sk-share-status'),{input:$('#sk-invite-url')});
     wireInvite($('#sk-copy-invite'),$('#sk-share-status'),{copyOnly:true,input:$('#sk-invite-url')});
-    wireInvite($('#bv-copy-invite'),$('#bv-invite-status'),{copyOnly:true});
     showWelcome(picked(),homeSkinChosen);
   };
   function showWelcome(settings,themed=true) {
