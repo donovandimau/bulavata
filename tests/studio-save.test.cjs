@@ -28,7 +28,7 @@ function setup({user={id:'owner'},me={id:'owner'},deferClose=false,storageError=
   const query = {update(patch) { calls.patch=patch; calls.updated++; return query; }, eq(key, id) { calls.owner=id; return query; }, select() {return query;}, single() {return pending;}};
   const context = vm.createContext({
     studio:dialog, draft:settings, mediaBusy:false,
-    S:{user,me},app:{firstElementChild:origin},homeSkinChosen:false,guestPreviewToken:0,guestPreviewToken:0,
+    S:{user,me},app:{firstElementChild:origin},homeSkinChosen:false,guestPreviewToken:0,
     skins:{safeUrl:()=>true, encode:()=> 'encoded'},
     sb:{from:()=>query}, discardUploads: kept => calls.kept.push(kept),
     toast() {}, render:async()=>{calls.rendered++;},renderAuth(){calls.auth++;context.guestPreviewToken++;context.app.firstElementChild={};},
