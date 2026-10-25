@@ -1,0 +1,107 @@
+/* Community discovery uses existing artwork. No external fonts, imagery or UI runtime. */
+.bv-welcome .bv-discovery{margin:24px 0;padding:clamp(18px,3vw,34px);border:1px solid #56849c;border-radius:24px 7px;background:#0b2034;color:#f2f8ff;box-shadow:0 16px 40px #09243a25;text-align:left}
+.bv-welcome .bv-discovery>header{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:22px}
+.bv-welcome .bv-discovery-kicker{display:block;color:#a4e8df;font:750 10px/1.5 system-ui;letter-spacing:.15em}
+.bv-welcome .bv-discovery h2{margin:8px 0;color:#fff;font:800 clamp(27px,3.5vw,42px)/1.12 Nunito,system-ui;letter-spacing:-.035em;text-shadow:none}
+.bv-welcome .bv-discovery header p{max-width:480px;margin:0;color:#c6d6e6;font:500 15px/1.6 Nunito,system-ui;text-shadow:none}
+.bv-welcome .bv-discovery-all{flex:none;min-height:46px;padding:11px 16px;border:1px solid #9bd5d0;border-radius:999px;background:#b9eee0;color:#103b37;font:800 13px/1.4 Nunito,system-ui;box-shadow:none;cursor:pointer}
+.bv-welcome .bv-discovery-all span{margin-left:10px}
+.bv-collection-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.bv-collection-card{position:relative;display:flex;flex-direction:column;min-width:0;margin:0;padding:0;overflow:hidden;border:1px solid #4d6a82;border-radius:14px;background:#142d44;color:#f5f9ff;text-align:left;cursor:pointer;box-shadow:none;transition:transform .16s,border-color .16s,background .16s}
+.bv-welcome .bv-collection-card:hover,.bv-collection-shortcuts .bv-collection-card:hover{transform:translateY(-3px);border-color:#ace9dd;background:#1b3b50}
+.bv-collection-art{position:relative;display:block;height:145px;margin:12px 12px 0;isolation:isolate;overflow:hidden;border-radius:8px;background:#071624}
+.bv-collection-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .2s}
+.bv-collection-art img+img{inset:auto -9px -18px auto;width:47%;height:76%;border:4px solid #142d44;border-radius:6px;transform:rotate(8deg);object-position:75% center;box-shadow:0 8px 18px #0008}
+.bv-collection-card[data-collection=music-crowd] .bv-collection-art{height:145px;background:repeating-radial-gradient(circle at 68% 52%,#1d2a38 0 2px,#07111e 3px 9px)}
+.bv-collection-card[data-collection=music-crowd] .bv-collection-art img:first-child{inset:10px auto 10px 12px;width:65%;height:calc(100% - 20px);border-radius:7px;object-position:75% center;transform:rotate(-6deg);box-shadow:8px 8px 18px #0005}
+.bv-collection-card[data-collection=masi-culture] .bv-collection-art{border-radius:2px}
+.bv-collection-copy{display:flex;flex-direction:column;gap:5px;min-width:0;padding:15px 36px 18px 16px}
+.bv-collection-count{color:#abe2dc;font:750 10px/1.5 system-ui;letter-spacing:.06em;text-transform:uppercase}
+.bv-collection-copy strong{color:#f8fbff;font:800 19px/1.2 Nunito,system-ui;letter-spacing:-.02em}
+.bv-collection-line{color:#c6d6e6;font:500 12px/1.5 Nunito,system-ui}
+.bv-collection-arrow{position:absolute;right:16px;bottom:20px;color:#b5eddf;font:500 23px/1 system-ui}
+.bv-welcome .bv-discovery-note{margin:17px 0 0;color:#c6d6e6;font:500 12px/1.6 Nunito,system-ui;text-shadow:none}
+.bv-discovery :is(button,a):focus-visible,.bv-collection-shortcuts button:focus-visible{outline:3px solid #e4ff9e;outline-offset:3px}
+
+/* Image-backed collection shortcuts stay a short, scrollable row above the editor. */
+.bv-studio .bv-collection-shortcuts{display:flex;gap:8px;margin:0 0 16px;padding:3px 3px 10px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#5c758b transparent}
+.bv-studio .bv-collection-shortcuts .bv-collection-card{flex:0 0 142px;min-height:78px;display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;gap:8px;padding:9px;border-radius:10px;scroll-snap-align:start}
+.bv-studio .bv-collection-shortcuts .bv-collection-art{width:38px;height:48px;margin:0;border-radius:5px;grid-column:1;grid-row:1;background:#071624}
+.bv-studio .bv-collection-shortcuts .bv-collection-art img{position:static;width:100%;height:100%;object-position:75% center;transform:none;border:0;border-radius:0}
+.bv-studio .bv-collection-shortcuts .bv-collection-art img+img{display:none}
+.bv-studio .bv-collection-shortcuts .bv-collection-copy{grid-column:2;grid-row:1;gap:4px;padding:0;flex-direction:column-reverse}
+.bv-studio .bv-collection-shortcuts .bv-collection-count{font-size:9px;line-height:1.3;color:#c6d6e6}
+.bv-studio .bv-collection-shortcuts .bv-collection-copy strong{font:750 12px/1.3 system-ui;color:#f8fbff}
+.bv-studio .bv-collection-shortcuts .bv-collection-arrow{display:none}
+.bv-studio .bv-collection-shortcuts .bv-collection-card[aria-pressed=true]{border-color:#a7edd8;background:#1e493f;box-shadow:inset 0 0 0 1px #a7edd8}
+
+/* A skin changes information hierarchy as well as its palette. */
+.bv-art-room[data-identity-layout=school] .bv-preview-columns{grid-template-columns:.85fr 1.15fr}
+.bv-art-room[data-identity-layout=school] .bv-preview-mates{order:-1}
+.bv-studio .bv-art-room[data-identity-layout=school] .bv-profile-intro{border-top:5px solid var(--bv-accent);padding-top:18px}
+.bv-art-room[data-identity-layout=school] .bv-room-tabs{font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.bv-art-room[data-identity-layout=school] .bv-photo-friends{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.bv-art-room[data-identity-layout=school] .bv-photo-friends>span{border-radius:2px;border-width:2px}
+.bv-art-room[data-identity-layout=music] .bv-cover{height:220px;min-height:220px}
+.bv-art-room[data-identity-layout=music] .bv-profile-intro{background:var(--bv-bg);border-bottom:0;padding-bottom:16px}
+.bv-art-room[data-identity-layout=music] .bv-room-tabs{background:var(--bv-bg);border-bottom:2px solid var(--bv-accent)}
+.bv-soundstage{padding-top:14px}
+.bv-studio .bv-soundstage .bv-identity-music{border:0;border-radius:12px;box-shadow:0 8px 22px #0002}
+.bv-studio .bv-soundstage .bv-identity-music>header h3{font-size:20px}
+.bv-studio .bv-soundstage .bv-identity-song{padding:16px 14px;align-items:center}
+.bv-studio .bv-soundstage .bv-song-record{width:46px;height:46px;font-size:23px;border-width:2px}
+.bv-studio .bv-soundstage .bv-identity-song b{font-size:14px}
+.bv-studio .bv-soundstage .bv-identity-song button{min-height:44px;min-width:68px;border-radius:999px}
+.bv-art-room[data-identity-layout=heritage] .bv-profile-intro{grid-template-columns:1fr;text-align:center;border-bottom:3px double var(--bv-accent)}
+.bv-art-room[data-identity-layout=heritage] .bv-profile-intro>.bv-profile-avatar{grid-column:1;grid-row:1;margin:-36px auto 9px}
+.bv-art-room[data-identity-layout=heritage] .bv-room-identity{grid-column:1;grid-row:2}
+.bv-art-room[data-identity-layout=heritage] .bv-room-sticker{display:none}
+.bv-art-room[data-identity-layout=heritage] .bv-room-bio{grid-row:3}
+.bv-art-room[data-identity-layout=heritage] .bv-interests{justify-content:center}
+.bv-art-room[data-identity-layout=heritage] .bv-preview-columns{grid-template-columns:1fr}
+.bv-art-room[data-identity-layout=heritage] .bv-photo-friends{grid-template-columns:repeat(8,minmax(0,1fr))}
+.bv-art-room[data-identity-layout=place] .bv-cover{height:250px;min-height:250px;align-items:center}
+.bv-art-room[data-identity-layout=place] .bv-cover-words{max-width:65%;font-family:Georgia,serif;font-weight:500;font-size:35px;line-height:1.15;letter-spacing:-.03em}
+.bv-art-room[data-identity-layout=place] .bv-preview-columns{grid-template-columns:1.35fr .8fr}
+.bv-art-room[data-identity-layout=celebration] .bv-profile-intro{border-radius:0 0 28px 0}
+.bv-art-room[data-identity-layout=celebration] .bv-mini-card{border-radius:20px 5px 20px 5px}
+
+/* The published profile carries the same identity without changing saved settings. */
+.bv-room[data-bv-identity=school] .bv-profile-stats{border-top:4px solid var(--bv-accent);text-transform:uppercase;letter-spacing:.04em}
+.bv-room[data-bv-identity=school] #room-head{border-radius:4px;border:3px solid var(--bv-accent)}
+.bv-room[data-bv-identity=music] .bv-room-soundstage{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:12px;padding:14px 0}
+.bv-room[data-bv-identity=music] .bv-room-soundstage>:is(.bv-track,.bv-identity-music){margin:0;height:100%}
+.bv-room[data-bv-identity=music] .bv-room-soundstage>:only-child{grid-column:1/-1}
+.bv-room[data-bv-identity=heritage] #room-head{border:5px double var(--bv-accent);border-radius:0}
+.bv-room[data-bv-identity=place] #room-head .bv-cover{height:320px;min-height:320px}
+.bv-room[data-bv-identity=place] #room-head .bv-cover-words{font-family:Georgia,serif;font-weight:500;max-width:68%}
+
+@media(max-width:960px){.bv-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+ .bv-welcome .bv-discovery{margin:18px 0;padding:18px 13px;border-radius:18px 5px}
+ .bv-welcome .bv-discovery>header{display:block;margin-bottom:16px}
+ .bv-welcome .bv-discovery h2{font-size:30px}
+ .bv-welcome .bv-discovery header p{font-size:14px}
+ .bv-welcome .bv-discovery-all{margin-top:14px;min-height:44px;font-size:12px}
+ .bv-collection-grid{gap:10px}
+ .bv-collection-art,.bv-collection-card[data-collection=music-crowd] .bv-collection-art{height:100px;margin:8px 8px 0}
+ .bv-collection-copy{padding:12px 24px 14px 10px;gap:5px}
+ .bv-collection-copy strong{font-size:16px;line-height:1.25}
+ .bv-collection-count{font-size:9px}
+ .bv-collection-line{font-size:11px;line-height:1.5}
+ .bv-collection-arrow{right:10px;bottom:16px;font-size:19px}
+ .bv-art-room[data-identity-layout=school] .bv-preview-columns,.bv-art-room[data-identity-layout=place] .bv-preview-columns{grid-template-columns:1fr}
+ .bv-art-room[data-identity-layout=school] .bv-photo-friends,.bv-art-room[data-identity-layout=heritage] .bv-photo-friends{grid-template-columns:repeat(8,minmax(0,1fr))}
+ .bv-studio .bv-art-room[data-identity-layout=place] .bv-cover{height:220px;min-height:220px}
+ .bv-studio .bv-art-room[data-identity-layout=place] .bv-cover-words{font-size:28px}
+ .bv-room[data-bv-identity=music] .bv-room-soundstage{grid-template-columns:1fr}
+ .bv-room[data-bv-identity=place] #room-head .bv-cover{height:250px;min-height:250px}
+}
+@media(max-width:350px){.bv-collection-grid{grid-template-columns:1fr}.bv-collection-art,.bv-collection-card[data-collection=music-crowd] .bv-collection-art{height:140px}}
+@media(prefers-reduced-motion:reduce){.bv-collection-card,.bv-collection-art img{transition:none}.bv-welcome .bv-collection-card:hover,.bv-collection-shortcuts .bv-collection-card:hover{transform:none}}
+@media(forced-colors:active){
+ .bv-welcome .bv-discovery,.bv-collection-card,.bv-studio .bv-collection-shortcuts .bv-collection-card{background:Canvas;color:CanvasText;border:1px solid CanvasText}
+ .bv-collection-copy :is(strong,span),.bv-collection-arrow,.bv-welcome .bv-discovery :is(h2,p,span){color:CanvasText}
+ .bv-collection-card[aria-pressed=true]{outline:2px solid Highlight}
+ .bv-welcome .bv-discovery-all{background:ButtonFace;color:ButtonText;border-color:ButtonText}
+}

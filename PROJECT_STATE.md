@@ -1,3 +1,13 @@
+## 2026-10-25 — Apply the design research to community discovery
+
+Owner accepted the design-search recommendation to apply it to Sota Kece first. Resume verified published main 519d02201a6d0f843d12fc3ecb6659b8ae0ac1d3 in donovandimau/bulavata, Vercel project sotakece. The separate sota-kece React demo is not the production source.
+
+Add six image-led community collections below the existing room entry: School pride (8), Vanua & islands (22), The music crowd (6), Masi & culture (13), Life & memories (18), and Fresh looks (4). Counts come from actual available presets. All 94 skins remain accessible, with 12 varied discovery picks and direct collection entry from the homepage and studio. Search now includes existing identity labels, attributed artists and song titles as well as skin names. Collection entry previews an appropriate identity while preserving saved personal words, media, interests and layout until the user chooses to save.
+
+Use existing original artwork and local fonts. School previews put the friend community first; music previews put soundtracks before the conversation; heritage rooms use a centred profile and editorial stack; place covers have more space. Published profiles derive their matching presentation from the existing skin ID. Saved v1 settings, all 73 song references, the central 81-song playlist, authentication, data permissions, supplied homepage artwork and previous revisions remain unchanged. No third-party logo, brand font, recording or UI runtime was copied. New JS/CSS are included in the public-only shell; artwork remains lazy-loaded.
+
+Verification and exact release receipts belong in the current PR. Browser control reported that the originating browser context is unavailable in this turn, so do not claim visual desktop/mobile or signed-in browser verification. Continue source, DOM-fixture and GitHub/Vercel verification through available tools. No Ops memory, lease or continuity receipt is fabricated.
+
 ## 2026-10-25 — Owner correction: redo the identity collections
 
 Owner rejected the colour-dot studio and screenshot defects, then asked to redo all school/group collections and associated music. Resume canonical published 3bce793c6c73c796551f68aff090b7af67385318. Preserve the 88 existing skin IDs, profile/account behavior, native music catalogue, supplied public homepage and original assets.
