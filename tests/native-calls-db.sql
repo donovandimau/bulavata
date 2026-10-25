@@ -57,6 +57,14 @@ select set_config('request.jwt.claim.sub','61025000-0000-4000-8000-000000000004'
 select pg_temp.assert_denied(format($q$select public.bv_call_snapshot(%L)$q$,current_setting('calls.test')),'Outsider read snapshot');
 select set_config('request.jwt.claim.sub','61025000-0000-4000-8000-000000000001',true);
 select pg_temp.assert_true(jsonb_array_length(public.bv_call_signals(current_setting('calls.test')::uuid,0,'61025000-0000-4000-8000-000000000011'))=1,'Recipient did not receive authorized signal');
+select public.bv_call_signal(current_setting('calls.test')::uuid,'61025000-0000-4000-8000-000000000002','offer','{"type":"offer","sdp":"v=0 old device"}','61025000-0000-4000-8000-000000000011');
+reset role;
+update bulavata.call_people set last_seen=clock_timestamp()-interval '70 seconds' where call_id=current_setting('calls.test')::uuid and member='61025000-0000-4000-8000-000000000002';
+set local role authenticated;
+select set_config('request.jwt.claim.sub','61025000-0000-4000-8000-000000000002',true);
+select public.bv_call_act(current_setting('calls.test')::uuid,'accept','61025000-0000-4000-8000-000000000022');
+select pg_temp.assert_true(public.bv_call_signals(current_setting('calls.test')::uuid,0,'61025000-0000-4000-8000-000000000022')='[]'::jsonb,'Rejoined device received old SDP from its expired connection');
+select set_config('request.jwt.claim.sub','61025000-0000-4000-8000-000000000001',true);
 select public.bv_call_act(current_setting('calls.test')::uuid,'kick','61025000-0000-4000-8000-000000000011','61025000-0000-4000-8000-000000000002');
 select set_config('request.jwt.claim.sub','61025000-0000-4000-8000-000000000002',true);
 select pg_temp.assert_denied(format($q$select public.bv_call_act(%L,'accept','61025000-0000-4000-8000-000000000012')$q$,current_setting('calls.test')),'Kicked member rejoined');

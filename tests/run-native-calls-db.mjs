@@ -11,6 +11,7 @@ create table bulavata.crews(id bigint primary key,name text,owner uuid reference
 create table bulavata.crew_members(crew_id bigint references bulavata.crews(id),member uuid references bulavata.profiles(id),primary key(crew_id,member));`);
 const migration=await readFile(new URL('../supabase/migrations/20261025190921_native_calls.sql',import.meta.url),'utf8');
 await db.exec(migration);
+await db.exec(await readFile(new URL('../supabase/migrations/20261025192250_native_call_rejoin_signal_cleanup.sql',import.meta.url),'utf8'));
 const results=await db.exec(await readFile(new URL('./native-calls-db.sql',import.meta.url),'utf8'));
 console.log(JSON.stringify({checks:results.flatMap(r=>r.rows).filter(r=>r.result),fixturesRemaining:(await db.query('select count(*)::int n from auth.users')).rows[0].n},null,2));
 await db.close();
