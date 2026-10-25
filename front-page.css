@@ -609,3 +609,6 @@
  .sk-playlist.sk-playlist h2 {font-size:32px;}
  #app.bv-welcome .bv-account-head>button {font-size:32px;}
 }
+
+/* Cover choices now live in the skin studio. */
+#app.bv-welcome .bv-classic-panels>.bv-music-feature{grid-column:1/-1;}
