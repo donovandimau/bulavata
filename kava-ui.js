@@ -10,19 +10,30 @@
     if(busy)return;busy=true;if(button)button.disabled=true;
     try{await fn();}catch(err){error(err);}finally{busy=false;if(button?.isConnected)button.disabled=false;}
   }
-  const hero=()=>`<section class="glass kava-hero"><div class="kava-eyebrow">Talanoa • Stories • Music • Wisdom</div>
-    <h1>The Digital Kava Circle</h1><p>A host. Four to six seats. Room for everyone to listen and join the conversation.
-    Share what you know, ask a thoughtful question, and make space for each other.</p>
-    <div class="kava-respect"><span>Take turns</span><span>Reward substance</span><span>Respect the speaker</span><span>No gift battles</span></div></section>`;
+  const hero=()=>`<section class="glass kava-hero" aria-labelledby="kc-lobby-title"><div class="kava-eyebrow">Talanoa • Stories • Music • Wisdom</div>
+    <h1 id="kc-lobby-title">The Digital Kava Circle</h1><p>Good stories. Familiar voices. A place to bring your Koro together, share what you know and make space for each other.</p>
+    <div class="kava-hero-values"><span>Take turns</span><span>Listen generously</span><span>Everyone belongs</span></div></section>`;
+  const lobby=content=>`<div class="kava-room kava-lobby">${hero()}${content}</div>`;
+  function landingState(setup){
+    return `<section class="glass card kava-setup ${setup?'':'kava-connection'}" aria-labelledby="kc-setup-title"><div class="kava-setup-copy">
+      <span class="kava-setup-badge">${setup?'Explore the layout':'Connection interrupted'}</span>
+      <h2 id="kc-setup-title">${setup?'Come in. Take a look around.':'Let’s reconnect.'}</h2>
+      <p>${setup?'See the speaker seats, discover the conversation space and get a feel for your circle.':'Your circles could not load. Try again to reconnect with your Koro.'}</p>
+      <button class="btn" id="kc-retry">${setup?'Explore circle layout <span aria-hidden="true">↗</span>':'Try again'}</button>
+      <p class="kava-setup-status">${setup?'Live circles and comments are not available yet. This tour is a preview, with no live people, audio or payments.':'Your saved circles have not been changed.'}</p>
+      <p id="kava-error" class="kava-error" role="alert" ${setup?'hidden':''}></p></div>
+      ${setup?`<div class="kava-circle-illustration" aria-hidden="true"><div class="kava-seat-ring">${Array.from({length:6},(_,i)=>`<span class="kava-ring-seat ${i===0?'is-host':''}">${i===0?'✦':'+'}</span>`).join('')}<div class="kava-ring-centre"><span class="kava-mini-bowl"></span><b>TALANOA</b><small>A space for every voice</small></div></div><span class="kava-illustration-caption">One host. Four to six speaker seats.</span></div>`:''}</section>
+      ${setup?`<section class="kava-lobby-features" aria-label="Inside a circle"><article><span aria-hidden="true">01</span><h3>Your Koro, together</h3><p>An invite-only space for your people.</p></article><article><span aria-hidden="true">02</span><h3>A seat for your story</h3><p>The host makes room for each speaker.</p></article><article><span aria-hidden="true">03</span><h3>More than listening</h3><p>Questions and stories keep the talanoa going.</p></article></section>`:''}`;
+  }
   function init(context){ctx=context;service=core().api(ctx.client);}
   async function view(){
     stop();guest=false;current=null;snapshot=null;
-    ctx.shell(`${hero()}<div class="kava-state" role="status">Loading your Koro circles…</div>`);
+    ctx.shell(lobby(`<div class="kava-state" role="status">Loading your Koro circles…</div>`));
     const run=epoch;
     try{
       const [crews,circles]=await Promise.all([service.crews(),service.list()]);if(run!==epoch||ctx.state.tab!=='circles')return;
       const names=Object.fromEntries(crews.map(c=>[c.id,c.name]));
-      ctx.shell(`${hero()}<div class="kava-columns"><section class="glass card"><h2 style="font-size:20px">Your circles</h2>
+      ctx.shell(lobby(`<div class="kava-columns"><section class="glass card"><h2 style="font-size:20px">Your circles</h2>
         <p class="sub">Invite-only through your Koro. Listed newest first.</p><div class="kava-list">${circles.length?circles.map(c=>`
         <button type="button" data-circle="${e(c.id)}"><strong>${e(c.title)}</strong><span>${e(names[c.crew_id]||'Your Koro')} · ${c.capacity} speaker seats · ${e(c.status==='open'?'Comments open':c.status==='ended'?'Ended':'Planned')}</span></button>`).join(''):
         '<p class="kava-notice">There are no circles yet. Start one with your Koro.</p>'}</div>
@@ -35,7 +46,7 @@
         <p class="kava-notice">You decide who takes a seat. Everyone in this Koro can read and comment when you open the circle.</p>
         <button class="btn" type="submit">Create my circle</button></form>`:
         '<p class="kava-notice">Create or join a Koro first, then bring your people into a circle.</p><button class="btn" id="kc-gokoro">Go to Koro</button>'}
-        <p id="kava-error" class="kava-error" role="alert" hidden></p></section></div>`);
+        <p id="kava-error" class="kava-error" role="alert" hidden></p></section></div>`));
       document.querySelectorAll('[data-circle]').forEach(b=>b.onclick=()=>action(b,()=>open(b.dataset.circle)));
       if(q('#kc-gokoro'))q('#kc-gokoro').onclick=()=>root.go('crews');
       if(q('#kava-create'))q('#kava-create').onsubmit=event=>{
@@ -43,8 +54,7 @@
       };
     }catch(err){if(run!==epoch)return;
       const setup=['PGRST205','PGRST202','42P01','42883'].includes(err.code);
-      ctx.shell(`${hero()}<section class="glass card" style="margin-top:16px"><p>${setup?'Circles are awaiting database setup. You can explore the layout now; saved rooms and comments will open when setup is complete.':'Connection interrupted. Your circles and Koro are still yours.'}</p>
-      <button class="btn" id="kc-retry">${setup?'Explore circle layout':'Try again'}</button><p id="kava-error" class="kava-error" role="alert" ${setup?'hidden':''}></p></section>`);
+      ctx.shell(lobby(landingState(setup)));
       if(!setup)error(err);q('#kc-retry').onclick=setup?preview:view;
     }
   }

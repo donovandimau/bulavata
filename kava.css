@@ -127,3 +127,54 @@ nav.bottom{max-width:540px}nav.bottom button{min-width:0}button:focus-visible{ou
  #app .kava-room .kava-seat.host{border:2px solid Highlight}
  #app .kava-room .kava-hero:before,#app .kava-room .kava-hero:after{display:none}
 }
+
+/* Circles landing, loading and recovery states share the readable room palette. */
+#app .kava-lobby{padding-top:0;padding-bottom:90px}
+#app .kava-lobby>.kava-hero{padding:36px 40px;min-height:230px}
+#app .kava-lobby>.kava-state{background:#fff;color:#526c78;border-color:#d9e5e5;margin-top:20px;padding:24px}
+#app .kava-lobby .glass.card.kava-setup{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);gap:40px;align-items:center;margin-top:20px;padding:36px 40px;border-radius:24px;overflow:hidden}
+#app .kava-lobby .kava-setup-copy{min-width:0;max-width:530px}
+#app .kava-lobby .kava-setup-badge{display:inline-flex;color:#356456;background:#ebf6ee;border:1px solid #d3e7d9;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.03em;margin-bottom:14px}
+#app .kava-lobby .kava-setup h2{font-size:clamp(24px,2.3vw,31px)!important;line-height:1.2;letter-spacing:-.035em;margin-bottom:13px;max-width:430px}
+#app .kava-lobby .kava-setup-copy>p{font-size:14px;line-height:1.8;color:#526c78;margin:0 0 20px;max-width:450px}
+#app .kava-lobby .kava-setup #kc-retry{min-height:48px;padding:13px 20px;display:inline-flex;align-items:center;gap:22px;background:#176b64;color:#fff;border-color:#176b64;font-size:14px}
+#app .kava-lobby .kava-setup #kc-retry:hover{background:#115950;border-color:#115950}
+#app .kava-lobby .kava-setup-copy>.kava-setup-status{font-size:12px;line-height:1.8;color:#60746f;margin:16px 0 0;max-width:440px}
+#app .kava-lobby .kava-circle-illustration{min-width:0;display:grid;justify-items:center;gap:17px;background:radial-gradient(ellipse,#e9f3eb 0%,#f8fbf5 58%,transparent 72%);padding:6px 0}
+#app .kava-lobby .kava-seat-ring{position:relative;width:280px;max-width:100%;height:230px}
+#app .kava-lobby .kava-seat-ring:before{content:'';position:absolute;inset:23px 29px;border:1px dashed #bfd5c7;border-radius:50%}
+#app .kava-lobby .kava-ring-seat{position:absolute;display:grid;place-items:center;width:40px;height:40px;background:#fff;border:1px solid #c4dcd0;border-radius:50%;color:#5e8a79;font-size:21px;box-shadow:0 3px 8px #34675108}
+#app .kava-lobby .kava-ring-seat.is-host{background:#246b5d;color:#eff9f2;border-color:#246b5d;font-size:18px}
+#app .kava-lobby .kava-ring-seat:nth-child(1){left:calc(50% - 20px);top:0}
+#app .kava-lobby .kava-ring-seat:nth-child(2){right:15px;top:45px}
+#app .kava-lobby .kava-ring-seat:nth-child(3){right:15px;bottom:35px}
+#app .kava-lobby .kava-ring-seat:nth-child(4){left:calc(50% - 20px);bottom:-2px}
+#app .kava-lobby .kava-ring-seat:nth-child(5){left:15px;bottom:35px}
+#app .kava-lobby .kava-ring-seat:nth-child(6){left:15px;top:45px}
+#app .kava-lobby .kava-ring-centre{position:absolute;inset:58px 55px 48px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;text-align:center}
+#app .kava-lobby .kava-mini-bowl{width:72px;height:32px;background:#c9a467;border-radius:4px 4px 40px 40px;box-shadow:inset 0 5px 0 #9c783d;position:relative}
+#app .kava-lobby .kava-mini-bowl:after{content:'';position:absolute;left:7px;right:7px;top:5px;height:6px;border-radius:50%;background:#e4c793}
+#app .kava-lobby .kava-ring-centre b{color:#356050;font-size:10px;letter-spacing:.18em}
+#app .kava-lobby .kava-ring-centre small{color:#6a8174;font-size:10px;line-height:1.4;white-space:nowrap}
+#app .kava-lobby .kava-illustration-caption{font-size:11px;color:#61796c;text-align:center}
+#app .kava-lobby .kava-lobby-features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
+#app .kava-lobby .kava-lobby-features article{padding:22px 24px;background:#f6faf7;border:1px solid #d7e5dc;border-radius:17px;min-width:0}
+#app .kava-lobby .kava-lobby-features article>span{font-size:10px;color:#52816d;font-weight:700;letter-spacing:.1em}
+#app .kava-lobby .kava-lobby-features h3{font-size:15px;line-height:1.4;margin:10px 0 6px;letter-spacing:-.02em}
+#app .kava-lobby .kava-lobby-features p{font-size:12px;line-height:1.7;color:#60746f;margin:0}
+#app .kava-lobby .kava-list>button{background:#f6faf7;border-color:#d6e5dd;color:#173541}
+#app .kava-lobby .kava-list span{color:#526c78}
+#app .kava-lobby .kava-columns .kava-state{background:#f0f7f1;color:#526c78;border-color:#d9e5dd}
+#app .kava-lobby .glass.card.kava-connection{grid-template-columns:minmax(0,1fr)}
+#app .kava-lobby .kava-connection .kava-setup-badge{background:#fff3df;color:#78551e;border-color:#eedcb6}
+@media(max-width:700px){
+ #app .kava-lobby>.kava-hero{padding:28px 22px;min-height:0}
+ #app .kava-lobby .glass.card.kava-setup{grid-template-columns:minmax(0,1fr);padding:25px 22px;gap:24px;border-radius:18px}
+ #app .kava-lobby .kava-setup h2{font-size:27px!important}
+ #app .kava-lobby .kava-setup #kc-retry{width:100%;justify-content:space-between;min-height:48px}
+ #app .kava-lobby .kava-circle-illustration{padding-top:16px;border-top:1px solid #e1ece3}
+ #app .kava-lobby .kava-seat-ring{width:260px;height:215px}
+ #app .kava-lobby .kava-lobby-features{grid-template-columns:minmax(0,1fr);gap:10px}
+ #app .kava-lobby .kava-lobby-features article{padding:18px 20px}
+}
+@media(forced-colors:active){#app .kava-lobby :is(.kava-setup-badge,.kava-circle-illustration,.kava-ring-seat,.kava-lobby-features article){background:Canvas!important;color:CanvasText!important;border-color:CanvasText;box-shadow:none}#app .kava-lobby .kava-mini-bowl{background:ButtonText;box-shadow:none}}
