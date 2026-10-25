@@ -3,7 +3,7 @@
  * Copy this file unchanged; configure URL/key/storage separately per app. */
 (function(root){
   'use strict';
-  const catalog=[['google','Google'],['facebook','Facebook'],['x','X'],['github','GitHub'],['apple','Apple'],['azure','Microsoft'],['discord','Discord']];
+  const catalog=[['google','Google'],['facebook','Facebook'],['x','X'],['apple','Apple'],['azure','Microsoft'],['discord','Discord']];
   function create(options, environment){
     const e=environment||root;
     const base=new URL(options.url);
