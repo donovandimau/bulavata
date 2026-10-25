@@ -24,7 +24,7 @@ test('new skins round-trip profile media and readable chat colours, including cu
 });
 
 test('chat sample escapes profile text and contains no live message form or remote request',()=>{
-  const context=vm.createContext({skins,esc});
+  const context=vm.createContext({skins,esc,window:{}});
   vm.runInContext(source.slice(source.indexOf('  function chatPreview('),source.indexOf('  function coverMediaMarkup(')),context);
   const html=context.chatPreview({display_name:'<img src=x onerror=alert(1)>'},{id:'studio-ocean'});
   assert(html.includes('&lt;img src=x onerror=alert(1)&gt;'));
