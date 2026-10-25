@@ -202,6 +202,10 @@
       if (channel) await channel.track({ name: displayName(), at: Date.now() });
       toast('Name updated.');
     });
+    // Browsers hold back call sound until the first tap; any tap turns it on.
+    const unlock = () => { for (const t of tiles.values()) if (t.audio) t.audio.play().then(() => { $('crSound').hidden = true; }).catch(() => {}); };
+    document.addEventListener('pointerdown', unlock, true);
+    document.addEventListener('keydown', unlock, true);
     window.addEventListener('pagehide', () => leave());
     $('ncLive').hidden = false;
     paintButtons(); updateCount();
