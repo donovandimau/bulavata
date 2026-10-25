@@ -31,6 +31,14 @@ function nodes(){
   return {button,status,input};
 }
 function deferred(){let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});return {promise,resolve,reject};}
+function focusDocument(n){
+  const doc={body:{id:'body'},activeElement:n.button};let disabled=n.button.disabled;
+  n.button.ownerDocument=doc;n.button.focused=0;
+  n.button.focus=options=>{n.button.focused++;n.button.focusOptions=options;doc.activeElement=n.button;};
+  Object.defineProperty(n.button,'disabled',{get:()=>disabled,set(value){disabled=value;if(value&&doc.activeElement===n.button)doc.activeElement=doc.body;}});
+  n.input.focus=()=>{n.input.focused++;doc.activeElement=n.input;};
+  return doc;
+}
 
 test('native share sends only the canonical public app invitation',async()=>{
   const payloads=[],copies=[];
@@ -126,4 +134,40 @@ test('an unexpected helper failure still restores the captured connected button'
   context.wireInvite(n.button,n.status,{input:n.input});
   try{await n.button.fire();}catch(_){}
   assert.equal(n.button.disabled,false);assert.equal(n.input.focused,0);assert.equal(n.input.selected,0);
+});
+
+test('copy completion restores the focused opener when disabling it moved focus to body',async()=>{
+  const gate=deferred(),context=harness({clipboard:{writeText:()=>gate.promise}}),n=nodes(),doc=focusDocument(n);
+  context.wireInvite(n.button,n.status,{copyOnly:true,input:n.input});const pending=n.button.fire();
+  assert.equal(n.button.disabled,true);assert.equal(doc.activeElement,doc.body);assert.equal(n.button.focused,0);
+  gate.resolve();await pending;
+  assert.equal(n.button.disabled,false);assert.equal(doc.activeElement,n.button);assert.equal(n.button.focused,1);assert.equal(n.button.focusOptions.preventScroll,true);
+});
+
+test('completion never steals focus from another control selected while copying',async()=>{
+  const gate=deferred(),context=harness({clipboard:{writeText:()=>gate.promise}}),n=nodes(),doc=focusDocument(n),other={id:'other-control'};
+  context.wireInvite(n.button,n.status,{copyOnly:true,input:n.input});const pending=n.button.fire();doc.activeElement=other;
+  gate.resolve();await pending;
+  assert.equal(n.button.disabled,false);assert.equal(doc.activeElement,other);assert.equal(n.button.focused,0);
+});
+
+test('manual fallback keeps its selected input focused instead of restoring the opener',async()=>{
+  const gate=deferred(),context=harness({clipboard:{writeText:()=>gate.promise}}),n=nodes(),doc=focusDocument(n);
+  context.wireInvite(n.button,n.status,{copyOnly:true,input:n.input});const pending=n.button.fire();
+  assert.equal(doc.activeElement,doc.body);gate.reject(new Error('Clipboard denied'));await pending;
+  assert.equal(n.button.disabled,false);assert.equal(doc.activeElement,n.input);assert.equal(n.input.focused,1);assert.equal(n.input.selected,1);assert.equal(n.button.focused,0);
+});
+
+test('a button that was not the focused opener does not gain focus on completion',async()=>{
+  const gate=deferred(),context=harness({clipboard:{writeText:()=>gate.promise}}),n=nodes(),doc=focusDocument(n);
+  doc.activeElement={id:'previous-control'};context.wireInvite(n.button,n.status,{copyOnly:true,input:n.input});const pending=n.button.fire();doc.activeElement=doc.body;
+  gate.resolve();await pending;
+  assert.equal(n.button.disabled,false);assert.equal(doc.activeElement,doc.body);assert.equal(n.button.focused,0);
+});
+
+test('a detached opener is not refocused even when disabling it originally lost focus',async()=>{
+  const gate=deferred(),context=harness({clipboard:{writeText:()=>gate.promise}}),n=nodes(),doc=focusDocument(n);
+  context.wireInvite(n.button,n.status,{copyOnly:true,input:n.input});const pending=n.button.fire();n.button.isConnected=false;
+  gate.resolve();await pending;
+  assert.equal(doc.activeElement,doc.body);assert.equal(n.button.focused,0);assert.equal(n.button.disabled,true);
 });

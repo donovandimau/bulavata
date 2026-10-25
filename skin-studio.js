@@ -307,13 +307,13 @@
   }
   function wireInvite(button,status,{copyOnly=false,input=null}={}) {
     button.addEventListener('click',async()=>{
-      if(button.disabled)return;button.disabled=true;
+      if(button.disabled)return;const doc=button.ownerDocument,restoreFocus=doc?.activeElement===button;button.disabled=true;
       try{
         const result=await shareApp(copyOnly);
         if(!button.isConnected||!status.isConnected)return;
         status.textContent=result.message;
         if(input?.isConnected){input.parentElement.hidden=result.kind!=='manual';if(result.kind==='manual'){input.focus();input.select();}}
-      }finally{if(button.isConnected)button.disabled=false;}
+      }finally{if(button.isConnected){button.disabled=false;if(restoreFocus&&doc.activeElement===doc.body)button.focus({preventScroll:true});}}
     });
   }
   renderAuth=function(mode='in',expanded=false){
