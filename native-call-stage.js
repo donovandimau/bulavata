@@ -164,12 +164,14 @@
     reactBtn = button('nc-round nc-react', 'Reactions', () => { picker.hidden = !picker.hidden; reactBtn.setAttribute('aria-expanded', String(!picker.hidden)); });
     reactBtn.hidden = true;
     reactBtn.setAttribute('aria-expanded', 'false');
-    moreBtn = button('nc-round nc-more-btn', 'More options', () => openSheet(sheet.hidden));
-    moreBtn.setAttribute('aria-controls', 'ncSheet');
-    moreBtn.setAttribute('aria-expanded', 'false');
+    if (!document.getElementById('ncMore')) {
+      moreBtn = button('nc-round nc-more-btn', 'More options', () => openSheet(sheet.hidden));
+      moreBtn.setAttribute('aria-controls', 'ncSheet');
+      moreBtn.setAttribute('aria-expanded', 'false');
+    }
     const leave = document.getElementById('ncLeave');
     toolbar.insertBefore(reactBtn, leave);
-    toolbar.insertBefore(moreBtn, leave);
+    if (moreBtn) toolbar.insertBefore(moreBtn, leave);
     for (const id of ['ncMute', 'ncVideo', 'ncShare', 'ncLeave']) document.getElementById(id)?.classList.add('nc-round');
 
     const share = document.getElementById('ncShare');

@@ -7,7 +7,7 @@
   const MAX_FRIENDS=120,MAX_GROUPS=40;
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pid=id=>'person:'+id, gid=id=>'group:'+id;
-  let ctx,epoch=0,mounted=null,liveOwner=null,authSubscription=null;
+  let ctx,epoch=0,mounted=null,liveOwner=null,authSubscription=null,entryMounted=false;
   function model(me,friends,groups,memberships){
     const nodes=[],edges=[],people=new Set(),crews=new Set(),seenEdges=new Set();
     const self=pid(me.id);
@@ -31,12 +31,13 @@
     }
     return {nodes,edges,self};
   }
-  async function load(client,state){
+  async function load(client,state,{friendsOnly=false}={}){
     if(!state.user?.id||!state.me)throw new Error('Sign in to see your connections.');
     const owner=String(state.user.id),auth=await client.auth.getUser();
+    if(friendsOnly&&auth.error&&(auth.error.name==='AuthRetryableFetchError'||auth.error.status===0||auth.error.status>=500))throw new Error('Your friends could not be refreshed. Please try again.');
     if(auth.error||String(auth.data?.user?.id||'')!==owner){const error=new Error('Sign in again to see your connections.');error.code='AUTH_REQUIRED';throw error;}
     if(state.me.id&&String(state.me.id)!==owner)throw new Error('Your profile is changing. Please try again.');
-    const [fr,gr]=await Promise.all([client.rpc('bv_my_friends'),client.rpc('bv_my_crews')]);
+    const [fr,gr]=await Promise.all([client.rpc('bv_my_friends'),friendsOnly?Promise.resolve({data:[]}):client.rpc('bv_my_crews')]);
     if(fr.error||gr.error)throw new Error('Your connections could not be loaded. Please try again.');
     const notices=[];
     const allFriends=fr.data||[],allGroups=gr.data||[];
@@ -54,7 +55,7 @@
     const friends=bounded.map(f=>({...f,id:f.id||handles.get(f.handle)})).filter(f=>f.id&&String(f.id)!==owner);
     if(friends.length<bounded.filter(f=>String(f.id||'')!==owner).length&&!notices.length)notices.push('Some friend records could not be mapped.');
     if(groups.length<Math.min(allGroups.length,MAX_GROUPS))notices.push('Some Koro records could not be mapped.');
-    if(allFriends.length>MAX_FRIENDS||allGroups.length>MAX_GROUPS)notices.push('Showing up to 120 friends and 40 Koro.');
+    if(allFriends.length>MAX_FRIENDS||allGroups.length>MAX_GROUPS)notices.push(friendsOnly?'Showing the first 120 accepted friends.':'Showing up to 120 friends and 40 Koro.');
     const memberships=[];
     if(friends.length&&groups.length){
       // Narrow both sides before reading. The signed-in Supabase client retains its existing policies.
@@ -104,7 +105,8 @@
       if(event==='SIGNED_OUT'||String(session?.user?.id||'')!==liveOwner){stop();ctx.state.user=null;ctx.state.me=null;ctx.auth();}
     })?.data?.subscription||null;
   }
-  function stop(){epoch++;liveOwner=null;if(mounted)mounted.dispose();mounted=null;}
+  function stop(){epoch++;liveOwner=null;entryMounted=false;if(mounted)mounted.dispose();mounted=null;}
+  function stopEntry(){if(entryMounted)stop();}
   function clearRoute(){if(/^#connections=(?:example|mine)$/.test(location.hash))history.replaceState(null,'',location.pathname+location.search);}
   function back(){stop();clearRoute();if(ctx.state.user&&ctx.state.me)ctx.go('pulse');else if(ctx.home)ctx.home();else ctx.auth();}
   function openPersonal(){
@@ -112,8 +114,72 @@
     if(ctx.state.user&&ctx.state.me)return ctx.go('connections');
     return ctx.auth('in',true);
   }
-  function entryHtml(){return `<section class="sc-entry" id="sota-connections" aria-labelledby="sc-entry-title"><img src="/assets/dimau-visuals-icon.svg" alt="" width="88" height="88"><div><p class="sc-kicker">Dimau Visuals · Connections</p><h2 id="sc-entry-title">See how we’re connected.</h2><p>Your friends. Your Koro. The links that bring you together.</p><p class="sc-entry-note">Sign in for your own map,or explore a fictional community first. Your personal map stays inside Sota Kece.</p><div class="sc-entry-actions"><button type="button" onclick="window.SotaConnections.openPersonal()">See my connections</button><button type="button" class="sc-entry-example" onclick="window.SotaConnections.preview()">Explore the example</button></div><a class="sc-tool-link" href="https://dimau-visuals.vercel.app/#explorer" target="_blank" rel="noopener noreferrer">Open Dimau Visuals for your own data ↗</a></div></section>`;}
-  const hero=()=>`<section class="glass sc-hero"><p class="sc-kicker">Sota Kece · Dimau Visuals</p><h1>Our people. Our circles.</h1>
+  function entryHtml(){return `<section class="sc-friends" id="sota-connections" aria-labelledby="sc-entry-title"><header class="scf-heading"><div><p class="scf-kicker">YOUR PEOPLE · YOUR CONNECTIONS</p><h2 id="sc-entry-title">Your circle, growing.</h2><p>A new friendship. A new connection.</p></div><span class="scf-private">Only visible to you</span></header><div data-friend-graph><p class="scf-message" role="status">Loading your friend graph…</p></div><noscript>Sign in with JavaScript enabled to see your personal friend graph.</noscript></section>`;}
+  function signIn(){stop();clearRoute();ctx.auth('in',true);}
+  // Slots belong to this mounted owner only. Adding/removing a friend never moves existing nodes.
+  function friendPositions(graph,slots=new Map()){
+    const ids=new Set(graph.nodes.filter(n=>n.type==='person').map(n=>n.id));
+    for(const id of slots.keys())if(!ids.has(id))slots.delete(id);
+    const used=new Set(slots.values());
+    for(const id of ids)if(!slots.has(id)){let slot=0;while(used.has(slot))slot++;slots.set(id,slot);used.add(slot);}
+    const positions=new Map([[graph.self,{x:360,y:240}]]),rings=[[8,220,155],[16,125,88],[24,310,205],[32,180,125],[40,270,180]];
+    for(const [id,slot] of slots){let i=slot;for(const [count,rx,ry] of rings){if(i<count){const order=count===8?[0,4,2,6,1,5,3,7][i]:i,angle=-Math.PI/2+order*2*Math.PI/count;positions.set(id,{x:360+rx*Math.cos(angle),y:240+ry*Math.sin(angle)});break;}i-=count;}}
+    return positions;
+  }
+  function mountEntry(){
+    stopEntry();
+    const host=ctx?.app.querySelector('#sota-connections [data-friend-graph]');if(!host)return;
+    const owner=String(ctx.state.user?.id||'');
+    if(!owner||!ctx.state.me){
+      host.innerHTML='<div class="scf-gate"><span aria-hidden="true">🤝</span><h3>Your friends belong here.</h3><p>Sign in to watch your own circle grow.</p><button type="button" class="scf-primary" data-friend-sign-in>Sign in</button></div>';
+      host.querySelector('[data-friend-sign-in]').onclick=signIn;return;
+    }
+    stop();entryMounted=true;liveOwner=owner;const run=epoch;
+    const valid=()=>run===epoch&&String(ctx.state.user?.id||'')===owner&&host.isConnected&&ctx.app.contains(host);
+    const snapshot={user:{id:owner},me:{...ctx.state.me}};
+    host.innerHTML=`<div class="scf-meta"><strong data-friend-count role="status" aria-live="polite">Your accepted friends</strong><div><span data-friend-status role="status" aria-live="polite">Checking your friends…</span><button type="button" class="scf-refresh" data-friend-refresh aria-label="Refresh friend graph">↻ Refresh</button></div></div><div class="scf-body"><div class="scf-map"><svg viewBox="0 0 720 480" role="img" aria-label="Your accepted friendships" data-friend-svg><g data-friend-lines></g><g data-friend-nodes></g></svg><p data-friend-empty hidden>Your friends will appear here as you connect.</p></div><div class="scf-list-wrap"><h3>Your friends</h3><p class="scf-list-hint">Choose a friend to visit their room.</p><div class="scf-list" data-friend-list></div><button type="button" class="scf-find" data-friend-find>Find friends →</button></div></div><p class="scf-note" data-friend-note>Each line is an accepted friendship with you. Checks for changes every 15 seconds while this page is open.</p><p class="scf-warning" data-friend-warning role="status" hidden></p>`;
+    const q=s=>host.querySelector(s),slots=new Map(),buttons=new Map();let signature='',lastUpdated=null,disposed=false;
+    function data(result){
+      if(!valid())return;
+      lastUpdated=result.updated;
+      const graph=result.graph,next=JSON.stringify(graph);
+      q('[data-friend-warning]').textContent=result.notices.join(' ');q('[data-friend-warning]').hidden=!result.notices.length;
+      if(next===signature)return;signature=next;
+      const people=graph.nodes.filter(n=>n.type==='person'),ids=new Set(people.map(n=>n.id)),p=friendPositions(graph,slots),dense=people.length>8;
+      q('[data-friend-count]').textContent=`${people.length} ${people.length===1?'friend':'friends'} · ${people.length} ${people.length===1?'connection':'connections'}`;
+      q('[data-friend-svg]').setAttribute('aria-label',`You and ${people.length} accepted ${people.length===1?'friend':'friends'}. Every line connects a friend to you. Names are listed beside the graph.`);
+      q('[data-friend-lines]').innerHTML=graph.edges.filter(e=>e.type==='friend').map(e=>{const a=p.get(e.source),b=p.get(e.target);return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"/>`;}).join('');
+      q('[data-friend-nodes]').innerHTML=graph.nodes.map(n=>{const a=p.get(n.id),self=n.type==='you';return `<g transform="translate(${a.x} ${a.y})" class="${self?'scf-you':'scf-person'}"><title>${esc(n.label)}</title><circle r="${self?35:dense?7:25}"/>${self||!dense?`<text class="scf-symbol" text-anchor="middle" y="8" aria-hidden="true">${esc(self?'🏝':n.emoji)}</text><text class="scf-label" text-anchor="middle" y="${self?60:48}">${esc(n.label.length>18?n.label.slice(0,16)+'…':n.label)}</text>`:''}</g>`;}).join('');
+      for(const [id,button] of buttons)if(!ids.has(id)){const focused=document.activeElement===button;button.remove();buttons.delete(id);if(focused)q('[data-friend-refresh]').focus({preventScroll:true});}
+      for(const person of people){
+        let button=buttons.get(person.id);
+        if(!button){button=document.createElement('button');button.type='button';buttons.set(person.id,button);q('[data-friend-list]').append(button);}
+        const label=person.label+(person.handle?' · @'+person.handle:'');
+        if(button.getAttribute('aria-label')!==`Visit ${label}`||button.dataset.emoji!==person.emoji){button.innerHTML=`<span aria-hidden="true">${esc(person.emoji)}</span><span>${esc(person.label)}${person.handle?`<small>@${esc(person.handle)}</small>`:''}</span>`;button.setAttribute('aria-label',`Visit ${label}`);button.dataset.emoji=person.emoji;}
+        button.disabled=!person.handle;button.onclick=()=>{if(valid()&&person.handle){stop();ctx.openRoom(person.handle);}};
+      }
+      q('[data-friend-empty]').hidden=people.length>0;
+      q('[data-friend-list]').hidden=!people.length;
+    }
+    function status(value){
+      if(!valid())return;
+      const offline=typeof navigator==='object'&&navigator.onLine===false;
+      const time=lastUpdated?.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+      q('[data-friend-status]').setAttribute('aria-live',value==='current'?'off':'polite');
+      q('[data-friend-status]').textContent=value==='current'?`Updated ${time} · Auto-refresh on`:value==='loading'?'Checking your friends…':value==='paused'?(offline?'Offline · Updates paused':'Updates paused'):value==='stale'?`Could not refresh · Last updated ${time}`:value==='auth-required'?'Sign in again to see your friends':'Could not load your friends · Try Refresh';
+      if(value==='auth-required'){
+        q('[data-friend-nodes]').replaceChildren();q('[data-friend-lines]').replaceChildren();q('[data-friend-list]').replaceChildren();buttons.clear();slots.clear();
+        host.innerHTML='<div class="scf-gate"><h3>Sign in again to see your friends.</h3><p>Your graph needs a current Sota Kece session.</p><button type="button" class="scf-primary" data-friend-sign-in>Sign in</button></div>';host.querySelector('[data-friend-sign-in]').onclick=signIn;
+      }
+    }
+    const listeners=[];let feed;
+    function on(el,event,fn){el.addEventListener(event,fn);listeners.push(()=>el.removeEventListener(event,fn));}
+    mounted={dispose(){disposed=true;feed?.stop();listeners.forEach(fn=>fn());buttons.clear();slots.clear();host.replaceChildren();}};
+    feed=window.SotaFriendFeed.watchFriends({read:()=>load(ctx.client,snapshot,{friendsOnly:true}),valid:()=>!disposed&&valid(),active:()=>!document.hidden&&navigator.onLine!==false,onData:data,onStatus:status});
+    on(q('[data-friend-refresh]'),'click',()=>feed.refresh());on(q('[data-friend-find]'),'click',()=>{if(valid())ctx.go('friends');});
+    on(document,'visibilitychange',()=>feed.refresh());on(window,'online',()=>feed.refresh());on(window,'offline',()=>feed.refresh());on(window,'focus',()=>feed.refresh());
+  }
+  const hero=()=>`<section class="glass sc-hero"><p class="sc-kicker">Sota Kece</p><h1>Our people. Our circles.</h1>
     <p>Explore how friendships and Koro bring a community together.</p></section>`;
   function preview(){
     if(typeof window==='object')window.SotaView?.invalidate();
@@ -219,5 +285,5 @@
     on(svg,'pointerup',()=>{drag=null;});on(svg,'pointercancel',()=>{drag=null;});
     draw();return {dispose(){disposed=true;listeners.forEach(fn=>fn());host.replaceChildren();}};
   }
-  return {init,view,preview,openPersonal,entryHtml,stop,model,load,path,layout,example,mount,summaryRows};
+  return {init,view,preview,openPersonal,entryHtml,mountEntry,stopEntry,signIn,stop,model,load,path,layout,friendPositions,example,mount,summaryRows};
 });

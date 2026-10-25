@@ -189,10 +189,10 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 .seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(20,59,82,.1)}
 </style>
 <link rel="stylesheet" href="/skins.css?v=20261025-art-skins">
-<link rel="stylesheet" href="/front-page.css?v=20261021-blue-white-background">
+<link rel="stylesheet" href="/front-page.css?v=20261025-home-groups">
 <link rel="stylesheet" href="/music-playlist.css?v=20261021-woven-mat">
-<link rel="stylesheet" href="/kava.css">
-<link rel="stylesheet" href="/connections.css?v=20261023-bottom-map"><link rel="stylesheet" href="/dimau-visuals.css?v=20261024">
+<link rel="stylesheet" href="/kava.css?v=20261025-circle-landing">
+<link rel="stylesheet" href="/connections.css?v=20261025-personal-graph"><link rel="stylesheet" href="/dimau-visuals.css?v=20261024">
 <script src="/room-media.js"></script>
 <script src="/skin-identities.js?v=20261025-identity"></script>
 <script src="/skin-visuals.js?v=20261025-editorial-v3"></script>
@@ -200,10 +200,11 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <script async src="https://dimau-ops.vercel.app/api/visit?s=sota-kece"></script>
 <link rel="stylesheet" href="/header-alignment-20261018.css?v=20261021-blue-white-background">
 <link rel="stylesheet" href="/quality.css?v=20261024-quality">
-<link rel="stylesheet" href="/studio-skins.css?v=20261025-community-design">
+<link rel="stylesheet" href="/studio-skins.css?v=20261025-skin-room-2">
 <link rel="stylesheet" href="/community-design.css?v=20261025-community-design">
 <link rel="stylesheet" href="/editorial-design.css?v=20261025-editorial-v5-labels">
 <link rel="stylesheet" href="/room-atmosphere.css?v=20261025-2">
+<link rel="stylesheet" href="/koro.css?v=20261025-koro-landing">
 <link rel="preload" as="image" href="/assets/front-reference-brand.jpg" media="(min-width:761px)">
 <link rel="preload" as="image" href="/assets/mobile-front-reference-brand.jpg" media="(max-width:760px)">
 </head>
@@ -308,6 +309,7 @@ async function signUp(){
 
 /* ================= SHELL ================= */
 function shell(body){
+  window.SotaConnections?.stopEntry();
   const p = S.pending.length;
   const active=document.activeElement,navFocused=active?.closest?.('nav.bottom'),viewFocused=active&&app.contains(active);
   app.innerHTML = `
@@ -448,7 +450,11 @@ async function viewPulse(){
     requestResult(sb.from("bv_sparks").select("*").eq("for_date",today).maybeSingle())
   ]);
   if(!currentView(run))return;
-  if(pf.error||sp.error)return viewError('the Pulse','viewPulse()');
+  if(pf.error||sp.error){
+    viewError('the Pulse','viewPulse()');
+    $('#view')?.insertAdjacentHTML('beforeend',window.SotaConnections?.entryHtml?.()||'');
+    window.SotaConnections?.mountEntry();return;
+  }
   const pulses = (pf.data||[]).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
   let spark = sp.data, mine=null, answers=[];
   if(spark){
@@ -512,6 +518,7 @@ async function viewPulse(){
       </div>
     </div>
   </div>${window.SotaConnections?.entryHtml?.()||''}`);
+  window.SotaConnections?.mountEntry();
 }
 async function postPulse(){
   const t=$("#p-text").value.trim(); if(!t) return;
@@ -807,26 +814,23 @@ async function viewCrews(){
   const {data:crews,error}=await requestResult(sb.rpc("bv_my_crews"));
   if(!currentView(run))return;
   if(error)return viewError('your Koro','viewCrews()');
-  shell(`<div class="grid two"><div class="stack">
-    <div class="glass card"><h3>Your Koro</h3>
-      <button class="btn sm ghost" style="margin:10px 0" onclick="go('connections')">See my connections</button>
-      <a class="btn sm ghost" href="/communications.html?app=sota-kece" style="display:inline-block;margin:10px 0">Chat, discussions, boards and call invitations ↗</a>
-      <div class="sub" style="margin-bottom:12px">Villages. Small, closed, invite-only. No discovery, no public anything.</div>
-      ${(crews||[]).length? crews.map(c=>`
+  shell(`<div class="koro-page">
+    <section class="koro-hero" aria-labelledby="koro-title"><div class="koro-hero-top"><span class="koro-eyebrow">YOUR COMMUNITY, CLOSE BY</span><span class="koro-private"><span aria-hidden="true">◇</span> Private & invite-only</span></div><h1 id="koro-title">Your people. Your Koro.</h1><p>A small, private place for friends, family or your community. Start a Koro or join one with an invitation.</p></section>
+    <div class="koro-layout"><section class="glass card koro-communities" aria-labelledby="koro-list-title">
+      <div class="koro-section-head"><div><span class="koro-section-kicker">A PLACE TO BELONG</span><h2 id="koro-list-title">Your Koro</h2></div>${(crews||[]).length?`<span class="koro-count">${crews.length} Koro</span>`:''}</div>
+      ${(crews||[]).length? `<div class="koro-list">${crews.map(c=>`
         <button type="button" class="pulse-item" onclick="S.crew=${c.id};render()" aria-label="Open ${esc(c.name)} Koro">
           <div class="av" style="background:${esc(c.accent)}22">${esc(c.emoji)}</div>
           <div style="flex:1;min-width:0"><div class="name">${esc(c.name)}</div>
-            <div class="handle">${c.members} member${c.members==1?'':'s'}${c.last_at?' · '+ago(c.last_at):''}</div></div>
-        </button>`).join("") : `<div class="empty"><em>🪸</em>No Koro yet.</div>`}
-    </div></div>
-    <div class="stack">
-      <div class="glass card"><h3>Start a Koro</h3>
-        <div class="row" style="margin-top:11px"><input id="c-name" aria-label="New Koro name" placeholder="Village name" maxlength="40">
-          <button class="btn sm" onclick="makeCrew()">Make</button></div></div>
-      <div class="glass card"><h3>Join with a code</h3>
-        <div class="row" style="margin-top:11px"><input id="c-code" aria-label="Koro join code" placeholder="paste join code" autocapitalize="off">
-          <button class="btn sm ghost" onclick="joinCrew()">Join</button></div></div>
-    </div></div>`);
+            <div class="handle">${c.members} member${c.members==1?'':'s'}${c.last_at?' · '+ago(c.last_at):''}</div></div><span class="koro-open-arrow" aria-hidden="true">↗</span>
+        </button>`).join("")}</div>` : `<div class="koro-empty"><div class="koro-empty-art" aria-hidden="true"><span>🪸</span></div><h3>Your Koro starts with you.</h3><p>Bring your people into one private space.<br>Create your first Koro, or join with a code shared with you.</p><div class="koro-empty-actions"><button type="button" class="btn" onclick="$('#c-name').focus()">Start your first Koro <span aria-hidden="true">↗</span></button><button type="button" class="koro-text-button" onclick="$('#c-code').focus()">I have an invite code</button></div></div>`}
+      <div class="koro-tools" aria-label="More ways to connect"><button type="button" class="btn sm ghost" onclick="go('connections')">See my connections <span aria-hidden="true">↗</span></button><a class="btn sm ghost" href="/communications.html?app=sota-kece">Chat, discussions & calls <span aria-hidden="true">↗</span></a></div>
+      <p class="koro-privacy-note"><span aria-hidden="true">◇</span> Small, closed communities. No public discovery.</p>
+    </section>
+    <aside class="koro-forms" aria-label="Create or join a Koro">
+      <section class="glass card koro-form-card" id="koro-create" aria-labelledby="koro-create-title"><span class="koro-form-icon" aria-hidden="true">+</span><h2 id="koro-create-title">Start a Koro</h2><p>Give your people a place of their own.</p><label for="c-name">Koro name</label><input id="c-name" aria-label="New Koro name" placeholder="Give your Koro a name" maxlength="40"><button type="button" class="btn koro-submit" onclick="makeCrew()">Create Koro <span aria-hidden="true">↗</span></button><small>Choose a name your people will recognise.</small></section>
+      <section class="glass card koro-form-card koro-join-card" aria-labelledby="koro-join-title"><span class="koro-form-icon" aria-hidden="true">↗</span><h2 id="koro-join-title">Join with a code</h2><p>Already invited? Your place is waiting.</p><label for="c-code">Koro join code</label><input id="c-code" aria-label="Koro join code" placeholder="Paste your invite code" autocapitalize="off"><button type="button" class="btn ghost koro-submit" onclick="joinCrew()">Join Koro <span aria-hidden="true">↗</span></button><small>Use the code shared with you.</small></section>
+    </aside></div></div>`);
 }
 async function makeCrew(){
   const n=$("#c-name").value.trim(); if(!n) return;
@@ -908,7 +912,7 @@ async function viewFriends(){
         <button class="btn sm" onclick="respond(${r.friendship_id},'accepted')">Accept</button>
         <button class="btn sm ghost" onclick="respond(${r.friendship_id},'reject')">No</button>
       </div>`).join("")}</div>`:''}
-    <div class="glass card"><h3>Your connections</h3><p class="sub">See your accepted friends and Koro together,with Dimau Visuals.</p><button class="btn" style="margin-top:12px" onclick="go('connections')">See my connections</button></div>
+    <div class="glass card"><h3>Your connections</h3><p class="sub">See your accepted friends and Koro together.</p><button class="btn" style="margin-top:12px" onclick="go('connections')">See my connections</button></div>
     <div class="glass card"><h3>Your friends</h3>
       ${S.metaErrors?.friends?`<p role="alert">Your friends could not load. <button type="button" class="btn sm" onclick="render()">Try again</button></p>`:`<div class="sub" style="margin-bottom:10px">${S.friends.length} ${S.friends.length===1?'person':'people'}. Mutual, always.</div>
       ${S.friends.length? S.friends.map(f=>`
@@ -1048,12 +1052,13 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/music-playlist.js?v=20261025-visuals"></script>
 <script src="/skin-discovery.js?v=20261025-community-design"></script>
 <script src="/room-atmosphere.js?v=20261025-1"></script>
-<script src="/skin-studio.js?v=20261025-atmospheres-2"></script>
+<script src="/skin-studio.js?v=20261025-guest-preview"></script>
 <script src="/offline.js?v=20261024-quality"></script>
 <script src="/kava.js"></script>
-<script src="/kava-ui.js?v=20261024-quality"></script>
+<script src="/kava-ui.js?v=20261025-circle-landing"></script>
 <script src="/dimau-charts-core.js?v=20261024"></script><script src="/dimau-visuals.js?v=20261024"></script>
-<script src="/connections.js?v=20261024-quality"></script>
+<script src="/friend-feed.js?v=20261025-personal-graph"></script>
+<script src="/connections.js?v=20261025-home-collections"></script>
 <script>window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261025b" data-app="sota-kece" defer></script>
 </body>
