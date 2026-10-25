@@ -11,6 +11,7 @@
 .bv-studio .bv-studio-controls{display:block;min-width:0;overflow-y:auto;overflow-x:hidden;padding:22px;border-right:1px solid var(--studio-line);scrollbar-width:thin;scrollbar-color:#5c758b transparent}
 .bv-studio .bv-studio-picker{display:block;min-width:0}
 .bv-studio .bv-skin-filters{display:grid;grid-template-columns:1.1fr 1fr;gap:12px;align-items:end;margin-bottom:14px}
+.bv-studio .bv-skin-filters{position:sticky;top:-22px;z-index:3;padding:12px 0;background:var(--studio-bg);box-shadow:0 7px 8px var(--studio-bg)}
 .bv-studio .bv-skin-filters label{display:block;font:650 11px/1.4 system-ui;color:var(--studio-muted);text-transform:none;letter-spacing:0}
 .bv-studio .bv-skin-filters input,.bv-studio .bv-skin-filters select{width:100%;min-width:0;height:44px;margin-top:6px;border:1px solid var(--studio-line);border-radius:10px;background:var(--studio-panel);color:var(--studio-ink);font:400 13px system-ui;padding:0 10px}
 .bv-studio .bv-skin-filters input::placeholder{color:#b0bfd0;opacity:1}
@@ -196,4 +197,9 @@ body.bv-room-active{background-image:linear-gradient(color-mix(in srgb,var(--bv-
 .bv-chat-preview[data-look=music] .msg,body.bv-chat-active[data-bv-look=music] .msg{box-shadow:0 3px 0 var(--bv-accent);border-radius:12px 12px 3px 12px}
 @media(max-width:760px){.bv-studio .bv-art-room[data-look=varsity] .bv-cover-words{font-size:24px;max-width:70%}.bv-studio .bv-identity-song{gap:8px;padding:11px}.bv-studio .bv-identity-song button{min-height:44px}.bv-studio .bv-identity-song a{min-height:35px}body.bv-room-active{background-attachment:scroll}}
 @media(prefers-reduced-transparency:reduce){.bv-studio::backdrop{backdrop-filter:none}.bv-art-room .bv-skin-tag{backdrop-filter:none;background:#101b2b}}
+.bv-studio.bv-studio :where(*){font-family:system-ui,sans-serif!important}
+.bv-studio.bv-studio :is(.bv-art-room,.bv-chat-preview) :where(*){font-family:var(--bv-font,system-ui,sans-serif)!important}
+.bv-studio.bv-studio .bv-art-room[data-look=varsity] .bv-cover-words,.bv-studio.bv-studio .bv-art-room[data-look=retro] .bv-cover-words{font-family:Impact,'Arial Black',system-ui,sans-serif!important}
+.bv-studio.bv-studio .bv-art-room:is([data-look=rain],[data-look=coral],[data-look=masi],[data-look=music]) .bv-cover-words{font-family:Georgia,serif!important}
+@media(max-width:760px){.bv-studio .bv-skin-filters{top:-14px}}
 @media(forced-colors:active){.bv-studio,.bv-studio :is(.bv-studio-head,.bv-studio-footer,.bv-studio-controls,.bv-studio-preview,.bv-skin-option,.bv-preview-modes),.bv-art-room,.bv-art-room :is(.bv-cover,.bv-mini-card,.bv-profile-intro){background:Canvas;color:CanvasText;border:1px solid CanvasText;box-shadow:none}.bv-art-room .bv-cover::before{display:none}.bv-art-room .bv-cover-words{color:CanvasText;text-shadow:none}.bv-studio .bv-skin-option[aria-pressed=true]{outline-color:Highlight}}

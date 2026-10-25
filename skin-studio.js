@@ -384,8 +384,12 @@
     const gallery=studio.querySelector('#bv-skin-options');
     const category=studio.querySelector('#bv-skin-category');
     category.innerHTML=['New picks','All',...new Set(skins.presets.map(p=>p.category).filter(c=>c!=='New picks'))].map(c=>`<option value="${esc(c)}" ${c===skinCategory?'selected':''}>${esc(c)}</option>`).join('');
-    category.addEventListener('change',()=>{skinCategory=category.value;drawOptions();});
-    studio.querySelector('#bv-skin-search').addEventListener('input',event=>{skinQuery=event.target.value.trim().toLowerCase();drawOptions();});
+    category.addEventListener('change',()=>{skinCategory=category.value;skinQuery='';studio.querySelector('#bv-skin-search').value='';drawOptions();});
+    studio.querySelector('#bv-skin-search').addEventListener('input',event=>{
+      skinQuery=event.target.value.trim().toLowerCase();
+      if(skinQuery){skinCategory='All';category.value='All';}
+      drawOptions();
+    });
     gallery.addEventListener('keydown',event=>{
       if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;
       const buttons=Array.from(gallery.querySelectorAll('[data-skin]')),i=buttons.indexOf(event.target);if(i<0)return;
