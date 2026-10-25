@@ -8,7 +8,7 @@ const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;
 
 test('new skins round-trip profile media and readable chat colours, including custom palettes',()=>{
   const ids=['studio-ocean','studio-masi','studio-coral','studio-retro'];
-  assert.deepEqual(skins.presets.slice(-4).map(p=>p.id),ids);
+  assert.deepEqual(skins.presets.filter(p=>ids.includes(p.id)).map(p=>p.id),ids);
   for(const id of ids){
     const saved=skins.normalize({id,note:'My own story',interests:'Friends, music',trackTitle:'My recording',trackUrl:'https://example.org/song.mp3',layout:'wide'});
     assert.deepEqual(skins.read(skins.encode(saved)).settings,saved);
@@ -38,16 +38,16 @@ test('Koro uses its current owner skin and removes old tokens when changing scre
   const classes=new Set(),styles=[];
   let activeStyle=null,hasMessages=true;
   const context=vm.createContext({skins,S:{me:{room_accent:'#046e86'}},stopSample(){},app:{classList:{remove(){}}},window:{},
-    document:{body:{classList:{add:(...v)=>v.forEach(x=>classes.add(x)),remove:(...v)=>v.forEach(x=>classes.delete(x))}},
+    document:{body:{dataset:{},classList:{add:(...v)=>v.forEach(x=>classes.add(x)),remove:(...v)=>v.forEach(x=>classes.delete(x))}},
       querySelector:selector=>selector==='#msgs'?(hasMessages?{}:null):selector==='#bv-active-skin'?activeStyle:null,
       createElement:()=>({remove(){activeStyle=null;}}),head:{appendChild(style){activeStyle=style;styles.push(style);}},documentElement:{style:{setProperty(){}}}}});
   vm.runInContext(source.slice(source.indexOf('  function applyChat('),source.indexOf('  const originalShell=')),context);
   vm.runInContext(source.slice(source.indexOf('  function reset()'),source.indexOf('  function apply(profile')),context);
   context.applyChat({room_css:skins.encode({id:'studio-ocean'})});
   assert(classes.has('bv-chat-active'));
-  assert(activeStyle.textContent.includes('--bv-chat-out:#046e86'));
+  assert(activeStyle.textContent.includes('--bv-chat-out:#6de6dd'));
   context.applyChat({room_css:skins.encode({id:'studio-coral'})});
-  assert(activeStyle.textContent.includes('--bv-chat-out:#b7384b'));
+  assert(activeStyle.textContent.includes('--bv-chat-out:#ffb38d'));
   context.reset();assert.equal(activeStyle,null);assert.equal(classes.size,0);
   hasMessages=false;context.applyChat({room_css:skins.encode({id:'studio-retro'})});
   assert.equal(activeStyle,null);assert.equal(styles.length,2);

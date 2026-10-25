@@ -1,0 +1,86 @@
+{
+  "updated": "2026-10-25",
+  "redesigned": 94,
+  "schools": [
+    "school-natabua-high-school",
+    "school-marist-brothers-high-school",
+    "school-suva-grammar-school",
+    "school-queen-victoria-school",
+    "school-ratu-kadavulevu-school",
+    "school-adi-cakobau-school",
+    "school-fnu",
+    "school-usp"
+  ],
+  "musicGroups": [
+    "Makare",
+    "Paradise Rootz",
+    "Kula Kei Uluivuya",
+    "Voqa Kei Valenisau",
+    "Rako Pasefika",
+    "Knox"
+  ],
+  "paletteEvidence": {
+    "FNU": "University Academic and Student Regulations, Schedule II: official blue Pantone 289U. Rendered HEX is a screen approximation.",
+    "USP": "USP Wayfinding Manual 2023: Teal RGB 0,140,149 and Dark Teal RGB 0,38,62.",
+    "Other schools": "Supporter palettes based on existing research and school/public team references; no copied or invented official crest."
+  },
+  "sources": [
+    {
+      "id": "rks-osa",
+      "title": "RKS Old Scholars Association: Lodoni 80, Part 01",
+      "url": "https://rksosa.wordpress.com/2019/08/30/lodoni-80-series-part-01/",
+      "retrieval": "scraped page",
+      "note": "Identifies Noqu Koronivuli Uasivi and credits composer Eremasi Tamanisau."
+    },
+    {
+      "id": "acs-history",
+      "title": "ACS Old Girls: Our History",
+      "url": "https://acsog.org/acs-history/",
+      "retrieval": "scraped page",
+      "note": "School at Sawani; houses named for flowers: Kakala, Mokosoi, Uci and Lagakali."
+    },
+    {
+      "id": "marist-song",
+      "title": "Fiji Sun: Marist school-song performance",
+      "url": "https://www.facebook.com/fijisun/videos/marist-brothers-high-school-old-boys-and-supporters-chanting-the-school-song-aft/650511829794840/",
+      "retrieval": "search excerpt",
+      "note": "Documents school-song chanting by Marist supporters."
+    },
+    {
+      "id": "usp-anthem",
+      "title": "USP official: Garland of Achievement",
+      "url": "https://www.facebook.com/USP.Team/posts/a-song-that-brings-the-usp-community-togetherthe-usp-choir-performs-garland-of-a/1528909485946112/",
+      "retrieval": "search excerpt",
+      "note": "USP identifies Garland of Achievement as its anthem."
+    },
+    {
+      "id": "natabua-song",
+      "title": "Fiji Times: Natabua school song",
+      "url": "https://www.facebook.com/thefijitimes/videos/local-news-natabua-high-school-students-singing-their-school-song-in-scientia-fo/957525369265531/",
+      "retrieval": "search excerpt",
+      "note": "Identifies In Scientia Fortitudo as the school song."
+    },
+    {
+      "id": "qvs-song",
+      "title": "Fiji Sun: QVS school-song performance",
+      "url": "https://www.facebook.com/fijisun/videos/queen-victoria-school-students-sing-their-school-song-following-the-official-ope/307482298318156/",
+      "retrieval": "search excerpt",
+      "note": "School-song performance following opening of a school block."
+    },
+    {
+      "id": "grammar-context",
+      "title": "Fijivillage: Suva Grammar sapphire anniversary",
+      "url": "https://www.fijivillage.com/feature/-We-are-here-we-are-here--Grammar-celebrates-65th-Sapphire-Anniversary-in-60s-Elegance-f458xr/",
+      "retrieval": "search excerpt",
+      "note": "Identifies Grammar Tu Ga as an alumni anthem and Grammar Here as an anniversary track."
+    },
+    {
+      "url": "https://www.fnu.ac.fj/wp-content/uploads/2020/04/UASR_Booklet_11_March_2019.pdf"
+    },
+    {
+      "url": "https://www.usp.ac.fj/wp-content/uploads/sites/72/2023/04/00-Wayfinding-Manual.pdf"
+    }
+  ],
+  "music": "Existing attributed recordings preserved as listening references; users may choose one for their profile. No song downloads, fake anthem assignments or autoplay.",
+  "illustrations": "Original vector designs; decorative geography is not a campus photograph or a claim of an official school crest. Existing source art preserved."
+}

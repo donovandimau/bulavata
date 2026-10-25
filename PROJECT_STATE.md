@@ -1,3 +1,15 @@
+## 2026-10-25 — Owner correction: redo the identity collections
+
+Owner rejected the colour-dot studio and screenshot defects, then asked to redo all school/group collections and associated music. Resume canonical published 3bce793c6c73c796551f68aff090b7af67385318. Preserve the 88 existing skin IDs, profile/account behavior, native music catalogue, supplied public homepage and original assets.
+
+Replace palette-only cards with visual room thumbnails, search and a collection selector. Collapse optional custom controls. Use one themed cover instead of a wrapping scene title followed by the same group photograph. The revised studio has bounded scrolling and a footer outside the preview. Rebuild artwork across the available collection: 89 new original vector covers plus the new photographic/retro covers; all 94 available skins receive identity metadata, including eight school skins and six additional named music communities. FNU/USP palettes use institution references; other school designs are community supporter treatments rather than certified official branding or copied crests. Primary school/alumni references and limits are in docs/skin-identities-20261025.json.
+
+Keep 73 attributed song associations visible and allow a chosen reference to save in the existing versioned profile settings. Listening stays on the published source; native owned/direct-audio tracks continue to work. No recording downloads, autoplay or invented institutional anthem. Unknown song IDs are rejected. The 222-concept historical research catalogue is preserved; this revision does not claim every school in Fiji is available.
+
+The screenshot's Brokenhearted mid-word title, duplicate cover, palette-only cards, repeated generic cover and encoded waveform are addressed in the new rendering. Existing private schemas/policies, social reads/sends, account logic and 81-song central playlist are unchanged. New art is lazy-loaded; the public-only worker allowlist includes the new static files.
+
+Verification and exact preview/production receipts are recorded in the current PR after hosted checks. Ops browser access is verified; authenticated memory/lease tools remain unavailable in this executor as previously recorded. Continue via connected GitHub/Vercel tools under the 24 October owner standing order; no fabricated memory/lease receipts.
+
 ## 2026-10-25 — Shared profile and chat skins
 
 Owner requested the proposed Ocean, Masi, Coral Sunset and Bebo Retro skins. The canonical live app is donovandimau/bulavata at ec95a9eac7c5cc3a6c8339d461028f1693561370 (sotakece.com), confirmed by Ops Projects and Vercel project sotakece. The separate donovandimau/sota-kece React demo is not the production source and was not changed.

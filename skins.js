@@ -1805,6 +1805,23 @@
     {id:'studio-coral',name:'Coral Sunset',category:'New picks',note:'Stay for one more story.',bg:'#fff0e7',panel:'#fffaf7',ink:'#412b3b',muted:'#735560',accent:'#b7384b',cover:'#f5a486',pattern:'waves',font:'rounded',material:'raised',cardStyle:'round'},
     {id:'studio-retro',name:'Bebo Retro',category:'New picks',note:'Your space. Your people. Your playlist.',bg:'#ede5ff',panel:'#fffbff',ink:'#2f174d',muted:'#6b547c',accent:'#7130a4',cover:'#efb0da',pattern:'checker',font:'rounded',material:'paper',cardStyle:'soft',effect:'sticker'}
   );
+  // Artwork and layout belong to the built-in design, never to imported CSS.
+  const artRoot='/assets/skins/studio/';
+  const artStyles={
+    'studio-ocean':{look:'ocean',coverArt:artRoot+'ocean-20261025.webp',bg:'#081e2c',panel:'#102f41',ink:'#eefbff',muted:'#b4d8e3',accent:'#6de6dd',material:'glass'},
+    'studio-masi':{look:'masi',coverArt:'/assets/masi-supplied.png',coverRepeat:true,bg:'#d6c1a0',panel:'#fff6e7',ink:'#312418',muted:'#6c543a',accent:'#7d402a',material:'paper'},
+    'studio-coral':{look:'coral',coverArt:artRoot+'coral-20261025.webp',bg:'#2b152d',panel:'#48263c',ink:'#fff2ef',muted:'#e3bfcb',accent:'#ffb38d',material:'glass',font:'serif'},
+    'studio-retro':{look:'retro',coverArt:artRoot+'retro-20261025.svg',bg:'#2b124a',panel:'#fff1fa',ink:'#39104b',muted:'#795577',accent:'#b82181',material:'paper'},
+    'memory-broken-hearted':{look:'rain',coverArt:artRoot+'rain-20261025.webp',bg:'#0d1021',panel:'#171b32',ink:'#f1edff',muted:'#b9b9d8',accent:'#eeb0e3',material:'glass',font:'serif'}
+  };
+  for(const p of presets)Object.assign(p,artStyles[p.id]||{look:p.material==='paper'?'paper':'social'});
+  const identities=typeof module==='object'&&module.exports?require('./skin-identities.js'):globalThis.SotaSkinIdentities;
+  if(identities){presets.push(...identities.presets);for(const p of presets)Object.assign(p,identities.styles[p.id]||{});}
+  function song(ref){
+    const match=String(ref||'').match(/^([a-z0-9-]+):(\d{1,2})$/);if(!match)return null;
+    const p=presets.find(p=>p.id===match[1]),s=p?.songs?.[Number(match[2])];
+    return s&&safeUrl(s.url)?{...s,ref:match[0],skinName:p.name}:null;
+  }
   const patterns = ['waves','dots','stars','flowers','stripes','checker','grid','masi','plain'];
   const fonts = ['rounded','serif','mono'];
   const marker = /^\/\* bv-skin:v1 ([^\n]*?) \*\/\n?/;
@@ -1828,7 +1845,7 @@
       font:fonts.includes(input.font)?input.font:preset.font,
       layout:input.layout==='wide'?'wide':'classic',
       note:String(input.note??preset.note).slice(0,80),interests:String(input.interests??'').slice(0,160),
-      trackUrl:safeUrl(input.trackUrl,true),trackTitle:String(input.trackTitle??'').slice(0,80),
+      songRef:song(input.songRef)?String(input.songRef):'',trackUrl:safeUrl(input.trackUrl,true),trackTitle:String(input.trackTitle??'').slice(0,80),
       trackPath:safeMediaPath(input.trackPath,'music'),coverPath:safeMediaPath(input.coverPath,'covers'),
       panel:hex(input.panel,preset.panel),cover:hex(input.cover,preset.cover),
       cardStyle:['soft','square','round'].includes(input.cardStyle)?input.cardStyle:(preset.cardStyle||'soft'),
@@ -1878,7 +1895,9 @@
       `linear-gradient(135deg,${light?'#ffffff99':'#ffffff14'},transparent 55%,${s.accent}0d)`;
     const finish=s.effect==='glow'?`,0 0 16px ${s.accent}44`:s.effect==='sticker'?`,4px 4px 0 ${s.accent}`:'';
     const controlShadow=`0 3px 8px ${s.accent}24,inset 0 1px 0 #ffffff40,inset 0 -2px 0 #00000012`;
-    return {'--bv-art':p.artwork?`url("${p.artwork}")`:'none','--bv-border':p.border?`url("${p.border}")`:'none',
+    return {'--bv-hero':p.coverArt||p.artwork?`url("${p.coverArt||p.artwork}")`:motif(s.pattern),
+      '--bv-hero-size':p.coverRepeat?'240px auto':'cover','--bv-hero-repeat':p.coverRepeat?'repeat':'no-repeat',
+      '--bv-art':p.artwork?`url("${p.artwork}")`:'none','--bv-border':p.border?`url("${p.border}")`:'none',
       '--bv-bg':s.background,'--bv-panel':s.panel,'--bv-ink':s.panel===p.panel?p.ink:foreground(s.panel),'--bv-muted':s.panel===p.panel?p.muted:foreground(s.panel),
       '--bv-accent':s.accent,'--bv-on-accent':foreground(s.accent),
       '--bv-chat-in':s.panel,'--bv-chat-in-ink':s.panel===p.panel?p.ink:foreground(s.panel),
@@ -1910,6 +1929,6 @@
     }
     return rules.join('\n');
   }
-  return {presets,patterns,fonts,normalize,read,encode,tokens,inline,safeLegacy,contrast,foreground,safeUrl};
+  return {presets,patterns,fonts,normalize,read,encode,tokens,inline,safeLegacy,contrast,foreground,safeUrl,song};
 });
 
