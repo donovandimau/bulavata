@@ -22,27 +22,27 @@ function setup({user={id:'owner'},me={id:'owner'},deferClose=false,storageError=
     querySelector: selector => controls[selector],
     querySelectorAll: () => Object.entries(controls).filter(([key]) => key !== '#bv-studio-error').map(([, value]) => value),
     setAttribute() {}, removeAttribute() {},
-    addEventListener(type,listener,options){listeners.push({type,listener,once:!!options?.once});},
+    addEventListener(type,listener,options){listeners.push({target:this,type,listener,once:!!options?.once});},
     close() { calls.closed++;if(!deferClose)fireClose(); }
   };
   const query = {update(patch) { calls.patch=patch; calls.updated++; return query; }, eq(key, id) { calls.owner=id; return query; }, select() {return query;}, single() {return pending;}};
   const context = vm.createContext({
     studio:dialog, draft:settings, mediaBusy:false,
-    S:{user,me},app:{firstElementChild:origin},homeSkinChosen:false,
+    S:{user,me},app:{firstElementChild:origin},homeSkinChosen:false,guestPreviewToken:0,
     skins:{safeUrl:()=>true, encode:()=> 'encoded'},
     sb:{from:()=>query}, discardUploads: kept => calls.kept.push(kept),
-    toast() {}, render:async()=>{calls.rendered++;},renderAuth(){calls.auth++;},
+    toast() {}, render:async()=>{calls.rendered++;},renderAuth(){calls.auth++;context.guestPreviewToken++;context.app.firstElementChild={};},
     localStorage:{setItem(key,value){if(storageError)throw new Error('Storage unavailable');calls.stored.push({key,value});}},
     showGuestRoom(settings){calls.guestRooms.push({settings:JSON.parse(JSON.stringify(settings)),studio:context.studio});},
     showWelcome(settings){calls.welcome.push(settings);},
     window:{addEventListener(){}, SotaPlayback:{register(){}}},
     openDecorate:null, setTimeout, document:{querySelector:()=>null}
   });
-  function fireClose(){
+  function fireClose(target=dialog){
     // The dialog's existing cleanup listener is registered by open() before the
     // save callback. Model that cleanup first, then dispatch the queued once listener.
-    if(context.studio===dialog){context.studio=null;context.draft=null;}
-    for(const entry of [...listeners])if(entry.type==='close'){
+    if(context.studio===target){context.studio=null;context.draft=null;}
+    for(const entry of [...listeners])if(entry.target===target&&entry.type==='close'){
       if(entry.once)listeners.splice(listeners.indexOf(entry),1);
       entry.listener();
     }
@@ -130,9 +130,9 @@ test('guest storage failure keeps the current dialog and unsaved draft',async()=
   assert.equal(h.controls['#bv-save'].disabled,false);assert.equal(h.calls.updated,0);assert.equal(h.calls.auth,0);
 });
 
-test('a replaced origin suppresses the queued guest room destination',async()=>{
-  const h=guest();await h.context.save();h.context.app.firstElementChild={};h.fireClose();
-  assert.equal(h.calls.guestRooms.length,0);assert.equal(h.calls.rendered,0);assert.equal(h.calls.auth,0);
+test('a replacement auth render invalidates the queued guest room destination',async()=>{
+  const h=guest();await h.context.save();h.context.renderAuth();h.fireClose();
+  assert.notEqual(h.context.app.firstElementChild,h.origin);assert.equal(h.calls.guestRooms.length,0);assert.equal(h.calls.rendered,0);assert.equal(h.calls.auth,1);
 });
 
 test('signing in while the guest close event is queued suppresses the guest room',async()=>{
@@ -140,9 +140,11 @@ test('signing in while the guest close event is queued suppresses the guest room
   assert.equal(h.calls.guestRooms.length,0);assert.equal(h.calls.updated,0);assert.equal(h.context.S.me.room_css,undefined);
 });
 
-test('a replacement studio suppresses the queued guest room without closing the replacement',async()=>{
-  const h=guest();await h.context.save();const replacement={};h.context.studio=replacement;h.fireClose();
-  assert.equal(h.context.studio,replacement);assert.equal(h.calls.guestRooms.length,0);assert.equal(h.calls.closed,1);
+test('a newer guest save supersedes the old queued preview without closing its replacement',async()=>{
+  const h=guest();await h.context.save();const replacement={...h.dialog},nextSettings={...guestSettings,note:'Newer selected room'};
+  h.context.studio=replacement;h.context.draft=nextSettings;await h.context.save();h.fireClose();
+  assert.equal(h.context.studio,replacement);assert.equal(h.calls.guestRooms.length,0);assert.equal(h.calls.closed,2);
+  h.fireClose(replacement);assert.equal(h.calls.guestRooms.length,1);assert.deepEqual(h.calls.guestRooms[0].settings,nextSettings);assert.equal(h.calls.guestRooms[0].studio,null);
 });
 
 test('a signed-in account without a profile is not treated as a guest',async()=>{

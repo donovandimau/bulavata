@@ -90,7 +90,7 @@ test('pending invitations disable the button and cannot start a duplicate share'
 });
 
 test('manual fallback reveals and selects the existing input and restores the button',async()=>{
-  const context=harness({clipboard:{writeText:async()=>{throw new Error('denied');}}}),n=nodes();
+  const context=harness({clipboard:{writeText:async()=>{throw new Error('denied');}}}),n=nodes();focusDocument(n);
   context.wireInvite(n.button,n.status,{input:n.input});await n.button.fire();
   assert(n.status.textContent.includes(publicURL));assert.equal(n.input.parentElement.hidden,false);assert.equal(n.input.focused,1);assert.equal(n.input.selected,1);assert.equal(n.button.disabled,false);
 });
@@ -149,6 +149,13 @@ test('completion never steals focus from another control selected while copying'
   context.wireInvite(n.button,n.status,{copyOnly:true,input:n.input});const pending=n.button.fire();doc.activeElement=other;
   gate.resolve();await pending;
   assert.equal(n.button.disabled,false);assert.equal(doc.activeElement,other);assert.equal(n.button.focused,0);
+});
+
+test('manual fallback does not steal focus from another control selected while copying',async()=>{
+  const gate=deferred(),context=harness({clipboard:{writeText:()=>gate.promise}}),n=nodes(),doc=focusDocument(n),other={id:'other-control'};
+  context.wireInvite(n.button,n.status,{copyOnly:true,input:n.input});const pending=n.button.fire();doc.activeElement=other;
+  gate.reject(new Error('Clipboard denied'));await pending;
+  assert(n.status.textContent.includes(publicURL));assert.equal(n.input.parentElement.hidden,false);assert.equal(doc.activeElement,other);assert.equal(n.input.focused,0);assert.equal(n.input.selected,0);assert.equal(n.button.focused,0);assert.equal(n.button.disabled,false);
 });
 
 test('manual fallback keeps its selected input focused instead of restoring the opener',async()=>{
