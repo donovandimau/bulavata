@@ -193,7 +193,7 @@
     document.body.classList.remove('bv-room-active','bv-chat-active');
     delete document.body.dataset.bvLook;
     document.querySelector('#bv-active-skin')?.remove();
-    app.classList.remove('bv-welcome');
+    app.classList.remove('bv-welcome','bv-skin-room-preview');
     document.documentElement.style.setProperty('--accent',S.me?.room_accent||'#086779');
   }
   function apply(profile, room) {
@@ -375,6 +375,18 @@
       delete root.dataset.homeSkin;
     }
   }
+  function showGuestRoom(settings) {
+    if(S.user)return;
+    const s=skins.normalize(settings),name=skins.presets.find(p=>p.id===s.id).name;
+    window.SotaView?.invalidate();window.SotaConnections?.stop();window.SotaKavaUI?.stop();
+    reset();app.classList.add('bv-skin-room-preview');
+    app.innerHTML=`<section class="bv-skin-room-page"><header class="bv-skin-room-head"><div><p class="bv-skin-room-kicker">YOUR SELECTED SKIN</p><h1 id="bv-skin-room-title" tabindex="-1">${esc(name)}</h1><p>Example room · Sign in to make it yours.</p></div><nav aria-label="Room preview actions"><button type="button" class="btn ghost" id="bv-room-change-skin">Change skin</button><button type="button" class="btn" id="bv-room-sign-in">Sign in to save my room</button><button type="button" class="btn ghost" id="bv-room-home">Back to home</button></nav></header><main id="bv-skin-room" data-skin="${esc(s.id)}" aria-label="${esc(name)} room preview">${preview(example,s)}</main></section>`;
+    app.querySelector('#bv-room-change-skin').onclick=()=>open(s);
+    app.querySelector('#bv-room-sign-in').onclick=()=>renderAuth('in',true);
+    app.querySelector('#bv-room-home').onclick=()=>renderAuth('in');
+    wireMedia(app);window.SotaLocalMusic?.mount(app,{beforePlay:()=>{window.SotaPlaylist?.pause();stopSampleOnly();}});
+    app.scrollIntoView({block:'start'});app.querySelector('#bv-skin-room-title').focus({preventScroll:true});
+  }
   function open(initial,collection) {
     if(studio)return;
     const parsed=skins.read(S.me?.room_css);
@@ -497,9 +509,13 @@
     errorBox.textContent='';
     const trackInput=dialog.querySelector('#bv-trackUrl').value.trim();
     if(trackInput&&!skins.safeUrl(trackInput,true)){errorBox.textContent='Use a direct HTTPS audio-file link, or leave it empty.';dialog.querySelector('#bv-trackUrl').focus();return;}
-    if(!S.user||!S.me){
+    if(S.user&&!S.me){errorBox.textContent='Finish setting up your room before saving a skin.';return;}
+    if(!S.user){
       try{localStorage.setItem('bv-picked-skin',JSON.stringify(settings));}catch(_){errorBox.textContent='This browser could not keep your choice. You can still pick it after signing in.';return;}
-      homeSkinChosen=true;close();showWelcome(settings);document.querySelector('#bv-neon')?.scrollIntoView({block:'start'});toast('Homepage skin updated. Make your room to save it with your profile.');return;
+      homeSkinChosen=true;const origin=app.firstElementChild;
+      // Run after the studio close listener clears its draft,media and focus state.
+      dialog.addEventListener('close',()=>{if(!S.user&&studio===null&&app.firstElementChild===origin)showGuestRoom(settings);},{once:true});
+      close();return;
     }
     const name=dialog.querySelector('#d-name').value.trim();
     if(!name){errorBox.textContent='Give your profile a display name.';dialog.querySelector('#d-name').focus();return;}

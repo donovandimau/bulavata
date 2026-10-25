@@ -8,6 +8,20 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* A guest's selected skin opens the room itself, outside the picker dialog. */
+#app.bv-skin-room-preview{max-width:1164px;margin:24px auto;padding:0 18px;background:transparent;box-shadow:none;border:0}
+.bv-skin-room-page{min-width:0;padding-bottom:30px}
+.bv-skin-room-head{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 24px;margin-bottom:18px;background:#fff;border:1px solid #c9dce0;border-radius:16px;color:#173e50}
+.bv-skin-room-head h1{font:800 clamp(25px,4vw,34px)/1.2 Nunito,sans-serif;color:#173e50;margin:0 0 7px;outline:none}
+.bv-skin-room-head p{font:14px/1.6 Nunito,sans-serif;color:#476878;margin:0}
+.bv-skin-room-head .bv-skin-room-kicker{font-size:10px;font-weight:800;letter-spacing:.13em;color:#35666e;margin-bottom:6px}
+.bv-skin-room-head nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.bv-skin-room-head .btn{min-height:44px;font:800 13px/1.4 Nunito,sans-serif;white-space:normal;padding:10px 14px}
+.bv-skin-room-page #bv-skin-room{min-width:0;max-width:100%}
+.bv-skin-room-page .bv-preview{width:100%;max-width:none;margin:0}
+.bv-skin-room-page button:focus-visible{outline:3px solid #166d75;outline-offset:3px}
+@media(max-width:760px){#app.bv-skin-room-preview{margin:14px auto;padding:0 12px}.bv-skin-room-head{padding:18px;align-items:start;flex-direction:column;gap:16px}.bv-skin-room-head nav{justify-content:start;width:100%}.bv-skin-room-head .btn{flex:1 1 auto}}
+
 @font-face {
   font-family: 'Fredoka';
   font-style: normal;
