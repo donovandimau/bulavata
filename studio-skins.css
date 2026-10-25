@@ -179,7 +179,7 @@
 .bv-chosen-song b{display:block;font:750 13px/1.4 var(--bv-font);color:var(--bv-ink)}.bv-chosen-song>div>span{display:block;font:400 10px/1.5 var(--bv-font);color:var(--bv-muted)}
 .bv-chosen-song>a{flex:none;min-height:40px;display:grid;place-items:center;padding:7px 10px;border:1px solid var(--bv-accent);border-radius:7px;color:var(--bv-link);font:700 11px system-ui;text-decoration:none}
 .bv-chosen-song>.bv-vinyl{flex:0 0 42px!important;width:42px!important;min-width:42px;max-width:42px;height:42px;aspect-ratio:1}
-.bv-studio:is(.bv-studio,.bv-skin-room-page) .bv-identity-song small{font-size:9px!important;line-height:1.5!important}
+:is(.bv-studio.bv-studio,.bv-skin-room-page.bv-skin-room-page) .bv-identity-song small{font-size:9px!important;line-height:1.5!important}
 .bv-preview-back{display:none}
 .bv-studio.bv-studio .bv-studio-footer{display:flex!important;align-items:center;justify-content:flex-end;flex-wrap:nowrap;min-height:70px;height:auto;padding:12px 20px}
 .bv-studio.bv-studio .bv-studio-footer .bv-studio-error:empty{display:none}
