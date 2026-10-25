@@ -1,3 +1,11 @@
+## 2026-10-25 — Owner rejects bare/cartoon collection treatment
+
+Owner asks for a more accomplished design after the collection browser was published. Resume canonical 9b4c96460a747770dfd18458524f4dec0549b06d. Replace flat vector cover presentation with original photographic mood artwork and a restrained editorial interface: nine generated scenes, six full-image collection entries, stronger community titles, less rounded typography, no miniature placeholder profile skeletons, and a cleaner studio. Ra's rooster, Nadroga's horse and the childhood dalo-garden identity have dedicated photographic motifs. Existing Ocean, Coral Sunset and Brokenhearted photographic covers remain in use.
+
+All 94 IDs, custom words, colours, song associations and saved settings are preserved. The old original vectors stay in the repository. New cover resolution is a separate local module, used by profile/chat tokens and thumbnails without rewriting identity metadata. The owner's supplied public hero, logos and blue pattern remain unchanged. The new photography is original illustrative mood art, not documentary imagery of a school, an artist portrait or official institutional branding. Generation briefs and source PNG names are in docs/editorial-artwork.md; original generation outputs are preserved.
+
+New WebP files are fetched only when used. They are excluded from install-time shell caching and added to the narrowly scoped public-image allowlist. No new UI runtime, external image host, audio source, database or access-control change. Real visual preview and production receipts belong to the current PR.
+
 ## 2026-10-25 — Apply the design research to community discovery
 
 Owner accepted the design-search recommendation to apply it to Sota Kece first. Resume verified published main 519d02201a6d0f843d12fc3ecb6659b8ae0ac1d3 in donovandimau/bulavata, Vercel project sotakece. The separate sota-kece React demo is not the production source.

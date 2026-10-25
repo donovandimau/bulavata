@@ -4,9 +4,9 @@ Sota Kece is a Fijian community space built around people, personal rooms and mu
 
 ## Community discovery
 
-Use original existing skin artwork as the primary visual cue. Six collection cards group the available schools, vanua/islands, music communities, cultural designs, life events and new styles. Derive counts and featured examples from the actual preset catalogue in `skin-discovery.js`. All skins remain available through All skins and the category selector. A search covers identity names and the existing attributed song/artist references.
+Use original photographic mood artwork as the primary visual cue, resolved through `skin-visuals.js`. All 94 room covers and studio thumbnails use this presentation; the original vector library remains preserved as source history. Six collection cards group the available schools, vanua/islands, music communities, cultural designs, life events and new styles. Derive counts and featured examples from the actual preset catalogue in `skin-discovery.js`. All skins remain available through All skins and the category selector. A search covers identity names and the existing attributed song/artist references.
 
-The discovery panel uses a dark ocean surface (`#0b2034`), crisp light type, restrained mint actions and cover imagery. Preserve the visible surrounding supplied pattern. Cards have a layered cover treatment, a clear name, an honest count and a short human description. Images are decorative when the button already names the collection. Use native buttons, visible focus, reduced-motion support and a narrow-screen layout without horizontal page overflow.
+The owner rejected bare vector cards and cartoon styling. Use a warm editorial surface (`#f5f3ee`), restrained Arial/system typography, asymmetric photographic cards and legible white image captions. Preserve the supplied pattern outside this panel. Featured school and music entries get more space; the coastal, cultural and memories entries form an image-led row. Use real material depth and original photographic mood artwork rather than stacked vector covers, abstract symbols, toy profile skeletons or rounded display lettering. Counts remain honest. Images are decorative when the button already names the collection. Native buttons, visible focus, reduced motion and narrow-screen layouts remain essential.
 
 ## Distinct room hierarchy
 
@@ -21,6 +21,6 @@ The presentation family derives from the stable skin ID, not from imported arbit
 
 ## Reuse and constraints
 
-The 25 October GitHub review informed the hierarchy: content-led music discovery, mobile-friendly collection entry and reusable accessible controls. This implementation uses original native HTML/CSS/JS and existing assets. It does not copy Spotify code, proprietary fonts, institutional crests, third-party photographs or recordings. The existing song relationships remain attributed references, and the central native playlist is unchanged.
+The 25 October GitHub review informed the hierarchy: content-led music discovery, mobile-friendly collection entry and reusable accessible controls. This implementation uses original native HTML/CSS/JS and existing assets. Nine original mood scenes were generated for this revision, with briefs in `docs/editorial-artwork.md`. They are illustrative artwork, not records of a real school campus or portraits of a real artist. This implementation does not copy Spotify code, proprietary fonts, institutional crests, third-party photographs or recordings. The existing song relationships remain attributed references, and the central native playlist is unchanged.
 
 Keep expert settings under Fine-tune your skin. Add no large UI framework solely for visual styling. New public shell files belong in the worker allowlist; optional cover imagery stays lazy-loaded. Authentication, social queries, private media and cache exclusions are outside the visual redesign.

@@ -1,0 +1,147 @@
+/* Photographic collections and a restrained editorial type system. */
+.bv-welcome .bv-discovery,.bv-welcome .bv-discovery *,.bv-studio.bv-studio{font-family:Arial,Helvetica,system-ui,sans-serif!important}
+.bv-welcome .bv-discovery{padding:36px;border:1px solid #d9d7cf;border-radius:8px;background:#f5f3ee;color:#172c35;box-shadow:0 20px 55px #0b26391a}
+.bv-welcome .bv-discovery>header{align-items:flex-end;gap:28px;margin-bottom:28px}
+.bv-welcome .bv-discovery-kicker{color:#667367;font-size:10px;letter-spacing:.19em;font-weight:700}
+.bv-welcome .bv-discovery h2{margin:12px 0 14px;color:#182b30;font-size:clamp(34px,4.6vw,58px);font-weight:500;line-height:1.04;letter-spacing:-.055em}
+.bv-welcome .bv-discovery header p{color:#52626a;font-size:15px;font-weight:400;line-height:1.6;max-width:500px}
+.bv-welcome .bv-discovery-all{border:1px solid #c6cdc7;border-radius:3px;padding:13px 17px;background:transparent;color:#203b3c;font-size:12px;font-weight:600;white-space:nowrap;min-height:46px;transition:background .2s,color .2s}
+.bv-welcome .bv-discovery-all:hover{background:#173d3c;color:#fff}
+.bv-welcome .bv-collection-grid{grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.bv-welcome .bv-collection-card{grid-column:span 4;height:266px;display:block;border:0;border-radius:4px;background:#12232a;isolation:isolate;box-shadow:none;overflow:hidden;transition:transform .25s}
+.bv-welcome .bv-collection-card[data-collection=school-pride]{grid-column:span 7;height:350px}
+.bv-welcome .bv-collection-card[data-collection=music-crowd]{grid-column:8/span 5;height:350px;grid-row:1}
+.bv-welcome .bv-collection-card[data-collection=vanua-islands]{grid-row:2;grid-column:1/span 4}
+.bv-welcome .bv-collection-card[data-collection=masi-culture]{grid-row:2;grid-column:5/span 4}
+.bv-welcome .bv-collection-card[data-collection=life-memories]{grid-row:2;grid-column:9/span 4}
+.bv-welcome .bv-collection-card[data-collection=fresh-looks]{grid-column:1/-1;height:180px}
+.bv-welcome .bv-collection-card:hover{transform:none;background:#12232a;border:0}
+.bv-welcome .bv-collection-card .bv-collection-art,.bv-welcome .bv-collection-card[data-collection=music-crowd] .bv-collection-art{position:absolute;inset:0;margin:0;width:100%;height:100%;border-radius:0;background:#15232b;z-index:-2}
+.bv-welcome .bv-collection-card .bv-collection-art img,.bv-welcome .bv-collection-card[data-collection=music-crowd] .bv-collection-art img:first-child{inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transform:none;border:0;border-radius:0;box-shadow:none;transition:transform .45s ease}
+.bv-welcome .bv-collection-card::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#061219eb,transparent 90%),linear-gradient(90deg,#07111755,transparent 80%);pointer-events:none}
+.bv-welcome .bv-collection-card:hover .bv-collection-art img{transform:scale(1.04)}
+.bv-welcome .bv-collection-card[data-collection=fresh-looks] .bv-collection-art img{object-position:center 56%}
+.bv-welcome .bv-collection-card[data-collection=fresh-looks]::before{background:linear-gradient(90deg,#08171ce3,transparent 85%)}
+.bv-welcome .bv-collection-card[data-collection=school-pride] .bv-collection-art img{object-position:center 58%}
+.bv-welcome .bv-collection-copy{position:absolute;inset:auto 24px 24px;display:flex;flex-direction:column;gap:8px;padding:0;max-width:85%;color:#fff}
+.bv-welcome .bv-collection-card[data-collection=school-pride] .bv-collection-copy,.bv-welcome .bv-collection-card[data-collection=music-crowd] .bv-collection-copy{inset:auto 26px 26px}
+.bv-welcome .bv-collection-count{font-size:9px;line-height:1.5;font-weight:600;letter-spacing:.18em;color:#e1e7df;text-transform:uppercase}
+.bv-welcome .bv-collection-copy strong{font-size:27px;font-weight:500;line-height:1.08;letter-spacing:-.035em;color:#fff;max-width:95%}
+.bv-welcome .bv-collection-card[data-collection=school-pride] strong,.bv-welcome .bv-collection-card[data-collection=music-crowd] strong{font-size:39px}
+.bv-welcome .bv-collection-line{max-width:320px;color:#edf0e9;font-size:12px;font-weight:400;line-height:1.5}
+.bv-welcome .bv-collection-members{display:block;margin-top:5px;font-size:8px;font-weight:600;line-height:1.5;letter-spacing:.14em;text-transform:uppercase;color:#c9d5cd}
+.bv-welcome .bv-collection-arrow{right:23px;bottom:24px;font:300 25px/1 Arial!important;color:#fff}
+.bv-welcome .bv-discovery-note{margin:20px 0 0;color:#626f6f;font-size:11px;font-weight:400;line-height:1.6}
+
+/* The editor uses the same photography and drops toy profile skeletons. */
+.bv-studio.bv-studio{border-radius:10px;border-color:#34434b;background:#0d1720;max-width:1320px}
+.bv-studio .bv-studio-head{background:#101d26;border-bottom:1px solid #3d4b53}
+.bv-studio .bv-studio-head h2{font:500 30px/1.1 Arial,Helvetica,system-ui!important;letter-spacing:-.035em}
+.bv-studio .bv-studio-head p{font:400 12px/1.6 Arial,Helvetica,system-ui!important;color:#b9c8cc}
+.bv-studio .bv-studio-kicker{color:#b5c8bb;letter-spacing:.18em;font-family:Arial,Helvetica,system-ui!important}
+.bv-studio .bv-studio-controls{background:#111e28}
+.bv-studio .bv-studio-preview{background:#0b151d;padding-top:22px}
+.bv-studio .bv-collection-shortcuts .bv-collection-card{background:#192c37;border-color:#465760;border-radius:5px;min-height:72px}
+.bv-studio .bv-collection-shortcuts .bv-collection-card[aria-pressed=true]{background:#263e42;border-color:#d8dfcf;box-shadow:inset 2px 0 0 #e4d3ac}
+.bv-studio .bv-collection-shortcuts .bv-collection-copy strong{font-size:11px;font-weight:500}
+.bv-studio .bv-collection-shortcuts .bv-collection-art{height:48px;width:38px;border-radius:2px}
+.bv-studio .bv-collection-shortcuts .bv-collection-art img{object-position:65% center}
+.bv-studio .bv-skin-option{border-radius:5px;background:#182832;border-color:#42515a;box-shadow:none;overflow:hidden}
+.bv-studio .bv-skin-option[aria-pressed=true]{border-color:#e6d6af;box-shadow:inset 0 0 0 1px #e6d6af}
+.bv-studio .bv-visual-thumb{display:block;height:180px;overflow:hidden;background:#14242d}
+.bv-studio .bv-visual-thumb .bv-thumb-art{position:relative;display:flex;align-items:flex-end;height:100%;width:100%;padding:15px;margin:0;isolation:isolate;background:none}
+.bv-studio .bv-visual-thumb .bv-thumb-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:65% center;opacity:1;z-index:-2}
+.bv-studio .bv-visual-thumb .bv-thumb-art::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#03101de6,transparent 100%);z-index:-1}
+.bv-studio .bv-visual-thumb .bv-thumb-art b{position:static;width:auto;max-width:100%;margin:0;padding:0;color:#fff;font:500 20px/1.08 Arial,Helvetica,system-ui!important;letter-spacing:-.03em;text-shadow:none;text-transform:none;overflow-wrap:normal;word-break:normal}
+.bv-studio .bv-choice-label{display:flex;align-items:center;gap:6px;justify-content:space-between;padding:11px 12px;min-height:50px}
+.bv-studio .bv-choice-label strong{font:500 12px/1.3 Arial,Helvetica,system-ui!important;color:#f2f4ef}
+.bv-studio .bv-choice-label small{font:400 9px/1.3 Arial,Helvetica,system-ui!important;color:#b4c2c7;text-align:right}
+.bv-studio .bv-choice-label::after{display:none}
+.bv-studio .bv-skin-option[aria-pressed=true] .bv-choice-label small::after{content:' / selected';color:#e6d6af}
+.bv-studio :is(.bv-skin-filters label,.bv-studio-custom>summary){font-family:Arial,Helvetica,system-ui!important;font-weight:500}
+.bv-studio .bv-preview-modes{border-radius:4px;background:#1a2c37}
+.bv-studio .bv-preview-modes button{border-radius:3px;font:500 12px/1.4 Arial,Helvetica,system-ui!important}
+.bv-studio .bv-preview-modes button[aria-pressed=true]{background:#e9e5da;color:#223a3a}
+.bv-studio .bv-example-label{font-family:Arial,Helvetica,system-ui!important}
+.bv-studio.bv-studio .bv-studio-footer .btn{border-radius:4px;font-family:Arial,Helvetica,system-ui!important;font-weight:600!important}
+.bv-studio.bv-studio .bv-studio-footer #bv-save{background:#e6dbc1;color:#203936;border-color:#e6dbc1}
+
+/* Full room covers use a real image, a community title and the member's own words. */
+.bv-art-room,.bv-art-room[data-look],.bv-room #room-head{border-radius:6px!important;box-shadow:0 16px 42px #0003!important;border-width:1px!important;border-style:solid!important}
+.bv-art-room .bv-cover,.bv-art-room[data-look] .bv-cover,.bv-room #room-head .bv-cover{height:285px;min-height:285px;padding:26px 30px 34px;background-size:cover!important;background-repeat:no-repeat!important;background-position:var(--bv-hero-position,60% center)!important;align-items:flex-end}
+.bv-art-room .bv-cover::before,.bv-art-room[data-look] .bv-cover::before,.bv-room #room-head .bv-cover::before{background:linear-gradient(0deg,#03111ee8,transparent 100%),linear-gradient(90deg,#04131a66,transparent 90%)!important}
+.bv-art-room .bv-cover-copy,.bv-room #room-head .bv-cover-copy{width:100%;padding:0;max-width:100%}
+.bv-art-room .bv-skin-tag,.bv-room #room-head .bv-skin-tag{border:0;border-radius:0;background:transparent;backdrop-filter:none;margin:0 0 14px;padding:0;font:600 9px/1.5 Arial,Helvetica,system-ui!important;letter-spacing:.14em;color:#fff}
+.bv-studio .bv-art-room .bv-identity-title,.bv-room #room-head .bv-identity-title{margin:0 0 13px!important;padding:0;color:#fff!important;max-width:94%;font:500 clamp(28px,3.2vw,43px)/1.03 Arial,Helvetica,system-ui!important;letter-spacing:-.045em!important;text-transform:none!important;text-shadow:0 2px 14px #0004!important;overflow-wrap:normal;word-break:normal}
+.bv-art-room .bv-cover-words,.bv-art-room[data-look] .bv-cover-words,.bv-room #room-head .bv-cover-words{font:400 13px/1.6 Arial,Helvetica,system-ui!important;letter-spacing:.01em!important;text-transform:none!important;font-style:normal!important;max-width:85%!important;text-shadow:0 1px 6px #0005;color:#f8f8f2}
+.bv-studio .bv-art-room .bv-profile-intro{font-family:Arial,Helvetica,system-ui!important;border-top-width:0;padding-top:18px;padding-bottom:17px}
+.bv-studio .bv-art-room .bv-profile-intro h2{font:500 24px/1.15 Arial,Helvetica,system-ui!important;letter-spacing:-.035em}
+.bv-studio .bv-art-room .bv-profile-intro .bv-room-bio{font:400 12px/1.6 Arial,Helvetica,system-ui!important}
+.bv-art-room .bv-room-sticker,.bv-art-room .bv-player-wave{display:none!important}
+.bv-art-room .bv-profile-avatar{border-radius:50%!important;box-shadow:0 2px 14px #0003!important}
+.bv-art-room .bv-room-tabs{justify-content:flex-start;gap:24px;font-family:Arial,Helvetica,system-ui!important;font-weight:500!important;letter-spacing:.03em!important;text-transform:none!important;border-bottom-width:1px}
+.bv-art-room[data-look] .bv-mini-card{border-radius:5px!important;border-width:1px!important;box-shadow:none!important}
+.bv-studio .bv-art-room .bv-mini-card h3{font:600 13px/1.4 Arial,Helvetica,system-ui!important}
+.bv-studio .bv-art-room .bv-mini-card h3 small{font:400 10px/1.5 Arial,Helvetica,system-ui!important}
+.bv-art-room .bv-photo-friends>span{border-radius:4px!important;border-width:0!important}
+.bv-studio .bv-art-room .bv-photo-note :is(b,p){font-family:Arial,Helvetica,system-ui!important}
+.bv-art-room .bv-identity-music,.bv-art-room .bv-skin-player,.bv-art-room .bv-chosen-song{border-radius:5px!important;box-shadow:none!important}
+.bv-studio .bv-art-room .bv-identity-music>header h3{font:500 19px/1.2 Arial,Helvetica,system-ui!important;letter-spacing:-.02em}
+.bv-studio .bv-art-room .bv-identity-song b{font:500 13px/1.5 Arial,Helvetica,system-ui!important}
+.bv-studio .bv-art-room .bv-identity-song button{border-radius:4px;min-height:44px}
+.bv-studio .bv-art-room .bv-identity-song a{min-height:32px}
+.bv-studio .bv-art-room .bv-identity-song>div>span{font-family:Arial,Helvetica,system-ui!important}
+.bv-chat-preview .bv-chat-heading{background-size:cover!important;min-height:155px}
+.bv-studio .bv-chat-preview :is(h3,p,.msg,.who){font-family:Arial,Helvetica,system-ui!important}
+.bv-studio .bv-chat-preview .msg{border-radius:8px!important;box-shadow:none!important;border-width:1px!important}
+
+@media(max-width:960px){
+ .bv-welcome .bv-discovery{padding:25px}
+ .bv-welcome .bv-collection-card[data-collection=school-pride],.bv-welcome .bv-collection-card[data-collection=music-crowd]{height:320px}
+ .bv-welcome .bv-collection-card{height:255px}
+ .bv-welcome .bv-collection-copy{inset:auto 18px 21px;max-width:87%}
+ .bv-welcome .bv-collection-copy strong{font-size:24px}
+ .bv-welcome .bv-collection-card[data-collection=school-pride] strong,.bv-welcome .bv-collection-card[data-collection=music-crowd] strong{font-size:32px}
+}
+@media(max-width:760px){
+ .bv-welcome .bv-discovery{padding:22px 16px;border-radius:5px}
+ .bv-welcome .bv-discovery>header{display:block;margin-bottom:22px}
+ .bv-welcome .bv-discovery h2{font-size:39px;margin:12px 0}
+ .bv-welcome .bv-discovery header p{font-size:13px}
+ .bv-welcome .bv-discovery-all{margin-top:19px;font-size:11px;min-height:44px}
+ .bv-welcome .bv-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .bv-welcome .bv-collection-card[data-collection]{grid-column:auto;grid-row:auto;height:240px}
+ .bv-welcome .bv-collection-card[data-collection=school-pride]{grid-column:1/-1;height:290px}
+ .bv-welcome .bv-collection-card[data-collection=fresh-looks]{grid-column:1/-1;height:195px}
+ .bv-welcome .bv-collection-copy,.bv-welcome .bv-collection-card[data-collection=school-pride] .bv-collection-copy,.bv-welcome .bv-collection-card[data-collection=music-crowd] .bv-collection-copy{inset:auto 14px 18px;gap:7px;max-width:90%}
+ .bv-welcome .bv-collection-copy strong,.bv-welcome .bv-collection-card[data-collection=music-crowd] strong{font-size:23px}
+ .bv-welcome .bv-collection-card[data-collection=school-pride] strong{font-size:35px}
+ .bv-welcome .bv-collection-line{font-size:10px;line-height:1.5;max-width:91%}
+ .bv-welcome .bv-collection-count{font-size:8px;letter-spacing:.12em}
+ .bv-welcome .bv-collection-members{font-size:7px;letter-spacing:.09em;max-width:88%}
+ .bv-welcome .bv-collection-arrow{right:12px;bottom:15px;font-size:20px!important}
+ .bv-studio .bv-studio-head h2{font-size:26px!important}
+ .bv-studio .bv-visual-thumb{height:160px}
+ .bv-studio .bv-visual-thumb .bv-thumb-art{height:100%;padding:12px}
+ .bv-studio .bv-visual-thumb .bv-thumb-art b{font-size:18px!important}
+ .bv-studio .bv-choice-label{min-height:54px;padding:10px;display:block}
+ .bv-studio .bv-choice-label strong{display:block;font-size:12px!important}
+ .bv-studio .bv-choice-label small{display:block;margin-top:4px;text-align:left}
+ .bv-studio .bv-art-room[data-look] .bv-cover{height:265px;min-height:265px;padding:24px 22px 30px;background-position:var(--bv-hero-position,62% center)!important}
+ .bv-studio .bv-art-room .bv-identity-title{font-size:30px!important;line-height:1.06!important;max-width:100%}
+ .bv-studio .bv-art-room .bv-cover-words{font-size:12px!important;line-height:1.5!important}
+ .bv-art-room .bv-room-tabs{gap:14px;font-size:9px}
+ .bv-studio .bv-art-room .bv-profile-intro .bv-room-bio{font-size:12px!important}
+ .bv-studio .bv-art-room .bv-photo-friends{gap:5px}
+ .bv-room #room-head .bv-identity-title{font-size:34px!important}
+}
+@media(prefers-reduced-motion:reduce){.bv-welcome .bv-collection-card .bv-collection-art img{transition:none}.bv-welcome .bv-collection-card:hover .bv-collection-art img{transform:none}}
+@media(forced-colors:active){
+ .bv-welcome .bv-discovery{background:Canvas;border-color:CanvasText}
+ .bv-welcome .bv-discovery :is(h2,p,.bv-discovery-kicker){color:CanvasText}
+ .bv-welcome .bv-collection-card::before{background:Canvas;opacity:.95}
+ .bv-welcome .bv-collection-card :is(strong,span){color:CanvasText}
+ .bv-welcome .bv-collection-card{border:1px solid CanvasText}
+ .bv-studio .bv-visual-thumb .bv-thumb-art::after{background:Canvas;opacity:.95}
+ .bv-studio .bv-visual-thumb .bv-thumb-art b{color:CanvasText}
+}
