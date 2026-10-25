@@ -1,3 +1,9 @@
+## 2026-10-25 — Verify identity skins and repair phone title clipping
+
+Owner asks to complete the rebuilt collections. Check the current canonical live release, preserving the photographic design, six collection entries, 94 skin IDs, 73 listening references and the shared music visualiser. Browser checks confirmed the RKS school recording plays at its published YouTube source; the native 81-track player streams its first track with advancing time and no media error; the chosen RKS skin and soundtrack survive a signed-out browser reload; all six music-community cards show their attributed song reference. Signed-in profile persistence remains untested because no account session is available.
+
+At 390px the inherited two-and-a-half-line thumbnail title limit clips long school names. Remove that old height limit for the photographic title, keeping the existing artwork, card dimensions, wrapping, controls, account/storage and song behavior. Version the stylesheet URL and public shell cache. Exact candidate/release and visual checks are recorded in the scoped PR; do not claim release before verification.
+
 ## 2026-10-25 — Shared audio-reactive music visuals (review revision)
 
 Owner asks to research the first ten music visualiser search pages and build selected features into Sota Kece, the shared player, Sere and Dimau Studios. Add an original shared Canvas/Web Audio engine: spectrum with peak caps, waveform, halo, layered ocean waves; four palettes; intensity; fullscreen; gesture-only activation; low-data, visibility and reduced-motion controls. Studios/Sere include bounded audio-backed WebM capture, and Sere reuses the same source for lyric-video export. Current artwork, songs/catalogue, source credits, accounts/storage and unrelated saved revisions are preserved. Public Maps exposes this as an optional disclosure within music, keeping its ordinary interface simple.
