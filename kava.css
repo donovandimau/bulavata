@@ -97,7 +97,7 @@ nav.bottom{max-width:540px}nav.bottom button{min-width:0}button:focus-visible{ou
 #app .kava-room .kava-money{padding:12px;background:#f5f9f7;border-radius:10px;gap:8px;font-size:11px;color:#536e72}
 #app .kava-room .kava-tips{gap:8px}
 #app .kava-room .kava-tips .btn{flex:1;padding:10px 7px;font-size:12px}
-#app .kava-room .kava-tips .btn[aria-pressed=true]{background:#e0f2e9;border-color:#579a83;color:#235b48;outline:0}
+#app .kava-room .kava-tips .btn[aria-pressed=true]{background:#e0f2e9;border-color:#579a83;color:#235b48}
 #app .kava-room .kava-values-card{background:#f8fbf7;border-color:#dce7db}
 #app .kava-room .kava-respect span{background:#fff;border-color:#d3e2d7;color:#496856;font-size:11px;padding:6px 9px}
 #app:has(.kava-room[data-preview="true"]) nav.bottom{display:none!important}
