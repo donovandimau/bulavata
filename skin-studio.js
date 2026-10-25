@@ -3,6 +3,7 @@
   const skins = window.BulaSkins;
   if (!skins) return;
   const discovery = window.SotaSkinDiscovery;
+  const visuals = window.SotaSkinVisuals;
   let studio = null, draft = null, legacy = '', focusBefore = null;
   let homeSkinChosen=false;
   try{homeSkinChosen=!!localStorage.getItem('bv-picked-skin');}catch(_){}
@@ -76,7 +77,7 @@
   }
   function coverContent(settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
-    return `${s.coverPath?coverMediaMarkup(s):''}<div class="bv-cover-copy"><span class="bv-skin-tag">${esc(p.name)}</span><div class="bv-cover-words">${esc(s.note||p.note)}</div></div>`;
+    return `${s.coverPath?coverMediaMarkup(s):''}<div class="bv-cover-copy"><span class="bv-skin-tag">${esc(p.category)} · Your community</span><h3 class="bv-identity-title">${esc(p.identityLabel||p.name)}</h3><div class="bv-cover-words">${esc(s.note||p.note)}</div></div>`;
   }
   function preview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
@@ -247,18 +248,18 @@
     return tiles.map((tile,i)=>`<button type="button" class="bv-collage-tile bv-tile-${tile[0]}" data-collage-skin="${skins.presets[i%skins.presets.length].id}" aria-label="Try ${esc(skins.presets[i%skins.presets.length].name)} skin" style="--tile-tone:${['#086779','#ac244c','#362459','#187e9c','#a05617','#194f47'][i%6]};${tile[0]==='music'?`background-image:url('/assets/fiji-music.jpg');background-position:65% 35%;`:''}">${tile[0]==='photo'?frontCrop(tile[1],tile[2],tile[3],tile[4],'Friends from your Fijian community design'):['text','emoji'].includes(tile[0])?esc(tile[1]).replace(/\n/g,'<br>'):''}</button>`).join('');
   }
   function skinThumbnail(p) {
-    const art=p.coverArt||p.artwork;
-    return `<span class="bv-visual-thumb" style="${esc(skins.inline({id:p.id}))}" data-look="${p.look}" aria-hidden="true"><span class="bv-thumb-art">${art?`<img src="${esc(art)}" loading="lazy" alt="">`:''}<b>${esc(p.note)}</b></span><span class="bv-thumb-person"><i>✦</i><span>Your room</span></span><span class="bv-thumb-cards"><i></i><i></i></span></span>`;
+    const art=visuals?.cover(p)||p.coverArt||p.artwork;
+    return `<span class="bv-visual-thumb" style="${esc(skins.inline({id:p.id}))}" data-look="${p.look}" aria-hidden="true"><span class="bv-thumb-art">${art?`<img src="${esc(art)}" loading="lazy" alt="">`:''}<b>${esc(p.identityLabel||p.name)}</b></span></span>`;
   }
   function collectionMarkup(compact=false) {
     if(!discovery)return '';
     return discovery.collections(skins.presets).map(group=>`<button type="button" class="bv-collection-card" data-collection="${group.id}" ${compact?`aria-pressed="${skinCategory===group.id}"`:''} aria-label="Browse ${esc(group.name)} · ${group.count} skins">
-      <span class="bv-collection-art" aria-hidden="true">${group.featured.map(p=>`<img src="${esc(p.coverArt||p.artwork)}" alt="" loading="lazy" decoding="async" width="600" height="300">`).join('')}</span>
-      <span class="bv-collection-copy"><span class="bv-collection-count">${group.count} skins</span><strong>${esc(group.name)}</strong>${compact?'':`<span class="bv-collection-line">${esc(group.line)}</span>`}</span><span class="bv-collection-arrow" aria-hidden="true">↗</span></button>`).join('');
+      <span class="bv-collection-art" aria-hidden="true"><img src="${esc(visuals?.collection(group.id)||group.featured[0].coverArt)}" alt="" loading="lazy" decoding="async" width="1536" height="1024"></span>
+      <span class="bv-collection-copy"><span class="bv-collection-count">${group.count} skins</span><strong>${esc(group.name)}</strong>${compact?'':`<span class="bv-collection-line">${esc(group.line)}</span><span class="bv-collection-members">${group.featured.map(p=>esc(p.name)).join(' / ')}</span>`}</span><span class="bv-collection-arrow" aria-hidden="true">↗</span></button>`).join('');
   }
   function discoveryMarkup() {
     if(!discovery)return '';
-    return `<section class="bv-discovery" aria-labelledby="bv-discovery-title"><header><div><span class="bv-discovery-kicker">FIND YOUR PEOPLE. MAKE IT YOURS.</span><h2 id="bv-discovery-title">A little more you.</h2><p>Start with your school, your vanua or the music you love.</p></div><button type="button" class="bv-discovery-all">Explore all ${skins.presets.length} skins <span aria-hidden="true">↗</span></button></header><div class="bv-collection-grid">${collectionMarkup()}</div><p class="bv-discovery-note">Community-made room designs. Preview a skin, then make it your own.</p></section>`;
+    return `<section class="bv-discovery" aria-labelledby="bv-discovery-title"><header><div><span class="bv-discovery-kicker">THE SOTA KECE COLLECTIONS</span><h2 id="bv-discovery-title">Where you belong.</h2><p>Your school. Your vanua. The music that takes you home.</p></div><button type="button" class="bv-discovery-all">Explore ${skins.presets.length} room designs <span aria-hidden="true">↗</span></button></header><div class="bv-collection-grid">${collectionMarkup()}</div><p class="bv-discovery-note">Original cover artwork. Community-made designs. A space to make your own.</p></section>`;
   }
   function originalCrop(x,y,w,h,label) {
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(label)}"><image href="/assets/mobile-front-reference.png" width="1008" height="1792"/></svg>`;

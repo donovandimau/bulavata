@@ -1881,6 +1881,8 @@
   }
   function tokens(raw) {
     const s=normalize(raw),p=presets.find(p=>p.id===s.id);
+    const visuals=typeof module==='object'&&module.exports?require('./skin-visuals.js'):globalThis.SotaSkinVisuals;
+    const hero=visuals?.cover(p)||p.coverArt||p.artwork;
     // Materials follow the chosen palette; saved v1 settings remain compatible.
     const paper=p.material==='paper'||['masi','kava','notebook','ink','varsity','comic'].includes(s.id);
     const raised=p.material==='raised'||['kula','bloom','palm','mango','candy','cloud','mint'].includes(s.id);
@@ -1895,8 +1897,8 @@
       `linear-gradient(135deg,${light?'#ffffff99':'#ffffff14'},transparent 55%,${s.accent}0d)`;
     const finish=s.effect==='glow'?`,0 0 16px ${s.accent}44`:s.effect==='sticker'?`,4px 4px 0 ${s.accent}`:'';
     const controlShadow=`0 3px 8px ${s.accent}24,inset 0 1px 0 #ffffff40,inset 0 -2px 0 #00000012`;
-    return {'--bv-hero':p.coverArt||p.artwork?`url("${p.coverArt||p.artwork}")`:motif(s.pattern),
-      '--bv-hero-size':p.coverRepeat?'240px auto':'cover','--bv-hero-repeat':p.coverRepeat?'repeat':'no-repeat',
+    return {'--bv-hero':hero?`url("${hero}")`:motif(s.pattern),
+      '--bv-hero-size':visuals?'cover':p.coverRepeat?'240px auto':'cover','--bv-hero-repeat':!visuals&&p.coverRepeat?'repeat':'no-repeat','--bv-hero-position':visuals?.position(p)||'center',
       '--bv-art':p.artwork?`url("${p.artwork}")`:'none','--bv-border':p.border?`url("${p.border}")`:'none',
       '--bv-bg':s.background,'--bv-panel':s.panel,'--bv-ink':s.panel===p.panel?p.ink:foreground(s.panel),'--bv-muted':s.panel===p.panel?p.muted:foreground(s.panel),
       '--bv-accent':s.accent,'--bv-on-accent':foreground(s.accent),
