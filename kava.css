@@ -100,7 +100,7 @@ nav.bottom{max-width:540px}nav.bottom button{min-width:0}button:focus-visible{ou
 #app .kava-room .kava-tips .btn[aria-pressed=true]{background:#e0f2e9;border-color:#579a83;color:#235b48}
 #app .kava-room .glass.card.kava-values-card{background:#f8fbf7;border-color:#dce7db}
 #app .kava-room .kava-respect span{background:#fff;border-color:#d3e2d7;color:#496856;font-size:11px;padding:6px 9px}
-#app #view:has(>.kava-room[data-preview="true"])~nav.bottom[hidden]{display:none!important}
+#app:has(.kava-room[data-preview="true"]) nav.bottom[hidden]{display:none!important}
 @media(min-width:820px){#app .kava-room .kava-columns{grid-template-columns:minmax(0,1.6fr) minmax(310px,1fr)}}
 @media(max-width:649px){
  #app .kava-room{padding-bottom:20px}
