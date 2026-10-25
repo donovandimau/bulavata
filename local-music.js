@@ -43,7 +43,7 @@
   function changed(){root.dispatchEvent(new root.CustomEvent('sota-music-change'));}
   function getAudio(){
     if(audio)return audio;
-    audio=root.document.createElement('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label','Your uploaded music');audio.setAttribute('data-sota-playback-source','local');
+    audio=root.document.createElement('audio');audio.id='sota-local-audio';audio.controls=true;audio.preload='none';audio.setAttribute('aria-label','Your uploaded music');audio.setAttribute('data-sota-playback-source','local');
     audio.addEventListener('play',()=>{root.SotaPlayback?.activate('local',audio);sync();});
     for(const event of ['pause','ended'])audio.addEventListener(event,sync);
     audio.addEventListener('error',()=>{message='This track could not play. Choose another audio file.';sync();});
@@ -121,7 +121,8 @@
     const status=el('p','','bv-local-music-status');status.id='bv-local-music-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
     const title=el('h3');title.id='bv-local-music-title';const play=button('Play selected music',toggle);play.id='bv-local-music-play';
     const list=el('div','','bv-local-music-list');list.id='bv-local-music-list';list.setAttribute('aria-label','Saved songs');
-    dialog.append(head,note,label,input,formatsNote,status,title,play,getAudio(),list);root.document.body.append(dialog);
+    const visuals=el('dimau-music-visualiser');visuals.setAttribute('for','sota-local-audio');
+    dialog.append(head,note,label,input,formatsNote,status,title,play,getAudio(),visuals,list);root.document.body.append(dialog);
     input.addEventListener('change',async()=>{const files=Array.from(input.files||[]);input.disabled=true;try{await importFiles(files);}catch(_){}finally{input.disabled=false;input.value='';}});
     dialog.addEventListener('close',()=>{dialog.remove();dialog=null;focusBefore?.focus({preventScroll:true});});
     dialog.showModal();await ensure();if(dialog){sync();renderList();}
