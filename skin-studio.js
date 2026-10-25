@@ -384,7 +384,7 @@
     app.querySelector('#bv-room-change-skin').onclick=()=>open(s);
     app.querySelector('#bv-room-sign-in').onclick=()=>renderAuth('in',true);
     app.querySelector('#bv-room-home').onclick=()=>renderAuth('in');
-    wireMedia(app);window.SotaLocalMusic?.mount(app,{beforePlay:()=>{window.SotaPlaylist?.pause();stopSampleOnly();}});
+    wireMedia(app);
     app.scrollIntoView({block:'start'});app.querySelector('#bv-skin-room-title').focus({preventScroll:true});
   }
   function open(initial,collection) {
