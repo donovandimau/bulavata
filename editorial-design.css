@@ -33,6 +33,21 @@
 .bv-welcome .bv-collection-arrow{right:23px;bottom:24px;font:300 25px/1 Arial!important;color:#fff}
 .bv-welcome .bv-discovery-note{margin:20px 0 0;color:#626f6f;font-size:11px;font-weight:400;line-height:1.6}
 
+/* Featured room designs replace the old emoji/photo checkerboard. */
+#app.bv-welcome .bv-people-feature{height:auto}
+#app.bv-welcome .bv-people-collage{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));grid-auto-rows:auto;gap:6px;height:265px;padding:0;background:transparent;border:0;border-radius:4px;box-shadow:none}
+#app.bv-welcome .bv-collage-tile.bv-photo-tile{position:relative;grid-column:auto;isolation:isolate;background:#10212a;border:0;border-radius:3px;filter:none;text-align:left;font-style:normal}
+#app.bv-welcome .bv-photo-tile img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:65% center;transition:transform .3s}
+#app.bv-welcome .bv-photo-tile::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#06131fee,transparent 90%)}
+#app.bv-welcome .bv-photo-tile span{position:absolute;inset:auto 10px 12px;color:#fff;font:500 12px/1.2 Arial,Helvetica,system-ui!important;letter-spacing:-.01em;text-shadow:none}
+#app.bv-welcome .bv-photo-tile:hover img{transform:scale(1.04)}
+#app.bv-welcome .bv-photo-tile:focus-visible{outline:3px solid #315f65;outline-offset:3px}
+#app.bv-welcome .bv-collage-caption{border:0;border-radius:0;box-shadow:none;background:#f5f3ee;color:#40565d;padding:12px;font-family:Arial,Helvetica,system-ui!important}
+#app.bv-welcome .bv-collage-caption :is(b,span){color:#40565d;font-family:Arial,Helvetica,system-ui!important;font-weight:400}
+@media(max-width:760px){#app.bv-welcome .bv-people-collage{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));height:480px;gap:8px}#app.bv-welcome .bv-photo-tile span{font-size:15px!important}}
+@media(prefers-reduced-motion:reduce){#app.bv-welcome .bv-photo-tile img{transition:none}#app.bv-welcome .bv-photo-tile:hover img{transform:none}}
+@media(forced-colors:active){#app.bv-welcome .bv-photo-tile::before{background:Canvas}#app.bv-welcome .bv-photo-tile span{color:CanvasText}#app.bv-welcome .bv-photo-tile{border:1px solid CanvasText}}
+
 /* The editor uses the same photography and drops toy profile skeletons. */
 .bv-studio.bv-studio{border-radius:10px;border-color:#34434b;background:#0d1720;max-width:1320px}
 .bv-studio .bv-studio-head{background:#101d26;border-bottom:1px solid #3d4b53}
