@@ -1,3 +1,9 @@
+## 25 October 2026 — App companion installation
+
+Owner resumed the portfolio companion rollout with “do it”. Added byte-identical original Dimau Companion v1.0.1 assets and app-specific entry points from the shared platform standard. Local task guides, movable characters, appearance settings and read-aloud are available without a model provider. No account, payment, private-record or provider access is added. Open-ended AI remains disconnected unless a host explicitly supplies its existing service; held assistant pilots remain unchanged.
+
+Validation: shared package's 12 tests pass; entry changes preserve original source outside the loader insertion. Host build/deployment and rendered results are tracked on this change's GitHub revision, not claimed by this source entry. Direct GitHub/Vercel execution is authorised by the current owner request; authenticated Ops memory, continuity, task and checkpoint operations remain unavailable, so no such receipts are claimed. Existing unrelated revision branches and holds are preserved. Next: verify the exact hosted companion and record the actual result.
+
 ## 2026-10-25 — Shared Koro communications workspace
 
 Owner requests calling, chat, groups and boards across the apps. Add `/communications.html` as the shared Sota Kece workspace, reusing its existing account session and invite-only Koro backend without schema or permission changes. Persistent chat, discussions/replies and collaborative task cards use strict versioned events in existing crew messages. Video/audio invitations open the external Jitsi service only after a user chooses the explicit link; the Calls panel discloses that anyone with its link may join and recommends a host lobby. No native private-call service is claimed. Existing Koro controls and plain messages remain, with escaped summaries for structured events. Public shell cache gains only the parser asset and a version refresh; private data stays out of browser/offline storage.
