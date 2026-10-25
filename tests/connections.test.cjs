@@ -79,7 +79,7 @@ function client({fr=friends,gr=crews,members=[],profiles=[],user=me,authError=fa
   await check('public example opens before any session or member lookup',async()=>{
     const vm=require('node:vm');const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
     const source=html.slice(html.indexOf('async function boot(){'),html.indexOf('/* Signed in, but no room yet.'));
-    let examples=0,queries=0;const context=vm.createContext({location:{hash:'#connections=example'},window:{SotaConnections:{preview(){examples++;}}},sb:{auth:{getSession(){queries++;throw Error('Example must not look up a session');}}}});
+    let examples=0,queries=0;const context=vm.createContext({socialReady:Promise.resolve(),location:{hash:'#connections=example'},window:{SotaConnections:{preview(){examples++;}}},sb:{auth:{getSession(){queries++;throw Error('Example must not look up a session');}}}});
     vm.runInContext(source+';this.openExample=boot;',context);await context.openExample();assert.equal(examples,1);assert.equal(queries,0);
   });
   await check('visual summaries count only supplied visible graph and contain no member identifiers',()=>{
@@ -90,3 +90,4 @@ function client({fr=friends,gr=crews,members=[],profiles=[],user=me,authError=fa
   });
   console.log(`${passed} Connections checks passed`);
 })().catch(err=>{console.error(err);process.exitCode=1;});
+

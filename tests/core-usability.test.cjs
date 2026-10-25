@@ -8,7 +8,7 @@ const helpers=section('// Every view owns its pending reads','function mediaMark
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function deferred(){let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});return {promise,resolve,reject};}
 function harness(extra={}){
-  const ctx={S:{tab:'moments',user:{id:'owner'},me:{handle:'sina'},roomHandle:null,crew:null,pending:[],friends:[]},esc,
+  const ctx={socialReady:Promise.resolve(),S:{tab:'moments',user:{id:'owner'},me:{handle:'sina'},roomHandle:null,crew:null,pending:[],friends:[]},esc,
     shell:body=>{ctx.screen=body;},screen:'',ago:()=>'',mediaMarkup:()=>'',toast:()=>{},...extra};
   vm.createContext(ctx);vm.runInContext(helpers,ctx);return ctx;
 }
@@ -162,3 +162,4 @@ check('core markup keeps a main landmark, native social controls, named inputs a
 });
 
 (async()=>{for(const [name,fn] of checks){await fn();console.log('PASS '+name);}console.log(checks.length+' core usability checks passed');})().catch(error=>{console.error(error);process.exitCode=1;});
+

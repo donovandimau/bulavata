@@ -62,7 +62,7 @@ async function pin(rows,readError=null){
   // Public handle searches must wait for an authenticated session and a valid profile.
   let authenticated=false,stored='mate_123',lookups=0,renders=0,authRenders=0;
   const input={value:''};
-  const bootContext={S:{},navigator:{onLine:true},document:{documentElement:{style:{setProperty(){}}}},
+  const bootContext={socialReady:Promise.resolve(),S:{},navigator:{onLine:true},document:{documentElement:{style:{setProperty(){}}}},
     sessionStorage:{getItem:()=>stored,removeItem:()=>{stored='';}},
     sb:{auth:{getSession:async()=>({data:{session:authenticated?{user:{id:'owner'}}:null}})},
       from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:{handle:'owner'},error:null})})})}),rpc:()=>{}},
@@ -75,3 +75,4 @@ async function pin(rows,readError=null){
   stored='<script>';await bootContext.boot();assert.equal(lookups,1);assert.equal(renders,2);
   console.log('PASS: 8 skin round trips, contrast, URL/CSS injection guards, Top 16 allocation and cap, duplicate/read-failure handling, sixteen room tiles, tap-only media, connection recovery, authenticated handle-search handoff and all script syntax.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
+
