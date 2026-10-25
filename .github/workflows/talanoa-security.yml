@@ -1,0 +1,21 @@
+name: Talanoa privacy checks
+on:
+  pull_request:
+  push:
+    branches: [main, 'agent/**']
+permissions:
+  contents: read
+jobs:
+  graph-consent-and-invitations:
+    runs-on: ubuntu-latest
+    env:
+      NODE_PATH: ${{ github.workspace }}/tests/talanoa-tools/node_modules
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+        working-directory: tests/talanoa-tools
+      - run: node --test tests/circle-types.test.cjs tests/circle-groups.test.cjs tests/circle-communications.test.cjs
+      - run: node tests/run-talanoa-db.cjs

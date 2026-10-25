@@ -1,0 +1,25 @@
+/* Shared circle appearance stays inside the selected Communications workspace. */
+#createGroup .cc-consent,#joinGroup .cc-consent{display:flex;align-items:flex-start;gap:10px;min-height:44px;padding:6px 0;font-size:13px;line-height:1.5;font-weight:600;margin:12px 0}
+#createGroup .cc-consent input,#joinGroup .cc-consent input{flex:0 0 20px;width:20px;height:20px;margin:1px 0 0;min-height:20px;accent-color:#17636c}
+#createGroup .cc-skin-preview{border:1px solid var(--bv-accent,#b9d4dc);border-left-width:4px;border-radius:10px;padding:12px;background:var(--bv-panel,#fff);color:var(--bv-ink,#173e49);font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+#createGroup select,#joinGroup input{min-height:44px;max-width:100%}
+#groupWorkspace.circle-workspace{min-width:0;padding:18px;border-radius:14px;background-color:var(--bv-bg);background-image:var(--bv-art),var(--bv-pattern);background-size:cover,var(--bv-pattern-size);background-position:center;color:var(--bv-ink)}
+#groupWorkspace.circle-workspace>.room-heading{padding:16px;border:1px solid var(--bv-accent);border-radius:12px;background:var(--bv-panel);color:var(--bv-ink);gap:12px}
+#groupWorkspace.circle-workspace .room-heading :is(h2,p,.section-number){color:var(--bv-ink)}
+#groupWorkspace.circle-workspace .cc-circle-identity{font-size:12px;font-weight:700;line-height:1.6;margin:7px 0 0;overflow-wrap:anywhere}
+#groupWorkspace.circle-workspace>.tabs{background:var(--bv-panel);border-color:var(--bv-accent)}
+#groupWorkspace.circle-workspace>.tabs button{color:var(--bv-ink)}
+#groupWorkspace.circle-workspace>.tabs [aria-selected=true]{border-color:var(--bv-accent);color:var(--bv-ink);background:var(--bv-panel)}
+#groupWorkspace.circle-workspace :is(#panel-chat,#panel-discussions,#panel-board){padding:14px;border-radius:12px;background:var(--bv-panel);color:var(--bv-ink)}
+#groupWorkspace.circle-workspace :is(#panel-chat,#panel-discussions,#panel-board) :is(h3,h4,label,.fine,.empty-note){color:var(--bv-ink)}
+#groupWorkspace.circle-workspace :is(.composer,.new-item,.thread,.task,.board-column){background:var(--bv-panel);color:var(--bv-ink);border-color:var(--bv-accent)}
+#groupWorkspace.circle-workspace .message{background:var(--bv-chat-in);color:var(--bv-chat-in-ink);border-color:var(--bv-accent)}
+#groupWorkspace.circle-workspace .message.mine{background:var(--bv-chat-out);color:var(--bv-chat-out-ink)}
+#groupWorkspace.circle-workspace .message :is(.message-body,.message-meta){color:inherit}
+#groupWorkspace.circle-workspace :is(.composer,.new-item,.thread,.task) :is(input,textarea,select){background:var(--bv-panel);color:var(--bv-ink);border-color:var(--bv-accent)}
+#groupWorkspace.circle-workspace :is(.composer,.new-item,.thread,.task) :is(input,textarea)::placeholder{color:var(--bv-ink);opacity:.7}
+#groupWorkspace.circle-workspace :is(.composer,.new-item) .primary{background:var(--bv-accent);color:var(--bv-on-accent)}
+#groupWorkspace.circle-workspace :is(.room-heading,.composer,.new-item,.thread,.task) :is(.secondary,.text-button){color:var(--bv-ink);border-color:var(--bv-accent);background:var(--bv-panel)}
+#groupWorkspace.circle-workspace .room-heading button{min-height:44px;flex-shrink:0}
+@media(max-width:600px){#groupWorkspace.circle-workspace{padding:10px}#groupWorkspace.circle-workspace>.room-heading{padding:12px;flex-wrap:wrap}#groupWorkspace.circle-workspace>.tabs{margin-left:0;margin-right:0}#groupWorkspace.circle-workspace :is(#panel-chat,#panel-discussions,#panel-board){padding:10px}}
+@media(forced-colors:active){#groupWorkspace.circle-workspace,#groupWorkspace.circle-workspace :is(.room-heading,.tabs,#panel-chat,#panel-discussions,#panel-board,.message,.composer,.new-item,.thread,.task,.board-column){background:Canvas;color:CanvasText;border-color:CanvasText}#groupWorkspace.circle-workspace :is(button,input,textarea,select){forced-color-adjust:auto}#createGroup .cc-skin-preview{background:Canvas;color:CanvasText;border-color:CanvasText}}

@@ -2,10 +2,11 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
 const path=require('node:path');
-const staged=fs.existsSync(path.join(__dirname,'bulavata-files.json'));
-const skins=require(staged?'./bulavata-skins.js':'../skins.js');
-const files=staged?JSON.parse(fs.readFileSync(path.join(__dirname,'bulavata-files.json'),'utf8')):['index.html','skins.js','skin-studio.js','offline.js','sw.js'].map(p=>({path:p,content:fs.readFileSync(path.join(__dirname,'..',p),'utf8')}));
-const source=p=>files.find(f=>f.path===p).content;
+const stagedPath=path.join(__dirname,'bulavata-files.json');
+const archive=fs.existsSync(stagedPath)?JSON.parse(fs.readFileSync(stagedPath,'utf8')):[];
+const skins=require(fs.existsSync(path.join(__dirname,'../skins.js'))?'../skins.js':'./bulavata-skins.js');
+// Retain historical fixtures, but never let them mask current checked-out files.
+const source=p=>{const current=path.join(__dirname,'..',p);if(fs.existsSync(current))return fs.readFileSync(current,'utf8');const saved=archive.find(f=>f.path===p);assert(saved,'Current source or archived fallback exists: '+p);return saved.content;};
 for(const preset of skins.presets){
   const s=skins.normalize({id:preset.id,note:'Bula 🌺 </style><script>no</script> */',interests:'Drua, music, café',trackUrl:'https://example.com/song.mp3',trackTitle:'Fiji tunes'});
   const encoded=skins.encode(s,'.scrawl { border-radius: 17px; }');
@@ -27,7 +28,8 @@ const html=source('index.html');
 for(const match of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))if(match[1].trim())new vm.Script(match[1]);
 assert(!html.includes('<style id="roomcss">${custom}</style>'));
 assert(html.includes('window.BulaSkinStudio?.apply(p,R)'));
-assert(html.indexOf('src="/skin-studio.js"')<html.lastIndexOf('boot();'));
+const studioScript=/<script\b[^>]*\bsrc="\/skin-studio\.js(?:\?[^\"]*)?"[^>]*>/.exec(html);
+assert(studioScript&&studioScript.index<html.lastIndexOf('boot();'),'Skin studio must load before app boot');
 for(const marker of ['async function postPulse','async function exportArchive','async function viewCrewRoom','async function viewFriends'])assert(html.includes(marker));
 assert(html.includes('<title>Sota Kece'));
 assert(/<link rel="manifest" href="\/manifest\.webmanifest">\s*<script src="\/dimau-install\.js(?:\?v=[\w-]+)?" data-app="bulavata" data-label="Sota Kece" defer><\/script>/.test(html)); // Dimau install kit, no data-sw: sw.js stays the only worker.
@@ -62,7 +64,7 @@ async function pin(rows,readError=null){
   // Public handle searches must wait for an authenticated session and a valid profile.
   let authenticated=false,stored='mate_123',lookups=0,renders=0,authRenders=0;
   const input={value:''};
-  const bootContext={S:{},navigator:{onLine:true},document:{documentElement:{style:{setProperty(){}}}},
+  const bootContext={S:{},window:{},navigator:{onLine:true},document:{documentElement:{style:{setProperty(){}}}},
     sessionStorage:{getItem:()=>stored,removeItem:()=>{stored='';}},
     sb:{auth:{getSession:async()=>({data:{session:authenticated?{user:{id:'owner'}}:null}})},
       from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:{handle:'owner'},error:null})})})}),rpc:()=>{}},
@@ -73,5 +75,5 @@ async function pin(rows,readError=null){
   await bootContext.boot();assert.equal(authRenders,1);assert.equal(lookups,0);assert.equal(stored,'mate_123');
   authenticated=true;await bootContext.boot();assert.equal(bootContext.S.tab,'friends');assert.equal(input.value,'mate_123');assert.equal(lookups,1);assert.equal(stored,'');
   stored='<script>';await bootContext.boot();assert.equal(lookups,1);assert.equal(renders,2);
-  console.log('PASS: 8 skin round trips, contrast, URL/CSS injection guards, Top 16 allocation and cap, duplicate/read-failure handling, sixteen room tiles, tap-only media, connection recovery, authenticated handle-search handoff and all script syntax.');
+  console.log('PASS: '+skins.presets.length+' skin round trips, contrast, URL/CSS injection guards, Top 16 allocation and cap, duplicate/read-failure handling, sixteen room tiles, tap-only media, connection recovery, authenticated handle-search handoff and all script syntax.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
