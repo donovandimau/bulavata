@@ -371,6 +371,9 @@
     studio.querySelectorAll('[data-preview-mode]').forEach(button=>button.addEventListener('click',()=>{
       studioPreviewMode=button.dataset.previewMode;drawPreview();
     }));
+    const browse=document.createElement('button');browse.type='button';browse.className='bv-preview-back';browse.textContent='← Browse skins';
+    browse.addEventListener('click',()=>studio.querySelector('.bv-studio-controls').scrollIntoView({block:'start',behavior:'auto'}));
+    studio.querySelector('.bv-studio-preview').prepend(browse);
     studio.addEventListener('cancel',event=>{event.preventDefault();close();});
     const opened=studio,returnFocus=focusBefore;
     studio.addEventListener('close',()=>{
@@ -412,6 +415,7 @@
       draft=skins.normalize({id:b.dataset.skin,note:personalNote,layout:draft.layout,interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath,songRef:draft.songRef});
       for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle'])studio.querySelector('#bv-'+key).value=draft[key];
       drawOptions();drawPreview();studio.querySelector(`[data-skin="${draft.id}"]`).focus({preventScroll:true});
+      if(window.matchMedia('(max-width:760px)').matches)studio.querySelector('.bv-studio-preview').scrollIntoView({block:'start',behavior:'auto'});
     }));
 
   }
