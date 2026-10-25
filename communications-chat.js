@@ -24,9 +24,15 @@
     return { name, day: comma > 0 ? when.slice(0, comma) : when, time: comma > 0 ? when.slice(comma + 2) : '' };
   }
 
+  let msgWatch = null;
   function decorateMessages() {
     const host = $('messages');
     if (!host) return;
+    // Pause watching while we add dividers, or our own changes would retrigger us.
+    if (msgWatch) msgWatch.disconnect();
+    try { decorate(host); } finally { if (msgWatch) { msgWatch.takeRecords(); msgWatch.observe(host, { childList: true }); } }
+  }
+  function decorate(host) {
     let lastDay = '', lastName = '';
     for (const item of [...host.children]) {
       if (!item.classList.contains('message')) {
@@ -160,7 +166,7 @@
     details.append(card, quick, note);
     connected.appendChild(details);
 
-    new MutationObserver(decorateMessages).observe(messages, { childList: true });
+    msgWatch = new MutationObserver(decorateMessages); msgWatch.observe(messages, { childList: true });
     const watch = () => {
       const on = !connected.hidden;
       document.body.classList.toggle('sk-connected', on);
