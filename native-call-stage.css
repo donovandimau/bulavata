@@ -9,7 +9,7 @@ body.nc-in-call #ncRecordingNotice,body.nc-in-call #ncMutedWarning{margin:4px 16
 body.nc-in-call #ncGrid{position:relative;flex:1;min-height:0;display:grid;grid-template-columns:repeat(var(--cols,1),minmax(0,1fr));grid-template-rows:repeat(var(--rows,1),minmax(0,1fr));gap:8px;padding:8px 12px;margin:0}
 body.nc-in-call #ncGrid .nc-tile{position:relative;min-height:0;margin:0;border-radius:18px;overflow:hidden;background:#13344b;box-shadow:0 6px 22px rgba(0,0,0,.28);cursor:pointer;outline:none;transition:box-shadow .2s}
 body.nc-in-call #ncGrid .nc-tile:focus-visible{box-shadow:0 0 0 3px #fff}
-body.nc-in-call #ncGrid .nc-tile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#13344b;border-radius:0}
+body.nc-in-call #ncGrid .nc-tile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#13344b;border-radius:0;max-height:none;max-width:none;aspect-ratio:auto}
 body.nc-in-call #ncGrid .nc-self video{transform:scaleX(-1)}
 body.nc-in-call #ncLive:has(#ncShare[data-on=true]) .nc-self video{transform:none}
 body.nc-in-call #ncGrid .nc-person-label{position:absolute;left:10px;bottom:10px;z-index:2;max-width:calc(100% - 20px);padding:4px 10px;border-radius:999px;background:rgba(7,24,36,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
