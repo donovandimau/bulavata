@@ -626,3 +626,32 @@
 
 /* Cover choices now live in the skin studio. */
 #app.bv-welcome .bv-classic-panels>.bv-music-feature{grid-column:1/-1;}
+#app.bv-welcome .bv-classic-header.bv-connect-header{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:22px 28px;padding:24px;background:rgba(255,255,255,.95);border-color:#c5dce3;box-shadow:0 4px 16px #0b354516;text-align:left}
+#app.bv-welcome .bv-connect-header .bv-wordmark{grid-column:1/-1;padding:0}
+#app.bv-welcome .bv-connect-header .bv-wordmark small{font-size:11px;line-height:1.5;letter-spacing:.12em;color:#356775}
+#app.bv-welcome .bv-entry-copy{min-width:0}
+#app.bv-welcome .bv-entry-copy h2{font:800 clamp(25px,3vw,34px)/1.15 var(--sk-ui-font,Nunito,sans-serif);letter-spacing:-.035em;color:#163e50;margin:0 0 9px;text-transform:none}
+#app.bv-welcome .bv-entry-copy p{font-size:15px;line-height:1.65;color:#456676;margin:0}
+#app.bv-welcome .bv-entry-account-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;align-self:center;min-width:0}
+#app.bv-welcome .bv-connect-header .bv-entry-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:11px 20px;border:1px solid #b5ced7;border-radius:12px;background:#fff;color:#174b60;font:800 15px/1.4 var(--sk-ui-font,Nunito,sans-serif);cursor:pointer;box-shadow:none;text-shadow:none;white-space:normal;text-align:center;min-width:0}
+#app.bv-welcome .bv-entry-account-actions .bv-entry-button{flex:1;max-width:185px;font-size:16px}
+#app.bv-welcome .bv-connect-header .bv-entry-primary{background:#164d61;color:#fff;border-color:#164d61}
+#app.bv-welcome .bv-entry-invite{min-width:0;padding:20px;border:1px solid #c1dcd4;border-radius:14px;background:#edf7f1}
+#app.bv-welcome .bv-entry-invite h3{font-size:18px;line-height:1.35;color:#204f48;margin:0 0 7px}
+#app.bv-welcome .bv-entry-invite p{font-size:14px;line-height:1.65;color:#466c63;margin:0 0 14px}
+#app.bv-welcome .bv-entry-share-actions{display:flex;gap:8px;flex-wrap:wrap}
+#app.bv-welcome .bv-entry-share-actions .bv-entry-button{flex:1;padding:10px 12px;font-size:14px;min-height:44px}
+#app.bv-welcome .bv-connect-header .bv-entry-share{background:#d7eddf;border-color:#a8ceba;color:#204f48}
+#app.bv-welcome .bv-connect-header .bv-entry-status{display:block;min-height:19px;font-size:12px;line-height:1.6;color:#345d54;margin-top:8px;overflow-wrap:anywhere}
+#app.bv-welcome .bv-connect-header .bv-home-search{grid-column:auto;width:100%;max-width:none;min-width:0;align-self:center;margin:0}
+#app.bv-welcome .bv-connect-header .bv-home-search label{font-size:14px;color:#284e63}
+#app.bv-welcome .bv-connect-header #bv-search-status{font-size:12px;line-height:1.6;color:#4c6d7a}
+#app.bv-welcome .bv-entry-copy-link{margin-top:12px;min-width:0}
+#app.bv-welcome .bv-entry-copy-link[hidden]{display:none!important}
+#app.bv-welcome .bv-entry-copy-link label{display:block;font-size:12px;font-weight:800;color:#345d54;margin-bottom:5px}
+#app.bv-welcome .bv-entry-copy-link input{width:100%;min-width:0;font-size:16px;line-height:1.5;color:#204f48;background:#fff;border:1px solid #a8ceba;border-radius:8px;padding:9px}
+#app.bv-welcome .bv-connect-header .bv-entry-button:hover{border-color:#398592;filter:brightness(.98)}
+#app.bv-welcome .bv-connect-header .bv-entry-button:focus-visible{outline:3px solid #08768a;outline-offset:3px}
+#app.bv-welcome .bv-connect-header .bv-entry-button:disabled{opacity:.65;cursor:wait}
+@media(max-width:760px){#app.bv-welcome .bv-classic-header.bv-connect-header{grid-template-columns:minmax(0,1fr);gap:18px;padding:20px 16px}#app.bv-welcome .bv-entry-account-actions{justify-content:stretch}#app.bv-welcome .bv-entry-account-actions .bv-entry-button{max-width:none}#app.bv-welcome .bv-entry-invite{padding:16px}#app.bv-welcome .bv-entry-copy h2{font-size:28px}}
+@media(forced-colors:active){#app.bv-welcome .bv-classic-header.bv-connect-header,#app.bv-welcome .bv-entry-invite,#app.bv-welcome .bv-connect-header .bv-entry-button{background:Canvas;color:CanvasText;border-color:CanvasText}#app.bv-welcome .bv-connect-header .bv-entry-button:focus-visible{outline-color:Highlight}}
