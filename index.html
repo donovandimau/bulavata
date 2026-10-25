@@ -210,12 +210,24 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <body>
 <div class="bubbles" id="bubbles"></div>
 <div id="app"></div>
+<script src="/social-auth.js?v=20261025-1"></script>
 <script src="/communications-core.js?v=20261025-1"></script>
 <script>
 /* ---------- config ---------- */
 const SB_URL = "https://aqfzpaczyodhugsgqvxi.supabase.co";
 const SB_KEY = "sb_publishable_DvpX2PSuPtxE3IqWUlRZfQ_YP2qLZtF";
-const sb = window.supabase.createClient(SB_URL, SB_KEY);
+const sb = window.supabase.createClient(SB_URL, SB_KEY, {auth:{detectSessionInUrl:false}});
+const social=window.DimauSocialAuth.create({url:SB_URL,key:SB_KEY,storageKey:"sota.oauth.v1"});
+const socialReady=(async()=>{
+  let session=await social.complete();
+  const email=new URLSearchParams(location.hash.slice(1));
+  if(email.has('access_token')){
+    history.replaceState(null,'',location.pathname+location.search);
+    if(!['signup','recovery','magiclink','invite'].includes(email.get('type')))throw Error('Please start sign-in again from this page.');
+    session={access_token:email.get('access_token'),refresh_token:email.get('refresh_token')};
+  }
+  if(session){const {error}=await sb.auth.setSession(session);if(error)throw error;}
+})().catch(error=>{setTimeout(()=>toast(error.message),0);});
 
 /* ---------- state ---------- */
 const S = { user:null, me:null, tab:"pulse", luv:3, pending:[], friends:[], crew:null, roomHandle:null };
@@ -255,6 +267,7 @@ function renderAuth(mode="in"){
     </div>
     <button class="btn ghost" type="button" onclick="window.SotaKavaUI.preview()" style="margin-bottom:16px">Explore the Digital Kava Circle</button>
     <a class="btn ghost" href="/communications.html?app=sota-kece" style="display:block;text-align:center;margin-bottom:16px">Open Communications · Chat, boards and calls</a>
+    <div id="social-signin" aria-label="Social sign-in"></div>
     <div class="seg">
       <button class="${mode==='in'?'on':''}" onclick="renderAuth('in')">Sign in</button>
       <button class="${mode==='up'?'on':''}" onclick="renderAuth('up')">Create a room</button>
@@ -271,6 +284,7 @@ function renderAuth(mode="in"){
       <div class="sub" id="a-err" role="alert" style="color:var(--coral);text-align:center"></div>
     </div>
   </div>`;
+  social.mount($("#social-signin"),{className:"btn ghost",onError:error=>{$("#a-err").textContent=error.message;}});
   $("#a-go").onclick = () => mode==='up' ? signUp() : signIn();
   app.querySelectorAll("input").forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter")$("#a-go").click()}));
 }
@@ -971,6 +985,7 @@ async function render(){
   if(S.tab==="wallet") return viewWallet();
 }
 async function boot(){
+  await socialReady;
   if(typeof location==='object'&&location.hash==="#connections=example")return window.SotaConnections.preview();
   const run=typeof viewRun==='function'?viewRun():null,stillHere=()=>!run||currentView(run);
   const personal=typeof location==='object'&&location.hash==='#connections=mine';
@@ -1057,5 +1072,6 @@ window.SotaView={invalidate:()=>viewRun()};
 <script>window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});boot();installAuthLifecycle();</script>
 </body>
 </html>
+
 
 

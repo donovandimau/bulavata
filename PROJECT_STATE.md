@@ -200,3 +200,11 @@ for owner review;actual member-session validation requires signing in.
 Portable Dimau Visuals core/SDK/CSS,served locally with no data network requests. Sota visible connection counts track existing map filters and lifecycle;no new member-data reads.
 
 
+
+
+## 2026-10-25 — Social sign-in revision (staged)
+
+Requested shared provider sign-in and Google-only human owner access. This revision updates this app’s account entry; canonical implementation and rollout requirements are in `donovandimau/dimau-platform-standard/identity/README.md`. Source is staged, not deployed. Shared protocol/owner checks and DOM fixtures passed; real provider round trips and all required hosted builds remain release gates. No provider credentials, redirect configuration or production permissions were changed. Existing unrelated work is preserved.
+
+Next: validate the exact revision preview, configure verified app callbacks/providers, then release under the project’s existing publication rules. Ops coordination could not be recorded because this execution had no own Ops credential; GitHub revision is the durable handover, not an Ops lease or Live receipt.
+
