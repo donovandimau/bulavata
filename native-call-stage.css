@@ -1,0 +1,70 @@
+/* Sota Kece call stage — full-screen call view. Pairs with native-call-stage.js. */
+body.nc-in-call{overflow:hidden}
+body.nc-in-call dimau-companion,body.nc-in-call #dimau-connect-launcher{display:none!important}
+body.nc-in-call #ncLive{position:fixed;inset:0;z-index:9000;margin:0;display:flex;flex-direction:column;background:radial-gradient(120% 80% at 50% 0%,#17405c 0%,#0b2233 55%,#071824 100%);color:#fff;padding:env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left);font-family:Lexend,Manrope,system-ui,sans-serif}
+body.nc-in-call #ncLive .nc-live-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px 6px;margin:0}
+body.nc-in-call #ncLive .nc-live-heading h4{margin:0;font:700 17px/1.3 Manrope,system-ui,sans-serif;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.nc-in-call #ncConnection{font-size:13px;color:#cfeaf8;background:rgba(255,255,255,.12);padding:4px 10px;border-radius:999px;white-space:nowrap}
+body.nc-in-call #ncRecordingNotice,body.nc-in-call #ncMutedWarning{margin:4px 16px;padding:8px 12px;border-radius:12px;background:rgba(229,72,77,.92);color:#fff;font-size:13px;text-align:center}
+body.nc-in-call #ncGrid{position:relative;flex:1;min-height:0;display:grid;grid-template-columns:repeat(var(--cols,1),minmax(0,1fr));grid-template-rows:repeat(var(--rows,1),minmax(0,1fr));gap:8px;padding:8px 12px;margin:0}
+body.nc-in-call #ncGrid .nc-tile{position:relative;min-height:0;margin:0;border-radius:18px;overflow:hidden;background:#13344b;box-shadow:0 6px 22px rgba(0,0,0,.28);cursor:pointer;outline:none;transition:box-shadow .2s}
+body.nc-in-call #ncGrid .nc-tile:focus-visible{box-shadow:0 0 0 3px #fff}
+body.nc-in-call #ncGrid .nc-tile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#13344b;border-radius:0}
+body.nc-in-call #ncGrid .nc-self video{transform:scaleX(-1)}
+body.nc-in-call #ncLive:has(#ncShare[data-on=true]) .nc-self video{transform:none}
+body.nc-in-call #ncGrid .nc-person-label{position:absolute;left:10px;bottom:10px;z-index:2;max-width:calc(100% - 20px);padding:4px 10px;border-radius:999px;background:rgba(7,24,36,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.nc-in-call #ncGrid .nc-peer-state{position:absolute;right:10px;top:10px;z-index:2;padding:3px 8px;border-radius:999px;background:rgba(7,24,36,.55);color:#d7eef9;font-size:11px}
+body.nc-in-call #ncGrid .nc-peer-state:empty,body.nc-in-call #ncGrid .nc-tile:not(.nc-novideo) .nc-peer-state{display:none}
+body.nc-in-call #ncGrid .nc-novideo video{opacity:0}
+body.nc-in-call #ncGrid .nc-novideo::before{content:attr(data-initial);position:absolute;left:50%;top:50%;width:min(34%,104px);aspect-ratio:1;transform:translate(-50%,-56%);display:grid;place-items:center;border-radius:50%;background:linear-gradient(160deg,#87ceeb,#3f8fbf);color:#082538;font:800 clamp(22px,5vw,40px)/1 Manrope,system-ui,sans-serif;z-index:1}
+body.nc-in-call #ncGrid .nc-speaking{box-shadow:0 0 0 3px #87ceeb,0 6px 22px rgba(0,0,0,.28)}
+/* Your own picture floats in the corner on phones once someone else joins. */
+body.nc-in-call #ncGrid .nc-pip{position:absolute;right:20px;bottom:16px;width:96px;height:132px;z-index:5;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.45),0 0 0 2px rgba(255,255,255,.7)}
+body.nc-in-call #ncGrid .nc-pip .nc-person-label{left:6px;bottom:6px;font-size:11px;padding:2px 7px}
+/* Spotlight: tap a person to make them large; everyone else becomes a thumbnail strip. */
+body.nc-in-call #ncGrid[data-layout=spot]{display:block}
+body.nc-in-call #ncGrid[data-layout=spot] .nc-pinned{position:absolute;inset:8px 12px 124px;z-index:1}
+body.nc-in-call #ncGrid[data-layout=spot] .nc-pinned video{object-fit:contain;background:#06141e}
+body.nc-in-call #ncGrid[data-layout=spot] .nc-thumb{position:absolute;bottom:12px;left:calc(12px + var(--i,0) * 88px);width:80px;height:104px;z-index:2;border-radius:12px}
+body.nc-in-call #ncGrid[data-layout=spot] .nc-thumb .nc-person-label{left:5px;bottom:5px;font-size:10px;padding:2px 6px}
+body.nc-in-call #ncGrid[data-layout=spot] .nc-thumb.nc-novideo::before{width:44px;font-size:18px}
+@media(min-width:701px){body.nc-in-call #ncGrid{padding:12px 24px}body.nc-in-call #ncGrid[data-layout=spot] .nc-pinned{inset:12px 24px 12px 220px}body.nc-in-call #ncGrid[data-layout=spot] .nc-thumb{left:24px;top:calc(12px + var(--i,0) * 124px);bottom:auto;width:180px;height:112px}}
+/* Round control buttons. */
+body.nc-in-call #ncLive .nc-toolbar{display:flex;justify-content:center;align-items:center;gap:clamp(10px,3.4vw,18px);flex-wrap:nowrap;padding:12px 16px calc(18px + env(safe-area-inset-bottom));margin:0;background:linear-gradient(180deg,rgba(7,24,36,0),rgba(7,24,36,.55))}
+body.nc-in-call #ncLive .nc-round{position:relative;flex:0 0 auto;width:56px;height:56px;min-width:0;padding:0;margin:0;border:0;border-radius:50%;display:grid;place-items:center;font-size:0;line-height:0;color:#fff;background:rgba(255,255,255,.17);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none;cursor:pointer;transition:background .15s,transform .1s}
+body.nc-in-call #ncLive .nc-round:hover{background:rgba(255,255,255,.27)}
+body.nc-in-call #ncLive .nc-round:active{transform:scale(.94)}
+body.nc-in-call #ncLive .nc-round:focus-visible{outline:3px solid #87ceeb;outline-offset:3px}
+body.nc-in-call #ncLive .nc-round:disabled{opacity:.5;cursor:default}
+body.nc-in-call #ncLive .nc-round::before{content:"";width:26px;height:26px;background:currentColor;-webkit-mask:var(--icon) center/contain no-repeat;mask:var(--icon) center/contain no-repeat}
+body.nc-in-call #ncMute{--icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%229%22%20y%3D%222.5%22%20width%3D%226%22%20height%3D%2211.5%22%20rx%3D%223%22/%3E%3Cpath%20d%3D%22M5.5%2010.5a6.5%206.5%200%200%200%2013%200M12%2017v4M8.5%2021h7M3.5%203.5l17%2017%22/%3E%3C/svg%3E")}
+body.nc-in-call #ncMute[aria-pressed=true]{--icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%229%22%20y%3D%222.5%22%20width%3D%226%22%20height%3D%2211.5%22%20rx%3D%223%22/%3E%3Cpath%20d%3D%22M5.5%2010.5a6.5%206.5%200%200%200%2013%200M12%2017v4M8.5%2021h7%22/%3E%3C/svg%3E")}
+body.nc-in-call #ncVideo{--icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%222.5%22%20y%3D%226%22%20width%3D%2213%22%20height%3D%2212%22%20rx%3D%222.5%22/%3E%3Cpath%20d%3D%22M15.5%2010.5%2021.5%207v10l-6-3.5zM3%203l18%2018%22/%3E%3C/svg%3E")}
+body.nc-in-call #ncVideo[aria-pressed=true]{--icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%222.5%22%20y%3D%226%22%20width%3D%2213%22%20height%3D%2212%22%20rx%3D%222.5%22/%3E%3Cpath%20d%3D%22M15.5%2010.5%2021.5%207v10l-6-3.5z%22/%3E%3C/svg%3E")}
+body.nc-in-call #ncMute[aria-pressed=false],body.nc-in-call #ncVideo[aria-pressed=false]{background:#fff;color:#0b2233}
+body.nc-in-call #ncShare{--icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%222.5%22%20y%3D%223.5%22%20width%3D%2219%22%20height%3D%2213%22%20rx%3D%222%22/%3E%3Cpath%20d%3D%22M8%2021h8M12%2016.5V21M9%209.5l3-3%203%203M12%206.5v6%22/%3E%3C/svg%3E")}
+body.nc-in-call #ncShare[data-on=true]{background:#87ceeb;color:#0b2233}
+body.nc-in-call #ncLive .nc-react{--icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22/%3E%3Cpath%20d%3D%22M8%2014.5s1.5%202%204%202%204-2%204-2M9%209.5h.01M15%209.5h.01%22/%3E%3C/svg%3E")}
+body.nc-in-call #ncLive .nc-react[aria-expanded=true]{background:#fff;color:#0b2233}
+body.nc-in-call #ncLive .nc-more-btn{--icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23000%22%3E%3Ccircle%20cx%3D%225%22%20cy%3D%2212%22%20r%3D%222%22/%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%222%22/%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2212%22%20r%3D%222%22/%3E%3C/svg%3E")}
+body.nc-in-call #ncLeave{--icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M2.4%2013.9c5.4-5%2013.8-5%2019.2%200%20.5.5.5%201.2%200%201.7l-2%202c-.4.4-1%20.5-1.5.2l-2.6-1.5c-.4-.2-.6-.6-.6-1.1v-2.1a11%2011%200%200%200-5.8%200v2.1c0%20.5-.2.9-.6%201.1l-2.6%201.5c-.5.3-1.1.2-1.5-.2l-2-2c-.5-.5-.5-1.2%200-1.7z%22/%3E%3C/svg%3E");width:64px;height:64px;background:#e5484d;color:#fff}
+body.nc-in-call #ncLeave:hover{background:#d13438}
+body.nc-in-call #ncLeave::before{width:30px;height:30px}
+@media(max-width:380px){body.nc-in-call #ncLive .nc-round{width:48px;height:48px}body.nc-in-call #ncLeave{width:56px;height:56px}body.nc-in-call #ncLive .nc-round::before{width:22px;height:22px}}
+@media(hover:none),(max-width:700px){body.nc-in-call #ncShare{display:none}}
+/* Reactions. */
+body.nc-in-call #ncLive .nc-picker{align-self:center;display:flex;gap:6px;padding:6px 8px;margin:0 0 2px;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+body.nc-in-call #ncLive .nc-picker[hidden]{display:none}
+body.nc-in-call #ncLive .nc-emoji{width:44px;height:44px;border:0;border-radius:50%;background:transparent;font-size:26px;line-height:1;cursor:pointer;padding:0}
+body.nc-in-call #ncLive .nc-emoji:hover,body.nc-in-call #ncLive .nc-emoji:focus-visible{background:#e3f4fc;outline:none}
+body.nc-in-call #ncLive .nc-float{position:absolute;left:var(--x,50%);bottom:110px;z-index:20;font-size:40px;pointer-events:none;animation:nc-rise 2.6s ease-out forwards}
+@keyframes nc-rise{0%{transform:translateY(0) scale(.6);opacity:0}12%{opacity:1;transform:translateY(-20px) scale(1.1)}100%{transform:translateY(-55vh) scale(1);opacity:0}}
+@media(prefers-reduced-motion:reduce){body.nc-in-call #ncLive .nc-float{animation-duration:1.4s}}
+/* "More options" sheet keeps captions, recording, participants and settings. */
+body.nc-in-call #ncLive .nc-sheet{position:absolute;left:0;right:0;bottom:0;z-index:30;max-height:72vh;overflow:auto;padding:14px 18px calc(22px + env(safe-area-inset-bottom));border-radius:22px 22px 0 0;background:#fff;color:#0b2233;box-shadow:0 -10px 40px rgba(0,0,0,.35)}
+body.nc-in-call #ncLive .nc-sheet[hidden]{display:none}
+body.nc-in-call #ncLive .nc-sheet-head{position:sticky;top:-14px;display:flex;justify-content:space-between;align-items:center;padding:4px 0 10px;background:#fff;z-index:1}
+body.nc-in-call #ncLive .nc-sheet-head strong{font:700 17px/1.3 Manrope,system-ui,sans-serif}
+body.nc-in-call #ncLive .nc-sheet-close{border:0;background:#e3f4fc;color:#0b2233;border-radius:999px;padding:8px 14px;font:600 14px Lexend,system-ui,sans-serif;cursor:pointer}
+body.nc-in-call #ncLive .nc-sheet #ncEnd{display:block;width:100%;margin:0 0 12px;padding:12px;border-radius:12px;border:1px solid #f3c3c4;background:#fff5f5;color:#b42328;font-weight:700}
+body.nc-in-call #ncLive .nc-sheet #ncEnd[hidden]{display:none}
