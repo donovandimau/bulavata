@@ -41,7 +41,8 @@ test('room hierarchy follows the identity while saved profile settings still rou
 
 test('photographic covers resolve to real local WebP assets without changing catalogue identities',()=>{
   const fs=require('node:fs'),path=require('node:path'),visuals=require('../skin-visuals.js');
-  assert.equal(visuals.images.length,9);
+  assert.equal(visuals.images.length,16);
+  assert.equal(new Set(skins.presets.filter(p=>p.category==='Schools').map(visuals.cover)).size,8);
   for(const asset of visuals.images){
     assert.match(asset,/^\/assets\/skins\/editorial\/[a-z]+-20261025\.webp$/);
     const bytes=fs.readFileSync(path.join(__dirname,'..',asset));

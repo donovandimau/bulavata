@@ -72,10 +72,10 @@
 .bv-art-room .bv-cover::before,.bv-art-room[data-look] .bv-cover::before,.bv-room #room-head .bv-cover::before{background:linear-gradient(0deg,#03111ee8,transparent 100%),linear-gradient(90deg,#04131a66,transparent 90%)!important}
 .bv-art-room .bv-cover-copy,.bv-room #room-head .bv-cover-copy{width:100%;padding:0;max-width:100%}
 .bv-art-room .bv-skin-tag,.bv-room #room-head .bv-skin-tag{border:0;border-radius:0;background:transparent;backdrop-filter:none;margin:0 0 14px;padding:0;font:600 9px/1.5 Arial,Helvetica,system-ui!important;letter-spacing:.14em;color:#fff}
-.bv-studio .bv-art-room .bv-identity-title,.bv-room #room-head .bv-identity-title{margin:0 0 13px!important;padding:0;color:#fff!important;max-width:94%;font:500 clamp(28px,3.2vw,43px)/1.03 Arial,Helvetica,system-ui!important;letter-spacing:-.045em!important;text-transform:none!important;text-shadow:0 2px 14px #0004!important;overflow-wrap:normal;word-break:normal}
-.bv-art-room .bv-cover-words,.bv-art-room[data-look] .bv-cover-words,.bv-room #room-head .bv-cover-words{font:400 13px/1.6 Arial,Helvetica,system-ui!important;letter-spacing:.01em!important;text-transform:none!important;font-style:normal!important;max-width:85%!important;text-shadow:0 1px 6px #0005;color:#f8f8f2}
+.bv-studio .bv-art-room .bv-identity-title,.bv-room #room-head .bv-identity-title{margin:0 0 13px!important;padding:0;color:#fff!important;max-width:94%;font:500 clamp(28px,3.2vw,43px)/1.03 var(--bv-font)!important;letter-spacing:-.045em!important;text-transform:none!important;text-shadow:0 2px 14px #0004!important;overflow-wrap:normal;word-break:normal}
+.bv-art-room .bv-cover-words,.bv-art-room[data-look] .bv-cover-words,.bv-room #room-head .bv-cover-words{font:400 13px/1.6 var(--bv-font)!important;letter-spacing:.01em!important;text-transform:none!important;font-style:normal!important;max-width:85%!important;text-shadow:0 1px 6px #0005;color:#f8f8f2}
 .bv-studio .bv-art-room .bv-profile-intro{font-family:Arial,Helvetica,system-ui!important;border-top-width:0;padding-top:18px;padding-bottom:17px}
-.bv-studio .bv-art-room .bv-profile-intro h2{font:500 24px/1.15 Arial,Helvetica,system-ui!important;letter-spacing:-.035em}
+.bv-studio .bv-art-room .bv-profile-intro h2{font:500 24px/1.15 var(--bv-font)!important;letter-spacing:-.035em}
 .bv-studio .bv-art-room .bv-profile-intro .bv-room-bio{font:400 12px/1.6 Arial,Helvetica,system-ui!important}
 .bv-art-room .bv-room-sticker,.bv-art-room .bv-player-wave{display:none!important}
 .bv-art-room .bv-profile-avatar{border-radius:50%!important;box-shadow:0 2px 14px #0003!important}
