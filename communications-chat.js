@@ -30,7 +30,8 @@
     if (!host) return;
     // Pause watching while we add dividers, or our own changes would retrigger us.
     if (msgWatch) msgWatch.disconnect();
-    try { decorate(host); } finally { if (msgWatch) { msgWatch.takeRecords(); msgWatch.observe(host, { childList: true }); } }
+    const atEnd = host.scrollHeight - host.scrollTop - host.clientHeight < 120;
+    try { decorate(host); if (atEnd) host.scrollTop = host.scrollHeight; } finally { if (msgWatch) { msgWatch.takeRecords(); msgWatch.observe(host, { childList: true }); } }
   }
   function decorate(host) {
     let lastDay = '', lastName = '';

@@ -6,7 +6,7 @@ body.sk-chat.sk-connected main{max-width:1480px;padding:16px 20px 20px}
 body.sk-chat.sk-connected .intro,body.sk-chat.sk-connected .page-footer{display:none}
 body.sk-chat.sk-connected #status:empty{display:none}
 body.sk-chat.sk-connected #status{margin:0 0 10px}
-body.sk-chat #connected.workspace{display:grid;grid-template-columns:310px minmax(0,1fr);gap:16px;align-items:stretch;height:calc(100vh - 120px);min-height:560px}
+body.sk-chat #connected.workspace{display:grid;grid-template-columns:310px minmax(0,1fr);gap:16px;align-items:stretch;height:calc(100dvh - 150px);min-height:520px}
 @media(min-width:1240px){body.sk-chat #connected.workspace{grid-template-columns:310px minmax(0,1fr) 280px}}
 body.sk-chat #connected .panel{border-radius:20px;border-color:var(--sk-line);box-shadow:0 10px 32px rgba(11,42,64,.07);background:#fff}
 /* Left: conversation list */
