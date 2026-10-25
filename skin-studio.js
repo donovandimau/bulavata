@@ -56,26 +56,38 @@
     return `<div class="bv-skin-scene" style="background-image:url(&quot;${esc(p.artwork)}&quot;)" role="img" aria-label="${esc(p.artDescription)}"><span>${esc(p.name)}</span></div>`;
   }
   function skinSongs(settings) {
-    const p=skins.presets.find(p=>p.id===settings.id);
-    if(!p?.artwork)return '';
-    return `<div class="bv-skin-story"><small>${esc(p.designNote)}</small>${p.songs.length?`<details><summary>Music for this skin</summary><p>Listen at the source, or add your own recording.</p>${p.songs.map(song=>`<a href="${esc(song.url)}" target="_blank" rel="noopener noreferrer">${esc(song.title)} <span>— ${esc(song.performer)}</span> ↗</a>`).join('')}</details>`:''}</div>`;
+    const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id),songs=p.songs||[];
+    if(!songs.length&&!p.identityLabel)return '';
+    const sources=(p.identitySources||[]).filter(url=>skins.safeUrl(url));
+    return `<section class="bv-identity-music"><header><span>THE MUSIC. THE MEMORIES.</span><h3>${esc(p.identityLabel||p.name)}</h3></header>
+      ${songs.length?`<div class="bv-identity-songs">${songs.map((song,i)=>{
+        const ref=p.id+':'+i,selected=s.songRef===ref;
+        const label=/official institutional|documented school association/.test(song.relationship)?'School / community song':/alumni/.test(song.relationship)?'Alumni anthem':/school-themed|collaboration/.test(song.relationship)?'Supporter recording':'Listening reference';
+        return `<div class="bv-identity-song"><span class="bv-song-record" aria-hidden="true">♫</span><div><small>${esc(label)}</small><b>${esc(song.title)}</b><span>${esc(song.performer)}</span><a href="${esc(song.url)}" target="_blank" rel="noopener noreferrer">Listen at the source ↗</a></div>${studio?`<button type="button" data-choose-song="${ref}" aria-pressed="${selected}" aria-label="${selected?'Selected':'Choose'} ${esc(song.title)}">${selected?'Chosen ✓':'Choose'}</button>`:''}</div>`;
+      }).join('')}</div>`:'<p class="bv-music-empty">Make it personal with your own track in Fine-tune your skin.</p>'}
+      ${sources.length?`<details><summary>About this community skin</summary><p>${esc(p.identityNote||'Community-made design')}</p>${sources.map((url,i)=>`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Identity reference ${i+1} ↗</a>`).join('')}</details>`:''}</section>`;
+  }
+  function coverContent(settings) {
+    const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
+    return `${s.coverPath?coverMediaMarkup(s):''}<div class="bv-cover-copy"><span class="bv-skin-tag">${esc(p.name)}</span><div class="bv-cover-words">${esc(s.note||p.note)}</div></div>`;
   }
   function preview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
     const interests=s.interests.split(',').map(x=>x.trim()).filter(Boolean).slice(0,8);
-    const portraits=Array.from({length:14},(_,i)=>originalMate(i,`Example friend ${i+1}`));
-    return `<div class="bv-preview bv-photo-room" style="${esc(skins.inline(s))}" data-layout="${s.layout}">
-      ${skinScene(s)}<div class="bv-cover" data-pattern="${s.pattern}">${s.coverPath?coverMediaMarkup(s):'<svg class="bv-cover-photo sk-photo" viewBox="137 715 754 228" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Fijian friends from the supplied Sema design"><defs><clipPath id="bv-original-cover-clip" clipPathUnits="userSpaceOnUse"><rect x="137" y="715" width="754" height="228"/></clipPath></defs><image clip-path="url(#bv-original-cover-clip)" href="/assets/mobile-front-reference.png" width="1008" height="1792"/></svg>'}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span></div>
-      <div class="bv-profile-intro"><div class="bv-profile-avatar">${frontAvatar('Sema — example profile portrait')}</div>
-        <h2>${esc(profile.display_name||profile.handle||'Your name')}</h2><p>@${esc(profile.handle||'yourhandle')}</p><p>${esc(profile.bio||'Good people. Brighter days.')}</p>
+    const portraits=Array.from({length:16},(_,i)=>originalMate(i%14,`Example friend ${i+1}`));
+    const avatar=profile.avatar_emoji?`<span class="bv-avatar-emoji">${esc(profile.avatar_emoji)}</span>`:frontAvatar('Sema — example profile portrait');
+    return `<div class="bv-preview bv-art-room" style="${esc(skins.inline(s))}" data-layout="${s.layout}" data-look="${p.look}">
+      <div class="bv-cover" data-pattern="${s.pattern}">${coverContent(s)}</div>
+      <div class="bv-profile-intro"><div class="bv-profile-avatar">${avatar}</div><div class="bv-room-identity"><h2>${esc(profile.display_name||profile.handle||'Your name')}</h2><p class="bv-room-handle">@${esc(profile.handle||'yourhandle')}</p></div><span class="bv-room-sticker" aria-hidden="true">✦</span><p class="bv-room-bio">${esc(profile.bio||'Good people. Brighter days.')}</p>
         ${interests.length?`<div class="bv-interests">${interests.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}</div>
-      <div class="bv-preview-columns"><section class="bv-mini-card"><h3>Talanoa <small>Example notes</small></h3><div class="bv-photo-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div><small>2h ago</small></div><div class="bv-photo-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>Bring your favourite track. See you there.</p></div><small>4h ago</small></div></section>
-      <section class="bv-mini-card"><h3>Top Mates · 16</h3><div class="bv-photo-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
-      ${s.trackUrl||s.trackPath?trackMarkup(s):window.SotaLocalMusic?.hasSelected()?`<div class="bv-track"><span>♫ ${esc(window.SotaLocalMusic.title())}</span><button type="button" class="btn sm ghost" data-local-music-toggle>Play my music</button><small>Saved on this device.</small></div>`:`<div class="bv-photo-track"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Band rehearsal" loading="lazy"><div><b>Your room. Your soundtrack.</b><small>Add your own track in the studio.</small></div><span class="bv-photo-wave" aria-hidden="true">▁▃▆▂��▇▃▂��▂▆▃▁</span></div>`}${skinSongs(s)}</div>`;
+      <div class="bv-room-tabs"><span>Talanoa</span><span>Top Mates · 16</span><span>My soundtrack</span></div>
+      <div class="bv-preview-columns"><section class="bv-mini-card"><h3>Talanoa <small>Example notes</small></h3><div class="bv-photo-note">${frontCrop(660,500,46,49,'Example portrait of Donu')}<div><b>Donu</b><p>Same time, same sunset?</p></div></div><div class="bv-photo-note">${frontCrop(658,562,46,48,'Example portrait of Jo')}<div><b>Jo</b><p>Bring your favourite track.</p></div></div></section>
+      <section class="bv-mini-card"><h3>My people <small>Example Top Mates</small></h3><div class="bv-photo-friends">${portraits.map(p=>`<span>${p}</span>`).join('')}</div></section></div>
+      ${s.trackUrl||s.trackPath||s.songRef?trackMarkup(s):window.SotaLocalMusic?.hasSelected()?`<div class="bv-track"><span>♫ ${esc(window.SotaLocalMusic.title())}</span><button type="button" class="btn sm ghost" data-local-music-toggle>Play my music</button><small>Saved on this device.</small></div>`:`<div class="bv-skin-player"><span class="bv-vinyl" aria-hidden="true"></span><div><small>THE SOUND OF YOUR ROOM</small><b>Your own mixtape</b><p>Add a track in Fine-tune your skin.</p></div><span class="bv-player-wave" aria-hidden="true">▂▅▃▇▂▆▃</span></div>`}${skinSongs(s)}</div>`;
   }
   function chatPreview(profile, settings) {
-    const s=skins.normalize(settings);
-    return `<section class="bv-chat-preview" style="${esc(skins.inline(s))}" aria-label="Chat skin preview">
+    const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
+    return `<section data-look="${p.look}" class="bv-chat-preview" style="${esc(skins.inline(s))}" aria-label="Chat skin preview">
       <header class="bv-chat-heading"><span class="bv-chat-avatar" aria-hidden="true">✦</span><div><h3>Your circle</h3><p>Example Koro · ${esc(profile.display_name||profile.handle||'You')}</p></div></header>
       <div class="bv-chat-messages"><p class="bv-chat-caption">Example conversation</p>
         <div class="msg"><span class="who">Donu</span>Same time, same sunset?</div>
@@ -90,9 +102,17 @@
   }
   function trackMarkup(settings) {
     const attribute=settings.trackPath?`data-profile-path="${esc(settings.trackPath)}"`:settings.trackUrl?`data-profile-track="${esc(settings.trackUrl)}"`:'';
-    return attribute?`<div class="bv-track"><span>♫ ${esc(settings.trackTitle||'My profile track')}</span><button type="button" class="btn sm ghost" ${attribute}>Play track</button><small>Tap to load. No autoplay.</small></div>`:'';
+    if(attribute)return `<div class="bv-track"><span>♫ ${esc(settings.trackTitle||'My profile track')}</span><button type="button" class="btn sm ghost" ${attribute}>Play track</button><small>Tap to load. No autoplay.</small></div>`;
+    const song=skins.song(settings.songRef);
+    return song?`<div class="bv-track bv-chosen-song"><span class="bv-vinyl" aria-hidden="true"></span><div><small>MY SOUNDTRACK</small><b>${esc(song.title)}</b><span>${esc(song.performer)}</span></div><a href="${esc(song.url)}" target="_blank" rel="noopener noreferrer">Listen ↗</a></div>`:'';
   }
   function wireMedia(root) {
+    root.querySelectorAll('[data-choose-song]').forEach(button=>button.addEventListener('click',()=>{
+      if(!studio||!draft||!skins.song(button.dataset.chooseSong))return;
+      const ref=button.dataset.chooseSong;draft.songRef=ref;draft.trackUrl='';draft.trackPath='';
+      studio.querySelector('#bv-trackUrl').value='';drawPreview();
+      studio.querySelector(`[data-choose-song="${ref}"]`)?.focus({preventScroll:true});
+    }));
     window.SotaLocalMusic?.mount(root,{beforePlay:()=>{window.SotaPlaylist?.pause();stopSample();}});
     root.querySelectorAll('[data-profile-track]:not([data-bv-bound]),[data-profile-path]:not([data-bv-bound])').forEach(button=>{
       button.dataset.bvBound='true';button.addEventListener('click',async()=>{
@@ -157,6 +177,7 @@
     window.SotaPlayback?.pauseSource('profile');
     stopSample();
     document.body.classList.remove('bv-room-active','bv-chat-active');
+    delete document.body.dataset.bvLook;
     document.querySelector('#bv-active-skin')?.remove();
     app.classList.remove('bv-welcome');
     document.documentElement.style.setProperty('--accent',S.me?.room_accent||'#086779');
@@ -166,20 +187,20 @@
     if (!String(profile.room_css||'').startsWith('/* bv-skin:v1 ')) s.accent=/^#[0-9a-f]{6}$/i.test(profile.room_accent)?profile.room_accent:s.accent;
     const view=document.querySelector('#view');
     if(!view)return;
-    view.classList.add('bv-room');view.dataset.layout=s.layout;
+    view.classList.add('bv-room');view.dataset.layout=s.layout;view.dataset.bvLook=skins.presets.find(p=>p.id===s.id).look;
     const style=document.createElement('style');style.id='bv-active-skin';
     style.textContent='body.bv-room-active{'+skins.inline(s)+'}\n'+skins.safeLegacy(parsed.legacy);
     document.head.appendChild(style);document.body.classList.add('bv-room-active');
     const p=skins.presets.find(p=>p.id===s.id),head=document.querySelector('#room-head');
     if(head){
       const cover=document.createElement('div');cover.className='bv-cover';cover.dataset.pattern=s.pattern;
-      cover.innerHTML=`${coverMediaMarkup(s)}<div class="bv-cover-words">${esc(s.note||p.note)}</div><span class="bv-skin-tag">${esc(p.name)}</span>`;
+      cover.innerHTML=coverContent(s);
       head.prepend(cover);
-      if(p.artwork){head.insertAdjacentHTML('afterbegin',skinScene(s));head.insertAdjacentHTML('beforeend',skinSongs(s));}
+      head.insertAdjacentHTML('beforeend',skinSongs(s));
       const stats=document.createElement('div');stats.className='bv-profile-stats';
       stats.innerHTML=`<span><b>${(room.top||[]).length}</b>Top friends</span><span><b>${(room.moments||[]).length}</b>Moments</span><span><b>${(room.wall||[]).length}</b>Whiteboard notes</span>`;
       head.appendChild(stats);
-      if(s.trackUrl||s.trackPath){const track=document.createElement('div');track.innerHTML=trackMarkup(s);head.appendChild(track.firstElementChild);}
+      if(s.trackUrl||s.trackPath||s.songRef){const track=document.createElement('div');track.innerHTML=trackMarkup(s);head.appendChild(track.firstElementChild);}
     }
     const side=view.querySelector('.grid.two>.stack:nth-child(2)');
     if(side){
@@ -202,6 +223,7 @@
     const style=document.createElement('style');style.id='bv-active-skin';
     style.textContent='body.bv-room-active{'+skins.inline(s)+'}';
     document.head.appendChild(style);document.body.classList.add('bv-room-active','bv-chat-active');
+    document.body.dataset.bvLook=skins.presets.find(p=>p.id===s.id).look;
   }
   const originalShell=shell;
   shell=function(body){reset();originalShell(body);wireMedia(app);};
@@ -212,7 +234,8 @@
     return tiles.map((tile,i)=>`<button type="button" class="bv-collage-tile bv-tile-${tile[0]}" data-collage-skin="${skins.presets[i%skins.presets.length].id}" aria-label="Try ${esc(skins.presets[i%skins.presets.length].name)} skin" style="--tile-tone:${['#086779','#ac244c','#362459','#187e9c','#a05617','#194f47'][i%6]};${tile[0]==='music'?`background-image:url('/assets/fiji-music.jpg');background-position:65% 35%;`:''}">${tile[0]==='photo'?frontCrop(tile[1],tile[2],tile[3],tile[4],'Friends from your Fijian community design'):['text','emoji'].includes(tile[0])?esc(tile[1]).replace(/\n/g,'<br>'):''}</button>`).join('');
   }
   function skinThumbnail(p) {
-    return `<span class="bv-skin-palette" aria-hidden="true">${[p.bg,p.panel,p.accent,p.cover].map(c=>`<i style="background:${c}"></i>`).join('')}</span>`;
+    const art=p.coverArt||p.artwork;
+    return `<span class="bv-visual-thumb" style="${esc(skins.inline({id:p.id}))}" data-look="${p.look}" aria-hidden="true"><span class="bv-thumb-art">${art?`<img src="${esc(art)}" loading="lazy" alt="">`:''}<b>${esc(p.note)}</b></span><span class="bv-thumb-person"><i>✦</i><span>Your room</span></span><span class="bv-thumb-cards"><i></i><i></i></span></span>`;
   }
   function originalCrop(x,y,w,h,label) {
     return `<svg class="sk-photo" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(label)}"><image href="/assets/mobile-front-reference.png" width="1008" height="1792"/></svg>`;
@@ -317,11 +340,11 @@
     const current=String(S.me?.room_css||'');
     draft=skins.normalize(initial||(!S.user||!current?picked():current.startsWith('/* bv-skin:v1 ')?parsed.settings:{...parsed.settings,accent:S.me.room_accent}));
     legacy=parsed.legacy;focusBefore=document.activeElement;
-    const p=S.me||example;skinCategory='New picks';studioPreviewMode='profile';
+    const p=S.me||example;skinCategory=initial?.id?skins.presets.find(p=>p.id===draft.id).category:'New picks';skinQuery='';studioPreviewMode='profile';
     studio=document.createElement('dialog');studio.className='bv-studio';studio.setAttribute('aria-labelledby','bv-studio-title');
-    studio.innerHTML=`<div class="bv-studio-head"><div><h2 id="bv-studio-title">Make it yours.</h2><p>Pick a skin. Mix the colours. Give your room a personality.</p></div><button type="button" class="bv-close" aria-label="Close skin studio">×</button></div>
-      <div class="bv-studio-body"><div class="bv-studio-controls"><div class="bv-studio-picker"><h3>Choose your room style</h3><p class="bv-style-intro">${skins.presets.length} designs. Schools, vanua, celebrations and memories. Make one yours.</p><div class="bv-skin-categories" id="bv-skin-categories"></div><div class="bv-skin-navigation"><button type="button" id="bv-skins-left" aria-label="Scroll skins left" aria-controls="bv-skin-options">←</button><span>Swipe or browse the colours</span><button type="button" id="bv-skins-right" aria-label="Scroll skins right" aria-controls="bv-skin-options">→</button></div><div class="bv-skin-grid" id="bv-skin-options" tabindex="0" aria-label="Room skins"></div></div>
-      <div class="bv-studio-custom"><h3>Add your own twist</h3><div class="bv-controls">
+    studio.innerHTML=`<div class="bv-studio-head"><div><span class="bv-studio-kicker">YOUR SPACE, REMIXED</span><h2 id="bv-studio-title">Find your skin.</h2><p>Artwork, atmosphere and a room that feels like you.</p></div><button type="button" class="bv-close" aria-label="Close skin studio">×</button></div>
+      <div class="bv-studio-body"><div class="bv-studio-controls"><div class="bv-studio-picker"><div class="bv-skin-filters"><label class="bv-search-label" for="bv-skin-search">Find a skin<input id="bv-skin-search" type="search" placeholder="Ocean, school, love…" autocomplete="off"></label><label for="bv-skin-category">Collection<select id="bv-skin-category" aria-label="Skin collection"></select></label><p id="bv-skin-count" role="status"></p></div><div class="bv-skin-grid" id="bv-skin-options" tabindex="0" aria-label="Room skins"></div></div>
+      <details class="bv-studio-custom"><summary>Fine-tune your skin <span>Colours · lettering · music</span></summary><div class="bv-custom-content"><div class="bv-controls">
         <div><label for="bv-accent">Accent colour</label><input id="bv-accent" type="color" value="${draft.accent}"></div>
         <div><label for="bv-background">Page colour</label><input id="bv-background" type="color" value="${draft.background}"></div>
         <div><label for="bv-panel">Card colour</label><input id="bv-panel" type="color" value="${draft.panel}"></div><div><label for="bv-cover">Cover colour</label><input id="bv-cover" type="color" value="${draft.cover}"></div>
@@ -338,7 +361,7 @@
         <div><label for="d-pro">Pronouns</label><input id="d-pro" value="${esc(p.pronouns||'')}" maxlength="24"></div>
         <div><label for="d-bio">Bio</label><textarea id="d-bio" maxlength="400">${esc(p.bio||'')}</textarea></div>
         <div><label for="d-emo">Your emoji</label><input id="d-emo" value="${esc(p.avatar_emoji||'🌺')}" maxlength="8"></div></div></details>
-        <details><summary>Advanced: your custom CSS</summary><p class="sub">Style room cards and text. External files and page overlays are excluded.</p><label for="d-css">Room CSS</label><textarea id="d-css" maxlength="3000" placeholder=".scrawl { border-radius: 20px; }">${esc(legacy)}</textarea></details>`:''}</div></div>
+        <details><summary>Advanced: your custom CSS</summary><p class="sub">Style room cards and text. External files and page overlays are excluded.</p><label for="d-css">Room CSS</label><textarea id="d-css" maxlength="3000" placeholder=".scrawl { border-radius: 20px; }">${esc(legacy)}</textarea></details>`:''}</div></details></div>
       <aside class="bv-studio-preview"><div class="bv-example-label"><span>${S.user?'Your room · live preview':'Example room · live preview'}</span><span id="bv-preview-name"></span></div><div class="bv-preview-modes" role="group" aria-label="Preview surface"><button type="button" data-preview-mode="profile" aria-pressed="true">Profile</button><button type="button" data-preview-mode="chat" aria-pressed="false">Chat</button></div><div id="bv-studio-preview"></div><p class="sub" style="font-size:11px;line-height:1.7;margin-top:14px">${S.user?'Your friends will see this skin when they visit your room.':'These are example details. Your own name, friends and posts appear when you make a room.'}</p></aside></div>
       <div class="bv-studio-footer"><div class="bv-studio-error" id="bv-studio-error" role="status" aria-live="polite"></div><div class="row"><button type="button" class="btn ghost" id="bv-cancel">Cancel</button><button type="button" class="btn" id="bv-save">${S.user?'Save my room':'Use this skin'}</button></div></div>`;
     document.body.appendChild(studio);
@@ -348,6 +371,9 @@
     studio.querySelectorAll('[data-preview-mode]').forEach(button=>button.addEventListener('click',()=>{
       studioPreviewMode=button.dataset.previewMode;drawPreview();
     }));
+    const browse=document.createElement('button');browse.type='button';browse.className='bv-preview-back';browse.textContent='← Browse skins';
+    browse.addEventListener('click',()=>studio.querySelector('.bv-studio-controls').scrollIntoView({block:'start',behavior:'auto'}));
+    studio.querySelector('.bv-studio-preview').prepend(browse);
     studio.addEventListener('cancel',event=>{event.preventDefault();close();});
     const opened=studio,returnFocus=focusBefore;
     studio.addEventListener('close',()=>{
@@ -356,45 +382,47 @@
     });
     studio.addEventListener('input',update);studio.addEventListener('change',update);
     studio.querySelectorAll('input[type=file]').forEach(input=>input.addEventListener('change',uploadRoomMedia));
-    studio.querySelector('#bv-remove-track').addEventListener('click',()=>{draft.trackPath='';draft.trackUrl='';draft.trackTitle='';studio.querySelector('#bv-trackUrl').value='';studio.querySelector('#bv-trackTitle').value='';drawPreview();});
+    studio.querySelector('#bv-remove-track').addEventListener('click',()=>{draft.trackPath='';draft.trackUrl='';draft.trackTitle='';draft.songRef='';studio.querySelector('#bv-trackUrl').value='';studio.querySelector('#bv-trackTitle').value='';drawPreview();});
     studio.querySelector('#bv-remove-cover').addEventListener('click',()=>{draft.coverPath='';drawPreview();});
     const gallery=studio.querySelector('#bv-skin-options');
-    const scrollSkins=direction=>gallery.scrollBy({left:direction*(gallery.querySelector('.bv-skin-option')?.offsetWidth+12||gallery.clientWidth),behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
-    studio.querySelector('#bv-skins-left').addEventListener('click',()=>scrollSkins(-1));
-    studio.querySelector('#bv-skins-right').addEventListener('click',()=>scrollSkins(1));
-    gallery.addEventListener('keydown',event=>{if(event.target===gallery&&['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();scrollSkins(event.key==='ArrowRight'?1:-1);}});
-    gallery.addEventListener('scroll',updateSkinNavigation);
+    const category=studio.querySelector('#bv-skin-category');
+    category.innerHTML=['New picks','All',...new Set(skins.presets.map(p=>p.category).filter(c=>c!=='New picks'))].map(c=>`<option value="${esc(c)}" ${c===skinCategory?'selected':''}>${esc(c)}</option>`).join('');
+    category.addEventListener('change',()=>{skinCategory=category.value;skinQuery='';studio.querySelector('#bv-skin-search').value='';drawOptions();});
+    studio.querySelector('#bv-skin-search').addEventListener('input',event=>{
+      skinQuery=event.target.value.trim().toLowerCase();
+      if(skinQuery){skinCategory='All';category.value='All';}
+      drawOptions();
+    });
+    gallery.addEventListener('keydown',event=>{
+      if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;
+      const buttons=Array.from(gallery.querySelectorAll('[data-skin]')),i=buttons.indexOf(event.target);if(i<0)return;
+      const next=i+({ArrowLeft:-1,ArrowRight:1,ArrowUp:-2,ArrowDown:2}[event.key]);
+      if(buttons[next]){event.preventDefault();buttons[next].focus();}
+    });
     studio.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
-    drawOptions();drawPreview();studio.showModal();updateSkinNavigation();
-    const resize=new ResizeObserver(updateSkinNavigation);resize.observe(gallery);studio.addEventListener('close',()=>resize.disconnect(),{once:true});
+    drawOptions();drawPreview();studio.showModal();
   }
   function close() {if(!saving)studio?.close();}
-  let skinCategory='New picks',studioPreviewMode='profile';
-  function updateSkinNavigation() {
-    if(!studio)return;
-    const gallery=studio.querySelector('#bv-skin-options');
-    studio.querySelector('#bv-skins-left').disabled=gallery.scrollLeft<=4;
-    studio.querySelector('#bv-skins-right').disabled=gallery.scrollLeft+gallery.clientWidth>=gallery.scrollWidth-2;
-  }
+  let skinCategory='New picks',skinQuery='',studioPreviewMode='profile';
   function drawOptions() {
-    const categories=['New picks','All',...new Set(skins.presets.map(p=>p.category).filter(category=>category!=='New picks'))];
-    studio.querySelector('#bv-skin-categories').innerHTML=categories.map(category=>`<button type="button" data-skin-category="${esc(category)}" aria-pressed="${category===skinCategory}">${esc(category)}</button>`).join('');
-    studio.querySelectorAll('[data-skin-category]').forEach(button=>button.addEventListener('click',()=>{skinCategory=button.dataset.skinCategory;drawOptions();studio.querySelector(`[data-skin-category="${skinCategory}"]`).focus();}));
-    const gallery=studio.querySelector('#bv-skin-options'),previousScroll=gallery.scrollLeft;
-    gallery.innerHTML=skins.presets.filter(p=>skinCategory==='All'||p.category===skinCategory).map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<strong>${esc(p.name)}</strong></button>`).join('');
+    const gallery=studio.querySelector('#bv-skin-options');
+    const choices=skins.presets.filter(p=>skinQuery?`${p.name} ${p.category} ${p.note}`.toLowerCase().includes(skinQuery):skinCategory==='All'||p.category===skinCategory);
+    studio.querySelector('#bv-skin-count').textContent=`${choices.length} ${choices.length===1?'skin':'skins'} · ${skinQuery?'searching all collections':skinCategory}`;
+    gallery.innerHTML=choices.length?choices.map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<span class="bv-choice-label"><strong>${esc(p.name)}</strong><small>${esc(p.category)}</small></span></button>`).join(''):'<p class="bv-no-skins">No skins match. Try another name or clear your search.</p>';
     studio.querySelectorAll('[data-skin]').forEach(b=>b.addEventListener('click',()=>{
       const oldPreset=skins.presets.find(p=>p.id===draft.id);
       const personalNote=draft.note!==oldPreset.note?draft.note:undefined;
-      draft=skins.normalize({id:b.dataset.skin,note:personalNote,layout:draft.layout,interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath});
+      draft=skins.normalize({id:b.dataset.skin,note:personalNote,layout:draft.layout,interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath,songRef:draft.songRef});
       for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle'])studio.querySelector('#bv-'+key).value=draft[key];
       drawOptions();drawPreview();studio.querySelector(`[data-skin="${draft.id}"]`).focus({preventScroll:true});
+      if(window.matchMedia('(max-width:760px)').matches)studio.querySelector('.bv-studio-preview').scrollIntoView({block:'start',behavior:'auto'});
     }));
-    gallery.scrollLeft=previousScroll;updateSkinNavigation();
+
   }
   function update(event) {
     if(!studio||!draft)return;
     for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle'])draft[key]=studio.querySelector('#bv-'+key).value;
-    if(event?.target.id==='bv-trackUrl'&&draft.trackUrl)draft.trackPath='';
+    if(event?.target.id==='bv-trackUrl'&&draft.trackUrl){draft.trackPath='';draft.songRef='';}
     draft=skins.normalize(draft);drawPreview();
   }
   function drawPreview() {
