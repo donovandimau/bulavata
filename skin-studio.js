@@ -56,7 +56,8 @@
     const oldPreset=skins.presets.find(p=>p.id===settings.id);
     return skins.normalize({id,note:settings.note!==oldPreset.note?settings.note:undefined,
       layout:settings.layout,interests:settings.interests,trackUrl:settings.trackUrl,trackTitle:settings.trackTitle,
-      trackPath:settings.trackPath,coverPath:settings.coverPath,songRef:settings.songRef});
+      trackPath:settings.trackPath,coverPath:settings.coverPath,songRef:settings.songRef,
+      atmosphere:settings.atmosphere,motionEnergy:settings.motionEnergy});
   }
   function skinScene(settings) {
     const p=skins.presets.find(p=>p.id===settings.id);
@@ -77,7 +78,7 @@
   }
   function coverContent(settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
-    return `${s.coverPath?coverMediaMarkup(s):''}<div class="bv-cover-copy"><span class="bv-skin-tag">${esc(p.category)} · Your community</span><h3 class="bv-identity-title">${esc(p.identityLabel||p.name)}</h3><div class="bv-cover-words">${esc(s.note||p.note)}</div></div>`;
+    return `${window.SotaRoomAtmosphere?.markup(s)||''}${s.coverPath?coverMediaMarkup(s):''}<div class="bv-cover-copy"><span class="bv-skin-tag">${esc(p.category)} · Your community</span><h3 class="bv-identity-title">${esc(p.identityLabel||p.name)}</h3><div class="bv-cover-words">${esc(s.note||p.note)}</div></div>`;
   }
   function preview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
@@ -99,7 +100,7 @@
   function chatPreview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
     return `<section data-look="${p.look}" class="bv-chat-preview" style="${esc(skins.inline(s))}" aria-label="Chat skin preview">
-      <header class="bv-chat-heading"><span class="bv-chat-avatar" aria-hidden="true">✦</span><div><h3>Your circle</h3><p>Example Koro · ${esc(profile.display_name||profile.handle||'You')}</p></div></header>
+      <header class="bv-chat-heading">${window.SotaRoomAtmosphere?.markup(s)||''}<span class="bv-chat-avatar" aria-hidden="true">✦</span><div><h3>Your circle</h3><p>Example Koro · ${esc(profile.display_name||profile.handle||'You')}</p></div></header>
       <div class="bv-chat-messages"><p class="bv-chat-caption">Example conversation</p>
         <div class="msg"><span class="who">Donu</span>Same time, same sunset?</div>
         <div class="msg mine"><span class="who">You</span>Absolutely. I’ll bring the playlist.</div>
@@ -118,6 +119,7 @@
     return song?`<div class="bv-track bv-chosen-song"><span class="bv-vinyl" aria-hidden="true"></span><div><small>MY SOUNDTRACK</small><b>${esc(song.title)}</b><span>${esc(song.performer)}</span></div><a href="${esc(song.url)}" target="_blank" rel="noopener noreferrer">Listen ↗</a></div>`:'';
   }
   function wireMedia(root) {
+    window.SotaRoomAtmosphere?.mount(root);
     root.querySelectorAll('[data-choose-song]').forEach(button=>button.addEventListener('click',()=>{
       if(!studio||!draft||!skins.song(button.dataset.chooseSong))return;
       const ref=button.dataset.chooseSong;draft.songRef=ref;draft.trackUrl='';draft.trackPath='';
@@ -185,6 +187,7 @@
   }
 
   function reset() {
+    window.SotaRoomAtmosphere?.release(app);
     window.SotaPlayback?.pauseSource('profile');
     stopSample();
     document.body.classList.remove('bv-room-active','bv-chat-active');
@@ -238,6 +241,13 @@
     style.textContent='body.bv-room-active{'+skins.inline(s)+'}';
     document.head.appendChild(style);document.body.classList.add('bv-room-active','bv-chat-active');
     document.body.dataset.bvLook=skins.presets.find(p=>p.id===s.id).look;
+    const messages=document.querySelector('#msgs');
+    document.querySelector('.sk-chat-atmosphere')?.remove();
+    if(s.atmosphere!=='none'&&window.SotaRoomAtmosphere){
+      const art=document.createElement('div');art.className='sk-chat-atmosphere';
+      art.innerHTML=window.SotaRoomAtmosphere.markup(s)+'<p>Your room atmosphere</p>';
+      messages.before(art);window.SotaRoomAtmosphere.mount(art);
+    }
   }
   const originalShell=shell;
   shell=function(body){reset();originalShell(body);wireMedia(app);};
@@ -373,6 +383,7 @@
     studio=document.createElement('dialog');studio.className='bv-studio';studio.setAttribute('aria-labelledby','bv-studio-title');
     studio.innerHTML=`<div class="bv-studio-head"><div><span class="bv-studio-kicker">YOUR SPACE, REMIXED</span><h2 id="bv-studio-title">Find your skin.</h2><p>Artwork, atmosphere and a room that feels like you.</p></div><button type="button" class="bv-close" aria-label="Close skin studio">×</button></div>
       <div class="bv-studio-body"><div class="bv-studio-controls"><nav class="bv-collection-shortcuts" aria-label="Browse identity collections">${collectionMarkup(true)}</nav><div class="bv-studio-picker"><div class="bv-skin-filters"><label class="bv-search-label" for="bv-skin-search">Find a skin<input id="bv-skin-search" type="search" placeholder="School, artist, song or place…" autocomplete="off"></label><label for="bv-skin-category">Collection<select id="bv-skin-category" aria-label="Skin collection"></select></label><p id="bv-skin-count" role="status"></p></div><div class="bv-skin-grid" id="bv-skin-options" tabindex="0" aria-label="Room skins"></div></div>
+      <section class="bv-atmosphere-picker" aria-labelledby="bv-atmosphere-title"><h3 id="bv-atmosphere-title">Room atmosphere</h3><p>A little movement over your artwork. Press Play in the preview.</p><div class="bv-atmosphere-fields"><label for="bv-atmosphere">Effect<select id="bv-atmosphere">${(window.SotaRoomAtmosphere?.effects||[{id:'none',name:'Off'}]).map(e=>`<option value="${e.id}" ${draft.atmosphere===e.id?'selected':''}>${e.name}</option>`).join('')}</select></label><label for="bv-motionEnergy">Energy<select id="bv-motionEnergy"><option value="calm" ${draft.motionEnergy==='calm'?'selected':''}>Calm</option><option value="bold" ${draft.motionEnergy==='bold'?'selected':''}>Energetic</option></select></label></div></section>
       <details class="bv-studio-custom"><summary>Fine-tune your skin <span>Colours · lettering · music</span></summary><div class="bv-custom-content"><div class="bv-controls">
         <div><label for="bv-accent">Accent colour</label><input id="bv-accent" type="color" value="${draft.accent}"></div>
         <div><label for="bv-background">Page colour</label><input id="bv-background" type="color" value="${draft.background}"></div>
@@ -406,6 +417,7 @@
     studio.addEventListener('cancel',event=>{event.preventDefault();close();});
     const opened=studio,returnFocus=focusBefore;
     studio.addEventListener('close',()=>{
+      window.SotaRoomAtmosphere?.release(opened);
       opened.remove();if(studio!==opened)return;
       discardUploads();studio=null;draft=null;showWelcome(picked(),homeSkinChosen);returnFocus?.isConnected&&returnFocus.focus({preventScroll:true});
     });
@@ -446,7 +458,7 @@
     gallery.innerHTML=choices.length?choices.map(p=>`<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<span class="bv-choice-label"><strong>${esc(p.name)}</strong><small>${esc(p.category)}</small></span></button>`).join(''):'<p class="bv-no-skins">No skins match. Try another name or clear your search.</p>';
     studio.querySelectorAll('[data-skin]').forEach(b=>b.addEventListener('click',()=>{
       draft=remix(draft,b.dataset.skin);
-      for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle'])studio.querySelector('#bv-'+key).value=draft[key];
+      for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle','atmosphere','motionEnergy'])studio.querySelector('#bv-'+key).value=draft[key];
       drawOptions();drawPreview();studio.querySelector(`[data-skin="${draft.id}"]`).focus({preventScroll:true});
       if(window.matchMedia('(max-width:760px)').matches)studio.querySelector('.bv-studio-preview').scrollIntoView({block:'start',behavior:'auto'});
     }));
@@ -454,11 +466,12 @@
   }
   function update(event) {
     if(!studio||!draft)return;
-    for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle'])draft[key]=studio.querySelector('#bv-'+key).value;
+    for(const key of ['accent','background','panel','cover','cardStyle','effect','pattern','font','note','layout','interests','trackUrl','trackTitle','atmosphere','motionEnergy'])draft[key]=studio.querySelector('#bv-'+key).value;
     if(event?.target.id==='bv-trackUrl'&&draft.trackUrl){draft.trackPath='';draft.songRef='';}
     draft=skins.normalize(draft);drawPreview();
   }
   function drawPreview() {
+    window.SotaRoomAtmosphere?.release(studio.querySelector('#bv-studio-preview'));
     const profile={...(S.me||example)};
     for(const [id,field] of [['d-name','display_name'],['d-bio','bio'],['d-emo','avatar_emoji']]){const el=studio.querySelector('#'+id);if(el)profile[field]=el.value;}
     studio.querySelector('#bv-studio-preview').innerHTML=studioPreviewMode==='chat'?chatPreview(profile,draft):preview(profile,draft);
@@ -499,6 +512,7 @@
   window.addEventListener('sota-music-change',()=>{if(studio&&draft)drawPreview();});
   openDecorate=function(){open();};
   function closeForOwnerChange(){
+    window.SotaRoomAtmosphere?.release(studio);
     const previous=studio,pending=mediaUploads;mediaUploads=[];studio=null;draft=null;saving=false;
     previous?.close();previous?.remove();window.SotaPlayback?.activate('auth-change');stopSampleOnly();
     // The auth notification stays synchronous; private upload cleanup runs after its lock is released.

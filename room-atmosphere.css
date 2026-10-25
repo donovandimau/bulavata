@@ -1,0 +1,36 @@
+/* The artwork remains visible beneath a bounded, pointer-transparent atmosphere. */
+.sk-atmosphere{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;isolation:isolate;--duration:12s}
+.sk-atmosphere[data-energy=calm]{--duration:24s}
+.sk-atmosphere-art{position:absolute;inset:0;overflow:hidden;mask-image:linear-gradient(#000 0 55%,#0005 78%,transparent)}
+.sk-atmosphere-art i{position:absolute;left:var(--x);top:var(--y);display:block;animation-duration:var(--duration);animation-delay:var(--delay);animation-timing-function:linear;animation-iteration-count:infinite;animation-play-state:paused}
+.sk-atmosphere[data-running=true] .sk-atmosphere-art i{animation-play-state:running}
+.sk-atmosphere .sk-motion-toggle{position:absolute;right:12px;top:12px;pointer-events:auto;min-height:36px;padding:8px 12px;border:1px solid #ffffff60;border-radius:6px;background:#071b2ce8;color:#fff;font:600 12px/1.4 Arial,sans-serif;letter-spacing:.01em;box-shadow:0 2px 12px #0002;cursor:pointer}
+.sk-atmosphere .sk-motion-toggle:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.sk-atmosphere .sk-motion-toggle:disabled{opacity:1;cursor:default;color:#e2e8ef}
+.sk-atmosphere[data-atmosphere=bubbles] i{width:var(--size);height:var(--size);border-radius:50%;border:1px solid #c5fffbb3;background:radial-gradient(circle at 28% 25%,#ffffff94,transparent 17%),radial-gradient(circle at 62% 76%,#9b82fa4d,transparent 70%);box-shadow:inset 0 0 16px #8fffff35,0 0 15px #96eee51a;animation-name:sk-bubble-rise}
+.sk-atmosphere[data-atmosphere=stars] i{width:3px;height:3px;border-radius:50%;background:#eaffff;box-shadow:0 0 8px #b9f9ff,22px 35px 0 -1px #fff,-31px 58px 0 -1px #fff;animation-name:sk-star-drift}
+.sk-atmosphere[data-atmosphere=stars] i:nth-child(5n){width:90px;height:1px;border-radius:0;background:linear-gradient(90deg,transparent,#dcfaff);box-shadow:none;animation-name:sk-star-trail}
+.sk-atmosphere[data-atmosphere=waves] i{left:-20%;top:calc(23% + var(--n)*6%);width:140%;height:40%;border:2px solid #6ef5f0;border-top-color:transparent;border-left-color:transparent;border-right-color:transparent;border-radius:50%;box-shadow:0 8px 20px -14px #91fff4;opacity:.7;animation-name:sk-wave-flow;animation-timing-function:ease-in-out}
+.sk-atmosphere[data-atmosphere=waves] i:nth-child(2n){border-bottom-color:#cbb0ff}
+.sk-atmosphere[data-atmosphere=sparks] i{width:3px;height:calc(var(--size)*.32);border-radius:3px;background:linear-gradient(#fff6c7,#ffb44900);box-shadow:0 -3px 9px #ffca6666;animation-name:sk-spark-rise}
+.sk-atmosphere[data-atmosphere=masi] i{width:var(--size);height:var(--size);border:1px solid #ffdf9c99;transform:rotate(45deg);box-shadow:inset 0 0 18px #ffdb5e1a,0 0 16px #ffdb5e1a;animation-name:sk-masi-glow;animation-timing-function:ease-in-out}
+.sk-atmosphere[data-atmosphere=masi] i::after{content:'';position:absolute;inset:6px;border:1px solid #fff0c450}
+@keyframes sk-bubble-rise{0%{transform:translate(-12px,130px);opacity:0}18%,75%{opacity:.85}100%{transform:translate(22px,-190px);opacity:0}}
+@keyframes sk-star-drift{0%{transform:translate(-20px,15px);opacity:.3}50%{opacity:.95}100%{transform:translate(45px,-24px);opacity:.3}}
+@keyframes sk-star-trail{0%,35%{transform:translate(-130px,90px) rotate(-28deg);opacity:0}45%,65%{opacity:.8}100%{transform:translate(200px,-90px) rotate(-28deg);opacity:0}}
+@keyframes sk-wave-flow{0%,100%{transform:translate(-4%,12%) rotate(-8deg) scaleY(.65)}50%{transform:translate(4%,-10%) rotate(6deg) scaleY(1.35)}}
+@keyframes sk-spark-rise{0%{transform:translate(0,140px) rotate(var(--turn));opacity:0}20%,60%{opacity:1}100%{transform:translate(45px,-180px) rotate(calc(var(--turn) + 80deg));opacity:0}}
+@keyframes sk-masi-glow{0%,100%{transform:translateY(12px) rotate(45deg);opacity:.18}50%{transform:translateY(-12px) rotate(45deg);opacity:.85}}
+.bv-atmosphere-picker{padding:20px 0;border-top:1px solid #d5d6cd;margin-top:20px}
+.bv-atmosphere-picker h3{margin:0 0 5px;font:600 19px/1.3 Arial,sans-serif;color:#183d40}
+.bv-atmosphere-picker p{margin:0 0 14px;font:400 13px/1.5 Arial,sans-serif;color:#486466}
+.bv-atmosphere-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bv-atmosphere-fields label{display:block;font:600 12px/1.4 Arial,sans-serif;color:#345453}
+.bv-atmosphere-fields select{display:block;width:100%;min-height:44px;margin-top:6px;padding:10px;border:1px solid #aab8b2;border-radius:5px;background:#fffef8;color:#173b40;font:400 16px/1.3 Arial,sans-serif}
+.bv-chat-heading{position:relative;isolation:isolate;overflow:hidden;padding-top:62px!important}
+.bv-chat-heading>div:not(.sk-atmosphere),.bv-chat-heading>.bv-chat-avatar{position:relative;z-index:3}
+.sk-chat-atmosphere{position:relative;min-height:155px;overflow:hidden;margin:12px 0;border-radius:8px;background-color:var(--bv-cover);background-image:var(--bv-hero);background-size:cover;background-position:center}
+.sk-chat-atmosphere>p{position:relative;z-index:3;display:inline-block;margin:96px 16px 16px;padding:6px 10px;background:#071b2ce8;color:#fff;font:500 12px/1.4 Arial,sans-serif;border-radius:4px}
+@media(pointer:coarse){.sk-atmosphere .sk-motion-toggle{min-height:44px}}
+@media(max-width:380px){.bv-atmosphere-fields{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.sk-atmosphere .sk-atmosphere-art i{animation:none!important}}

@@ -1849,7 +1849,9 @@
       trackPath:safeMediaPath(input.trackPath,'music'),coverPath:safeMediaPath(input.coverPath,'covers'),
       panel:hex(input.panel,preset.panel),cover:hex(input.cover,preset.cover),
       cardStyle:['soft','square','round'].includes(input.cardStyle)?input.cardStyle:(preset.cardStyle||'soft'),
-      effect:['flat','glow','sticker'].includes(input.effect)?input.effect:(preset.effect||'flat')};
+      effect:['flat','glow','sticker'].includes(input.effect)?input.effect:(preset.effect||'flat'),
+      atmosphere:['bubbles','stars','waves','sparks','masi'].includes(input.atmosphere)?input.atmosphere:'none',
+      motionEnergy:input.motionEnergy==='calm'?'calm':'bold'};
   }
   function read(css) {
     const text = String(css??'').slice(0,4000), match = text.match(marker);
