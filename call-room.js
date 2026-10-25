@@ -51,7 +51,7 @@
   }
   function dropPeer(peer) {
     const t = tiles.get(peer);
-    if (t) { t.item.remove(); tiles.delete(peer); }
+    if (t) { if (t.audio) { t.audio.pause(); t.audio.srcObject = null; } t.item.remove(); tiles.delete(peer); }
     if (engine) try { engine.removePeer(peer); } catch (_) {}
     updateCount();
   }
@@ -113,7 +113,16 @@
     engine = window.DimauCallMedia.create({
       localStream: stream, localId: me, iceServers, maxPeers: MAX - 1, lowData: false, statsIntervalMs: 0,
       sendSignal: async (peer, signal) => { if (channel) await channel.send({ type: 'broadcast', event: 'sig', payload: { from: me, to: peer, signal } }); },
-      onRemoteStream: (peer, media) => { const t = tileFor(peer); if (t.video.srcObject !== media) { t.video.srcObject = media; t.video.play().catch(() => { $('crSound').hidden = false; }); } },
+      onRemoteStream: (peer, media) => {
+        const t = tileFor(peer);
+        if (t.video.srcObject === media) return;
+        // Pictures play silently at once; sound plays separately so a browser
+        // that holds back sound never leaves the picture frozen.
+        t.video.muted = true; t.video.srcObject = media; t.video.play().catch(() => {});
+        if (!t.audio) { t.audio = new Audio(); t.audio.autoplay = true; }
+        t.audio.srcObject = media;
+        t.audio.play().catch(() => { $('crSound').hidden = false; });
+      },
       onPeerState: (peer, state) => { const t = tiles.get(peer); if (t) t.state.textContent = state === 'connected' ? '' : state === 'failed' ? 'Connection lost' : 'Connecting'; },
       onError: () => {}
     });
@@ -136,6 +145,7 @@
     try { channel && channel.untrack(); channel && sb.removeChannel(channel); } catch (_) {}
     try { engine && engine.close(); } catch (_) {}
     [stream, screenTrack && new MediaStream([screenTrack])].forEach(s => s && s.getTracks().forEach(t => t.stop()));
+    for (const t of tiles.values()) if (t.audio) { t.audio.pause(); t.audio.srcObject = null; }
     document.getElementById('nativeCalls').dataset.ncCall = '';
     $('ncLive').hidden = true;
     $('crEnded').hidden = false;
@@ -183,7 +193,7 @@
     $('crInvite').addEventListener('click', invite);
     $('crInvite2').addEventListener('click', invite);
     $('crRejoin').addEventListener('click', () => location.reload());
-    $('crSound').addEventListener('click', () => { for (const t of tiles.values()) t.video.play().catch(() => {}); $('crSound').hidden = true; });
+    $('crSound').addEventListener('click', () => { for (const t of tiles.values()) { t.video.play().catch(() => {}); if (t.audio) t.audio.play().catch(() => {}); } $('crSound').hidden = true; });
     const nameField = $('crName');
     nameField.value = myName;
     nameField.addEventListener('change', async () => {
