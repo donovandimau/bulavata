@@ -336,6 +336,7 @@
     window.SotaMusicHome?.mount(app);
     window.SotaFrontPages?.mount(app);
     window.SotaSpaceDesign?.mount(app);
+    window.SotaSpaceDesign?.decorateDialog?.(app.querySelector('.bv-account-dialog'));
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').textContent=mode==='up'?'Create account':'Sign in';
     $('#a-go').onclick=()=>mode==='up'?signUp():signIn();
