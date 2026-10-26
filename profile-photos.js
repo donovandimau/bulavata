@@ -57,17 +57,17 @@
       if(editor?.session===session&&!editor.files[kind]&&session.assets[kind])setImage(editor.dialog.querySelector('[data-photo-preview="'+kind+'"]'),session.assets[kind]);
     }
   }
-  async function loadAssets(session){
+  async function loadAssets(session,{skip=[]}={}){
     const revision=session.assetRevision;
     const fresh=()=>own(session)&&session.assetRevision===revision;
     try{
       if(!session.owner){
         const saved=await localStore('get');if(!fresh())return;
-        for(const kind of kinds){const blob=saved[kind];if(!blob||!blob.size||blob.size>6*1024*1024||!/^image\/(?:jpeg|png|webp)$/.test(blob.type||''))continue;const url=urlFor(session,blob);try{await decode(url);if(!fresh()){revoke(session,url);return;}session.assets[kind]=url;session.blobs[kind]=blob;}catch(_){revoke(session,url);}}
+        for(const kind of kinds){if(skip.includes(kind))continue;const blob=saved[kind];if(!blob||!blob.size||blob.size>6*1024*1024||!/^image\/(?:jpeg|png|webp)$/.test(blob.type||''))continue;const url=urlFor(session,blob);try{await decode(url);if(!fresh()){revoke(session,url);return;}session.assets[kind]=url;session.blobs[kind]=blob;}catch(_){revoke(session,url);}}
       }else{
         await checkOwner(session);if(!fresh())return;
         const settings=root.BulaSkins?.read(context.state.me?.room_css).settings||{};
-        for(const kind of kinds){const path=validPath(settings[kind+'Path'],session.owner);if(!path)continue;const url=await root.SotaRoomMedia.signed(context.client,path,'cover');if(!fresh())return;session.assets[kind]=url;}
+        for(const kind of kinds){if(skip.includes(kind))continue;const path=validPath(settings[kind+'Path'],session.owner);if(!path)continue;const url=await root.SotaRoomMedia.signed(context.client,path,'cover');if(!fresh())return;session.assets[kind]=url;}
       }
       if(fresh())present(session);
     }catch(_){/* Existing artwork remains available when private or device storage is unavailable. */}
@@ -201,6 +201,7 @@
           for(const kind of kinds)if(active.files[kind])session.assets[kind]=urlFor(session,active.files[kind]);
         }
         present(session);if(!valid())return;
+        loadAssets(session,{skip:kinds.filter(kind=>active.files[kind])});
         q('[data-photo-status]').textContent=session.owner?'Photos saved to your room.':'Saved on this device.';
         active.commitStarted=false;closeEditor();
         context.onSaved?.({owner:session.owner,local:!session.owner});
