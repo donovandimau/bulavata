@@ -9,14 +9,14 @@
       ids.add(track.id);return {id:track.id,title:track.title.trim(),url:AUDIO_BASE+track.path};
     });
   }
-  let dialog=null,audio=null,tracks=[],current=-1,loading=null,attempt=0,beforePlay=()=>{},focusBefore=null,message='Choose a song to start listening.';
+  let dialog=null,audio=null,tracks=[],current=-1,selectedTrack=null,authoritative=false,loading=null,attempt=0,beforePlay=()=>{},focusBefore=null,message='Choose a song to start listening.';
   root.SotaPlayback?.register('playlist',pause);
   let list,filter,count,status,title,play,previous,next,retry,mood,subtitle;
   function el(tag,text,cls){const node=root.document.createElement(tag);if(text)node.textContent=text;if(cls)node.className=cls;return node;}
   function button(text,action){const node=el('button',text);node.type='button';node.addEventListener('click',action);return node;}
   function live(){return !!audio&&!audio.paused&&!audio.ended;}
   function sync(){
-    const selected=tracks[current],playing=live();
+    const selected=tracks[current]||selectedTrack,playing=live();
     root.document.querySelectorAll('[data-playlist-open]').forEach(b=>{
       b.setAttribute('aria-expanded',String(!!dialog?.open));b.setAttribute('aria-pressed',String(playing));
       b.title=selected?(playing?'Playing: ':'Paused: ')+selected.title+' · Open music playlist':'Open music playlist';
@@ -34,11 +34,12 @@
       if(active)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current');
     });
   }
-  function pause(){attempt++;if(audio)audio.pause();if(tracks[current])message='Paused · '+tracks[current].title;sync();}
+  function pause(){attempt++;if(audio)audio.pause();if(selectedTrack)message='Paused · '+selectedTrack.title;sync();}
   async function playTrack(index){
     const selected=tracks[index];if(!selected)return;
     beforePlay();const request=++attempt;
-    if(current!==index||!audio.getAttribute('src')||audio.error){audio.pause();current=index;audio.src=selected.url;}
+    if(current!==index||audio.getAttribute('src')!==selected.url||audio.error){audio.pause();current=index;audio.src=selected.url;}
+    selectedTrack=selected;
     message='Loading · '+selected.title;sync();
     root.SotaHeroVisualiser?.prepare(audio);
     try{await audio.play();if(request!==attempt)return;message='Playing · '+selected.title;sync();}
@@ -55,13 +56,31 @@
     if(!shown)list.append(el('li',tracks.length?'No songs match your search.':'The playlist could not load.'));
     count.textContent=query?shown+' of '+tracks.length+' songs':tracks.length+' songs';sync();
   }
+  async function readCatalogue(){
+    try{
+      const shared=await import('/shared-music/core.mjs');
+      const result=await shared.loadCatalogue();
+      authoritative=true;return result;
+    }catch(error){
+      if(authoritative)throw error;
+      const response=await root.fetch('/music-playlist.json?v=20261026-shared-music',{credentials:'omit',cache:'no-cache'});
+      if(!response.ok)throw Error('Playlist unavailable.');
+      return {tracks:validateCatalog(await response.json()),source:'fallback',stale:true};
+    }
+  }
   async function load(){
-    if(tracks.length)return;
     if(loading)return loading;
     retry.hidden=true;message='Loading playlist…';sync();
     loading=(async()=>{
-      try{const response=await root.fetch('/music-playlist.json?v=20261026-shared-music',{credentials:'omit',cache:'no-cache'});if(!response.ok)throw Error('Playlist unavailable.');tracks=validateCatalog(await response.json());message='Choose a song to start listening.';render();}
-      catch(_){message='The playlist could not load. Check your connection and try again.';retry.hidden=false;sync();}
+      try{
+        const result=await readCatalogue();
+        const selectedId=(tracks[current]||selectedTrack)?.id;
+        tracks=result.tracks;current=selectedId?tracks.findIndex(track=>track.id===selectedId):-1;
+        if(current>=0)selectedTrack=tracks[current];
+        message=result.stale?'Saved playlist · Connection unavailable. Music needs an internet connection.':selectedTrack?(live()?'Playing · ':'Paused · ')+selectedTrack.title:'Choose a song to start listening.';
+        retry.hidden=!result.stale;render();
+      }
+      catch(_){message=tracks.length?'The shared playlist could not refresh. Your current selection is kept.':'The playlist could not load. Check your connection and try again.';retry.hidden=false;sync();}
       finally{loading=null;}
     })();
     return loading;
@@ -89,9 +108,9 @@
     audio.addEventListener('play',()=>{
       root.SotaPlayback?.activate('playlist',audio);
       beforePlay();root.document.querySelectorAll('audio').forEach(other=>{if(other!==audio)other.pause();});
-      message='Playing · '+(tracks[current]?.title||'');sync();
+      message='Playing · '+(selectedTrack?.title||'');sync();
     });
-    audio.addEventListener('pause',()=>{if(tracks[current])message='Paused · '+tracks[current].title;sync();});
+    audio.addEventListener('pause',()=>{if(selectedTrack)message='Paused · '+selectedTrack.title;sync();});
     audio.addEventListener('ended',()=>move(1));
     audio.addEventListener('error',()=>{message='This song could not load. Tap Play to retry, or choose another song.';sync();});
     dialog.addEventListener('close',()=>{sync();if(focusBefore?.isConnected)focusBefore.focus({preventScroll:true});});
