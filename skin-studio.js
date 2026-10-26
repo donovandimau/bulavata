@@ -292,7 +292,7 @@
     });
   }
   renderAuth=function(mode='in',expanded=false){
-    guestPreviewToken++;window.SotaConnections?.stopEntry();
+    guestPreviewToken++;window.SotaConnections?.stopEntry();window.SotaRoomSocial?.stop();window.SotaRoomSocialLayout?.stop();
     reset();originalAuth(mode);
     const authNode=app.querySelector('.authwrap');
     authNode.querySelectorAll(':scope > .row,:scope > .tagline,:scope > .promises,:scope > .btn').forEach(node=>node.remove());
@@ -303,7 +303,7 @@
     const auth=authNode.outerHTML;
     app.classList.add('bv-welcome');
     app.innerHTML=`<a class="sota-skip" href="#bv-neon">Skip to content</a><header class="sk-site-header sk-pattern-masthead" aria-label="Sota Kece header"><a class="sk-site-brand" href="/" aria-label="Sota Kece home"><img class="dimau-owner-logo" src="/assets/dimau-owner-logo-20260920.png" alt="Dimau Fintech" width="36" height="36"></a><div class="sk-pattern-heading" aria-hidden="true">Sota Kece</div><button class="sk-hero-play" id="sk-hero-play" type="button" data-playlist-open aria-label="Open music playlist" aria-pressed="false" aria-describedby="sk-hero-status" title="Open music playlist"></button><span class="sk-hero-status" id="sk-hero-status" data-playlist-status role="status">Music playlist · tap to choose a song</span></header><section class="sk-front sk-original-front" aria-label="Sota Kece original supplied design">
-      <div class="sk-hero-artwork"><picture class="sk-original-picture"><source media="(max-width:760px)" srcset="/assets/mobile-front-reference-brand.jpg" width="1008" height="1896"><img class="sk-original-design" src="/assets/front-reference-brand.jpg" width="1360" height="832" fetchpriority="high" alt="Sota Kece: Create your own space with friends. The original sunset design with Sema's slanted room, masi border, Talanoa, Top Mates and music player."></picture><div class="sk-hero-visualiser" hidden data-state="idle" role="img" aria-label="Music visualiser · choose a song to begin"><canvas aria-hidden="true"></canvas></div><button class="sk-artwork-play" hidden type="button" data-playlist-open aria-label="Choose music for live visualiser" aria-pressed="false" aria-describedby="sk-hero-status"></button><button class="sk-hero-create" type="button" onclick="renderAuth('up',true)" aria-label="Create your space" title="Create your space"></button></div>
+      <div class="sk-hero-artwork"><picture class="sk-original-picture"><source media="(max-width:760px)" srcset="/assets/mobile-front-reference-brand.jpg" width="1008" height="1896"><img class="sk-original-design" src="/assets/front-reference-brand.jpg" width="1360" height="832" fetchpriority="high" alt="Sota Kece: Create your own space with friends. Sunset room artwork, masi border and music player."></picture>${window.SotaRoomSocial?.markup({hero:true})||`<section class="sota-social-host sota-social-hero" aria-label="Your Talanoa and mates"><button type="button" class="sota-social-panel" data-social-panel="wall" onclick="renderAuth('in',true)"><span class="sota-social-heading">Talanoa</span><span>Sign in to see your own Talanoa.</span></button><button type="button" class="sota-social-panel" data-social-panel="mates" onclick="renderAuth('in',true)"><span class="sota-social-heading">Top Mates</span><span>Sign in to see your real friends.</span></button></section>`}<div class="sk-hero-visualiser" hidden data-state="idle" role="img" aria-label="Music visualiser · choose a song to begin"><canvas aria-hidden="true"></canvas></div><button class="sk-artwork-play" hidden type="button" data-playlist-open aria-label="Choose music for live visualiser" aria-pressed="false" aria-describedby="sk-hero-status"></button><button class="sk-hero-create" type="button" onclick="renderAuth('up',true)" aria-label="Create your space" title="Create your space"></button></div>
     </section><main class="bv-neon-section" id="bv-neon" tabindex="-1"><div class="bv-classic">
       <header class="bv-classic-header bv-connect-header"><div class="bv-wordmark" aria-label="Sota Kece"><small>FIJI ROOTS. EVERYWHERE ENERGY.</small></div>
         <div class="bv-entry-copy"><h2>Bring your people together.</h2><p>Friends, music and proper talanoa. Join the circle.</p></div>
@@ -325,6 +325,7 @@
     window.SotaConnections?.mountEntry();
     window.SotaLocalMusic?.mount(app,{beforePlay:()=>{window.SotaPlaylist?.pause();stopSample();}});
     window.SotaHeroVisualiser?.mount(app);
+    window.SotaRoomSocial?.mount(app);window.SotaRoomSocialLayout?.mount(app);
     window.SotaPlaylist?.mount(app,{beforePlay:stopSample});
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').textContent=mode==='up'?'Create account':'Sign in';

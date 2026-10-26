@@ -690,3 +690,10 @@
 
 /* Follow the original desktop player perspective without moving its artwork. */
 @media(min-width:761px){#app.bv-welcome .sk-hero-artwork>.sk-hero-visualiser canvas{transform:translateY(7%) skewY(3.2deg);transform-origin:center}}
+
+/* Keep painted sample contacts covered even if the optional live-card module is unavailable. */
+.sk-hero-artwork :where(.sota-social-hero){position:absolute;inset:0;z-index:2;display:block;margin:0;pointer-events:none}
+.sk-hero-artwork :where(.sota-social-hero) button{position:absolute;box-sizing:border-box;display:flex;flex-direction:column;gap:4px;padding:8px;min-height:44px;border:1px solid #dfe8dc;border-radius:6px;background:linear-gradient(125deg,#e7d0bb,#c1d6d0);color:#173e43;font:11px/1.3 system-ui,sans-serif;text-align:left;overflow:hidden;pointer-events:auto}
+.sk-hero-artwork :where(.sota-social-hero) [data-social-panel=wall]{left:47.14932127%;top:62.25961538%;width:23.34841629%;height:22.35576923%;clip-path:polygon(.8721% 0,99.7093% 1.6129%,99.7093% 99.4624%,0 91.3978%)}
+.sk-hero-artwork :where(.sota-social-hero) [data-social-panel=mates]{left:71.24434389%;top:56.49038462%;width:20.36199095%;height:30.28846154%;clip-path:polygon(.3333% 0,99.6667% 0,99.6667% 99.6032%,0 94.0476%)}
+@media(max-width:760px){.sk-hero-artwork :where(.sota-social-hero) [data-social-panel=wall]{left:13.99437412%;top:67.24683544%;width:73.04266292%;height:11.4978903%;clip-path:none}.sk-hero-artwork :where(.sota-social-hero) [data-social-panel=mates]{left:13.99437412%;top:79.16666667%;width:73.04266292%;height:12.39451477%;clip-path:none}}
