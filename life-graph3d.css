@@ -1,31 +1,31 @@
 /* Native WebGL life network. Labels are accessible DOM controls over real 3D geometry. */
-#app .lg3d{position:relative;overflow:hidden;background:#050913;color:#d9eaff;border:1px solid #203553;border-radius:18px;isolation:isolate;font-family:inherit}
-#app .lg3d [hidden]{display:none!important}
-#app .lg3d-stage{position:relative;height:520px;overflow:hidden;background:#050913;touch-action:pan-y}
-#app .lg3d-stage canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;background:#050913}
-#app .lg3d-stage canvas:active{cursor:grabbing}
-#app .lg3d-labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-#app button.lg3d-label{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:12px 4px;border:0;border-radius:3px;background:none;color:#dceaff;font-family:inherit;font-size:11px;font-weight:500;line-height:1.3;letter-spacing:0;text-transform:none;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;box-shadow:none;text-shadow:0 1px 3px #000,0 0 8px #000;cursor:pointer;transition:color .15s}
-#app button.lg3d-label[data-kind="you"]{font-size:14px;font-weight:800;color:#fff}
-#app button.lg3d-label[aria-pressed="true"]{color:#fff;font-weight:800;text-decoration:underline;text-decoration-color:var(--lg3d-color);text-underline-offset:5px}
-#app button.lg3d-label:hover{color:#fff}
-#app .lg3d-controls{position:absolute;z-index:150;right:15px;bottom:15px;display:flex;gap:6px}
-#app .lg3d-controls button{display:grid;place-items:center;min-width:44px;min-height:44px;border:1px solid #2d415c;background:#0d192b;color:#d5e9ff;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;line-height:1;padding:8px 11px;box-shadow:none;cursor:pointer;letter-spacing:0;text-transform:none}
-#app .lg3d-controls button:first-child,#app .lg3d-controls button:nth-child(2){font-size:22px}
-#app .lg3d-state{position:absolute;z-index:140;left:17px;bottom:24px;max-width:calc(100% - 200px);margin:0;font-size:10px;line-height:1.4;color:#91a8c8;pointer-events:none;letter-spacing:.02em}
-#app .lg3d-outline{position:relative;border-top:1px solid #1e3049;color:#b3c8e5;padding:0 15px;background:#08111e}
-#app .lg3d-outline summary{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;padding:10px 0;font-size:11px;font-weight:650;cursor:pointer;color:#b9d3f4;list-style:none}
-#app .lg3d-outline summary::before{content:'＋';font-size:14px;color:#6a8eb8}
-#app .lg3d-outline[open] summary::before{content:'−'}
-#app .lg3d-outline summary span{margin-left:auto;color:#789bbf;font-size:10px}
-#app .lg3d-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-height:280px;overflow:auto;padding:0 0 13px;scrollbar-color:#375478 #0b1728;scrollbar-width:thin}
-#app .lg3d-list button{display:grid;grid-template-columns:8px minmax(0,1fr);align-items:center;gap:0 7px;text-align:left;min-height:48px;padding:8px;border:1px solid #20334b;border-radius:6px;background:#0d1a2b;color:#d2e6ff;font-family:inherit;font-size:11px;font-weight:500;line-height:1.3;box-shadow:none;letter-spacing:0;text-transform:none;overflow-wrap:anywhere;cursor:pointer}
-#app .lg3d-list button i{width:5px;height:5px;border-radius:50%;background:var(--lg3d-color);box-shadow:0 0 8px var(--lg3d-color)}
-#app .lg3d-list button small{grid-column:2;font-size:9px;color:#7395bb;margin-top:3px}
-#app .lg3d-list button[aria-pressed="true"]{border-color:#88baf4;background:#152b46}
-#app .lg3d button:focus-visible,#app .lg3d summary:focus-visible{outline:2px solid #9dccff;outline-offset:-2px}
-#app .lg3d-unavailable .lg3d-stage{height:115px}
-#app .lg3d-unavailable .lg3d-stage canvas{display:none}
-#app .lg3d-unavailable .lg3d-state{left:20px;right:20px;bottom:auto;top:32px;max-width:none;color:#a4bddc;font-size:12px}
-@media(max-width:600px){#app .lg3d-stage{height:445px}#app button.lg3d-label{font-size:10px}#app .lg3d-state{left:12px;bottom:23px;font-size:9px;max-width:calc(100% - 172px)}#app .lg3d-controls{right:10px;bottom:12px;gap:4px}#app .lg3d-controls button{padding:7px 9px;font-size:11px;min-width:44px;min-height:44px}#app .lg3d-list{grid-template-columns:repeat(2,minmax(0,1fr))}#app .lg3d-outline{padding:0 12px}}
-@media(prefers-reduced-motion:reduce){#app .lg3d *{transition:none!important}}
+#app .slc .lg3d{position:relative;overflow:hidden;background:#050913;color:#d9eaff;border:1px solid #203553;border-radius:18px;isolation:isolate;font-family:inherit}
+#app .slc .lg3d [hidden]{display:none!important}
+#app .slc .lg3d-stage{position:relative;height:520px;overflow:hidden;background:#050913;touch-action:pan-y}
+#app .slc .lg3d-stage canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;background:#050913}
+#app .slc .lg3d-stage canvas:active{cursor:grabbing}
+#app .slc .lg3d-labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#app .slc button.lg3d-label{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:12px 4px;border:0;border-radius:3px;background:none;color:#dceaff;font-family:inherit;font-size:11px;font-weight:500;line-height:1.3;letter-spacing:0;text-transform:none;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;box-shadow:none;text-shadow:0 1px 3px #000,0 0 8px #000;cursor:pointer;transition:color .15s}
+#app .slc button.lg3d-label[data-kind="you"]{font-size:14px;font-weight:800;color:#fff}
+#app .slc button.lg3d-label[aria-pressed="true"]{color:#fff;font-weight:800;text-decoration:underline;text-decoration-color:var(--lg3d-color);text-underline-offset:5px}
+#app .slc button.lg3d-label:hover{color:#fff}
+#app .slc .lg3d-controls{position:absolute;z-index:150;right:15px;bottom:15px;display:flex;gap:6px}
+#app .slc .lg3d-controls button{display:grid;place-items:center;min-width:44px;min-height:44px;border:1px solid #2d415c;background:#0d192b;color:#d5e9ff;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;line-height:1;padding:8px 11px;box-shadow:none;cursor:pointer;letter-spacing:0;text-transform:none}
+#app .slc .lg3d-controls button:first-child,#app .slc .lg3d-controls button:nth-child(2){font-size:22px}
+#app .slc .lg3d-state{position:absolute;z-index:140;left:17px;bottom:24px;max-width:calc(100% - 200px);margin:0;font-size:10px;line-height:1.4;color:#91a8c8;pointer-events:none;letter-spacing:.02em}
+#app .slc .lg3d-outline{position:relative;border-top:1px solid #1e3049;color:#b3c8e5;padding:0 15px;background:#08111e}
+#app .slc .lg3d-outline summary{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;padding:10px 0;font-size:11px;font-weight:650;cursor:pointer;color:#b9d3f4;list-style:none}
+#app .slc .lg3d-outline summary::before{content:'＋';font-size:14px;color:#6a8eb8}
+#app .slc .lg3d-outline[open] summary::before{content:'−'}
+#app .slc .lg3d-outline summary span{margin-left:auto;color:#789bbf;font-size:10px}
+#app .slc .lg3d-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-height:280px;overflow:auto;padding:0 0 13px;scrollbar-color:#375478 #0b1728;scrollbar-width:thin}
+#app .slc .lg3d-list button{display:grid;grid-template-columns:8px minmax(0,1fr);align-items:center;gap:0 7px;text-align:left;min-height:48px;padding:8px;border:1px solid #20334b;border-radius:6px;background:#0d1a2b;color:#d2e6ff;font-family:inherit;font-size:11px;font-weight:500;line-height:1.3;box-shadow:none;letter-spacing:0;text-transform:none;overflow-wrap:anywhere;cursor:pointer}
+#app .slc .lg3d-list button i{width:5px;height:5px;border-radius:50%;background:var(--lg3d-color);box-shadow:0 0 8px var(--lg3d-color)}
+#app .slc .lg3d-list button small{grid-column:2;font-size:9px;color:#7395bb;margin-top:3px}
+#app .slc .lg3d-list button[aria-pressed="true"]{border-color:#88baf4;background:#152b46}
+#app .slc .lg3d button:focus-visible,#app .slc .lg3d summary:focus-visible{outline:2px solid #9dccff;outline-offset:-2px}
+#app .slc .lg3d-unavailable .lg3d-stage{height:115px}
+#app .slc .lg3d-unavailable .lg3d-stage canvas{display:none}
+#app .slc .lg3d-unavailable .lg3d-state{left:20px;right:20px;bottom:auto;top:32px;max-width:none;color:#a4bddc;font-size:12px}
+@media(max-width:600px){#app .slc .lg3d-stage{height:445px}#app .slc button.lg3d-label{font-size:10px}#app .slc .lg3d-state{left:12px;bottom:23px;font-size:9px;max-width:calc(100% - 172px)}#app .slc .lg3d-controls{right:10px;bottom:12px;gap:4px}#app .slc .lg3d-controls button{padding:7px 9px;font-size:11px;min-width:44px;min-height:44px}#app .slc .lg3d-list{grid-template-columns:repeat(2,minmax(0,1fr))}#app .slc .lg3d-outline{padding:0 12px}}
+@media(prefers-reduced-motion:reduce){#app .slc .lg3d *{transition:none!important}}
