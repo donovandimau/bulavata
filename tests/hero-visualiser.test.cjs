@@ -65,7 +65,7 @@ function environment(t,{reduced=false,resume=null,canvasAvailable=true}={}){
 
 function hero(h){
   h.run('music-visualiser.js');h.run('playback.js');h.run('hero-visualiser.js');
-  const studio=source('skin-studio.js'),start=studio.indexOf('<div class="sk-hero-artwork">'),end=studio.indexOf('</section>',start);
+  const studio=source('skin-studio.js'),start=studio.indexOf('<div class="sk-hero-artwork">'),end=studio.indexOf('</section><main class="bv-neon-section"',start);
   assert(start>=0&&end>start,'Use the actual supplied-artwork hero markup');
   h.get('#app').innerHTML=studio.slice(start,end);
   const draw=h.w.DimauMusicVisuals.draw;
