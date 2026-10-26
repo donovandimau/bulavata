@@ -1,0 +1,48 @@
+/* Original full-width music stage; canvas marks use the real shared analyser. */
+#app.bv-welcome .sk-music-stage {
+ box-sizing:border-box;max-width:1280px;margin:22px auto 0;padding:22px 24px 16px;
+ border:1px solid #a377f2;border-radius:20px;background:#160d2d;color:#fff;
+ box-shadow:0 5px 0 #41245f4d;text-shadow:none;overflow:hidden;
+}
+#app.bv-welcome .sk-music-stage :is(h2,p,small,label,span) {color:inherit;text-shadow:none;}
+#app.bv-welcome .sk-music-stage-heading {display:flex;justify-content:space-between;align-items:center;gap:16px;min-width:0;}
+#app.bv-welcome .sk-music-stage-heading>div {min-width:0;}
+#app.bv-welcome .sk-music-stage-heading small {display:block;color:#7df2f0;font:800 10px/1.5 var(--sk-ui-font,Nunito,sans-serif);letter-spacing:.17em;}
+#app.bv-welcome .sk-music-stage h2 {margin:5px 0 0;font:800 clamp(21px,2.4vw,30px)/1.2 var(--sk-ui-font,Nunito,sans-serif);letter-spacing:-.02em;color:#fff;}
+#app.bv-welcome .sk-music-stage .sk-music-stage-choose {
+ display:inline-flex;justify-content:center;align-items:center;gap:8px;flex:none;min-height:44px;padding:10px 16px;
+ background:#ffd85d;color:#25172b;border:1px solid #ffe7a0;border-radius:11px;
+ font:800 14px/1.4 var(--sk-ui-font,Nunito,sans-serif);text-shadow:none;box-shadow:none;cursor:pointer;
+}
+#app.bv-welcome .sk-music-stage-choose>span {font-size:24px;line-height:1;color:inherit;}
+#app.bv-welcome .sk-music-stage-picture {position:relative;height:180px;margin:10px 0 4px;background:repeating-linear-gradient(0deg,transparent,transparent 35px,#aaa0ff0d 35px,#aaa0ff0d 36px);}
+#app.bv-welcome .sk-music-stage-picture canvas {position:relative;z-index:1;display:block;width:100%;height:100%;background:transparent;}
+#app.bv-welcome .sk-music-stage-baseline {position:absolute;left:7%;right:7%;bottom:20%;height:1px;background:linear-gradient(90deg,#ff47b8,#ffd85d,#44efe0,#7b8dff);opacity:.6;}
+#app.bv-welcome .sk-music-stage-footer {display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+#app.bv-welcome .sk-music-stage-footer p {margin:0;color:#d2c8e5;font:600 12px/1.5 var(--sk-ui-font,Nunito,sans-serif);}
+#app.bv-welcome .sk-music-stage[data-state="live"] [data-stage-status] {color:#78efe2;}
+#app.bv-welcome .sk-music-stage-controls {display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+#app.bv-welcome .sk-music-stage-controls label {display:flex;align-items:center;gap:8px;margin:0;color:#ddd4eb;font:600 12px/1.4 var(--sk-ui-font,Nunito,sans-serif);}
+#app.bv-welcome .sk-music-stage-controls :is(select,button) {
+ box-sizing:border-box;min-height:44px;padding:9px 11px;margin:0;border:1px solid #8d77b4;border-radius:9px;
+ background:#302043;color:#fff;font:700 12px/1.4 var(--sk-ui-font,Nunito,sans-serif);text-shadow:none;box-shadow:none;cursor:pointer;
+}
+#app.bv-welcome .sk-music-stage-controls button[aria-pressed="true"] {border-color:#ffcf66;background:#52402d;color:#fff0c8;}
+#app.bv-welcome .sk-music-stage-controls button:disabled {cursor:default;opacity:.65;}
+#app.bv-welcome .sk-music-stage :is(button,select):focus-visible {outline:3px solid #77fcf0;outline-offset:3px;}
+#app.bv-welcome .sk-music-stage button::before,#app.bv-welcome .sk-music-stage button::after {content:none;}
+@media(max-width:1340px) {#app.bv-welcome .sk-music-stage {margin-inline:20px;}}
+@media(max-width:760px) {
+ #app.bv-welcome .sk-music-stage {margin:14px 12px 0;padding:18px 16px 12px;border-radius:16px;}
+ #app.bv-welcome .sk-music-stage-heading {align-items:flex-start;gap:10px;flex-wrap:wrap;}
+ #app.bv-welcome .sk-music-stage h2 {font-size:22px;}
+ #app.bv-welcome .sk-music-stage .sk-music-stage-choose {padding:8px 12px;font-size:12px;}
+ #app.bv-welcome .sk-music-stage-picture {height:140px;margin-top:4px;}
+ #app.bv-welcome .sk-music-stage-footer {gap:7px;}
+ #app.bv-welcome .sk-music-stage-controls {gap:7px;}
+ #app.bv-welcome .sk-music-stage-controls :is(select,button) {font-size:12px;padding-inline:9px;}
+}
+@media(forced-colors:active) {
+ #app.bv-welcome .sk-music-stage,#app.bv-welcome .sk-music-stage :is(select,button) {background:Canvas;color:CanvasText;border-color:CanvasText;box-shadow:none;}
+ #app.bv-welcome .sk-music-stage :is(button,select):focus-visible {outline-color:Highlight;}
+}
