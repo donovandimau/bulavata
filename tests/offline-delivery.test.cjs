@@ -79,6 +79,45 @@ test('first offline visit resolves versioned shell files from their installed en
   const store=app.stores.get(app.cacheName);assert(![...store.keys()].some(url=>url.includes('?')),'Version labels should not create duplicate cache entries');
 });
 
+test('new versioned code, styles and data use the current deployment on the first request',async()=>{
+  const app=worker();await app.install();const cache=await app.caches.open(app.cacheName);
+  const files=['/skin-studio.js','/connections.js','/life-connections.js','/front-page.css','/life-connections.css','/music-playlist.json','/shared-music/core.mjs'];
+  for(const file of files)await cache.put(file,new Response('old deployment '+file));
+  app.setNetwork(async url=>new Response('new deployment '+new URL(url).pathname));
+  for(const file of files){
+    const result=await app.request(file+'?v=revision-2');
+    assert.equal(await result.response.text(),'new deployment '+file,'Do not return a stale file before the background refresh: '+file);
+    assert.equal(await (await cache.match(file)).text(),'new deployment '+file);
+  }
+  assert(![...app.stores.get(app.cacheName).keys()].some(url=>url.includes('?')),'Fresh version labels must share the lean offline entry');
+});
+
+test('versioned files retain cached offline content when the newer deployment cannot be reached',async()=>{
+  const app=worker();await app.install();const cache=await app.caches.open(app.cacheName);
+  await cache.put('/skin-studio.js',new Response('working older code'));
+  app.setNetwork(async()=>{throw Error('offline');});
+  assert.equal(await (await app.request('/skin-studio.js?v=revision-2')).response.text(),'working older code');
+  assert.equal(await (await cache.match('/skin-studio.js')).text(),'working older code');
+  assert.equal((await app.request('/life-connections.js?v=never-cached')).response.type,'error');
+});
+
+test('failed versioned responses fall back without replacing a working file',async()=>{
+  const app=worker();await app.install();const cache=await app.caches.open(app.cacheName);
+  await cache.put('/connections.js',new Response('working graph'));
+  app.setNetwork(async()=>new Response('temporarily unavailable',{status:503}));
+  assert.equal(await (await app.request('/connections.js?v=revision-2')).response.text(),'working graph');
+  assert.equal(await (await cache.match('/connections.js')).text(),'working graph');
+  assert.equal((await app.request('/life-connections.js?v=never-cached')).response.status,503);
+});
+
+test('unversioned requests keep their cached response while refreshing in the background',async()=>{
+  const app=worker();await app.install();const cache=await app.caches.open(app.cacheName);
+  await cache.put('/connections.js',new Response('cached graph'));
+  app.setNetwork(async()=>new Response('fresh graph'));
+  assert.equal(await (await app.request('/connections.js')).response.text(),'cached graph');
+  assert.equal(await (await cache.match('/connections.js')).text(),'fresh graph');
+});
+
 test('known original hero artwork, optional visualiser, fonts and public skins cache only after use',async()=>{
   const app=worker();await app.install();
   const files=['/hero-visualiser.js','/assets/front-reference-brand.jpg','/assets/mobile-front-reference-brand.jpg','/assets/mobile-front-reference.png','/assets/sota-blue-white-background-20261021.png','/assets/fonts/nunito-latin.woff2','/assets/skins/core/masi-border.svg'];
