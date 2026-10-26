@@ -51,10 +51,45 @@ test('free-text roles support every living connection while input remains bounde
   const records=life.sanitize(input);assert.equal(records.length,120);assert.equal(records[0].kind,'Mango tree');assert.equal(records[1].kind,'Horse');
   assert.equal(records[2].name.length,60);assert.equal(records[2].kind.length,40);
 });
-test('portrait hub geometry remains stable and keeps large target centres apart',()=>{
-  const first=life.positions();assert.deepEqual(first,life.positions());assert.deepEqual(first.you,{x:50,y:50});
-  const width=280,height=400;
-  for(const c of life.CATEGORIES){const p=first[c.id];assert(p.x>=18&&p.x<=82&&p.y>=10&&p.y<=90);}
-  const ps=life.CATEGORIES.map(c=>first[c.id]);
-  for(let i=0;i<ps.length;i++)for(let j=i+1;j<ps.length;j++)assert(Math.hypot((ps[i].x-ps[j].x)*width/100,(ps[i].y-ps[j].y)*height/100)>=44);
+test('3D scene contains only connection categories and supplied real members',()=>{
+  const graph=life.sceneModel([record],[{id:'ana',display_name:'Ana'}]);
+  assert.equal(graph.nodes.length,13);assert.equal(graph.edges.length,12);
+  assert(graph.nodes.every(n=>['you','category','person'].includes(n.kind)));
+  assert.equal(graph.nodes.filter(n=>n.kind==='person').length,2);
+  assert(graph.edges.some(e=>e.source==='family'&&e.target==='member:family-1'));
+  assert(graph.edges.some(e=>e.source==='friends'&&e.target==='member:accepted:ana'));
+  assert(!graph.edges.some(e=>e.source==='family'&&e.target==='member:accepted:ana'));
+  assert.deepEqual(life.sceneModel([],[]).nodes.filter(n=>n.kind==='person'),[]);
+});
+let JSDOM;try{({JSDOM}=require('jsdom'));}catch(_){}
+test('3D workspace keeps real renderer data, category navigation and local editing in sync',{skip:!JSDOM},()=>{
+  const fs=require('node:fs'),path=require('node:path');
+  const dom=new JSDOM('<main id="app"><div id="life"></div></main>',{url:'https://sotakece.example/',runScripts:'outside-only'}),w=dom.window;
+  w.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){}});
+  let options,disposed=0,rotation,selected,scene;
+  w.SotaLifeGraph3D={mount(target,input){options=input;assert(target.matches('[data-slc-graph3d]'));return {update(value){scene=value;},select(id){selected=id;},setMotion(value){rotation=value;},dispose(){disposed++;}};}};
+  w.eval(fs.readFileSync(path.join(__dirname,'../life-connections.js'),'utf8'));
+  const host=w.document.querySelector('#life'),component=w.SotaLifeConnections.mount(host,{owner:'owner',friends:[{id:'ana',display_name:'Ana'}]});
+  assert.equal(host.querySelectorAll('.slc-node,.slc-node-icon,.slc-intro,svg').length,0,'the old illustrated map must not remain under the 3D view');
+  assert(scene.nodes.some(n=>n.label==='Ana'&&n.kind==='person'));assert.equal(scene.nodes.filter(n=>n.kind==='person').length,1);
+  options.onSelect('family');assert.equal(host.querySelector('[data-slc-filter]').value,'family');assert.equal(selected,'family');
+  host.querySelector('[data-slc-add]').click();
+  host.querySelector('[name="connectionName"]').value='Mere';host.querySelector('[name="connectionKind"]').value='Cousin';
+  host.querySelector('[data-slc-form]').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
+  assert(scene.nodes.some(n=>n.label==='Mere'&&n.kind==='person'));assert.equal(host.querySelector('[data-slc-branch-name]').textContent,'Family');
+  assert(w.localStorage.getItem(w.SotaLifeConnections.keyFor('owner')).includes('Mere'));assert(!w.localStorage.getItem(w.SotaLifeConnections.keyFor('owner')).includes('Ana'));
+  const filter=host.querySelector('[data-slc-filter]');filter.value='cat';filter.dispatchEvent(new w.Event('change',{bubbles:true}));
+  const search=host.querySelector('[data-slc-search]');search.value='cousin';search.dispatchEvent(new w.Event('input',{bubbles:true}));
+  assert(host.querySelector('[data-slc-members]').textContent.includes('Mere'),'search still covers categories outside the current view');
+  host.querySelector('[data-slc-motion]').click();assert.equal(rotation,false);
+  const edit=host.querySelector('[data-slc-edit]');edit.click();host.querySelector('[data-slc-remove]').click();assert(!scene.nodes.some(n=>n.label==='Mere'));
+  component.updateFriends([]);assert(!scene.nodes.some(n=>n.label==='Ana'));
+  component.dispose();assert.equal(disposed,1);assert.equal(host.innerHTML,'');dom.window.close();
+});
+test('a missing 3D renderer leaves an honest accessible connection editor',{skip:!JSDOM},()=>{
+  const fs=require('node:fs'),path=require('node:path'),dom=new JSDOM('<div id="life"></div>',{url:'https://sotakece.example/',runScripts:'outside-only'}),w=dom.window;
+  w.eval(fs.readFileSync(path.join(__dirname,'../life-connections.js'),'utf8'));
+  const host=w.document.querySelector('#life'),component=w.SotaLifeConnections.mount(host);
+  assert.match(host.querySelector('[data-slc-graph3d]').textContent,/3D view could not load/);assert.equal(host.querySelectorAll('[data-slc-filter] option').length,10);
+  host.querySelector('[data-slc-add]').click();assert.equal(host.querySelector('[data-slc-form]').hidden,false);component.dispose();dom.window.close();
 });

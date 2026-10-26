@@ -104,8 +104,8 @@ function harness({guest=false,incomplete=false,hero=false,hosts=1}={}){
   });
 }
 
-domTest('guest hero is an honest sign-in view without queries, sample names or portraits',async()=>{
-  const h=harness({guest:true,hero:true});try{h.mount();await flush();assert.equal(h.calls.length,0);assert.equal(h.authCalls,0);assert.equal(h.app.querySelectorAll('.sota-social-panel').length,2);assert.equal(h.app.querySelectorAll('img').length,0);assert.equal(h.app.querySelectorAll('.sota-social-footer').length,0);assert.match(h.app.textContent,/Sign in/);assert.doesNotMatch(h.app.textContent,/Donu|Sema|Jo|Example/);for(const button of h.app.querySelectorAll('.sota-social-panel'))button.click();assert.deepEqual(h.authActions,[['in',true],['in',true]]);}finally{h.close();}
+domTest('guest hero has neutral descriptions without repeated sign-in prompts or private queries',async()=>{
+  const h=harness({guest:true,hero:true});try{assert.doesNotMatch(h.app.textContent,/Sign in/,'Initial markup has no duplicate sign-in calls');h.mount();await flush();assert.equal(h.calls.length,0);assert.equal(h.authCalls,0);assert.equal(h.app.querySelectorAll('.sota-social-panel').length,2);assert.equal(h.app.querySelectorAll('img').length,0);assert.equal(h.app.querySelectorAll('.sota-social-footer').length,0);assert.match(h.app.textContent,/Your conversations, together\./);assert.match(h.app.textContent,/Your closest connections\./);assert([...h.app.querySelectorAll('.sota-social-action')].every(action=>action.hidden&&action.textContent===''));assert.doesNotMatch(h.app.textContent,/Sign in|Donu|Sema|Jo|Example/);for(const button of h.app.querySelectorAll('.sota-social-panel'))button.click();assert.deepEqual(h.authActions,[['in',true],['in',true]]);}finally{h.close();}
 });
 
 domTest('incomplete profiles stay gated and never request private social data',async()=>{

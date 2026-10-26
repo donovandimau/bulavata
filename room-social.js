@@ -47,8 +47,8 @@
   }
   function markup({hero=false}={}){
     const ready=ctx?.state?.user?.id&&ctx?.state?.me?.id===ctx.state.user.id;
-    const body=ready?'Loading your room…':'Sign in to see your own room.';
-    return `<section class="sota-social-host${hero?' sota-social-hero':''}" aria-label="Your Talanoa and mates"><button type="button" class="sota-social-panel sota-social-wall" data-social-panel="wall"><span class="sota-social-heading">Talanoa</span><span class="sota-social-body" data-social-body="wall">${body}</span><span class="sota-social-action">${ready?'Open your room →':'Sign in →'}</span></button><button type="button" class="sota-social-panel sota-social-mates-panel" data-social-panel="mates"><span class="sota-social-heading">Top Mates</span><span class="sota-social-body" data-social-body="mates">${ready?'Loading your friends…':'Sign in to see your real friends.'}</span><span class="sota-social-action">${ready?'See your friends →':'Sign in →'}</span></button>${hero?'':'<div class="sota-social-footer"><span class="sota-social-status" role="status" aria-live="polite"></span><button type="button" class="sota-social-refresh" data-social-refresh>Refresh</button></div>'}</section>`;
+    const body=ready?'Loading your room…':'Your conversations, together.';
+    return `<section class="sota-social-host${hero?' sota-social-hero':''}" aria-label="Your Talanoa and mates"><button type="button" class="sota-social-panel sota-social-wall" data-social-panel="wall"><span class="sota-social-heading">Talanoa</span><span class="sota-social-body" data-social-body="wall">${body}</span><span class="sota-social-action"${ready?'':' hidden'}>${ready?'Open your room →':''}</span></button><button type="button" class="sota-social-panel sota-social-mates-panel" data-social-panel="mates"><span class="sota-social-heading">Top Mates</span><span class="sota-social-body" data-social-body="mates">${ready?'Loading your friends…':'Your closest connections.'}</span><span class="sota-social-action"${ready?'':' hidden'}>${ready?'See your friends →':''}</span></button>${hero?'':'<div class="sota-social-footer"><span class="sota-social-status" role="status" aria-live="polite"></span><button type="button" class="sota-social-refresh" data-social-refresh>Refresh</button></div>'}</section>`;
   }
   function init(options){stop();ctx=options;}
   function stop(){epoch++;const previous=mounted;mounted=null;previous?.dispose();}
@@ -69,8 +69,9 @@
         host.dataset.socialState=kind;host.removeAttribute('aria-busy');
         for(const panel of host.querySelectorAll('[data-social-panel]')){
           const wall=panel.dataset.socialPanel==='wall',body=panel.querySelector('.sota-social-body'),action=panel.querySelector('.sota-social-action');
-          body.replaceChildren(span(host,'sota-social-empty',kind==='guest'?(wall?'Sign in to see your own Talanoa.':'Sign in to see your real friends.'):kind==='setup'?'Finish setting up your room to see this panel.':kind==='auth-required'?'Sign in again to see your room.':'Your live panel is paused.'));
-          action.textContent=kind==='guest'||kind==='auth-required'?'Sign in →':kind==='setup'?'Room setup required':wall?'Open your room →':'See your friends →';
+          body.replaceChildren(span(host,'sota-social-empty',kind==='guest'?(wall?'Your conversations, together.':'Your closest connections.'):kind==='setup'?'Finish setting up your room to see this panel.':kind==='auth-required'?'Sign in again to see your room.':'Your live panel is paused.'));
+          action.hidden=kind==='guest';
+          action.textContent=kind==='guest'?'':kind==='auth-required'?'Sign in →':kind==='setup'?'Room setup required':wall?'Open your room →':'See your friends →';
           panel.disabled=kind==='setup'||kind==='stopped';
         }
         const status=host.querySelector('.sota-social-status');if(status)status.textContent='';

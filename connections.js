@@ -114,7 +114,7 @@
     if(ctx.state.user&&ctx.state.me)return ctx.go('connections');
     return ctx.auth('in',true);
   }
-  function entryHtml(){return `<section class="sc-friends sc-life-panel" id="sota-connections" aria-labelledby="sc-entry-title"><header class="scf-heading"><div><p class="scf-kicker">EVERY LIFE HAS A CONNECTION</p><h2 id="sc-entry-title">Your world, connected.</h2><p>People, paws and everything that grows with you.</p></div><span class="scf-private">Your life map</span></header><div data-friend-graph><p class="scf-message" role="status">Opening your life map…</p></div><noscript>Enable JavaScript to explore your life connections.</noscript></section>`;}
+  function entryHtml(){return `<section class="sc-friends sc-life-panel" id="sota-connections" aria-labelledby="sc-entry-title"><header class="scf-heading"><div><p class="scf-kicker">YOUR CONNECTIONS</p><h2 id="sc-entry-title">Your world in 3D.</h2><p>Drag to explore every living connection.</p></div></header><div data-friend-graph><p class="scf-message" role="status">Opening your life map…</p></div><noscript>Enable JavaScript to explore your life connections.</noscript></section>`;}
   function signIn(){stop();clearRoute();ctx.auth('in',true);}
   // Slots belong to this mounted owner only. Adding/removing a friend never moves existing nodes.
   function friendPositions(graph,slots=new Map()){
@@ -133,7 +133,7 @@
     const owner=String(ctx.state.user?.id||''),run=epoch;
     if(owner)liveOwner=owner;
     const valid=()=>run===epoch&&String(ctx.state.user?.id||'')===owner&&host.isConnected&&ctx.app.contains(host);
-    host.innerHTML=`<div data-life-map></div><div class="slc-friend-sync"><p data-friend-status role="status" aria-live="polite">${owner?'Checking your accepted friends…':'Sign in to include your accepted Sota Kece friends.'}</p><button type="button" class="scf-refresh" data-friend-refresh ${owner?'':'hidden'}>↻ Refresh friends</button><button type="button" class="scf-refresh" data-friend-sign-in ${owner?'hidden':''}>Sign in</button></div><p class="scf-warning" data-friend-warning role="status" hidden></p><div data-friend-privacy></div>`;
+    host.innerHTML=`<div data-life-map></div><div class="slc-friend-sync" data-friend-sync ${owner?'':'hidden'}><p data-friend-status role="status" aria-live="polite">${owner?'Checking your accepted friends…':''}</p><button type="button" class="scf-refresh" data-friend-refresh ${owner?'':'hidden'}>↻ Refresh friends</button><button type="button" class="scf-refresh" data-friend-sign-in hidden>Reconnect account</button></div><p class="scf-warning" data-friend-warning role="status" hidden></p><div data-friend-privacy></div>`;
     const q=s=>host.querySelector(s),life=window.SotaLifeConnections?.mount(q('[data-life-map]'),{owner,friends:[]});
     if(!life)q('[data-life-map]').innerHTML='<p>Your life map could not open. Refresh this page to try again.</p>';
     const listeners=[];let feed,lastUpdated=null,disposed=false;
