@@ -206,3 +206,10 @@ for owner review;actual member-session validation requires signing in.
 Portable Dimau Visuals core/SDK/CSS,served locally with no data network requests. Sota visible connection counts track existing map filters and lifecycle;no new member-data reads.
 
 
+
+
+## 2026-10-26 — Complete shared Supabase music playlist
+
+The actual Maps and Navigate built-in queues contain82 public tracks: their81 imported songs plus the separately prepended default soundtrack. Sota Kece previously included only the81 imported songs. Added the existing Laffy Taffy - Raxz Tunez Mokubasi Remix 2k23 default with stable ID fiji-default-soundtrack-v1 and unchanged fiji-default-soundtrack.mp3 object, bringing the selectable Sota list into the same order as both apps. Existing81 IDs, titles, order and paths retained after it.
+
+Validation permits exactly this additional filename while retaining the fixed public fiji-audio origin and rejection of query strings, fragments, arbitrary hosts, paths and duplicate IDs. Playlist fetch/module/public-shell cache versions advanced. Existing playback controls, real visualiser, user-gesture playback, local uploads and private Music Hub drafts are unchanged. No audio bytes copied and no Supabase database, bucket or permission changes. All82 known public objects verified reachable; no claim that an authenticated storage-wide inventory was available. Connector only exposes SEMA, CLI lacks a token and the dashboard needs sign-in; public listing returned no visible rows. All known shared public music in current canonical Maps/Navigate sources is covered.
