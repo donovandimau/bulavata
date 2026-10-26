@@ -19,35 +19,6 @@
     document.querySelectorAll('[data-sample-status]').forEach(status=>status.textContent='Sample melody · tap to play');
     document.querySelector('.bv-mixtape')?.classList.remove('is-playing');
   }
-  async function playSample() {
-    window.SotaPlaylist?.pause();
-    if(window.SotaLocalMusic?.hasSelected())return window.SotaLocalMusic.toggle();
-    if(sampleAudio) { stopSample();return; }
-    const status=document.querySelector('#bv-home-status')||document.querySelector('#bv-sample-status')||document.querySelector('#sk-hero-status');
-    try {
-      const Audio=window.AudioContext||window.webkitAudioContext;
-      if(!Audio)throw new Error('Audio unavailable');
-      const context=new Audio();sampleAudio=context;
-      await context.resume();
-      if(sampleAudio!==context)return;
-      if(context.state!=='running')throw new Error('Audio did not start');
-      window.SotaPlayback?.activate('sample');
-      const start=context.currentTime;
-      [261.63,329.63,392,523.25,392,329.63,293.66,392,440,587.33,440,392].forEach((frequency,i)=>{
-        const oscillator=context.createOscillator(),gain=context.createGain();
-        oscillator.type='sine';oscillator.frequency.value=frequency;
-        const time=start+i*.32;
-        gain.gain.setValueAtTime(0,time);gain.gain.linearRampToValueAtTime(.09,time+.025);gain.gain.exponentialRampToValueAtTime(.001,time+.44);
-        oscillator.connect(gain);gain.connect(context.destination);oscillator.start(time);oscillator.stop(time+.46);
-      });
-      document.querySelectorAll('[data-sample-play]').forEach(button=>{
-        button.textContent=button.id==='sk-hero-play'?'':button.id==='bv-home-play'?'Ⅱ Stop sample':'Ⅱ';button.setAttribute('aria-label',button.id==='sk-hero-play'?'Stop sample music':'Stop sample loop');button.setAttribute('aria-pressed','true');
-      });
-      document.querySelector('.bv-mixtape')?.classList.add('is-playing');
-      document.querySelectorAll('[data-sample-status]').forEach(status=>status.textContent='Playing a sample melody · made here');
-      sampleTimer=setTimeout(()=>{stopSample();if(status.isConnected)status.textContent='Sample loop · tap to play again';},4200);
-    }catch(_){stopSample();if(status)status.textContent='Audio unavailable in this browser. Your room can still have a profile track.';}
-  }
   function picked() {
     try { return skins.normalize(JSON.parse(localStorage.getItem('bv-picked-skin')||'{"id":"midnight"}')); }
     catch (_) { return skins.normalize({id:'midnight'}); }
@@ -343,7 +314,7 @@
       <nav class="bv-home-section-nav" aria-label="On this page"><span>On this page</span><a href="#bv-music">Music</a><a href="#bv-circle">Talanoa Circle</a><a href="#bv-your-room">Skins</a></nav>
       <dialog class="bv-account-dialog" id="bv-entry" aria-labelledby="bv-account-title"><div class="bv-account-head"><h2 id="bv-account-title">${mode==='up'?'Create your account':'Sign in'}</h2><button type="button" id="bv-account-close" aria-label="Close account form">×</button></div>${auth}<button type="button" class="bv-link" onclick="renderAuth('${mode==='up'?'in':'up'}',true)">${mode==='up'?'Already have an account? Sign in':'New here? Sign up'}</button></dialog>
       <div class="bv-classic-panels">
-        <section class="bv-music-feature" id="bv-music" tabindex="-1" aria-labelledby="bv-music-title"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Fijian singer and friends sharing live music at a seaside gathering" loading="lazy" decoding="async"><div class="bv-music-copy"><small>YOUR ROOM. YOUR SOUNDTRACK.</small><h1 id="bv-music-title">Viti roots.<br>Volume up.</h1><p>Your tunes. Your people. Your island energy.</p><div class="bv-music-actions"><button id="bv-home-play" data-sample-play type="button" aria-label="Play sample loop" aria-pressed="false">▶ Try a sample</button><button type="button" data-local-music-open>Upload music</button></div><small id="bv-home-status" data-sample-status role="status">Sample melody · tap to play</small></div></section>
+        <section class="bv-music-feature" id="bv-music" tabindex="-1" aria-labelledby="bv-music-title"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Fijian singer and friends sharing live music at a seaside gathering" loading="lazy" decoding="async"><div class="bv-music-copy"><small>YOUR ROOM. YOUR SOUNDTRACK.</small><h1 id="bv-music-title">Viti roots.<br>Volume up.</h1><p>Your tunes. Your people. Your island energy.</p><div class="bv-music-actions"><button id="bv-home-play" data-playlist-open type="button" aria-label="Try a sample from the online music playlist" aria-haspopup="dialog" aria-expanded="false" aria-pressed="false">▶ Try a sample</button><button type="button" data-local-music-open>Upload music</button></div><small id="bv-home-status" data-playlist-status role="status">Online music · choose a song to listen</small></div></section>
       </div>
       <section class="bv-social-stage bv-home-call-group" id="bv-circle" tabindex="-1" aria-label="Talanoa Circle"><section class="bv-circle-feature" aria-labelledby="bv-circle-title"><div class="bv-circle-art"><img class="bv-circle-logo" src="/assets/sota-kece-logo-20261020.svg" width="256" height="256" alt="Sota Kece" loading="lazy" decoding="async"></div><small>SIT DOWN. CATCH UP.</small><h2 id="bv-circle-title">Same circle. New stories.</h2><p>Pull up a seat in Our Talanoa Circle.</p><button type="button" class="bv-circle-explore" onclick="window.SotaKavaUI.preview()">Explore Our Talanoa Circle →</button></section>
       </section>
@@ -361,7 +332,7 @@
     app.querySelectorAll('.authwrap input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')$('#a-go').click();}));
     app.querySelector('.bv-discovery-all')?.addEventListener('click',()=>open(null,'All'));
     app.querySelectorAll('[data-collection]').forEach(button=>button.addEventListener('click',()=>open(null,button.dataset.collection)));
-    $('#bv-home-play').addEventListener('click',playSample);
+
     $('#sk-invite-circle').addEventListener('click',()=>window.SotaCircles?.openInvite());
     $('#sk-sign-up').addEventListener('click',()=>renderAuth('up',true));
     $('#sk-sign-in').setAttribute('aria-haspopup','dialog');
