@@ -189,7 +189,8 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 .seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(20,59,82,.1)}
 </style>
 <link rel="stylesheet" href="/skins.css?v=20261025-art-skins">
-<link rel="stylesheet" href="/front-page.css?v=20261025-hero-visualiser-1">
+<link rel="stylesheet" href="/room-social.css?v=20261026-live-panels">
+<link rel="stylesheet" href="/front-page.css?v=20261026-live-panels">
 <link rel="stylesheet" href="/music-playlist.css?v=20261026-colourful-music">
 <link rel="stylesheet" href="/kava.css?v=20261025-talanoa-circles"><link rel="stylesheet" href="/circle-groups.css?v=20261025-talanoa-circles">
 <link rel="stylesheet" href="/connections.css?v=20261025-personal-graph"><link rel="stylesheet" href="/dimau-visuals.css?v=20261024">
@@ -309,6 +310,7 @@ async function signUp(){
 
 /* ================= SHELL ================= */
 function shell(body){
+  window.SotaRoomSocial?.stop();window.SotaRoomSocialLayout?.stop();
   window.SotaConnections?.stopEntry();
   const p = S.pending.length;
   const active=document.activeElement,navFocused=active?.closest?.('nav.bottom'),viewFocused=active&&app.contains(active);
@@ -329,7 +331,7 @@ function shell(body){
   if(navFocused)app.querySelector(`nav.bottom [data-tab="${S.tab}"]`)?.focus({preventScroll:true});
   else if(viewFocused)$('#view')?.focus({preventScroll:true});
 }
-function go(t){ if((t!=='connections'&&/^#connections=(?:mine|example)$/.test(location.hash))||/^#(?:circle-invite|circle-graph|friends-graph)=/.test(location.hash))history.replaceState(null,'',location.pathname+location.search); window.SotaCircles?.stop(); window.SotaConnections?.stop(); window.SotaKavaUI?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
+function go(t){ if((t!=='connections'&&/^#connections=(?:mine|example)$/.test(location.hash))||/^#(?:circle-invite|circle-graph|friends-graph)=/.test(location.hash))history.replaceState(null,'',location.pathname+location.search); window.SotaCircles?.stop(); window.SotaConnections?.stop(); window.SotaKavaUI?.stop(); window.SotaRoomSocial?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
 
 /* ================= DATA ================= */
 async function refreshMeta(){
@@ -451,7 +453,7 @@ async function viewPulse(){
   ]);
   if(!currentView(run))return;
   if(pf.error||sp.error){
-    viewError('the Pulse','viewPulse()');
+    viewError('the Pulse','viewPulse()');mountPulseSocial();
     $('#view')?.insertAdjacentHTML('beforeend',window.SotaConnections?.entryHtml?.()||'');
     window.SotaConnections?.mountEntry();return;
   }
@@ -460,12 +462,12 @@ async function viewPulse(){
   if(spark){
     const {data:ans,error:answerError} = await requestResult(sb.from("bv_spark_answers").select("*").eq("spark_id",spark.id));
     if(!currentView(run))return;
-    if(answerError)return viewError("today's Spark",'viewPulse()');
+    if(answerError){viewError("today's Spark",'viewPulse()');mountPulseSocial();return;}
     answers = ans||[]; mine = answers.find(a=>a.author===S.user.id);
     if(mine){ const ids=answers.map(a=>a.author);
       const {data:ppl,error:peopleError} = await requestResult(sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji").in("id",ids));
       if(!currentView(run))return;
-      if(peopleError)return viewError("today's Spark",'viewPulse()');
+      if(peopleError){viewError("today's Spark",'viewPulse()');mountPulseSocial();return;}
       const map=Object.fromEntries((ppl||[]).map(p=>[p.id,p]));
       answers = answers.map(a=>({...a,p:map[a.author]||{}})); }
   }
@@ -518,7 +520,12 @@ async function viewPulse(){
       </div>
     </div>
   </div>${window.SotaConnections?.entryHtml?.()||''}`);
-  window.SotaConnections?.mountEntry();
+  mountPulseSocial();window.SotaConnections?.mountEntry();
+}
+function mountPulseSocial(){
+  const view=$("#view");if(!view||S.tab!=="pulse"||!S.user||!S.me)return;
+  view.insertAdjacentHTML("afterbegin",window.SotaRoomSocial?.markup()||"");
+  window.SotaRoomSocial?.mount(view);
 }
 async function postPulse(){
   const t=$("#p-text").value.trim(); if(!t) return;
@@ -709,7 +716,7 @@ function installAuthLifecycle(){
     viewRun();
     S.user=null;S.me=null;S.friends=[];S.pending=[];S.wallet=null;S.crew=null;S.roomHandle=null;S.tab='pulse';S.luv=0;S.metaErrors={};S.sendingMessage=false;
     S.searchRevision=(S.searchRevision||0)+1;
-    window.SotaCircles?.stop();window.SotaConnections?.stop();window.SotaKavaUI?.stop();window.BulaSkinStudio?.closeForOwnerChange?.();
+    window.SotaCircles?.stop();window.SotaConnections?.stop();window.SotaKavaUI?.stop();window.SotaRoomSocial?.stop();window.SotaRoomSocialLayout?.stop();window.BulaSkinStudio?.closeForOwnerChange?.();
     app.replaceChildren();
     // Supabase work runs after its synchronous auth callback has returned.
     setTimeout(()=>{if(revision!==change)return;if(next)boot();else renderAuth();},0);
@@ -1092,14 +1099,16 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/music-playlist.js?v=20261026-shared-music"></script>
 <script src="/skin-discovery.js?v=20261025-community-design"></script>
 <script src="/room-atmosphere.js?v=20261025-1"></script>
-<script src="/skin-studio.js?v=20261026-colourful-music"></script>
+<script src="/room-social-layout.js?v=20261026-live-panels"></script>
+<script src="/skin-studio.js?v=20261026-live-panels"></script>
 <script src="/offline.js?v=20261024-quality"></script>
 <script src="/kava.js"></script>
 <script src="/circle-types.js?v=20261025-talanoa-circles"></script><script src="/circle-groups.js?v=20261025-talanoa-circles"></script><script src="/kava-ui.js?v=20261025-talanoa-circles"></script>
 <script src="/dimau-charts-core.js?v=20261024"></script><script src="/dimau-visuals.js?v=20261024"></script>
 <script src="/friend-feed.js?v=20261025-personal-graph"></script>
+<script src="/room-social.js?v=20261026-live-panels"></script>
 <script src="/connections.js?v=20261025-talanoa-circles"></script>
-<script>window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());boot();installAuthLifecycle();</script>
+<script>window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261025b" data-app="sota-kece" defer></script>
 </body>
 </html>
