@@ -30,6 +30,8 @@
 <script src="/dimau-install.js?v=20261019" data-app="bulavata" data-label="Sota Kece" defer></script>
 <script src="/vendor/supabase-2.45.0.min.js"></script>
 <style>
+/* Keep the companion out of the page flow until its own stylesheet loads, so it cannot push or jump. */
+dimau-companion{display:block;position:fixed;left:0;top:0;width:0;height:0;overflow:hidden}
 :root{
   --sky:#87CEEB; --sky-deep:#5FB3D9; --lagoon:#4FA8D8; --ink:#143B52; --ink-soft:#3C6B86;
   --shell:rgba(255,255,255,.62); --shell-solid:#fff; --line:rgba(255,255,255,.75);
