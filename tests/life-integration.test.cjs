@@ -70,7 +70,7 @@ test('guest gets an interactive life map without account or social data reads', 
   const f = fixture({ signedIn: false }); f.connections.mountEntry();
   assert.equal(f.maps.length, 1); assert.equal(f.maps[0].options.owner, ''); assert.equal(f.maps[0].options.friends.length, 0);
   assert.equal(f.maps[0].target.textContent, 'Guest category map'); assert.equal(f.watches.length, 0); assert.deepEqual(f.calls, []);
-  assert.equal(f.host.querySelector('[data-friend-sign-in]').hidden, false);
+  assert.equal(f.host.querySelector('[data-friend-sign-in]').hidden, true);
   f.connections.stopEntry(); assert.equal(f.maps[0].disposals, 1); assert.equal(f.host.innerHTML, '');
 });
 
