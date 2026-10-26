@@ -45,7 +45,7 @@
       visual(wrapper,'skins','Explore '+(node.querySelector('strong')?.textContent.trim()||'room')+' skins');
     }
     if(!collections.length)visual(app.querySelector('#bv-your-room .bv-collection-grid')||app.querySelector('#bv-your-room'),'skins','Explore room skins');
-    for(const node of [...collections,...app.querySelectorAll('#sota-connections .lg3d-labels')])session.inert.set(node,node.getAttribute('inert'));
+    for(const node of [...collections,...app.querySelectorAll('#sota-connections .lg3d-labels, .sk-hero-artwork .sota-social-hero, .sk-hero-artwork .sk-hero-create')])session.inert.set(node,node.getAttribute('inert'));
     function show(view,{focus=false}={}){
       if(!valid()||!Object.hasOwn(pages,view))return false;
       session.view=view;app.dataset.frontPage=view;

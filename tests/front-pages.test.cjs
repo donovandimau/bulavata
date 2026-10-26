@@ -8,7 +8,7 @@ const browserTest=(name,fn)=>test(name,{skip:!JSDOM?'Install jsdom or set JSDOM_
 const root=path.join(__dirname,'..');
 const fixture=`<main id="app" class="bv-welcome">
  <header class="sk-site-header"><a href="/" class="sk-site-brand">Sota Kece</a><button data-playlist-open>Music</button></header>
- <section class="sk-original-front"><div class="sk-hero-artwork"><picture><img class="sk-original-design" alt="Your room"></picture><button data-profile-photo-edit>Edit profile</button><button class="sk-artwork-play" data-playlist-open>Play</button></div>
+ <section class="sk-original-front"><div class="sk-hero-artwork"><picture><img class="sk-original-design" alt="Your room"></picture><section class="sota-social-hero"><button data-social-panel="wall">Talanoa</button><button data-social-panel="mates">Top Mates</button></section><button class="sk-hero-create">Create your space</button><button class="spp-hero-edit" data-profile-photo-edit>Edit profile</button><button class="sk-artwork-play" data-playlist-open>Play</button></div>
   <section id="sota-music-home" class="sota-music-home"><section class="bv-music-feature" id="bv-music"><img alt="Island music"><div class="bv-music-copy"><h1>Viti roots. Volume up.</h1><p>Music explanatory paragraph.</p><div class="bv-music-actions"><button data-playlist-open>Try a sample</button><button data-local-music-open>Upload music</button></div></div></section>
    <div class="sota-music-views"><div class="sota-music-view-tabs"><button data-music-view="visualiser">Visualiser</button><button data-music-view="playlist">Playlist</button></div><div id="music-panel-visualiser" class="sota-music-view-panel" data-music-panel="visualiser"><section class="sk-music-stage"><header class="sk-music-stage-heading"><h2>Your soundtrack, in colour.</h2><button data-playlist-open>Choose a song</button></header><div class="sk-music-stage-picture"><canvas id="music-canvas"></canvas></div><footer class="sk-music-stage-footer"><p data-stage-status>Song status</p><div class="sk-music-stage-controls"><select data-stage-mode><option value="halo">Halo</option><option value="spectrum">Spectrum</option></select><button data-stage-motion>Pause visuals</button></div></footer></section></div><div class="sota-music-view-panel" data-music-panel="playlist" hidden><div data-music-playlist-host><input id="playlist-search" value="Keep this track search"><audio id="active-audio"></audio></div></div></div>
   </section>
@@ -48,6 +48,15 @@ browserTest('every front-page visual has a native detail anchor without swallowi
  for(const [selector,href] of routes){const target=h.d.querySelector(selector),link=target.querySelector('a[href="'+href+'"]');assert(link,selector+' has a real '+href+' link');assert(link.textContent.trim()||link.getAttribute('aria-label'),'Visual links have accessible names');assert.equal(link.querySelector('button,input,select'),null,'Native anchors must not wrap active controls');}
  const edit=h.d.querySelector('[data-profile-photo-edit]');assert.equal(edit.closest('a'),null);assert(h.visible(edit));
  const header=h.d.querySelector('.sk-site-header');assert(header.nextElementSibling.querySelector('a[href="#home"]'),'Compact navigation immediately follows the masthead');
+});
+
+browserTest('Home disables obscured hero controls and restores them on Profile without disabling music or Edit profile',t=>{
+ const h=harness(t),social=h.d.querySelector('.sota-social-hero'),create=h.d.querySelector('.sk-hero-create'),edit=h.d.querySelector('.spp-hero-edit'),music=h.d.querySelector('.sk-artwork-play');
+ assert(social.hasAttribute('inert'));assert(create.hasAttribute('inert'));
+ assert.equal(edit.closest('[inert]'),null);assert.equal(music.closest('[inert]'),null);
+ h.api.open('profile');assert.equal(social.hasAttribute('inert'),false);assert.equal(create.hasAttribute('inert'),false);assert(h.visible(social));assert(h.visible(create));
+ h.api.open('home');assert(social.hasAttribute('inert'));assert(create.hasAttribute('inert'));
+ h.api.stop();assert.equal(social.hasAttribute('inert'),false);assert.equal(create.hasAttribute('inert'),false);
 });
 
 browserTest('detail routes reveal the existing full controls and keep unrelated sections out of view',t=>{

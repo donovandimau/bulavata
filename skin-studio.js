@@ -238,7 +238,7 @@
     }
   }
   const originalShell=shell;
-  shell=function(body){reset();originalShell(body);wireMedia(app);};
+  shell=function(body){reset();originalShell(body);wireMedia(app);window.SotaSpaceDesign?.mount(app);};
   const originalAuth=renderAuth;
   let pendingMate='';
   function coverChoices() {
@@ -335,6 +335,7 @@
     window.SotaPlaylist?.mount(app,{beforePlay:stopSample});
     window.SotaMusicHome?.mount(app);
     window.SotaFrontPages?.mount(app);
+    window.SotaSpaceDesign?.mount(app);
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').textContent=mode==='up'?'Create account':'Sign in';
     $('#a-go').onclick=()=>mode==='up'?signUp():signIn();

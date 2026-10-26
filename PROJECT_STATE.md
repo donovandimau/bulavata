@@ -1,3 +1,11 @@
+## 26 October 2026 — Visual front, separate details and personal page designs
+
+Owner asks for a mostly visual front screen where each visual opens a detailed page, a colourful site including sign-in/photo editing, and simple controls for personal expression on every page. The supplied galaxy now sits behind the actual WebGL connection map. Music photography follows the landing artwork; the live visualiser and colourful inline playlist are alternate layouts in the same music page and retain the single audio owner. The centre music note stays still; only its outer Fiji ring rotates at 2.4 seconds.
+
+Home is a visual gallery with native detail routes for music, 3D connections, Connect, Talanoa, skins and profile. Account/share/search words move to Connect. DOM owners for music, graph, forms and photos are preserved on route changes. All pages gain a compact Design your space control: colour moods and preview first; custom colours, uploaded background and layout controls under More options. Saved page preferences and images are owner-scoped on this device, with an All pages default. These preferences are not claimed as cross-device profile publishing. Existing account-saved room skins and photo editing retain their established backend. No database, private-storage policy or schema changes.
+
+Source tests and exact candidate/production browser evidence belong to the current scoped GitHub release. Authenticated Ops checkpoint operations remain unavailable; no checkpoint or remote two-account write is claimed. Next: verify the exact production revision and use Design your space to customise a page.
+
 ## 26 October 2026 — Live shared public music catalogue
 
 The existing Sota native playlist now reads the validated central public catalogue on opening. A valid central or saved catalogue is authoritative; the known82 local JSON remains a cold-failure fallback. Refresh preserves the selected stable ID, existing audio element and current playback position. Explicit song selection uses the current validated public mapping, with no duplicate default soundtrack or automatic playback. Existing playback coordination, local uploads, hero visualiser, badge, personal rooms and private data behavior are preserved.
