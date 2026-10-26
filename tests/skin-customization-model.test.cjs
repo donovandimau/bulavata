@@ -2,7 +2,7 @@
 const test=require('node:test');
 const assert=require('node:assert/strict');
 const skins=require('../skins.js');
-const defaults={customName:'',showArtwork:true,textScale:100,headingScale:100,coverHeight:195,coverX:0,coverY:100,textAlign:'left',musicPosition:'auto'};
+const defaults={customName:'',showArtwork:true,textScale:100,headingScale:100,coverHeight:195,coverX:0,coverY:100,textAlign:'left',musicPosition:'auto',avatarPath:''};
 const numeric={textScale:[90,140,100],headingScale:[80,150,100],coverHeight:[180,420,195],coverX:[0,100,0],coverY:[0,100,100]};
 const fields=Object.keys(defaults);
 function customization(settings){return Object.fromEntries(fields.map(key=>[key,settings[key]]));}
@@ -49,10 +49,35 @@ test('only new defaults are omitted; existing fields and every nondefault custom
  const normal=skins.normalize(),encoded=skins.encode(normal),payload=JSON.parse(decodeURIComponent(encoded.match(/^\/\* bv-skin:v1 ([^\n]+) \*\//)[1]));
  for(const key of fields)assert.equal(Object.hasOwn(payload,key),false);
  for(const key of ['layout','font','note','atmosphere','motionEnergy','trackUrl'])assert.equal(payload[key],normal[key]);
- const changed=skins.normalize({customName:'Own skin',showArtwork:false,textScale:120,headingScale:130,coverHeight:300,coverX:40,coverY:60,textAlign:'right',musicPosition:'top'});
+ const changed=skins.normalize({customName:'Own skin',showArtwork:false,textScale:120,headingScale:130,coverHeight:300,coverX:40,coverY:60,textAlign:'right',musicPosition:'top',avatarPath:'11111111-1111-4111-8111-111111111111/covers/22222222-2222-4222-8222-222222222222.webp'});
  const stored=JSON.parse(decodeURIComponent(skins.encode(changed).match(/^\/\* bv-skin:v1 ([^\n]+) \*\//)[1]));
  for(const key of fields)assert.equal(stored[key],changed[key]);
  assert.deepEqual(skins.read(skins.encode(changed)).settings,changed);
+});
+
+test('avatar and cover paths round-trip independently inside the existing room settings',()=>{
+ const owner='11111111-1111-4111-8111-111111111111',object='22222222-2222-4222-8222-222222222222';
+ for(const extension of ['jpg','jpeg','png','webp']){
+  const avatarPath=owner+'/covers/'+object+'.'+extension,coverPath=owner+'/covers/33333333-3333-4333-8333-333333333333.webp';
+  const raw=Object.freeze({id:'lagoon',avatarPath,coverPath,trackPath:owner+'/music/'+object+'.mp3',trackTitle:'My song',note:'Keep my story',interests:'Music, family',customName:'My room',layout:'wide'});
+  const normalized=skins.normalize(raw),result=skins.read(skins.encode(raw,'.legacy{color:red}'));
+  assert.equal(normalized.avatarPath,avatarPath);assert.equal(normalized.coverPath,coverPath);
+  assert.deepEqual(result,{settings:normalized,legacy:'.legacy{color:red}'});
+  for(const [key,value] of Object.entries(raw))assert.equal(result.settings[key],value);
+ }
+});
+
+test('avatar paths accept only private cover object paths and reject URL or path injection',()=>{
+ const owner='11111111-1111-4111-8111-111111111111',object='22222222-2222-4222-8222-222222222222',valid=owner+'/covers/'+object+'.png';
+ for(const avatarPath of [undefined,null,'',17,{},'https://example.org/avatar.png','data:image/png;base64,AA',
+  '/'+valid,valid+'?token=secret',valid+'#image',valid+'/extra',owner+'/covers/../'+object+'.png',
+  owner+'/music/'+object+'.png',owner+'/avatars/'+object+'.png',owner+'/covers/'+object+'.svg',owner+'/covers/'+object+'.mp3',valid+'\n']){
+  const normalized=skins.normalize({avatarPath});assert.equal(normalized.avatarPath,'',String(avatarPath));
+  assert.equal(skins.read(skins.encode({avatarPath})).settings.avatarPath,'');
+ }
+ assert.equal(skins.normalize({avatarPath:valid}).avatarPath,valid);
+ const oldHeader='/* bv-skin:v1 '+encodeURIComponent(JSON.stringify({id:'lagoon',note:'My original note'}))+' */\n.legacy{color:red}';
+ const restored=skins.read(oldHeader);assert.equal(restored.settings.avatarPath,'');assert.equal(restored.settings.note,'My original note');assert.equal(restored.legacy,'.legacy{color:red}');
 });
 
 test('numeric controls accept finite numbers and numeric strings, and clamp each bound',()=>{
@@ -134,7 +159,7 @@ test('hiding artwork yields none for both cover and page art, never a fallback m
 function maximumForm(unicode=false){
  const uuid='00000000-0000-4000-8000-000000000001',char=unicode?'🌺':'x',url='https://example.invalid/'+'x'.repeat(292)+'.mp3';
  return skins.normalize({id:'occasion-school-reunion',customName:char.repeat(40),showArtwork:false,note:char.repeat(80),interests:char.repeat(160),trackTitle:char.repeat(80),
-  trackUrl:url,trackPath:uuid+'/music/'+uuid+'.mp3',coverPath:uuid+'/covers/'+uuid+'.webp',songRef:'music-knox:0',
+  trackUrl:url,trackPath:uuid+'/music/'+uuid+'.mp3',coverPath:uuid+'/covers/'+uuid+'.webp',avatarPath:uuid+'/covers/'+uuid+'.webp',songRef:'music-knox:0',
   font:'handwritten',textScale:140,headingScale:150,coverHeight:420,coverX:100,coverY:0,textAlign:'center',layout:'stacked',musicPosition:'bottom',atmosphere:'bubbles',motionEnergy:'calm'});
 }
 test('maximum ordinary normalized form fits the existing 4000-character v1 budget',()=>{

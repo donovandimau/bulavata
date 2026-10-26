@@ -199,7 +199,7 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <script src="/room-media.js"></script>
 <script src="/skin-identities.js?v=20261025-identity"></script>
 <script src="/skin-visuals.js?v=20261025-editorial-v3"></script>
-<script src="/skins.js?v=20261025-create-own-1"></script>
+<script src="/skins.js?v=20261026-profile-photos-1"></script>
 <script async src="https://dimau-ops.vercel.app/api/visit?s=sota-kece"></script>
 <link rel="stylesheet" href="/header-alignment-20261018.css?v=20261021-blue-white-background">
 <link rel="stylesheet" href="/quality.css?v=20261024-quality">
@@ -213,6 +213,7 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <link rel="stylesheet" href="/welcome-connections.css?v=20261026-life-connections">
 <link rel="stylesheet" href="/music-spin.css?v=20261026-static-note-fast-ring">
 <link rel="stylesheet" href="/hero-music-stage.css?v=20261026-music-stage-1">
+<link rel="stylesheet" href="/profile-photos.css?v=20261026-profile-photos-1">
 </head>
 <body>
 <div class="bubbles" id="bubbles"></div>
@@ -633,7 +634,8 @@ async function viewRoom(){
       </div>
     </div>
     <div class="row wrap" style="margin-top:13px">
-      ${me?`<button class="btn sm" onclick="openDecorate()">🎨 Decorate</button>
+      ${me?`<button class="btn sm ghost" type="button" data-profile-photo-edit>Edit profile</button>
+            <button class="btn sm" onclick="openDecorate()">🎨 Decorate</button>
             <button class="btn sm ghost" onclick="exportArchive()">⬇ Download my archive</button>`
           :(R.friend_status==='accepted'
              ?`<span class="pill">🤝 Friends</span>
@@ -1106,17 +1108,18 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/skin-discovery.js?v=20261025-community-design"></script>
 <script src="/room-atmosphere.js?v=20261025-1"></script>
 <script src="/room-social-layout.js?v=20261026-live-panels"></script>
-<script src="/skin-studio.js?v=20261026-spatial-life-1"></script>
+<script src="/skin-studio.js?v=20261026-profile-photos-1"></script>
 <script src="/offline.js?v=20261024-quality"></script>
 <script src="/kava.js"></script>
 <script src="/circle-types.js?v=20261025-talanoa-circles"></script><script src="/circle-groups.js?v=20261025-talanoa-circles"></script><script src="/kava-ui.js?v=20261025-talanoa-circles"></script>
 <script src="/dimau-charts-core.js?v=20261024"></script><script src="/dimau-visuals.js?v=20261024"></script>
 <script src="/friend-feed.js?v=20261025-personal-graph"></script>
 <script src="/room-social.js?v=20261026-spatial-life-1"></script>
+<script src="/profile-photos.js?v=20261026-profile-photos-1"></script>
 <script src="/life-graph3d.js?v=20261026-spatial-life-1"></script>
 <script src="/life-connections.js?v=20261026-spatial-life-1"></script>
 <script src="/connections.js?v=20261026-spatial-life-1"></script>
-<script>window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());boot();installAuthLifecycle();</script>
+<script>window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261025b" data-app="sota-kece" defer></script>
 </body>
 </html>

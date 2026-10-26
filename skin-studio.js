@@ -27,7 +27,7 @@
     const oldPreset=skins.presets.find(p=>p.id===settings.id);
     return skins.normalize({id,note:settings.note!==oldPreset.note?settings.note:undefined,
       layout:settings.layout,interests:settings.interests,trackUrl:settings.trackUrl,trackTitle:settings.trackTitle,
-      trackPath:settings.trackPath,coverPath:settings.coverPath,songRef:settings.songRef,
+      trackPath:settings.trackPath,coverPath:settings.coverPath,avatarPath:settings.avatarPath,songRef:settings.songRef,
       atmosphere:settings.atmosphere,motionEnergy:settings.motionEnergy,
       customName:settings.customName,font:settings.font!==oldPreset.font?settings.font:undefined,
       textScale:settings.textScale,headingScale:settings.headingScale,coverHeight:settings.coverHeight,
@@ -161,6 +161,7 @@
   }
 
   function reset() {
+    window.SotaProfilePhotos?.stop();
     window.SotaHeroVisualiser?.release();
     window.SotaRoomAtmosphere?.release(app);
     window.SotaPlayback?.pauseSource('profile');
@@ -215,6 +216,7 @@
       about.querySelector('#bv-borrow-skin')?.addEventListener('click',()=>open(s));
     }
     wireMedia(view);
+    window.SotaProfilePhotos?.mountRoom(view,profile,{isOwner:!!room.is_me});
   }
   function applyChat(profile) {
     if(!profile||!document.querySelector('#msgs'))return;
@@ -327,6 +329,7 @@
     window.SotaLocalMusic?.mount(app,{beforePlay:()=>{window.SotaPlaylist?.pause();stopSample();}});
     window.SotaHeroVisualiser?.mount(app);
     window.SotaRoomSocial?.mount(app);window.SotaRoomSocialLayout?.mount(app);
+    window.SotaProfilePhotos?.mountHero(app);
     window.SotaPlaylist?.mount(app,{beforePlay:stopSample});
     // Replacing the wrapper recreates controls, so restore the original auth handlers.
     $('#a-go').textContent=mode==='up'?'Create account':'Sign in';
@@ -460,7 +463,7 @@
     });
     const replaceDesign=blank=>{
       undoDesign={...draft};
-      const keep={interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath,songRef:draft.songRef};
+      const keep={interests:draft.interests,trackUrl:draft.trackUrl,trackTitle:draft.trackTitle,trackPath:draft.trackPath,coverPath:draft.coverPath,avatarPath:draft.avatarPath,songRef:draft.songRef};
       draft=skins.normalize({...keep,id:blank?'lagoon':draft.id,...(blank?{customName:'My own skin',showArtwork:false,pattern:'plain',note:'Your space. Your people.'}:{})});
       syncDesignControls();drawOptions();drawPreview();studio.querySelector('#bv-undo-design').hidden=false;
       studio.querySelector('#bv-editor-status').textContent=blank?'Blank canvas ready. Your music and favourites are kept.':'Design reset to the original skin. Your music and favourites are kept.';
@@ -594,6 +597,7 @@
   window.addEventListener('sota-music-change',()=>{if(studio&&draft)drawPreview();});
   openDecorate=function(){open();};
   function closeForOwnerChange(){
+    window.SotaProfilePhotos?.stop();
     window.SotaRoomAtmosphere?.release(studio);
     const previous=studio,pending=mediaUploads;mediaUploads=[];studio=null;draft=null;saving=false;
     previous?.close();previous?.remove();window.SotaPlayback?.activate('auth-change');stopSampleOnly();
