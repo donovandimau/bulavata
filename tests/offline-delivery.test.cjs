@@ -79,9 +79,9 @@ test('first offline visit resolves versioned shell files from their installed en
   const store=app.stores.get(app.cacheName);assert(![...store.keys()].some(url=>url.includes('?')),'Version labels should not create duplicate cache entries');
 });
 
-test('known original hero artwork, fonts and public skins cache only after use',async()=>{
+test('known original hero artwork, optional visualiser, fonts and public skins cache only after use',async()=>{
   const app=worker();await app.install();
-  const files=['/assets/front-reference-brand.jpg','/assets/mobile-front-reference-brand.jpg','/assets/mobile-front-reference.png','/assets/sota-blue-white-background-20261021.png','/assets/fonts/nunito-latin.woff2','/assets/skins/core/masi-border.svg'];
+  const files=['/hero-visualiser.js','/assets/front-reference-brand.jpg','/assets/mobile-front-reference-brand.jpg','/assets/mobile-front-reference.png','/assets/sota-blue-white-background-20261021.png','/assets/fonts/nunito-latin.woff2','/assets/skins/core/masi-border.svg'];
   for(const file of files){assert(!app.stores.get(app.cacheName).has(origin+file));const result=await app.request(file+'?v=24');assert.equal(result.response.status,200);assert(app.stores.get(app.cacheName).has(origin+file));}
   app.setNetwork(async()=>{throw Error('offline');});
   for(const file of files){const result=await app.request(file);assert.equal(result.response.status,200);}
@@ -91,7 +91,7 @@ test('API, private, cross-origin and signed-query requests bypass the worker',as
   const app=worker();await app.install();const count=app.calls.length;
   const cases=[
     ['/rest/v1/bv_profiles'],['/api/room'],['/assets/member-cover.jpg'],['/assets/skins/private/room.svg'],
-    ['https://other.example/assets/fiji-music.jpg'],['/assets/fiji-music.jpg?token=private'],['/skins.js?v=24&token=private'],
+    ['https://other.example/assets/fiji-music.jpg'],['/assets/fiji-music.jpg?token=private'],['/skins.js?v=24&token=private'],['/hero-visualiser.js?token=private'],['/hero-visualiser.js',{headers:{authorization:'Bearer session'}}],
     ['/skins.js?v=24&v=25'],['/skins.js?v='],['/assets/fiji-music.jpg',{headers:{authorization:'Bearer session'}}],
     ['/assets/fiji-music.jpg',{headers:{range:'bytes=0-20'}}],['/skins.js',{method:'POST'}],['/members',{mode:'navigate'}]
   ];

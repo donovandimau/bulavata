@@ -26,6 +26,24 @@
     graph={context,source,analyser,frequency:new Uint8Array(analyser.frequencyBinCount),wave:new Uint8Array(analyser.fftSize)};
     graphs.set(audio,graph);return graph;
   }
+  async function prepare(audio,{signal}={}){
+    if(signal?.aborted)throw abortError(signal);
+    if(!canAnalyse(audio))throw Error('This source does not support visual analysis. Music can keep playing.');
+    const cached=graphs.get(audio);
+    let captured=cached?.context||context;
+    if(!captured||captured.state==='closed'&&!cached){
+      const C=root.AudioContext||root.webkitAudioContext;
+      if(!C)throw Error('Audio visuals are unavailable in this browser. Music can keep playing.');
+      captured=context=new C();
+    }
+    if(typeof captured.resume!=='function')throw Error('Audio visuals are unavailable in this browser. Music can keep playing.');
+    // Keep native audio untouched until its shared speaker context is running.
+    await captured.resume();
+    if(signal?.aborted)throw abortError(signal);
+    if(captured.state!=='running')throw Error('Audio visuals could not start. Music can keep playing.');
+    if(!canAnalyse(audio))throw Error('This source does not support visual analysis. Music can keep playing.');
+    return graphs.get(audio)||audioGraph(audio);
+  }
   function sample(audio){const g=graphs.get(audio);if(!g)return null;g.analyser.getByteFrequencyData(g.frequency);g.analyser.getByteTimeDomainData(g.wave);return g;}
   function bins(frequency,count,sampleRate=48000){
     const result=new Float32Array(count);if(!frequency?.length)return result;
@@ -283,6 +301,6 @@ async function finalizeWebmDuration(blob, durationSeconds, { signal } = {}) {
     }
     root.customElements.define('dimau-music-visualiser',Visualiser);
   }
-  root.DimauMusicVisuals={version:'1.0.0',finalizeWebmDuration,audioGraph,canAnalyse,sample,bins,draw,modes,palettes};
+  root.DimauMusicVisuals={version:'1.0.0',finalizeWebmDuration,audioGraph,prepare,canAnalyse,sample,bins,draw,modes,palettes};
   if(typeof module==='object'&&module.exports)module.exports=root.DimauMusicVisuals;
 })(typeof globalThis!=='undefined'?globalThis:this);
