@@ -115,7 +115,7 @@
   async function openLibrary(){
     if(dialog?.isConnected){dialog.showModal();return;}
     focusBefore=root.document.activeElement;dialog=el('dialog','','bv-music-dialog');dialog.setAttribute('aria-labelledby','bv-local-music-heading');
-    const head=el('div','','bv-music-dialog-head'),heading=el('h2','Your music');heading.id='bv-local-music-heading';const close=button('Close',()=>dialog.close());head.append(heading,close);
+    const head=el('div','','bv-music-dialog-head'),heading=el('h2','Your music');heading.id='bv-local-music-heading';const close=button('×',()=>dialog.close());close.setAttribute('aria-label','Close your music');head.append(heading,close);
     const note=el('p','Saved on this device, like Fiji 3D Maps. Your files are not sent to a server or shared with friends.','sub');
     const label=el('label','Choose music files');label.htmlFor='bv-local-music-files';const input=el('input');input.id='bv-local-music-files';input.type='file';input.multiple=true;input.accept=accept;
     const formatsNote=el('p','MP3, M4A, AAC, WAV, OGG, FLAC or Opus · up to 250 MB per song.','sub');

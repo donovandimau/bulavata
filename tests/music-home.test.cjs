@@ -34,6 +34,12 @@ browserTest('music home starts on the visualiser with one active tab and a hidde
   const tabs=[...h.get('[role="tablist"]').querySelectorAll('[role="tab"]')];assert.equal(tabs.length,2);for(const tab of tabs){assert.equal(h.d.getElementById(tab.getAttribute('aria-controls')).getAttribute('aria-labelledby'),tab.id);}
 });
 
+browserTest('closing the inline playlist returns to the visualiser without pausing music',t=>{
+  const h=harness(t);h.mount();h.tab('playlist').click();const hidden=h.calls.hide;
+  h.get('[data-music-playlist-host]').dispatchEvent(new h.w.CustomEvent('sota-playlist-inline-close',{bubbles:true}));
+  h.selected('visualiser');assert.equal(h.calls.hide,hidden+1);assert.equal(h.calls.pause,0);assert.equal(h.d.activeElement,h.tab('visualiser'));
+});
+
 browserTest('playlist and visualiser tabs swap the inline view without pausing or duplicating the music player',async t=>{
   const h=harness(t);h.mount();const hiddenBefore=h.calls.hide;h.tab('playlist').click();await flush();h.selected('playlist');assert.equal(h.calls.show.length,1);assert.equal(h.calls.show[0],h.get('[data-music-playlist-host]'));
   h.tab('visualiser').click();await flush();h.selected('visualiser');assert.equal(h.calls.hide-hiddenBefore,1);assert.equal(h.calls.pause,0);assert.equal(h.app.querySelectorAll('[data-music-playlist-host]').length,1);

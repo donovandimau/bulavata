@@ -7,7 +7,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 let JSDOM,VirtualConsole;
-try{({JSDOM,VirtualConsole}=require('jsdom'));}
+try{({JSDOM,VirtualConsole}=require(process.env.JSDOM_MODULE||'jsdom'));}
 catch(_){try{({JSDOM,VirtualConsole}=require('../call-controls/test-tools/node_modules/jsdom'));}catch(_){}}
 const browserTest=(name,fn)=>test(name,{skip:!JSDOM?'Install the pinned jsdom test tools to run browser integration.':false},fn);
 const root=path.join(__dirname,'..');
@@ -21,10 +21,10 @@ function environment(t,{reduced=false,resume=null,canvasAvailable=true}={}){
   const console=new VirtualConsole();console.on('jsdomError',error=>errors.push(error));
   const dom=new JSDOM('<!doctype html><html><head></head><body><main id="app"></main></body></html>',{url:'https://sotakece.com/',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:console});
   const w=dom.window,d=w.document,media=new WeakMap();
-  const state=audio=>{if(!media.has(audio))media.set(audio,{paused:true,ended:false,error:null});return media.get(audio);};
-  for(const name of ['paused','ended','error'])Object.defineProperty(w.HTMLMediaElement.prototype,name,{configurable:true,get(){return state(this)[name];}});
+  const state=audio=>{if(!media.has(audio))media.set(audio,{paused:true,ended:false,error:null,readyState:0});return media.get(audio);};
+  for(const name of ['paused','ended','error','readyState'])Object.defineProperty(w.HTMLMediaElement.prototype,name,{configurable:true,get(){return state(this)[name];}});
   Object.defineProperty(w.HTMLMediaElement.prototype,'currentSrc',{configurable:true,get(){return this.src;}});
-  w.HTMLMediaElement.prototype.play=function(){calls.plays.push(this);calls.order.push({kind:'play',audio:this});Object.assign(state(this),{paused:false,ended:false,error:null});this.dispatchEvent(new w.Event('play'));return Promise.resolve();};
+  w.HTMLMediaElement.prototype.play=function(){calls.plays.push(this);calls.order.push({kind:'play',audio:this});Object.assign(state(this),{paused:false,ended:false,error:null,readyState:state(this).readyState||4});this.dispatchEvent(new w.Event('play'));return Promise.resolve();};
   w.HTMLMediaElement.prototype.pause=function(){const current=state(this);if(current.paused)return;current.paused=true;this.dispatchEvent(new w.Event('pause'));};
   w.HTMLMediaElement.prototype.load=function(){};
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
@@ -34,7 +34,7 @@ function environment(t,{reduced=false,resume=null,canvasAvailable=true}={}){
   const drawing={save(){},restore(){},clearRect(){calls.draws++;},fillRect(){calls.draws++;},strokeRect(){},createLinearGradient:gradient,createRadialGradient:gradient,beginPath(){},moveTo(){},lineTo(){},stroke(){},arc(){},fill(){},fillText(){},setTransform(){},resetTransform(){},translate(){},scale(){}};
   w.HTMLCanvasElement.prototype.getContext=function(){return canvasAvailable?drawing:null;};
   w.HTMLElement.prototype.getBoundingClientRect=function(){return {width:800,height:240,left:0,top:0,right:800,bottom:240};};
-  w.HTMLElement.prototype.getClientRects=function(){return this.isConnected&&!this.closest('[hidden]')?[this.getBoundingClientRect()]:[];};
+  w.HTMLElement.prototype.getClientRects=function(){return this.isConnected&&!this.closest('[hidden],dialog:not([open])')?[this.getBoundingClientRect()]:[];};
   w.HTMLElement.prototype.scrollIntoView=function(){};
   w.requestAnimationFrame=callback=>{const id=++frameId;frames.set(id,callback);return id;};
   w.cancelAnimationFrame=id=>frames.delete(id);
@@ -71,7 +71,7 @@ function hero(h){
   h.get('#app').innerHTML=studio.slice(start,end);
   const draw=h.w.DimauMusicVisuals.draw;
   h.w.DimauMusicVisuals.draw=(ctx,width,height,settings,state,data,background)=>{
-    h.calls.audioDraws.push({width,height,data,background,settings});return draw(ctx,width,height,settings,state,data,background);
+    h.calls.audioDraws.push({width,height,data,background,settings,preview:state.preview,previewTime:state.previewTime});return draw(ctx,width,height,settings,state,data,background);
   };
   h.w.SotaHeroVisualiser.mount(h.get('#app'));
   return h.get('.sk-hero-visualiser');
@@ -90,7 +90,7 @@ browserTest('actual hero attachment preserves original artwork and account CTA w
   assert.equal(h.get('.sk-music-stage-picture canvas').getAttribute('aria-hidden'),'true');
   assert.match(h.get('[data-stage-status]').textContent,/Choose a song/);
   const play=h.get('.sk-artwork-play');assert.equal(play.getAttribute('data-playlist-open'),'');assert.match(play.getAttribute('aria-label'),/Choose music/i);
-  await tick();assert.equal(h.calls.contexts.length,0);assert.equal(h.calls.sources.length,0);assert.equal(h.calls.plays.length,0);assert.equal(h.calls.fetches.length,0);assert.equal(h.frames.size,0);
+  await tick();assert.equal(h.calls.contexts.length,0);assert.equal(h.calls.sources.length,0);assert.equal(h.calls.plays.length,0);assert.equal(h.calls.fetches.length,0);assert.equal(h.frames.size,1,'Ambient preview starts without playing audio');
   h.w.SotaHeroVisualiser.mount(h.get('#app'));
   assert.equal(h.d.querySelectorAll('.sk-hero-visualiser canvas').length,1);
   assert.equal(h.calls.contexts.length,0);h.w.SotaHeroVisualiser.release();h.clean();
@@ -106,24 +106,24 @@ browserTest('manual music playback drives the real shared analyser and a transpa
   const before=h.calls.samples;h.advance();assert(h.calls.samples>before,'An animation frame reads analyser samples');
   const drawn=h.calls.audioDraws.findLast(frame=>frame.data);
   assert(drawn);assert.equal(drawn.data.frequency[0],80);assert.equal(drawn.data.wave[0],144);assert.equal(drawn.background,false,'The original hero artwork remains visible behind the canvas');
-  audio.pause();assert.equal(host.dataset.state,'paused');assert.equal(h.frames.size,0);assert.equal(h.calls.audioDraws.at(-1).data,null,'Pause draws a flat resting state');
+  audio.pause();assert.equal(host.dataset.state,'paused');assert.equal(h.frames.size,1);assert.equal(h.calls.audioDraws.at(-1).data,null,'Paused audio uses a labelled ambient preview');assert.equal(h.calls.audioDraws.at(-1).preview,true);
   await audio.play();await tick();assert.equal(host.dataset.state,'live');assert.equal(h.calls.sources.length,1,'Replaying reuses the same graph');
-  h.end(audio);assert.equal(h.frames.size,0);assert.equal(host.dataset.state,'paused');
+  h.end(audio);assert.equal(h.frames.size,1);assert.equal(host.dataset.state,'paused');
   h.w.SotaHeroVisualiser.release();h.clean();
 });
 
-browserTest('hidden, offscreen, modal, buffering, and reduced-motion states stop frames while preserving audio',async t=>{
+browserTest('hidden, offscreen, modal and reduced-motion states suspend visuals; buffering uses a labelled preview',async t=>{
   const h=environment(t),host=hero(h),audio=eligibleAudio(h);await audio.play();await tick();assert.equal(h.frames.size,1);
-  const assertResting=()=>{assert.equal(h.frames.size,0);assert.equal(audio.paused,false,'Visual suspension does not pause the song');assert.equal(h.calls.audioDraws.at(-1).data,null);};
+  const assertResting=()=>{assert.equal(h.frames.size,0);assert.equal(audio.paused,false,'Visual suspension does not pause the song');};
   h.visibility(true);assertResting();h.visibility(false);assert.equal(h.frames.size,1);
   h.visible(host,false);assert.equal(h.frames.size,1,'The large visible stage keeps the shared loop alive');
   h.visible(h.get('.sk-music-stage-picture'),false);assertResting();h.visible(host,true);assert.equal(h.frames.size,1);
   const modal=h.d.createElement('dialog');h.d.body.append(modal);modal.showModal();h.advance();assertResting();
   modal.close();assert.equal(h.frames.size,1);modal.remove();
-  audio.dispatchEvent(new h.w.Event('waiting'));assertResting();audio.dispatchEvent(new h.w.Event('playing'));await tick();assert.equal(h.frames.size,1);
+  audio.dispatchEvent(new h.w.Event('waiting'));assert.equal(h.frames.size,1);assert.equal(h.calls.audioDraws.at(-1).data,null);assert.equal(h.calls.audioDraws.at(-1).preview,true);assert.notEqual(host.dataset.state,'live');audio.dispatchEvent(new h.w.Event('playing'));await tick();assert.equal(h.frames.size,1);
   h.motion.matches=true;for(const listener of h.motion.listeners)listener();assertResting();assert.equal(host.dataset.state,'reduced-motion');
   h.motion.matches=false;for(const listener of h.motion.listeners)listener();assert.equal(h.frames.size,1);
-  h.error(audio);assert.equal(host.dataset.state,'unavailable');assert.equal(h.frames.size,0);h.w.SotaHeroVisualiser.release();h.clean();
+  h.error(audio);assert.equal(host.dataset.state,'unavailable');assert.equal(h.frames.size,1);assert.match(h.get('[data-stage-status]').textContent,/AMBIENT PREVIEW/);h.w.SotaHeroVisualiser.release();h.clean();
 });
 
 browserTest('both music canvases share one sampled frame and stage controls never restart playback',async t=>{
@@ -196,15 +196,15 @@ browserTest('actual playlist opening is silent and manual track selection feeds 
   h.get('[data-track-index="0"]').click();await tick();
   const audio=h.get('#sota-playlist-audio');assert.equal(audio.crossOrigin,'anonymous');assert.equal(audio.paused,false);assert.equal(h.calls.sources.length,1);
   assert.deepEqual(h.calls.order.map(entry=>entry.kind),['prepare','play'],'The manual handler prepares the shared context before asking native audio to play');assert(h.calls.order.every(entry=>entry.audio===audio));
-  assert.notEqual(host.dataset.state,'live','The background hero does not animate behind an open dialog');assert.equal(h.frames.size,0);
-  h.get('.sk-playlist-close').click();await tick();assert.equal(host.dataset.state,'live');assert.equal(h.frames.size,1);
-  h.w.SotaPlaylist.pause();assert.equal(host.dataset.state,'paused');assert.equal(h.frames.size,0);assert.equal(h.calls.sources.length,1);h.w.SotaHeroVisualiser.release();h.clean();
+  assert.notEqual(host.dataset.state,'live','The background hero does not animate behind an open dialog');assert.equal(h.frames.size,1,'Only the visible playlist visualiser animates inside its dialog');
+  h.get('.sk-playlist-close').click();await tick();h.advance();assert.equal(host.dataset.state,'live');assert.equal(h.frames.size,1);
+  h.w.SotaPlaylist.pause();assert.equal(host.dataset.state,'paused');assert.equal(h.frames.size,1);assert.equal(h.calls.sources.length,1);h.w.SotaHeroVisualiser.release();h.clean();
 });
 
 browserTest('a refused audio-context resume leaves native playback running without creating a source route',async t=>{
   const resume=deferred(),h=environment(t,{resume}),host=hero(h),audio=eligibleAudio(h);
   await audio.play();await tick();resume.reject(new Error('NotAllowedError: suspended context'));await tick();
-  assert.equal(host.dataset.state,'unavailable');assert.equal(h.calls.sources.length,0);assert.equal(audio.paused,false);assert.equal(h.frames.size,0);assert.match(host.getAttribute('aria-label'),/music playback is unchanged/i);h.w.SotaHeroVisualiser.release();h.clean();
+  assert.equal(host.dataset.state,'unavailable');assert.equal(h.calls.sources.length,0);assert.equal(audio.paused,false);assert.equal(h.frames.size,1);assert.match(host.getAttribute('aria-label'),/music playback is unchanged/i);h.w.SotaHeroVisualiser.release();h.clean();
 });
 
 browserTest('the real skin reset releases hero animation while preserving background playlist playback',async t=>{
@@ -242,8 +242,52 @@ browserTest('inline music layout keeps the hero live and view switching preserve
   assert.equal(h.get('#sota-music-home').dataset.activeMusicView,'playlist');
   assert(h.get('#sk-music-playlist').classList.contains('sk-playlist-inline'));assert.equal(h.calls.plays.length,0);
   h.get('[data-track-index="0"]').click();await tick();const audio=h.get('#sota-playlist-audio');
-  assert.equal(host.dataset.state,'live');assert.equal(h.calls.sources.length,1);assert.equal(h.frames.size,1);
+  assert.equal(host.dataset.state,'live');assert.equal(h.calls.sources.length,1);assert.equal(h.frames.size,2,'Hero and visible inline playlist each render from the same audio graph');
   h.get('[data-music-view="visualiser"]').click();await tick();
   assert.equal(audio,h.get('#sota-playlist-audio'));assert.equal(audio.paused,false);assert.equal(host.dataset.state,'live');
   h.w.SotaMusicHome.stop();h.w.SotaPlaylist.pause();h.w.SotaHeroVisualiser.release();h.clean();
+});
+
+
+browserTest('idle ambient previews advance both canvases without audio setup and obey the visual pause control',async t=>{
+  const h=environment(t),host=hero(h),status=h.get('[data-stage-status]');
+  assert.equal(host.dataset.state,'idle');assert.match(status.textContent,/AMBIENT PREVIEW/);assert.doesNotMatch(status.textContent,/LIVE AUDIO/);
+  assert.equal(h.frames.size,1);const before=h.calls.audioDraws.at(-1).previewTime;h.advance();
+  assert(h.calls.audioDraws.at(-1).previewTime>before);assert.equal(h.calls.audioDraws.at(-1).preview,true);assert.equal(h.calls.audioDraws.at(-1).data,null);
+  assert.equal(h.calls.contexts.length,0);assert.equal(h.calls.sources.length,0);assert.equal(h.calls.samples,0);assert.equal(h.calls.plays.length,0);
+  h.get('[data-stage-motion]').click();assert.equal(h.frames.size,0);assert.equal(host.dataset.state,'motion-paused');
+  const stopped=h.calls.audioDraws.at(-1).previewTime;h.advance();assert.equal(h.calls.audioDraws.at(-1).previewTime,stopped);
+  h.get('[data-stage-motion]').click();assert.equal(h.frames.size,1);h.advance();assert(h.calls.audioDraws.at(-1).previewTime>stopped);
+  h.w.SotaHeroVisualiser.release();assert.equal(h.frames.size,0);h.clean();
+});
+
+browserTest('front page changes stop hidden previews and resume the existing canvas when its page returns',t=>{
+  const h=environment(t),host=hero(h),heroArtwork=h.get('.sk-hero-artwork'),music=h.get('#sota-music-home'),canvas=h.get('.sk-music-stage-picture canvas');
+  assert.equal(h.frames.size,1);heroArtwork.hidden=true;music.hidden=true;
+  h.get('#app').dispatchEvent(new h.w.CustomEvent('sota-front-page-change',{bubbles:true,detail:{view:'connect'}}));
+  assert.equal(h.frames.size,0);assert.equal(h.calls.contexts.length,0);
+  music.hidden=false;h.get('#app').dispatchEvent(new h.w.CustomEvent('sota-front-page-change',{bubbles:true,detail:{view:'music'}}));
+  assert.equal(h.frames.size,1);assert.equal(h.get('.sk-music-stage-picture canvas'),canvas);h.advance();assert.equal(h.calls.audioDraws.at(-1).preview,true);
+  h.w.SotaHeroVisualiser.release();h.clean();
+});
+
+
+browserTest('a suspended analyser context falls back to ambient preview without changing native playback',async t=>{
+  const h=environment(t),host=hero(h),audio=eligibleAudio(h);await audio.play();await tick();assert.equal(host.dataset.state,'live');
+  const samples=h.calls.samples;h.calls.contexts[0].state='suspended';h.advance();
+  assert.notEqual(host.dataset.state,'live');assert.match(h.get('[data-stage-status]').textContent,/AMBIENT PREVIEW/);assert.equal(h.calls.audioDraws.at(-1).data,null);
+  assert.equal(h.calls.samples,samples);assert.equal(h.frames.size,1);assert.equal(audio.paused,false);h.w.SotaHeroVisualiser.release();h.clean();
+});
+
+
+browserTest('audio readiness gates live labels and analyser reads before and after future data is available',async t=>{
+  const h=environment(t),host=hero(h),audio=eligibleAudio(h);h.state(audio).readyState=2;
+  await audio.play();await tick();
+  assert.equal(audio.paused,false);assert.equal(audio.readyState,2);assert.notEqual(host.dataset.state,'live');assert.match(h.get('[data-stage-status]').textContent,/AMBIENT PREVIEW/);
+  assert.equal(h.calls.contexts.length,1);assert.equal(h.calls.sources.length,1);assert.equal(h.calls.samples,0,'No analyser sampling before HAVE_FUTURE_DATA');
+  const plays=h.calls.plays.length;h.state(audio).readyState=3;h.advance();
+  assert.equal(host.dataset.state,'live');assert.match(h.get('[data-stage-status]').textContent,/LIVE AUDIO/);assert(h.calls.samples>0);assert(h.calls.audioDraws.at(-1).data);
+  const samples=h.calls.samples;h.state(audio).readyState=2;h.advance();
+  assert.notEqual(host.dataset.state,'live');assert.match(h.get('[data-stage-status]').textContent,/AMBIENT PREVIEW/);assert.equal(h.calls.audioDraws.at(-1).data,null);assert.equal(h.calls.samples,samples);
+  assert.equal(h.calls.plays.length,plays);assert.equal(audio.paused,false);h.w.SotaHeroVisualiser.release();h.clean();
 });

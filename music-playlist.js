@@ -91,7 +91,7 @@ function create(){
 dialog=el('dialog','','sk-playlist');dialog.id='sk-music-playlist';dialog.setAttribute('aria-labelledby','sk-playlist-heading');
 const head=el('div','','sk-playlist-head'),brand=el('div'),heading=el('h2','Music playlist');heading.id='sk-playlist-heading';
 brand.append(el('span','SOTA KECE · ISLAND MIX','sk-playlist-eyebrow'),heading);
-const close=button('×',()=>inlineHost?hideInline():dialog.close());close.className='sk-playlist-close';close.setAttribute('aria-label','Close music playlist');head.append(brand,close);
+const close=button('×',()=>{if(inlineHost){const host=inlineHost;host.dispatchEvent(new root.CustomEvent('sota-playlist-inline-close',{bubbles:true}));if(inlineHost)hideInline();}else dialog.close();});close.className='sk-playlist-close';close.setAttribute('aria-label','Close music playlist');head.append(brand,close);
 const hero=el('div','','sk-playlist-hero'),record=el('div','','sk-playlist-record');record.setAttribute('aria-hidden','true');
 record.append(el('span','♫','sk-playlist-record-label'));
 const details=el('div','','sk-playlist-details');mood=el('span','Turn up the island vibes','sk-playlist-mood');

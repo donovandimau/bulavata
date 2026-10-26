@@ -23,14 +23,14 @@ const fixture=`<main id="app" class="bv-welcome">
 </main>`;
 function harness(t,hash=''){
  const dom=new JSDOM('<!doctype html><html><head></head><body>'+fixture+'</body></html>',{url:'https://sotakece.com/'+hash,runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document,app=d.querySelector('#app');
- w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=function(){};
+ const scrollCalls=[];w.scrollTo=value=>scrollCalls.push(value);w.history.scrollRestoration='auto';w.HTMLElement.prototype.scrollIntoView=function(){};
  let pauses=0,previews=0;w.SotaPlaylist={pause(){pauses++;}};w.SotaKavaUI={preview(){previews++;}};
  w.eval(fs.readFileSync(path.join(root,'front-pages.js'),'utf8'));
  const style=d.createElement('style');style.textContent=fs.readFileSync(path.join(root,'front-pages.css'),'utf8');d.head.append(style);
  const api=w.SotaFrontPages;api.mount(app);
  t.after(()=>{api.stop();w.close();});
  const visible=element=>{let node=typeof element==='string'?d.querySelector(element):element;if(!node)return false;for(;node&&node.nodeType===1;node=node.parentElement)if(node.hidden||w.getComputedStyle(node).display==='none'||w.getComputedStyle(node).visibility==='hidden')return false;return true;};
- return {w,d,app,api,visible,get pauses(){return pauses;},get previews(){return previews;}};
+ return {w,d,app,api,visible,scrollCalls,get pauses(){return pauses;},get previews(){return previews;}};
 }
 
 browserTest('home becomes a visual gallery and moves account, share and search controls into Connect',t=>{
@@ -66,6 +66,32 @@ browserTest('detail routes reveal the existing full controls and keep unrelated 
  assert([...h.app.querySelectorAll('a[href="#home"]')].some(a=>/back/i.test(a.textContent+' '+a.getAttribute('aria-label'))),'Detail routes have a Back to home link');
 });
 
+browserTest('every detail page has a fixed reachable X that returns Home at document top without stopping music',t=>{
+ const h=harness(t),close=h.d.querySelector('[data-front-pages="close"]'),audio=h.d.querySelector('#active-audio');audio.currentTime=42;
+ assert.equal(h.visible(close),false);assert.equal(h.w.history.scrollRestoration,'manual');
+ for(const view of ['music','world','connect','talanoa','skins','profile']){
+  h.api.open(view);assert(h.visible(close));assert.equal(close.getAttribute('href'),'#home');assert.match(close.getAttribute('aria-label'),/Close .+ and return to home/);
+  const style=h.w.getComputedStyle(close);assert.equal(style.position,'fixed','Close stays reachable after scrolling past its heading');assert(parseFloat(style.minWidth)>=44);assert(parseFloat(style.minHeight)>=44);
+  h.d.documentElement.style.scrollBehavior='smooth';h.d.documentElement.scrollTop=2400;h.d.body.scrollTop=1800;close.click();
+  assert.equal(h.app.dataset.frontPage,'home');assert.equal(h.w.location.hash,'#home');assert.equal(h.visible(close),false);assert.equal(h.d.documentElement.scrollTop,0);assert.equal(h.d.body.scrollTop,0);assert.equal(h.d.documentElement.style.scrollBehavior,'smooth','The user scroll preference is restored');
+  const last=h.scrollCalls.at(-1);assert.equal(last.top,0);assert.equal(last.left,0);assert.equal(last.behavior,'instant');
+  assert.equal(h.d.activeElement,h.d.querySelector('[data-front-pages="navigation"] [data-front-view="home"]'),'Focus returns to the visible Home link');
+  assert.equal(h.d.querySelector('#active-audio'),audio);assert.equal(audio.currentTime,42);assert.equal(h.pauses,0);
+ }
+ h.api.stop();assert.equal(h.d.querySelector('[data-front-pages="close"]'),null);assert.equal(h.w.history.scrollRestoration,'auto');
+});
+
+browserTest('each main panel exposes its own native close only on its matching detail page',t=>{
+ const h=harness(t),cases=[['music','.bv-music-feature'],['music','.sk-music-stage'],['world','#sota-connections'],['talanoa','#bv-circle'],['skins','#bv-your-room'],['profile','.sk-hero-artwork'],['connect','.bv-connect-header']];
+ const closes=[...h.d.querySelectorAll('[data-front-pages="panel-close"]')];assert.equal(closes.length,7);assert(closes.every(close=>!h.visible(close)),'Panel close links never cover the Home gallery');
+ for(const [view,selector] of cases){
+  h.api.open(view);const close=h.d.querySelector(selector+'>[data-front-pages="panel-close"]');assert(close);assert(h.visible(close));assert.equal(close.getAttribute('href'),'#home');assert.match(close.getAttribute('aria-label'),/Close .+ and return to home/);assert.equal(h.w.getComputedStyle(close).position,'absolute');
+  for(const other of closes)if(other.dataset.frontPanelPage!==view)assert.equal(h.visible(other),false,'Other pages do not leave a close control visible');
+  close.click();assert.equal(h.app.dataset.frontPage,'home');assert(closes.every(control=>!h.visible(control)));assert.equal(h.pauses,0);
+ }
+ h.api.stop();assert.equal(h.d.querySelector('[data-front-pages="panel-close"]'),null);
+});
+
 browserTest('navigation preserves the same canvas, playlist, draft fields and native event listeners',t=>{
  const h=harness(t),canvas=h.d.querySelector('[data-lg3d-canvas]'),music=h.d.querySelector('#sota-music-home'),audio=h.d.querySelector('#active-audio'),search=h.d.querySelector('#playlist-search'),mate=h.d.querySelector('#bv-find-mate');
  let clicks=0;const button=h.d.querySelector('.bv-discovery-all'),upload=h.d.querySelector('#pending-upload'),files=[new h.w.File(['same bytes'],'still-selected.png',{type:'image/png'})];Object.defineProperty(upload,'files',{configurable:true,value:files});button.addEventListener('click',()=>clicks++);search.value='My playing track';mate.value='Keep this mate';canvas.dataset.liveRenderer='preserved';audio.currentTime=42;
@@ -87,8 +113,9 @@ browserTest('initial hashes, legacy visual links and browser Back select the mat
  const cases=[['#bv-music','music'],['#sota-connections','world'],['#bv-circle','talanoa'],['#bv-your-room','skins']];
  for(const [hash,view] of cases){h.d.querySelector('.bv-home-section-nav a[href="'+hash+'"]').click();assert.equal(h.app.dataset.frontPage,view);assert.equal(h.w.location.hash,'#'+view);}
  h.api.open('home');h.api.open('music');h.api.open('world');
+ h.d.documentElement.scrollTop=1800;h.d.body.scrollTop=900;
  const changed=new Promise(resolve=>h.w.addEventListener('hashchange',resolve,{once:true}));h.w.history.back();await changed;
- assert.equal(h.w.location.hash,'#music');assert.equal(h.app.dataset.frontPage,'music');
+ assert.equal(h.w.location.hash,'#music');assert.equal(h.app.dataset.frontPage,'music');assert.equal(h.d.documentElement.scrollTop,0);assert.equal(h.d.body.scrollTop,0);
 });
 
 browserTest('inline playlist opening enters the Music page before the music component receives its event',t=>{

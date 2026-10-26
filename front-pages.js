@@ -12,12 +12,14 @@
     session.inert.forEach((value,node)=>{if(value===null)node.removeAttribute('inert');else node.setAttribute('inert',value);});
     session.wrappers.forEach(({wrapper,node})=>{if(wrapper.parentNode)wrapper.replaceWith(node);});
     session.added.forEach(node=>node.remove());
+    if(session.oldScrollRestoration!==undefined)root.history.scrollRestoration=session.oldScrollRestoration;
     if(session.oldPage===undefined)delete session.app.dataset.frontPage;else session.app.dataset.frontPage=session.oldPage;
   }
   function mount(app){
     stop();if(!app)return ()=>{};
     const header=app.querySelector('.sk-site-header');if(!header)return ()=>{};
-    const session={app,oldPage:app.dataset.frontPage,listeners:[],added:[],wrappers:[],hidden:new Map(),inert:new Map(),blocks:[],view:'home'};current=session;
+    const session={app,oldPage:app.dataset.frontPage,oldScrollRestoration:root.history.scrollRestoration,listeners:[],added:[],wrappers:[],panelCloses:[],hidden:new Map(),inert:new Map(),blocks:[],view:'home'};current=session;
+    if(session.oldScrollRestoration!==undefined)root.history.scrollRestoration='manual';
     const valid=()=>current===session&&app.isConnected&&navigation.isConnected;
     const listen=(node,event,fn,capture=false)=>{node.addEventListener(event,fn,capture);session.listeners.push(()=>node.removeEventListener(event,fn,capture));};
     const created=(tag,className,role)=>{const node=root.document.createElement(tag);node.className=className;node.dataset.frontPages=role;session.added.push(node);return node;};
@@ -27,8 +29,18 @@
     const navigation=created('nav','sfp-navigation','navigation');navigation.setAttribute('aria-label','Sota Kece pages');
     for(const view of ['home','music','world','connect']){const anchor=root.document.createElement('a');anchor.href='#'+view;anchor.dataset.frontView=view;anchor.textContent=view==='world'?'3D':pages[view].name;navigation.append(anchor);}
     header.after(navigation);
-    const detail=created('section','sfp-detail-heading','heading'),back=root.document.createElement('a'),heading=root.document.createElement('h1'),note=root.document.createElement('p');
-    back.href='#home';back.className='sfp-back';back.dataset.frontPages='back';back.dataset.frontView='home';back.textContent='← Back to home';heading.tabIndex=-1;detail.append(back,heading,note);navigation.after(detail);
+    const detail=created('section','sfp-detail-heading','heading'),back=root.document.createElement('a'),heading=root.document.createElement('h1'),note=root.document.createElement('p'),close=root.document.createElement('a');
+    back.href='#home';back.className='sfp-back';back.dataset.frontPages='back';back.dataset.frontView='home';back.textContent='← Back to home';
+    close.href='#home';close.className='sfp-page-close';close.dataset.frontPages='close';close.dataset.frontView='home';close.textContent='×';
+    heading.tabIndex=-1;detail.append(back,heading,note,close);navigation.after(detail);
+    function panelClose(selector,view,label){
+      const panel=app.querySelector(selector);if(!panel)return;
+      const anchor=created('a','sfp-panel-close','panel-close');anchor.href='#home';anchor.dataset.frontView='home';anchor.dataset.frontPanelPage=view;anchor.textContent='×';anchor.setAttribute('aria-label','Close '+label+' and return to home');anchor.title='Close '+label;
+      panel.append(anchor);session.panelCloses.push({anchor,view});
+    }
+    panelClose('#sota-music-home .bv-music-feature','music','music');panelClose('#sota-music-home .sk-music-stage','music','music visualiser');
+    panelClose('#sota-connections','world','3D connections');panelClose('#bv-circle','talanoa','Talanoa');panelClose('#bv-your-room','skins','skins');
+    panelClose('.sk-hero-artwork','profile','your space');panelClose('.bv-connect-header','connect','Connect');
     function visual(container,view,label){
       if(!container)return;
       const anchor=created('a','sfp-visual-link','visual-link');anchor.href='#'+view;anchor.dataset.frontView=view;anchor.setAttribute('aria-label',label);
@@ -46,14 +58,25 @@
     }
     if(!collections.length)visual(app.querySelector('#bv-your-room .bv-collection-grid')||app.querySelector('#bv-your-room'),'skins','Explore room skins');
     for(const node of [...collections,...app.querySelectorAll('#sota-connections .lg3d-labels, .sk-hero-artwork .sota-social-hero, .sk-hero-artwork .sk-hero-create')])session.inert.set(node,node.getAttribute('inert'));
-    function show(view,{focus=false}={}){
+    function scrollTop(){
+      // Reset the document itself, not merely the navigation's position. Temporarily
+      // remove smooth scrolling so returning Home is immediate even after a long page.
+      const elements=[root.document.documentElement,root.document.body,root.document.scrollingElement].filter((node,index,list)=>node&&list.indexOf(node)===index);
+      const styles=elements.map(node=>[node,node.style.getPropertyValue('scroll-behavior'),node.style.getPropertyPriority('scroll-behavior')]);
+      elements.forEach(node=>{node.style.setProperty('scroll-behavior','auto','important');node.scrollTop=0;node.scrollLeft=0;});
+      try{root.scrollTo?.({top:0,left:0,behavior:'instant'});}finally{styles.forEach(([node,value,priority])=>{if(value)node.style.setProperty('scroll-behavior',value,priority);else node.style.removeProperty('scroll-behavior');});}
+    }
+    function show(view,{focus=false,scroll=false}={}){
       if(!valid()||!Object.hasOwn(pages,view))return false;
       session.view=view;app.dataset.frontPage=view;
       session.blocks.forEach(({node,views})=>{node.hidden=!views.includes(view)||session.hidden.get(node);});
       session.inert.forEach((original,node)=>{if(view==='home')node.setAttribute('inert','');else if(original===null)node.removeAttribute('inert');else node.setAttribute('inert',original);});
       detail.hidden=view==='home';heading.textContent=pages[view].title||'';note.textContent=pages[view].note||'';
+      close.hidden=view==='home';close.setAttribute('aria-label','Close '+pages[view].name+' and return to home');close.title='Close '+pages[view].name;
+      session.panelCloses.forEach(item=>{item.anchor.hidden=item.view!==view;});
       navigation.querySelectorAll('[data-front-view]').forEach(anchor=>{if(anchor.dataset.frontView===view)anchor.setAttribute('aria-current','page');else anchor.removeAttribute('aria-current');});
-      if(focus){(view==='home'?navigation.querySelector('[data-front-view="home"]'):heading).focus({preventScroll:true});navigation.scrollIntoView?.({block:'start',behavior:'auto'});}
+      if(focus)(view==='home'?navigation.querySelector('[data-front-view="home"]'):heading).focus({preventScroll:true});
+      if(scroll)scrollTop();
       // Canvas owners measure their original elements again after page visibility changes.
       root.dispatchEvent(new root.Event('resize'));
       app.dispatchEvent(new root.CustomEvent('sota-front-page-change',{bubbles:true,detail:{view}}));return true;
@@ -61,7 +84,7 @@
     session.navigate=(view,options={})=>{
       if(!valid()||!Object.hasOwn(pages,view))return false;
       if(root.location.hash!=='#'+view)root.history.pushState(null,'',root.location.pathname+root.location.search+'#'+view);
-      return show(view,{focus:options.focus!==false});
+      return show(view,{focus:options.focus!==false,scroll:true});
     };
     listen(app,'click',event=>{
       if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
@@ -71,7 +94,7 @@
       const view=fromHash(url.hash);if(!view)return;
       event.preventDefault();session.navigate(view);
     });
-    listen(root,'hashchange',()=>{const view=fromHash(root.location.hash);if(view)show(view);});
+    listen(root,'hashchange',()=>{const view=fromHash(root.location.hash);if(view)show(view,{scroll:true});});
     listen(root,'sota-playlist-inline-open',event=>{if(valid()&&app.contains(event.target))session.navigate('music',{focus:false});},true);
     show(fromHash(root.location.hash)||'home');
     return ()=>{if(current===session)stop();};

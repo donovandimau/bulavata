@@ -1,0 +1,113 @@
+/* Keep each panel's real close control with its heading while the panel scrolls. */
+.bv-account-dialog>.bv-account-head,
+.spp-dialog>form>header,
+.ssd-editor>.ssd-head,
+.bv-music-dialog>.bv-music-dialog-head,
+.sk-playlist>.sk-playlist-head,
+.tc-dialog>.tc-dialog-head,
+.bv-studio>.bv-studio-head,
+.modal .box>.sota-modal-head,
+.sota-panel-close-header {
+ position:sticky;top:0;z-index:20;isolation:isolate;flex-shrink:0;
+ background-color:var(--ssd-panel,var(--sota-page-surface,#fff8ed));
+ box-shadow:0 4px 8px #241f4420;
+}
+
+/* These two headings were transparent; their opaque colours match their player. */
+.bv-music-dialog>.bv-music-dialog-head {
+ padding-block:10px;background:var(--ssd-panel,#171321);color:var(--ssd-ink,#f6f1ff);
+}
+.bv-music-dialog>.bv-music-dialog-head h2 {color:var(--ssd-ink,#f6f1ff);}
+.sk-playlist>.sk-playlist-head {
+ padding-block:10px;background:var(--ssd-panel,linear-gradient(110deg,#a7f2e5,#fff0a9 58%,#ffd5e9));
+ color:var(--ssd-ink,#193b50);
+}
+.sk-playlist>.sk-playlist-head h2 {color:var(--ssd-ink,#193b50);}
+
+/* The studio already owns separate body scroll regions; this keeps that structure. */
+.bv-studio>.bv-studio-head {position:sticky;top:0;z-index:20;}
+
+/* Exact existing controls only. Design, save and transport actions keep their layout. */
+.bv-account-head>#bv-account-close,
+.spp-dialog>form>header>.spp-close,
+.ssd-head>.ssd-close,
+.bv-music-dialog-head>button,
+.sk-playlist-head>.sk-playlist-close,
+.tc-dialog-head>[data-tc-close],
+.bv-studio-head>.bv-close,
+.sota-modal-head>button,
+.sota-panel-close {
+ box-sizing:border-box;display:inline-grid;place-items:center;flex:0 0 44px;
+ width:44px;height:44px;min-width:44px;min-height:44px;max-width:44px;
+ order:99;align-self:flex-start;margin:0 0 0 auto;padding:0;
+ line-height:1;cursor:pointer;touch-action:manipulation;
+}
+.bv-account-head>h2,.ssd-head>div,.sk-playlist-head>div,.bv-studio-head>div,
+.tc-dialog-head>h2,.bv-music-dialog-head>h2 {min-width:0;overflow-wrap:anywhere;}
+
+/* Native buttons carry the real X glyph and their explicit accessible name. */
+.bv-music-dialog-head>button,.tc-dialog-head>[data-tc-close] {font-size:28px;font-weight:400;}
+.modal .box>.sota-modal-head {display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px;background:var(--ssd-panel,#fff8ed);}
+.sota-modal-head>h3 {flex:1;min-width:0;margin:0;color:var(--ssd-ink,#243d55);overflow-wrap:anywhere;}
+.sota-modal-head>button {border:1px solid #b29acb;border-radius:11px;background:var(--ssd-panel,#f2e4ff);color:var(--ssd-ink,#4c2d71);font:400 28px/1 system-ui,sans-serif;}
+
+/* Talanoa can scroll as a full page; its own exit stays below modal layers. */
+#app .kava-room .kava-room-toolbar {padding-right:58px;}
+#app .kava-room #kc-close.kava-panel-close {
+ position:fixed;top:max(12px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));z-index:110;
+ box-sizing:border-box;display:grid;place-items:center;width:44px;height:44px;min-width:44px;min-height:44px;
+ margin:0;padding:0;border:1px solid var(--ssd-accent,#8c66a8);border-radius:12px;
+ background:var(--ssd-panel,#fff0bc);color:var(--ssd-ink,#4b2b67);
+ box-shadow:0 3px 12px #35244a33;font:400 28px/1 system-ui,sans-serif;cursor:pointer;touch-action:manipulation;
+}
+
+/* An inline player's heading follows page scroll, rather than a clipped wrapper. */
+#app.bv-welcome #sota-music-home .sota-music-views {overflow:visible;}
+#app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline {overflow:visible;}
+#app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline>.sk-playlist-head {
+ position:sticky;top:8px;z-index:20;border-radius:10px;padding:10px;
+}
+#app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline .sk-playlist-close {display:inline-grid;}
+
+.bv-account-head>#bv-account-close:focus-visible,
+.spp-dialog>form>header>.spp-close:focus-visible,
+.ssd-head>.ssd-close:focus-visible,
+.bv-music-dialog-head>button:focus-visible,
+.sk-playlist-head>.sk-playlist-close:focus-visible,
+.tc-dialog-head>[data-tc-close]:focus-visible,
+.bv-studio-head>.bv-close:focus-visible,
+.sota-modal-head>button:focus-visible,
+#app .kava-room #kc-close.kava-panel-close:focus-visible,
+.sota-panel-close:focus-visible {
+ outline:3px solid var(--sota-page-focus,#40266d);outline-offset:3px;
+}
+@media(max-width:420px) {
+ .bv-account-head,.spp-dialog>form>header,.ssd-head,.bv-music-dialog-head,
+ .sk-playlist-head,.tc-dialog-head,.bv-studio-head {column-gap:8px;}
+ .bv-account-head>h2,.spp-dialog>form>header h2,.ssd-head h2 {overflow-wrap:anywhere;}
+ #app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline>.sk-playlist-head {top:4px;}
+ #app .kava-room .kava-room-toolbar {padding-right:52px;}
+ #app .kava-room #kc-close.kava-panel-close {right:max(10px,env(safe-area-inset-right));top:max(8px,env(safe-area-inset-top));}
+}
+@media(prefers-reduced-motion:reduce) {
+ .sota-panel-close,.bv-account-head>#bv-account-close,.spp-close,.ssd-close,
+ .bv-music-dialog-head>button,.sk-playlist-close,.tc-dialog-head>[data-tc-close],.bv-close {transition:none;}
+}
+@media(forced-colors:active) {
+ .bv-account-dialog>.bv-account-head,.spp-dialog>form>header,.ssd-editor>.ssd-head,
+ .bv-music-dialog>.bv-music-dialog-head,.sk-playlist>.sk-playlist-head,
+ .tc-dialog>.tc-dialog-head,.bv-studio>.bv-studio-head,.modal .box>.sota-modal-head,.sota-panel-close-header {
+ background:Canvas;color:CanvasText;box-shadow:none;border-bottom:1px solid CanvasText;
+ }
+ .bv-music-dialog>.bv-music-dialog-head h2,.sk-playlist>.sk-playlist-head h2 {color:CanvasText;}
+ .sota-panel-close,.bv-account-head>#bv-account-close,.spp-close,.ssd-close,
+ .bv-music-dialog-head>button,.sk-playlist-close,.tc-dialog-head>[data-tc-close],.bv-close,.sota-modal-head>button,
+ #app .kava-room #kc-close.kava-panel-close {
+ background:ButtonFace;color:ButtonText;border:1px solid ButtonText;
+ }
+}
+
+/* The design tool keeps its own readable chrome while previewing any page palette. */
+.ssd-editor>.ssd-head{background:linear-gradient(115deg,#66349b,#176b78);color:#fff;}
+.ssd-editor>.ssd-head :is(h2,small){color:#fff;}
+@media(forced-colors:active){.ssd-editor>.ssd-head{background:Canvas;color:CanvasText}.ssd-editor>.ssd-head :is(h2,small){color:CanvasText}}

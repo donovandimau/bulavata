@@ -214,10 +214,12 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <link rel="stylesheet" href="/music-spin.css?v=20261026-static-note-fast-ring">
 <link rel="stylesheet" href="/hero-music-stage.css?v=20261026-music-stage-1">
 <link rel="stylesheet" href="/profile-photos.css?v=20261026-profile-photos-1">
-<link rel="stylesheet" href="/music-home.css?v=20261026-galaxy-music-1">
-<link rel="stylesheet" href="/front-pages.css?v=20261026-galaxy-music-1">
+<link rel="stylesheet" href="/music-home.css?v=20261026-active-panels-1">
+<link rel="stylesheet" href="/front-pages.css?v=20261026-active-panels-1">
 <link rel="stylesheet" href="/colourful-pages.css?v=20261026-personal-world-2">
 <link rel="stylesheet" href="/space-design.css?v=20261026-personal-world-2">
+<link rel="stylesheet" href="/panel-close.css?v=20261026-active-panels-1">
+<link rel="stylesheet" href="/glass-controls.css?v=20261026-glass-symbols-1">
 </head>
 <body>
 <div class="bubbles" id="bubbles"></div>
@@ -784,7 +786,7 @@ function openDecorate(){
   const p=S.me;
   const m=document.createElement("div"); m.className="modal"; m.onclick=e=>{if(e.target===m)m.remove()};
   m.innerHTML=`<div class="box glass" style="background:#fff">
-    <h3>Decorate your room</h3><div class="sub" style="margin-bottom:14px">This is yours. Nobody flattens it into a grid.</div>
+    <div class="sota-modal-head"><h3>Decorate your room</h3><button type="button" aria-label="Close room editor" onclick="this.closest('.modal').remove()">×</button></div><div class="sub" style="margin-bottom:14px">This is yours. Nobody flattens it into a grid.</div>
     <div class="stack">
       <div><label>Display name</label><input id="d-name" value="${esc(p.display_name)}" maxlength="40"></div>
       <div><label>Pronouns</label><input id="d-pro" value="${esc(p.pronouns||'')}" maxlength="24"></div>
@@ -1105,22 +1107,22 @@ function finishRoom(){
 window.go=go; window.openRoom=openRoom; window.renderAuth=renderAuth; window.sb=sb;
 window.SotaView={invalidate:()=>viewRun()};
 </script>
-<script src="/music-visualiser.js?v=20261026-colourful-music"></script>
-<script src="/hero-visualiser.js?v=20261026-galaxy-music-1"></script>
+<script src="/music-visualiser.js?v=20261026-glass-symbols-1"></script>
+<script src="/hero-visualiser.js?v=20261026-active-panels-1"></script>
 <script src="/playback.js?v=20261024-quality"></script>
 <script src="/music-badge.js?v=20261026-spinning-music-badge"></script>
-<script src="/local-music.js?v=20261025-hero-visualiser-1"></script>
-<script src="/music-playlist.js?v=20261026-galaxy-music-1"></script>
+<script src="/local-music.js?v=20261026-active-panels-1"></script>
+<script src="/music-playlist.js?v=20261026-active-panels-1"></script>
 <script src="/skin-discovery.js?v=20261025-community-design"></script>
 <script src="/room-atmosphere.js?v=20261025-1"></script>
 <script src="/room-social-layout.js?v=20261026-live-panels"></script>
-<script src="/music-home.js?v=20261026-galaxy-music-1"></script>
-<script src="/front-pages.js?v=20261026-galaxy-music-1"></script>
+<script src="/music-home.js?v=20261026-active-panels-1"></script>
+<script src="/front-pages.js?v=20261026-active-panels-1"></script>
 <script src="/space-design.js?v=20261026-personal-world-2"></script>
 <script src="/skin-studio.js?v=20261026-personal-world-2"></script>
 <script src="/offline.js?v=20261024-quality"></script>
 <script src="/kava.js"></script>
-<script src="/circle-types.js?v=20261025-talanoa-circles"></script><script src="/circle-groups.js?v=20261025-talanoa-circles"></script><script src="/kava-ui.js?v=20261025-talanoa-circles"></script>
+<script src="/circle-types.js?v=20261025-talanoa-circles"></script><script src="/circle-groups.js?v=20261026-active-panels-1"></script><script src="/kava-ui.js?v=20261026-active-panels-1"></script>
 <script src="/dimau-charts-core.js?v=20261024"></script><script src="/dimau-visuals.js?v=20261024"></script>
 <script src="/friend-feed.js?v=20261025-personal-graph"></script>
 <script src="/room-social.js?v=20261026-spatial-life-1"></script>
@@ -1128,7 +1130,8 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/life-graph3d.js?v=20261026-galaxy-music-1"></script>
 <script src="/life-connections.js?v=20261026-spatial-life-1"></script>
 <script src="/connections.js?v=20261026-spatial-life-1"></script>
-<script>window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null,getPage:()=>S.user?S.tab:'profile'});window.SotaSpaceDesign?.mount(app);window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());boot();installAuthLifecycle();</script>
+<script src="/icon-controls.js?v=20261026-glass-symbols-1"></script>
+<script>window.SotaIconControls?.init();window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null,getPage:()=>S.user?S.tab:'profile'});window.SotaSpaceDesign?.mount(app);window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261025b" data-app="sota-kece" defer></script>
 </body>
 </html>

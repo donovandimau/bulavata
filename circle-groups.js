@@ -117,7 +117,7 @@
   function openDialog(title,routeHash=''){
     if(dialog)closeDialog(dialog,{clearHash:false,restore:false,preserveDraft:true});
     const opener=root.document.activeElement,node=root.document.createElement('dialog');node.className='tc-dialog';node.setAttribute('aria-labelledby','tc-dialog-title');
-    node.innerHTML=`<header class="tc-dialog-head"><h2 id="tc-dialog-title">${escape(title)}</h2><button type="button" class="tc-button" data-tc-close aria-label="Close circle dialog">Close</button></header><div class="tc-dialog-body" data-tc-body><p class="tc-status" data-tc-status role="status">Loading…</p></div>`;
+    node.innerHTML=`<header class="tc-dialog-head"><h2 id="tc-dialog-title">${escape(title)}</h2><button type="button" class="tc-button" data-tc-close aria-label="Close circle dialog">×</button></header><div class="tc-dialog-body" data-tc-body><p class="tc-status" data-tc-status role="status">Loading…</p></div>`;
     root.document.body.append(node);const r=record(node,false);r.opener=opener;r.routeHash=routeHash;r.childDispose=null;dialog=r;
     listen(r,q(node,'close'),'click',()=>closeDialog(r));
     listen(r,node,'cancel',event=>{event.preventDefault();closeDialog(r);});
