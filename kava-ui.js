@@ -59,7 +59,7 @@
     }
   }
   function frame(demo){
-    return `<div class="kava-room" data-preview="${demo}"><div class="kava-room-toolbar"><button class="btn sm ghost kava-back" id="kc-back">← ${demo?'Back to sign in':'Your circles'}</button><span>Our Talanoa Circle</span>${demo?'':'<button type="button" class="tc-button" id="kc-group-invite">Invite friends</button>'}</div><p id="kc-group-type" class="tc-session-kind" hidden></p>
+    return `<div class="kava-room" data-preview="${demo}"><div class="kava-room-toolbar"><button class="btn sm ghost kava-back" id="kc-back">← ${demo?'Back to sign in':'Your circles'}</button><span>Our Talanoa Circle</span><button type="button" id="kc-close" class="kava-panel-close" aria-label="Close Talanoa circle">×</button>${demo?'':'<button type="button" class="tc-button" id="kc-group-invite">Invite friends</button>'}</div><p id="kc-group-type" class="tc-session-kind" hidden></p>
       <section class="glass kava-hero"><div class="kava-hero-top"><div class="kava-eyebrow">A place for proper talanoa</div><span class="kava-session-badge">${demo?'Layout preview · no live session':'Your Koro · circle room'}</span></div>
       <h1 id="kc-heading"></h1><p id="kc-topic-text" class="kava-topic"></p><div class="kava-hero-values"><span>Listen generously</span><span>Make space for each other</span></div><div id="kc-host-actions" class="kava-actions"></div></section>
       <div class="kava-columns"><div class="stack"><section class="glass card kava-stage-card"><div class="kava-close"><h2 style="font-size:18px">Around the bowl</h2><span id="kc-capacity" class="pill"></span></div>
@@ -111,6 +111,7 @@
   }
   function bind(){
     q('#kc-back').onclick=()=>{stop();if(guest){guest=false;if(ctx.state.user)view();else root.renderAuth();}else view();};
+    q('#kc-close').onclick=q('#kc-back').onclick;
     q('#kc-currency').onchange=updateTip;updateTip();
     q('#kc-comment-form').onsubmit=event=>{event.preventDefault();const input=q('#kc-comment');const body=input.value;
       action(event.submitter,async()=>{await service.comment(current,ctx.state.user.id,body);if(input.value===body)input.value='';await refresh(epoch);});};

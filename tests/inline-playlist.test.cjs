@@ -80,3 +80,12 @@ run('invalid initial hosts do not create an audio player',()=>{
     assert.equal(f.api.showInline(null),null);assert.equal(f.api.showInline(f.d.createElement('div')),null);assert.equal(f.d.querySelector('audio'),null);
   }finally{f.close();}
 });
+
+run('the inline close control emits its view change while retaining the playing audio',async()=>{
+  const f=fixture();try{
+    const audio=await playing(f),counts=f.counts();let closed=0;
+    f.host.addEventListener('sota-playlist-inline-close',()=>{closed++;f.api.hideInline();});
+    f.d.querySelector('.sk-playlist-close').click();await new Promise(setImmediate);
+    assert.equal(closed,1);assert.equal(f.api.isInline(),false);assert.equal(f.d.querySelector('#sota-playlist-audio'),audio);assert.equal(audio.paused,false);assert.equal(audio.currentTime,37);assert.deepEqual(f.counts(),counts);
+  }finally{f.close();}
+});

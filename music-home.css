@@ -24,7 +24,7 @@
 #app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline {position:static;inset:auto;transform:none;box-sizing:border-box;width:100%;max-width:none;max-height:none;margin:0;padding:24px;border:0;border-radius:0;box-shadow:none;overflow:visible;}
 #app.bv-welcome #sota-music-home .sk-playlist-inline[open] {display:flex;}
 #app.bv-welcome #sota-music-home .sk-playlist-inline:not([open]) {display:none;}
-#app.bv-welcome #sota-music-home .sk-playlist-inline .sk-playlist-close {display:none;}
+#app.bv-welcome #sota-music-home .sk-playlist-inline .sk-playlist-close {display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;}
 #app.bv-welcome #sota-music-home .sk-playlist-inline .sk-playlist-songs {max-height:350px;min-height:100px;overflow-y:auto;overscroll-behavior:contain;}
 #app.bv-welcome #sota-music-home .sk-playlist-inline .sk-playlist-head {margin-bottom:2px;}
 @media(max-width:760px) {

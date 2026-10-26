@@ -6,6 +6,13 @@
 #app[data-front-page] .sfp-detail-heading h1{font:800 clamp(25px,4vw,38px)/1.15 var(--sk-ui-font,Nunito,sans-serif);letter-spacing:-.035em;color:#193f58;margin:9px 0}
 #app[data-front-page] .sfp-detail-heading p{max-width:68ch;margin:0;color:#42647a;font:14px/1.6 var(--sk-ui-font,Nunito,sans-serif)}
 #app[data-front-page] .sfp-back{display:inline-flex;align-items:center;min-height:44px;color:#185675;text-decoration:underline;text-underline-offset:4px;font:800 13px/1.3 var(--sk-ui-font,Nunito,sans-serif)}
+#app[data-front-page] .sfp-page-close{position:fixed;top:calc(78px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));z-index:220;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;width:46px;height:46px;min-width:44px;min-height:44px;padding:0;border:2px solid var(--ssd-accent,#285876);border-radius:50%;background:var(--ssd-panel,#fff8e9);color:var(--ssd-ink,#193f58);font:700 30px/1 system-ui,sans-serif;text-decoration:none;text-shadow:none;box-shadow:0 3px 14px #10284030;cursor:pointer}
+#app[data-front-page]:not([data-front-page=home]) .sfp-navigation{padding-right:76px}
+#app[data-front-page] .sfp-page-close:hover{outline:2px solid var(--ssd-accent,#285876);outline-offset:2px}
+#app[data-front-page] :is(.bv-music-feature,.sk-music-stage,#sota-connections,#bv-circle,#bv-your-room,.sk-hero-artwork,.bv-connect-header){position:relative}
+#app[data-front-page] .sfp-panel-close{position:absolute;top:12px;right:12px;z-index:8;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;border:1px solid var(--ssd-accent,#285876);border-radius:50%;background:var(--ssd-panel,#fff8e9);color:var(--ssd-ink,#193f58);font:700 28px/1 system-ui,sans-serif;text-decoration:none;text-shadow:none;box-shadow:0 2px 10px #10284020;cursor:pointer}
+#app[data-front-page=music] .sk-music-stage-heading{padding-right:76px}
+#app[data-front-page=world] #sota-connections>.scf-heading,#app[data-front-page=skins] #bv-your-room>header,#app[data-front-page=connect] .bv-connect-header>.bv-wordmark{padding-right:60px}
 #app[data-front-page] [hidden]{display:none!important}
 #app[data-front-page] .sfp-visual-link{display:none}
 #app[data-front-page=home] :is(.sk-hero-artwork,.sk-music-stage-picture,.bv-circle-art,.sfp-skin-tile){position:relative}
@@ -13,7 +20,7 @@
 #app[data-front-page=home] .sfp-visual-link>span{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 14px;box-sizing:border-box;border:1px solid #ffffff9c;border-radius:11px;background:#082c43e8;color:#fff;font:800 12px/1.35 var(--sk-ui-font,Nunito,sans-serif);box-shadow:0 4px 18px #071c3a2b}
 #app[data-front-page=home] .sk-hero-artwork>.sfp-visual-link{justify-content:flex-start;align-items:flex-end}
 #app[data-front-page=home] .lg3d-stage>.sfp-visual-link{z-index:160}
-#app[data-front-page] :is(.sfp-navigation>a,.sfp-back,.sfp-visual-link):focus-visible{outline:3px solid #00a9cf;outline-offset:4px}
+#app[data-front-page] :is(.sfp-navigation>a,.sfp-back,.sfp-visual-link,.sfp-page-close,.sfp-panel-close):focus-visible{outline:3px solid #00a9cf;outline-offset:4px}
 #app[data-front-page=home] .sfp-visual-link:hover>span{background:#12617c}
 #app[data-front-page=home] #sota-music-home .bv-music-copy>p,
 #app[data-front-page=home] #sota-music-home .bv-music-actions,
@@ -65,4 +72,4 @@
  #app[data-front-page=home] #sota-connections.sc-friends{padding:12px}
 }
 @media(prefers-reduced-motion:reduce){#app[data-front-page] .sfp-visual-link{scroll-behavior:auto}}
-@media(forced-colors:active){#app[data-front-page] :is(.sfp-navigation>a,.sfp-detail-heading,.sfp-visual-link>span){background:Canvas;color:CanvasText;border-color:CanvasText}#app[data-front-page] :is(.sfp-navigation>a,.sfp-back,.sfp-visual-link):focus-visible{outline-color:Highlight}}
+@media(forced-colors:active){#app[data-front-page] :is(.sfp-navigation>a,.sfp-detail-heading,.sfp-visual-link>span,.sfp-page-close,.sfp-panel-close){background:Canvas;color:CanvasText;border-color:CanvasText}#app[data-front-page] :is(.sfp-navigation>a,.sfp-back,.sfp-visual-link,.sfp-page-close,.sfp-panel-close):focus-visible{outline-color:Highlight}}

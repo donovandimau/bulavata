@@ -19,7 +19,7 @@
     if(!host||!image||!canvas||!engine)return;
     const surface=(node,large=false)=>{const picture=large?node.querySelector('.sk-music-stage-picture'):node,c=picture?.querySelector('canvas');let ctx;try{ctx=c?.getContext('2d');}catch(_){}return {host:picture,canvas:c,ctx,large,visible:true,drawState:{}};};
     const surfaces=[surface(host),...(stage?[surface(stage,true)]:[])];
-    const session={host,image,canvas,engine,surfaces,cleanup:[],audio:null,graph:null,frame:0,last:0,buffering:false,failed:false,pending:null,epoch:0,mode:'spectrum',motionPaused:false};
+    const session={host,image,canvas,engine,surfaces,cleanup:[],audio:null,graph:null,frame:0,last:0,buffering:false,failed:false,pending:null,epoch:0,mode:'spectrum',motionPaused:false,previewTime:0};
     current=session;
     const valid=()=>current===session&&host.isConnected;
     const listen=(node,event,fn,options)=>{node?.addEventListener(event,fn,options);session.cleanup.push(()=>node?.removeEventListener(event,fn,options));};
@@ -27,49 +27,57 @@
     const motion=root.matchMedia?.('(prefers-reduced-motion: reduce)');
     const state=value=>{
       host.dataset.state=value;
-      const labels={idle:'Music visualiser · choose a song to begin',live:'Live music visualiser · reacting to the playing song',paused:'Music visualiser paused',waiting:'Music visualiser · waiting for music',unavailable:'Music visualiser unavailable · music playback is unchanged','reduced-motion':'Music visualiser motion paused for your preference','motion-paused':'Music visualiser motion paused · music keeps playing'};
+      const labels={idle:'Ambient visual preview · choose a song to react to your music',live:'Live music visualiser · reacting to the playing song',paused:'Ambient visual preview · music is paused',waiting:'Ambient visual preview · waiting for audio',unavailable:surfaces.some(part=>part.ctx)?'Ambient visual preview · audio analysis unavailable; music playback is unchanged':'Music visualiser unavailable · music playback is unchanged','reduced-motion':'Visual preview motion paused for your device preference','motion-paused':'Visual motion paused'};
       host.setAttribute('aria-label',labels[value]||labels.idle);
       if(stage){
         stage.dataset.state=value;stage.querySelector('.sk-music-stage-picture')?.setAttribute('aria-label',labels[value]||labels.idle);
         const status=stage.querySelector('[data-stage-status]');
-        if(status)status.textContent=({idle:'Choose a song. Watch your sound come alive.',live:'LIVE AUDIO · Moving to your music',paused:'Music paused · ready when you are',waiting:'Waiting for audio · your music controls stay available',unavailable:'Visuals unavailable · music can keep playing','reduced-motion':'Motion paused · following your device preference','motion-paused':'Visuals paused · music keeps playing'})[value]||'';
+        if(status)status.textContent=({idle:'AMBIENT PREVIEW · Choose a song for live audio visuals',live:'LIVE AUDIO · Moving to your music',paused:'AMBIENT PREVIEW · Music is paused',waiting:'AMBIENT PREVIEW · Waiting for audio',unavailable:surfaces.some(part=>part.ctx)?'AMBIENT PREVIEW · Audio analysis unavailable':'Visuals unavailable · music can keep playing','reduced-motion':'Motion paused · following your device preference','motion-paused':'Visuals paused'})[value]||'';
         const toggle=stage.querySelector('[data-stage-motion]');
         if(toggle){toggle.disabled=!!motion?.matches;toggle.setAttribute('aria-pressed',String(session.motionPaused));toggle.textContent=session.motionPaused?'Resume visuals':'Pause visuals';}
       }
     };
-    const visible=part=>part.ctx&&part.host?.isConnected&&part.visible&&part.host.getBoundingClientRect().width>0;
-    const active=()=>valid()&&surfaces.some(visible)&&session.graph&&session.audio&&!session.audio.paused&&!session.audio.ended&&!session.audio.error&&!session.buffering&&!session.failed&&!root.document.hidden&&!session.motionPaused&&!motion?.matches&&!root.document.querySelector('dialog[open]:not(.sk-playlist-inline)');
+    const visible=part=>part.ctx&&part.host?.isConnected&&part.visible&&(!part.host.getClientRects||part.host.getClientRects().length>0)&&part.host.getBoundingClientRect().width>0;
+    const active=()=>valid()&&surfaces.some(visible)&&!root.document.hidden&&!session.motionPaused&&!motion?.matches&&!root.document.querySelector('dialog[open]:not(.sk-playlist-inline)');
+    const liveAudio=()=>session.graph?.context?.state==='running'&&session.audio&&session.audio.readyState>=3&&!session.audio.paused&&!session.audio.ended&&!session.audio.error&&!session.buffering&&!session.failed;
+    function displayState(live){
+      return !surfaces.some(part=>part.ctx)?'unavailable':motion?.matches?'reduced-motion':session.motionPaused?'motion-paused':live?'live':session.failed?'unavailable':session.audio?.paused||session.audio?.ended?'paused':session.audio?'waiting':'idle';
+    }
     function render(live){
       if(!valid())return;
       const data=live?engine.sample(session.audio):null,ratio=Math.min(root.devicePixelRatio||1,2);
       for(const part of surfaces){
-        if(!part.ctx||!part.canvas||!part.host.isConnected||live&&!visible(part))continue;
+        if(!part.ctx||!part.canvas||!visible(part))continue;
         const {ctx,canvas,large}=part,rect=canvas.getBoundingClientRect();
         const width=Math.max(1,Math.min(1920,Math.round(rect.width*ratio))),height=Math.max(1,Math.min(1080,Math.round(rect.height*ratio)));
         if(canvas.width!==width)canvas.width=width;if(canvas.height!==height)canvas.height=height;
-        ctx.clearRect(0,0,width,height);if(!live)part.drawState={};
+        ctx.clearRect(0,0,width,height);part.drawState.preview=!data;part.drawState.previewTime=session.previewTime;
         ctx.save();
         if(large){ctx.shadowColor='#ff40dd';ctx.shadowBlur=10*ratio;ctx.globalCompositeOperation='screen';}
         engine.draw(ctx,width,height,{mode:large?session.mode:'waveform',theme:large?'rainbow':'ocean',gain:large?1.5:1},part.drawState,data,false);
-        if(large&&session.mode==='spectrum'&&data)engine.draw(ctx,width,height,{mode:'waveform',theme:'rainbow',gain:1.3},{},data,false);
+        if(large&&session.mode==='spectrum')engine.draw(ctx,width,height,{mode:'waveform',theme:'rainbow',gain:1.3},{preview:!data,previewTime:session.previewTime},data,false);
         ctx.restore();
       }
     }
     function tick(time){
       session.frame=0;if(!active()){refresh();return;}
       const interval=1000/(root.navigator?.connection?.saveData?15:30);
-      if(!session.last||time-session.last>=interval){for(const part of surfaces)part.drawState.dt=session.last?time-session.last:0;session.last=time;render(true);}
+      if(!session.last||time-session.last>=interval){
+        const dt=session.last?Math.min(100,time-session.last):interval;session.previewTime+=dt;
+        for(const part of surfaces)part.drawState.dt=dt;session.last=time;
+        const live=!!liveAudio();state(displayState(live));render(live);
+      }
       session.frame=root.requestAnimationFrame(tick);
     }
     function refresh(){
       session.stop();if(!valid())return;
-      if(active()){state('live');render(true);session.frame=root.requestAnimationFrame(tick);}
-      else{state(!surfaces.some(part=>part.ctx)||session.failed?'unavailable':motion?.matches?'reduced-motion':session.motionPaused?'motion-paused':session.audio?.paused||session.audio?.ended?'paused':session.audio?'waiting':'idle');render(false);}
+      const moving=active(),live=!!(moving&&liveAudio());state(displayState(live));render(live);
+      if(moving)session.frame=root.requestAnimationFrame(tick);
     }
     function bind(audio){
       if(session.audio===audio)return;
       session.abort?.abort();session.epoch++;session.pending=null;session.unbind?.();session.stop();
-      session.audio=audio;lastAudio=audio;session.graph=engine.sample(audio);session.failed=false;session.buffering=false;
+      session.audio=audio;lastAudio=audio;session.graph=audio.readyState>=3?engine.sample(audio):null;session.failed=false;session.buffering=false;
       const handlers={play:()=>{session.buffering=false;session.connect(audio);},playing:()=>{session.buffering=false;session.connect(audio);},pause:refresh,ended:refresh,emptied:refresh,error:()=>{session.failed=true;refresh();},waiting:()=>{session.buffering=true;refresh();},stalled:()=>{session.buffering=true;refresh();}};
       for(const [name,handler] of Object.entries(handlers))audio.addEventListener(name,handler);
       session.unbind=()=>{for(const [name,handler] of Object.entries(handlers))audio.removeEventListener(name,handler);};
@@ -92,7 +100,7 @@
     function measure(){
       if(!valid())return;
       const parent=image.closest('.sk-hero-artwork'),parentRect=parent.getBoundingClientRect(),rect=image.getBoundingClientRect();
-      if(!rect.width||!rect.height)return;
+      if(!rect.width||!rect.height){refresh();return;}
       host.hidden=false;const playButton=parent.querySelector('.sk-artwork-play');if(playButton)playButton.hidden=false;
       const mobile=root.matchMedia?.('(max-width:760px)').matches;
       const naturalWidth=image.naturalWidth||(mobile?1008:1360),naturalHeight=image.naturalHeight||(mobile?1896:832);
@@ -104,6 +112,7 @@
     listen(root.document,'play',event=>{if(eligible(event.target))session.connect(event.target);},true);
     listen(root.document,'visibilitychange',refresh);
     listen(root.document,'sota-music-home-change',refresh);
+    listen(root.document,'sota-front-page-change',refresh);
     listen(root.document,'close',refresh,true);listen(root.document,'toggle',refresh,true);
     listen(image,'load',measure);listen(root,'resize',measure);
     listen(motion,'change',()=>{if(motion.matches){session.abort?.abort();session.pending=null;session.epoch++;}refresh();});

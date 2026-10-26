@@ -30,6 +30,7 @@
       event.preventDefault();show(tabs[index].dataset.musicView,{focus:true});
     });
     listen(host,'sota-playlist-inline-open',()=>show('playlist',{playlist:false}));
+    listen(host,'sota-playlist-inline-close',()=>show('visualiser',{focus:true}));
     show('visualiser',{playlist:false});
     return ()=>{if(current===session)stop();};
   }
