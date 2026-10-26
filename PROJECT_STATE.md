@@ -1,3 +1,9 @@
+## 26 October 2026 — Stop the home page jumping while it loads
+
+Owner asked to fix Sota Kece's layout jumping (“Do it”). Fiji Analytics showed a layout shift of 0.42–0.92 on many loads (p75 about 0.5), mostly on repeat visits. Cause: the shared Dimau Companion element is appended to the page before its own stylesheet loads, so for a moment it sits in the normal page flow (full width, about 130px tall) and then jumps to its fixed corner. It is visible, and counted, whenever the room has not drawn yet (signed-in members, slow phones). Fix: a host-page rule keeps `dimau-companion` fixed, zero-sized and clipped until the companion's own `:host` rules (which are `!important`) take over, so the final render is unchanged. The shared companion files stay byte-identical. Applied to `index.html` and `communications.html`; public shell cache advanced to v83.
+
+Validation: local Chromium with a mocked signed-in session shows CLS 0.18–0.20 before and 0–0.014 after at 390/768/1366/1920; signed-out stays about 0. Full-page screenshots at 390 and 1366 match main (signed-in differences equal run-to-run animation noise). `node --test tests/*.test.cjs`: 219 pass, 0 fail, the same as main. Ops task #806.
+
 ## 25 October 2026 — App companion installation
 
 Owner resumed the portfolio companion rollout with “do it”. Added byte-identical original Dimau Companion v1.0.1 assets and app-specific entry points from the shared platform standard. Local task guides, movable characters, appearance settings and read-aloud are available without a model provider. No account, payment, private-record or provider access is added. Open-ended AI remains disconnected unless a host explicitly supplies its existing service; held assistant pilots remain unchanged.
