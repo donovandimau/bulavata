@@ -5,7 +5,7 @@
     if(!Array.isArray(value)||!value.length||value.length>500)throw Error('Playlist unavailable.');
     const ids=new Set();
     return value.map(track=>{
-      if(!track||typeof track.id!=='string'||!/^[a-z0-9-]{1,80}$/.test(track.id)||ids.has(track.id)||typeof track.title!=='string'||!track.title.trim()||track.title.length>250||typeof track.path!=='string'||!/^fiji-(?:remix|song)-\d{2,3}\.mp3$/.test(track.path))throw Error('Playlist unavailable.');
+      if(!track||typeof track.id!=='string'||!/^[a-z0-9-]{1,80}$/.test(track.id)||ids.has(track.id)||typeof track.title!=='string'||!track.title.trim()||track.title.length>250||typeof track.path!=='string'||!(track.path==='fiji-default-soundtrack.mp3'||/^fiji-(?:remix|song)-\d{2,3}\.mp3$/.test(track.path)))throw Error('Playlist unavailable.');
       ids.add(track.id);return {id:track.id,title:track.title.trim(),url:AUDIO_BASE+track.path};
     });
   }
@@ -60,7 +60,7 @@
     if(loading)return loading;
     retry.hidden=true;message='Loading playlist…';sync();
     loading=(async()=>{
-      try{const response=await root.fetch('/music-playlist.json?v=20261020',{credentials:'omit',cache:'no-cache'});if(!response.ok)throw Error('Playlist unavailable.');tracks=validateCatalog(await response.json());message='Choose a song to start listening.';render();}
+      try{const response=await root.fetch('/music-playlist.json?v=20261026-shared-music',{credentials:'omit',cache:'no-cache'});if(!response.ok)throw Error('Playlist unavailable.');tracks=validateCatalog(await response.json());message='Choose a song to start listening.';render();}
       catch(_){message='The playlist could not load. Check your connection and try again.';retry.hidden=false;sync();}
       finally{loading=null;}
     })();
