@@ -1,3 +1,9 @@
+## 26 October 2026 — Live shared public music catalogue
+
+The existing Sota native playlist now reads the validated central public catalogue on opening. A valid central or saved catalogue is authoritative; the known82 local JSON remains a cold-failure fallback. Refresh preserves the selected stable ID, existing audio element and current playback position. Explicit song selection uses the current validated public mapping, with no duplicate default soundtrack or automatic playback. Existing playback coordination, local uploads, hero visualiser, badge, personal rooms and private data behavior are preserved.
+
+The byte-identical shared catalogue core is a local on-demand shell asset. Seven actual-source DOM/core regression cases and the existing playlist/playback suites pass locally. The release pipeline verifies the full app and hosted media behavior. No Supabase database, bucket, access policy or audio object changes.
+
 ## 26 October 2026 — Stop the home page jumping while it loads
 
 Owner asked to fix Sota Kece's layout jumping (“Do it”). Fiji Analytics showed a layout shift of 0.42–0.92 on many loads (p75 about 0.5), mostly on repeat visits. Cause: the shared Dimau Companion element is appended to the page before its own stylesheet loads, so for a moment it sits in the normal page flow (full width, about 130px tall) and then jumps to its fixed corner. It is visible, and counted, whenever the room has not drawn yet (signed-in members, slow phones). Fix: a host-page rule keeps `dimau-companion` fixed, zero-sized and clipped until the companion's own `:host` rules (which are `!important`) take over, so the final render is unchanged. The shared companion files stay byte-identical. Applied to `index.html` and `communications.html`; public shell cache advanced to v83.
