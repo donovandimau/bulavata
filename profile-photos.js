@@ -218,7 +218,7 @@
         if(valid()){dialog.removeAttribute('aria-busy');dialog.querySelectorAll('input,[data-photo-cancel]').forEach(input=>input.disabled=false);ready();}
       }
     });
-    root.document.body.append(dialog);if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');q('[data-photo-cancel]').focus();
+    root.document.body.append(dialog);root.SotaSpaceDesign?.decorateDialog?.(dialog);if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');q('[data-photo-cancel]').focus();
     return dialog;
   }
   async function mountRoom(target,profile,{isOwner=false}={}){

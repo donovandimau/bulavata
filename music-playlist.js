@@ -9,16 +9,18 @@ if(!track||typeof track.id!=='string'||!/^[a-z0-9-]{1,80}$/.test(track.id)||ids.
 ids.add(track.id);return {id:track.id,title:track.title.trim(),url:AUDIO_BASE+track.path};
 });
 }
-let dialog=null,audio=null,tracks=[],current=-1,selectedTrack=null,authoritative=false,loading=null,attempt=0,beforePlay=()=>{},focusBefore=null,message='Choose a song to start listening.';
+let dialog=null,audio=null,tracks=[],current=-1,selectedTrack=null,authoritative=false,loading=null,attempt=0,beforePlay=()=>{},focusBefore=null,inlineHost=null,message='Choose a song to start listening.';
 root.SotaPlayback?.register('playlist',pause);
 let list,filter,count,status,title,play,previous,next,retry,mood,subtitle;
 function el(tag,text,cls){const node=root.document.createElement(tag);if(text)node.textContent=text;if(cls)node.className=cls;return node;}
 function button(text,action){const node=el('button',text);node.type='button';node.addEventListener('click',action);return node;}
 function live(){return !!audio&&!audio.paused&&!audio.ended;}
+function homeHost(){return root.document?.querySelector?.('[data-music-playlist-host]')||null;}
 function sync(){
 const selected=tracks[current]||selectedTrack,playing=live();
 root.document.querySelectorAll('[data-playlist-open]').forEach(b=>{
 b.setAttribute('aria-expanded',String(!!dialog?.open));b.setAttribute('aria-pressed',String(playing));
+if(homeHost())b.removeAttribute('aria-haspopup');else b.setAttribute('aria-haspopup','dialog');
 b.title=selected?(playing?'Playing: ':'Paused: ')+selected.title+' · Open music playlist':'Open music playlist';
 });
 root.document.querySelectorAll('[data-playlist-status]').forEach(s=>s.textContent=selected?(playing?'Playing · ':'Paused · ')+selected.title:'Music playlist · tap to choose a song');
@@ -89,7 +91,7 @@ function create(){
 dialog=el('dialog','','sk-playlist');dialog.id='sk-music-playlist';dialog.setAttribute('aria-labelledby','sk-playlist-heading');
 const head=el('div','','sk-playlist-head'),brand=el('div'),heading=el('h2','Music playlist');heading.id='sk-playlist-heading';
 brand.append(el('span','SOTA KECE · ISLAND MIX','sk-playlist-eyebrow'),heading);
-const close=button('×',()=>dialog.close());close.className='sk-playlist-close';close.setAttribute('aria-label','Close music playlist');head.append(brand,close);
+const close=button('×',()=>inlineHost?hideInline():dialog.close());close.className='sk-playlist-close';close.setAttribute('aria-label','Close music playlist');head.append(brand,close);
 const hero=el('div','','sk-playlist-hero'),record=el('div','','sk-playlist-record');record.setAttribute('aria-hidden','true');
 record.append(el('span','♫','sk-playlist-record-label'));
 const details=el('div','','sk-playlist-details');mood=el('span','Turn up the island vibes','sk-playlist-mood');
@@ -113,9 +115,53 @@ message='Playing · '+(selectedTrack?.title||'');sync();
 audio.addEventListener('pause',()=>{if(selectedTrack)message='Paused · '+selectedTrack.title;sync();});
 audio.addEventListener('ended',()=>move(1));
 audio.addEventListener('error',()=>{message='This song could not load. Tap Play to retry, or choose another song.';sync();});
-dialog.addEventListener('close',()=>{sync();if(focusBefore?.isConnected)focusBefore.focus({preventScroll:true});});
+dialog.addEventListener('close',()=>{sync();if(dialog.open)return;stopVisuals();if(!inlineHost&&focusBefore?.isConnected)focusBefore.focus({preventScroll:true});focusBefore=null;});
+}
+function stopVisuals(){const visual=dialog?.querySelector('dimau-music-visualiser');visual?.finishRecording?.();visual?.stop?.();}
+function relocate(parent){
+if(dialog.parentNode===parent)return;
+// Modern browsers preserve the audio element's playback and custom-element
+// state during a connected move. The fallback still reuses the same nodes.
+if(typeof parent.moveBefore==='function'&&dialog.isConnected&&parent.isConnected){
+try{parent.moveBefore(dialog,null);return;}catch(_){}
+}
+parent.append(dialog);
+}
+function showInline(host){
+if(!host||!host.isConnected||typeof host.append!=='function')return null;
+if(!dialog)create();
+if(inlineHost===host&&dialog.parentNode===host&&dialog.open){sync();return dialog;}
+const active=root.document.activeElement;
+focusBefore=null;
+if(dialog.open)dialog.close();
+inlineHost=host;dialog.classList.add('sk-playlist-inline');
+relocate(host);dialog.show();sync();
+if(active&&active!==root.document.body&&active.isConnected)active.focus({preventScroll:true});
+dialog.querySelector('dimau-music-visualiser')?.wake?.();
+if(!tracks.length)load();
+return dialog;
+}
+function hideInline(){
+if(!dialog||!inlineHost)return;
+const active=root.document.activeElement;
+focusBefore=null;
+if(dialog.open)dialog.close();
+inlineHost=null;dialog.classList.remove('sk-playlist-inline');
+relocate(root.document.body);stopVisuals();sync();
+if(active&&active!==root.document.body&&active.isConnected&&!dialog.contains(active))active.focus({preventScroll:true});
 }
 function open(){
+const host=homeHost();
+if(host){
+host.dispatchEvent(new root.CustomEvent('sota-playlist-inline-open',{bubbles:true}));
+const target=host.isConnected?host:homeHost();
+if(target&&showInline(target)){
+target.scrollIntoView?.({behavior:root.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth',block:'start'});
+filter.focus({preventScroll:true});
+return;
+}
+}
+hideInline();
 if(!dialog)create();if(dialog.open)return;
 focusBefore=root.document.activeElement;dialog.showModal();dialog.querySelector('button').focus();sync();load();
 }
@@ -126,5 +172,5 @@ b.dataset.playlistBound='true';b.setAttribute('aria-haspopup','dialog');b.setAtt
 });sync();
 }
 if(root.document)root.document.addEventListener('play',event=>{if(event.target.tagName==='AUDIO'&&event.target!==audio)pause();},true);
-return {validateCatalog,mount,open,pause};
+return {validateCatalog,mount,open,pause,showInline,hideInline,detachInline:hideInline,isInline:()=>!!inlineHost&&!!dialog?.open&&inlineHost.isConnected};
 });

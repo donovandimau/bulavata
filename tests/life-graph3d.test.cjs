@@ -38,16 +38,16 @@ test('untrusted shape cannot introduce duplicate IDs, dangling edges or CSS colo
   assert.equal(result.nodes.length,13);assert.equal(result.edges.length,11);assert.equal(result.nodes.at(-1).color,'#55b9ff');
 });
 function glStub(failAt=0){
-  const calls={created:{buffer:0,shader:0,program:0},deleted:{buffer:0,shader:0,program:0},draws:[]};let compiled=0;
+  const calls={created:{buffer:0,shader:0,program:0},deleted:{buffer:0,shader:0,program:0},draws:[],clearColours:[]};let compiled=0;
   const gl={VERTEX_SHADER:1,FRAGMENT_SHADER:2,COMPILE_STATUS:3,LINK_STATUS:4,ALIASED_POINT_SIZE_RANGE:5,FLOAT:6,ARRAY_BUFFER:7,STATIC_DRAW:8,COLOR_BUFFER_BIT:1,DEPTH_BUFFER_BIT:2,BLEND:10,SRC_ALPHA:11,ONE_MINUS_SRC_ALPHA:12,DEPTH_TEST:13,LINES:14,POINTS:15,TRIANGLES:16,ONE:17,
-    createBuffer(){calls.created.buffer++;return {};},deleteBuffer(){calls.deleted.buffer++;},createShader(){calls.created.shader++;return {};},deleteShader(){calls.deleted.shader++;},createProgram(){calls.created.program++;return {};},deleteProgram(){calls.deleted.program++;},getShaderParameter(){compiled++;return compiled!==failAt;},getProgramParameter:()=>true,getParameter:()=>[1,256],getAttribLocation:(p,n)=>n==='aPosition'?0:n==='aNormal'||n==='aColor'?1:2,getUniformLocation:()=>({}),drawArrays(type,start,count){calls.draws.push({type,count});}};
-  for(const name of ['shaderSource','compileShader','attachShader','linkProgram','enableVertexAttribArray','vertexAttribPointer','useProgram','bindBuffer','uniformMatrix4fv','bufferData','viewport','clearColor','clear','enable','blendFunc','depthMask','disable','uniform1f','uniformMatrix3fv'])gl[name]=()=>{};
+    createBuffer(){calls.created.buffer++;return {};},deleteBuffer(){calls.deleted.buffer++;},createShader(){calls.created.shader++;return {};},deleteShader(){calls.deleted.shader++;},createProgram(){calls.created.program++;return {};},deleteProgram(){calls.deleted.program++;},getShaderParameter(){compiled++;return compiled!==failAt;},getProgramParameter:()=>true,getParameter:()=>[1,256],getAttribLocation:(p,n)=>n==='aPosition'?0:n==='aNormal'||n==='aColor'?1:2,getUniformLocation:()=>({}),drawArrays(type,start,count){calls.draws.push({type,count});},clearColor(...rgba){calls.clearColours.push(rgba);}};
+  for(const name of ['shaderSource','compileShader','attachShader','linkProgram','enableVertexAttribArray','vertexAttribPointer','useProgram','bindBuffer','uniformMatrix4fv','bufferData','viewport','clear','enable','blendFunc','depthMask','disable','uniform1f','uniformMatrix3fv'])gl[name]=()=>{};
   return {gl,calls};
 }
 test('GPU renderer draws native lines, glows and triangle meshes then releases resources',()=>{
   const {gl,calls}=glStub(),renderer=graph3d.createRenderer(gl);renderer.setData(graph3d.buildGeometry(graph3d.normalize(scene),graph3d.layout(scene),'family'));
   renderer.draw({width:320,height:445,yaw:.3,pitch:-.1,distance:14},480,668);
-  assert.deepEqual(calls.draws.map(d=>d.type),[gl.LINES,gl.POINTS,gl.TRIANGLES]);assert(calls.draws.every(d=>d.count>0));renderer.dispose();assert.deepEqual(calls.deleted,calls.created);
+  assert.deepEqual(calls.draws.map(d=>d.type),[gl.LINES,gl.POINTS,gl.TRIANGLES]);assert(calls.draws.every(d=>d.count>0));assert.deepEqual(calls.clearColours,[[0,0,0,0]]);renderer.dispose();assert.deepEqual(calls.deleted,calls.created);
 });
 test('partial shader failure releases earlier programs, shaders and buffers',()=>{
   const {gl,calls}=glStub(3);assert.throws(()=>graph3d.createRenderer(gl),/shader/);assert.deepEqual(calls.deleted,calls.created);

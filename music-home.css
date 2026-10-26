@@ -1,0 +1,45 @@
+/* The photo, live stage and playlist share one landing-page music area. */
+#app.bv-welcome #sota-music-home {box-sizing:border-box;width:calc(100% - 40px);max-width:1280px;min-width:0;margin:22px auto 0;color:#fff;text-shadow:none;}
+#app.bv-welcome #sota-music-home>.bv-music-feature {position:relative;isolation:isolate;display:flex;align-items:center;min-height:320px;height:auto;margin:0 0 16px;border:1px solid #dbc29e;border-radius:20px;overflow:hidden;box-shadow:none;}
+#app.bv-welcome #sota-music-home .bv-music-feature>img {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;z-index:-2;}
+#app.bv-welcome #sota-music-home .bv-music-feature::after {content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#072d33eb,#102b3799 50%,#13222c18);pointer-events:none;}
+#app.bv-welcome #sota-music-home .bv-music-copy {position:relative;inset:auto;box-sizing:border-box;max-width:650px;padding:30px;color:#fff;text-align:left;}
+#app.bv-welcome #sota-music-home .bv-music-copy :is(h1,p,small,span) {color:#fff;text-shadow:none;}
+#app.bv-welcome #sota-music-home .bv-music-copy>small:first-child {display:block;font-size:10px;font-weight:800;letter-spacing:.13em;color:#b4f4ee;}
+#app.bv-welcome #sota-music-home .bv-music-copy h1 {margin:10px 0;font-size:clamp(30px,4vw,46px);line-height:1.06;letter-spacing:-.025em;}
+#app.bv-welcome #sota-music-home .bv-music-copy p {margin:12px 0 16px;font-size:15px;line-height:1.5;}
+#app.bv-welcome #sota-music-home .bv-music-actions {display:flex;flex-wrap:wrap;gap:9px;}
+#app.bv-welcome #sota-music-home .bv-music-actions>button {min-height:44px;min-width:0;padding:11px 16px;border:1px solid #c6f8ef;border-radius:11px;background:#b5efe6;color:#154b50;font:800 14px/1.4 var(--sk-ui-font,Nunito,sans-serif);text-shadow:none;box-shadow:none;cursor:pointer;}
+#app.bv-welcome #sota-music-home .bv-music-actions>button:last-child {background:#fff7e3;border-color:#ffe3a0;color:#5b3c25;}
+#app.bv-welcome #sota-music-home .bv-music-copy>[data-playlist-status] {display:block;max-width:48ch;margin-top:13px;font-size:11px;line-height:1.5;overflow-wrap:anywhere;}
+#app.bv-welcome .sota-music-views {overflow:hidden;min-width:0;border:1px solid #a377f2;border-radius:18px;background:#160d2d;}
+#app.bv-welcome .sota-music-view-tabs {display:flex;gap:8px;padding:12px;background:#211534;}
+#app.bv-welcome .sota-music-view-tabs>button {display:inline-flex;justify-content:center;align-items:center;min-height:44px;min-width:130px;margin:0;padding:11px 20px;border:1px solid #8b77ad;border-radius:10px;background:#322442;color:#f1eafd;font:800 14px/1.4 var(--sk-ui-font,Nunito,sans-serif);text-shadow:none;box-shadow:none;cursor:pointer;}
+#app.bv-welcome .sota-music-view-tabs>button[aria-selected="true"] {background:#ffe38b;color:#3d2144;border-color:#ffe38b;}
+#app.bv-welcome #sota-music-home :is(button,input,select):focus-visible {outline:3px solid #71e5e5;outline-offset:3px;}
+#app.bv-welcome .sota-music-view-panel {min-width:0;}
+#app.bv-welcome .sota-music-view-panel[hidden] {display:none!important;}
+#app.bv-welcome #sota-music-home .sk-music-stage {width:100%;max-width:none;margin:0;border:0;border-radius:0;box-shadow:none;}
+#app.bv-welcome #sota-music-home [data-music-playlist-host] {min-width:0;}
+#app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline {position:static;inset:auto;transform:none;box-sizing:border-box;width:100%;max-width:none;max-height:none;margin:0;padding:24px;border:0;border-radius:0;box-shadow:none;overflow:visible;}
+#app.bv-welcome #sota-music-home .sk-playlist-inline[open] {display:flex;}
+#app.bv-welcome #sota-music-home .sk-playlist-inline:not([open]) {display:none;}
+#app.bv-welcome #sota-music-home .sk-playlist-inline .sk-playlist-close {display:none;}
+#app.bv-welcome #sota-music-home .sk-playlist-inline .sk-playlist-songs {max-height:350px;min-height:100px;overflow-y:auto;overscroll-behavior:contain;}
+#app.bv-welcome #sota-music-home .sk-playlist-inline .sk-playlist-head {margin-bottom:2px;}
+@media(max-width:760px) {
+ #app.bv-welcome #sota-music-home {width:calc(100% - 24px);margin-top:14px;}
+ #app.bv-welcome #sota-music-home>.bv-music-feature {min-height:290px;margin-bottom:12px;border-radius:16px;}
+ #app.bv-welcome #sota-music-home .bv-music-copy {max-width:100%;padding:24px 20px;}
+ #app.bv-welcome #sota-music-home .bv-music-copy h1 {font-size:34px;}
+ #app.bv-welcome #sota-music-home .bv-music-copy p {font-size:14px;}
+ #app.bv-welcome .sota-music-view-tabs {gap:7px;padding:10px;}
+ #app.bv-welcome .sota-music-view-tabs>button {flex:1;min-width:0;padding:11px 12px;}
+ #app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline {padding:16px;}
+ #app.bv-welcome #sota-music-home .sk-playlist-inline .sk-playlist-songs {max-height:350px;}
+}
+@media(prefers-reduced-motion:reduce) {#app.bv-welcome .sota-music-view-tabs>button {transition:none;}}
+@media(forced-colors:active) {
+ #app.bv-welcome .sota-music-views,#app.bv-welcome .sota-music-view-tabs,#app.bv-welcome .sota-music-view-tabs>button,#app.bv-welcome #sota-music-home .bv-music-actions>button {background:Canvas;color:CanvasText;border-color:CanvasText;}
+ #app.bv-welcome .sota-music-view-tabs>button[aria-selected="true"] {outline:2px solid Highlight;outline-offset:-4px;}
+}

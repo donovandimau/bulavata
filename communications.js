@@ -3,6 +3,7 @@
  const C=window.DimauCommsCore,$=id=>document.getElementById(id);
  const sb=window.supabase.createClient('https://aqfzpaczyodhugsgqvxi.supabase.co','sb_publishable_DvpX2PSuPtxE3IqWUlRZfQ_YP2qLZtF');
  const S={user:null,me:null,groups:[],group:null,rows:new Map(),profiles:new Map(),epoch:0,loading:false,sending:false,operation:null,dirty:true,tab:'chat',cursor:null,complete:false};
+ window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null});window.SotaSpaceDesign?.mount($('workspace'),{page:'communications'});
  const callUI=window.DimauNativeCalls.create({sb,root:$('nativeCalls'),inbox:$('callInbox'),getContext:()=>({user:S.user,group:S.group,groups:S.groups}),onStatus:tell,onSelectGroup:async crew=>{const g=S.groups.find(g=>String(g.id)===String(crew));if(g){setTab('calls');await selectGroup(g);}}});
  const route=C.routeView(new URLSearchParams(location.search).get('view'));S.tab=route.tab;let focusGroups=route.groups;
  const names={todo:'To do',doing:'In progress',done:'Done'};
@@ -45,7 +46,7 @@
  function reset(identity=false){window.SotaCircles?.stop();clearCircleTheme();callUI.resetContext();S.epoch++;S.group=null;S.rows.clear();S.profiles.clear();S.cursor=null;S.complete=false;S.loading=false;S.sending=false;S.operation=null;S.dirty=true;document.querySelectorAll('#connected input,#connected textarea,#connected button,#connected select').forEach(n=>n.disabled=false);$('groupWorkspace').hidden=true;$('noGroup').hidden=false;$('messages').replaceChildren();$('threads').replaceChildren();$('board').replaceChildren();$('calls').replaceChildren();$('chatText').value='';$('threadTitle').value='';$('threadText').value='';$('taskTitle').value='';$('groupCode').hidden=true;if(identity){S.me=null;S.groups=[];paintGroups();$('groupName').value='';$('groupType').value='koro';$('groupGraphVisibility').value='private';$('createShowOnGraph').checked=false;$('joinShowOnGraph').checked=false;circlePreview();$('joinCode').value='';$('copyCode').value='';$('accountName').textContent='';}}
  async function boot(){
   const preferred=S.group?.id,previous=S.user?.id;reset(true);S.user=null;$('connected').hidden=true;const run=S.epoch;tell('Checking your Sota Kece account…');
-  try{const {session}=check(await sb.auth.getSession());if(run!==S.epoch)return;S.user=session?.user||null;
+  try{const {session}=check(await sb.auth.getSession());if(run!==S.epoch)return;S.user=session?.user||null;window.SotaSpaceDesign?.apply();
    $('connected').hidden=!S.user;$('signedOut').hidden=!!S.user;
    if(!S.user){tell('Sign in on Sota Kece to open your existing Koro.');return;}
    const user=S.user.id;const profile=check(await sb.from('bv_profiles').select('id,handle,display_name').eq('id',user).maybeSingle());if(S.user?.id!==user||run!==S.epoch)return;
@@ -121,7 +122,7 @@
  $('reloadGroups').addEventListener('click',()=>{if(S.group)refresh();else loadGroups();});$('checkSession').addEventListener('click',boot);$('signOut').addEventListener('click',async()=>{reset(true);S.user=null;$('connected').hidden=true;$('signedOut').hidden=false;const result=await sb.auth.signOut();tell(result.error?'Your view is cleared. Sign-out could not be confirmed; reconnect to retry.':'Signed out. Your group history remains saved.');});
  document.querySelector('.tabs').addEventListener('click',e=>{const n=e.target.closest('[data-tab]');if(n)setTab(n.dataset.tab);});document.querySelector('.tabs').addEventListener('keydown',e=>{const tabs=[...document.querySelectorAll('[data-tab]')],index=tabs.indexOf(e.target);if(index<0)return;const next=e.key==='ArrowRight'?(index+1)%tabs.length:e.key==='ArrowLeft'?(index+tabs.length-1)%tabs.length:e.key==='Home'?0:e.key==='End'?tabs.length-1:null;if(next!==null){e.preventDefault();setTab(tabs[next].dataset.tab);tabs[next].focus();}});
  const app=new URLSearchParams(location.search).get('app');if(app&&/^[a-z0-9-]{1,60}$/.test(app)){$('sourceLabel').textContent='CONNECTED FROM '+app.replaceAll('-',' ').toUpperCase();$('groupName').placeholder=app.replaceAll('-',' ').slice(0,25)+' · group name';}
- sb.auth.onAuthStateChange((_event,session)=>{if(S.user?.id!==session?.user?.id){reset(true);S.user=null;$('connected').hidden=true;setTimeout(boot,0);}});
+ sb.auth.onAuthStateChange((_event,session)=>{if(S.user?.id!==session?.user?.id){reset(true);S.user=null;window.SotaSpaceDesign?.apply();$('connected').hidden=true;setTimeout(boot,0);}});
  window.addEventListener('offline',()=>tell('Offline. Your current draft stays on this page; messages need a connection.',true));window.addEventListener('online',()=>{if(S.group)refresh();else boot();});document.addEventListener('visibilitychange',()=>{if(!document.hidden&&S.group)refresh();});setInterval(()=>{if(S.group)refresh();},6000);boot();
 })();
 

@@ -38,7 +38,7 @@
       }
     };
     const visible=part=>part.ctx&&part.host?.isConnected&&part.visible&&part.host.getBoundingClientRect().width>0;
-    const active=()=>valid()&&surfaces.some(visible)&&session.graph&&session.audio&&!session.audio.paused&&!session.audio.ended&&!session.audio.error&&!session.buffering&&!session.failed&&!root.document.hidden&&!session.motionPaused&&!motion?.matches&&!root.document.querySelector('dialog[open]');
+    const active=()=>valid()&&surfaces.some(visible)&&session.graph&&session.audio&&!session.audio.paused&&!session.audio.ended&&!session.audio.error&&!session.buffering&&!session.failed&&!root.document.hidden&&!session.motionPaused&&!motion?.matches&&!root.document.querySelector('dialog[open]:not(.sk-playlist-inline)');
     function render(live){
       if(!valid())return;
       const data=live?engine.sample(session.audio):null,ratio=Math.min(root.devicePixelRatio||1,2);
@@ -103,6 +103,7 @@
     }
     listen(root.document,'play',event=>{if(eligible(event.target))session.connect(event.target);},true);
     listen(root.document,'visibilitychange',refresh);
+    listen(root.document,'sota-music-home-change',refresh);
     listen(root.document,'close',refresh,true);listen(root.document,'toggle',refresh,true);
     listen(image,'load',measure);listen(root,'resize',measure);
     listen(motion,'change',()=>{if(motion.matches){session.abort?.abort();session.pending=null;session.epoch++;}refresh();});

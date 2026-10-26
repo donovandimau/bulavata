@@ -1,9 +1,12 @@
 /* Native WebGL life network. Labels are accessible DOM controls over real 3D geometry. */
 #app .slc .lg3d{position:relative;overflow:hidden;background:#050913;color:#d9eaff;border:1px solid #203553;border-radius:18px;isolation:isolate;font-family:inherit}
 #app .slc .lg3d [hidden]{display:none!important}
-#app .slc .lg3d-stage{position:relative;height:520px;overflow:hidden;background:#050913;touch-action:pan-y}
-#app .slc .lg3d-stage canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;background:#050913}
+#app .slc .lg3d-stage{position:relative;height:520px;overflow:hidden;background:linear-gradient(#02061366,#02061388),url("/assets/life-galaxy-20261026.webp") center/cover no-repeat,#050913;touch-action:pan-y}
+#app .slc .lg3d-stage canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;background:transparent}
 #app .slc .lg3d-stage canvas:active{cursor:grabbing}
+#app .slc .lg3d[data-background="dark"] .lg3d-stage{background:#050913}
+#app .slc select.lg3d-background{position:absolute;z-index:150;top:14px;right:15px;width:94px;min-height:44px;margin:0;padding:9px 10px;border:1px solid #49607c88;border-radius:8px;color:#d9eaff;background:#081425cf;font-family:inherit;font-size:11px;line-height:1.3;letter-spacing:0;box-shadow:none;cursor:pointer;text-transform:none}
+#app .slc select.lg3d-background:focus-visible{outline:2px solid #9dccff;outline-offset:2px}
 #app .slc .lg3d-labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 #app .slc button.lg3d-label{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:12px 4px;border:0;border-radius:3px;background:none;color:#dceaff;font-family:inherit;font-size:11px;font-weight:500;line-height:1.3;letter-spacing:0;text-transform:none;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;box-shadow:none;text-shadow:0 1px 3px #000,0 0 8px #000;cursor:pointer;transition:color .15s}
 #app .slc button.lg3d-label[data-kind="you"]{font-size:14px;font-weight:800;color:#fff}
@@ -25,7 +28,7 @@
 #app .slc .lg3d-list button[aria-pressed="true"]{border-color:#88baf4;background:#152b46}
 #app .slc .lg3d button:focus-visible,#app .slc .lg3d summary:focus-visible{outline:2px solid #9dccff;outline-offset:-2px}
 #app .slc .lg3d-unavailable .lg3d-stage{height:115px}
-#app .slc .lg3d-unavailable .lg3d-stage canvas{display:none}
+#app .slc .lg3d-unavailable .lg3d-stage canvas,#app .slc .lg3d-unavailable .lg3d-background{display:none}
 #app .slc .lg3d-unavailable .lg3d-state{left:20px;right:20px;bottom:auto;top:32px;max-width:none;color:#a4bddc;font-size:12px}
 @media(max-width:600px){#app .slc .lg3d-stage{height:445px}#app .slc button.lg3d-label{font-size:10px}#app .slc .lg3d-state{left:12px;bottom:23px;font-size:9px;max-width:calc(100% - 172px)}#app .slc .lg3d-controls{right:10px;bottom:12px;gap:4px}#app .slc .lg3d-controls button{padding:7px 9px;font-size:11px;min-width:44px;min-height:44px}#app .slc .lg3d-list{grid-template-columns:repeat(2,minmax(0,1fr))}#app .slc .lg3d-outline{padding:0 12px}}
 @media(prefers-reduced-motion:reduce){#app .slc .lg3d *{transition:none!important}}

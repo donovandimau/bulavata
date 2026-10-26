@@ -28,6 +28,7 @@ function environment(t,{reduced=false,resume=null,canvasAvailable=true}={}){
   w.HTMLMediaElement.prototype.pause=function(){const current=state(this);if(current.paused)return;current.paused=true;this.dispatchEvent(new w.Event('pause'));};
   w.HTMLMediaElement.prototype.load=function(){};
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
+  w.HTMLDialogElement.prototype.show=function(){this.open=true;};
   w.HTMLDialogElement.prototype.close=function(){if(!this.open)return;this.open=false;this.dispatchEvent(new w.Event('close'));};
   const gradient=()=>({addColorStop(){}});
   const drawing={save(){},restore(){},clearRect(){calls.draws++;},fillRect(){calls.draws++;},strokeRect(){},createLinearGradient:gradient,createRadialGradient:gradient,beginPath(){},moveTo(){},lineTo(){},stroke(){},arc(){},fill(){},fillText(){},setTransform(){},resetTransform(){},translate(){},scale(){}};
@@ -188,7 +189,7 @@ browserTest('DOM replacement cleans frames and observers; remount reuses a playi
 });
 
 browserTest('actual playlist opening is silent and manual track selection feeds the hero after the modal closes',async t=>{
-  const h=environment(t),host=hero(h);h.run('music-playlist.js');h.w.SotaPlaylist.mount(h.get('#app'));
+  const h=environment(t),host=hero(h);h.get('[data-music-playlist-host]')?.remove();h.run('music-playlist.js');h.w.SotaPlaylist.mount(h.get('#app'));
   const prepare=h.w.SotaHeroVisualiser.prepare;h.w.SotaHeroVisualiser.prepare=audio=>{h.calls.order.push({kind:'prepare',audio});return prepare(audio);};
   h.get('.sk-artwork-play').click();await tick();
   assert(h.get('#sk-music-playlist').open);assert.equal(h.calls.fetches.length,1);assert.equal(h.calls.plays.length,0);assert.equal(h.calls.contexts.length,0);
@@ -232,4 +233,17 @@ browserTest('actual saved local music stays analysable after closing its library
   h.w.SotaHeroVisualiser.release();h.get('#app').innerHTML=original;h.w.SotaHeroVisualiser.mount(h.get('#app'));await tick();
   assert.equal(h.get('.sk-hero-visualiser').dataset.state,'live','A still-playing local graph returns with the landing page even when its native player is detached');
   assert.equal(h.calls.sources.length,1);assert.equal(h.calls.plays.length,1);assert.equal(h.frames.size,1);h.w.SotaHeroVisualiser.release();h.clean();
+});
+
+
+browserTest('inline music layout keeps the hero live and view switching preserves the shared player',async t=>{
+  const h=environment(t),host=hero(h);h.run('music-playlist.js');h.run('music-home.js');h.w.SotaPlaylist.mount(h.get('#app'));h.w.SotaMusicHome.mount(h.get('#app'));
+  h.get('.sk-artwork-play').click();await tick();
+  assert.equal(h.get('#sota-music-home').dataset.activeMusicView,'playlist');
+  assert(h.get('#sk-music-playlist').classList.contains('sk-playlist-inline'));assert.equal(h.calls.plays.length,0);
+  h.get('[data-track-index="0"]').click();await tick();const audio=h.get('#sota-playlist-audio');
+  assert.equal(host.dataset.state,'live');assert.equal(h.calls.sources.length,1);assert.equal(h.frames.size,1);
+  h.get('[data-music-view="visualiser"]').click();await tick();
+  assert.equal(audio,h.get('#sota-playlist-audio'));assert.equal(audio.paused,false);assert.equal(host.dataset.state,'live');
+  h.w.SotaMusicHome.stop();h.w.SotaPlaylist.pause();h.w.SotaHeroVisualiser.release();h.clean();
 });
