@@ -84,7 +84,7 @@ finally{if(!committed)for(const id of written)imageStore('delete',id,undefined,i
 function decorateDialog(dialog){
 if(!dialog||dialog===editor||typeof dialog.querySelector!=='function')return ()=>{};
 const existing=dialogDecorations.get(dialog);if(existing?.control.parentNode)return existing.dispose;existing?.dispose();
-const control=button('✦',()=>{control.focus({preventScroll:true});open();},'ssd-dialog-design');control.setAttribute('aria-label','Design this page');control.title='Design this page';control.setAttribute('aria-haspopup','dialog');control.setAttribute('aria-controls','ssd-editor');
+const control=button('✦',()=>{control.focus({preventScroll:true});open(viewPage());},'ssd-dialog-design');control.setAttribute('aria-label','Design this page');control.title='Design this page';control.setAttribute('aria-haspopup','dialog');control.setAttribute('aria-controls','ssd-editor');
 const header=dialog.querySelector('.bv-account-head,header')||dialog;header.classList.add('ssd-designable-header');const close=header.querySelector('[aria-label^="Close"],.spp-close,#bv-account-close');if(close)close.before(control);else header.append(control);
 let disposed=false;const entry={control,dispose(){if(disposed)return;disposed=true;control.remove();header.classList.remove('ssd-designable-header');if(dialogDecorations.get(dialog)===entry)dialogDecorations.delete(dialog);}};dialogDecorations.set(dialog,entry);return entry.dispose;
 }
