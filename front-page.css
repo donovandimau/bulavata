@@ -687,3 +687,6 @@
 @media(max-width:760px){#app.bv-welcome .sk-hero-artwork>.sk-hero-visualiser{background:linear-gradient(110deg,#9ba2a1 0%,#8c9fa5 50%,#869ca2 100%)}}
 @media(forced-colors:active){#app.bv-welcome .sk-hero-artwork>.sk-hero-visualiser{background:Canvas}#app.bv-welcome .sk-hero-artwork>.sk-artwork-play:focus-visible{outline-color:Highlight;box-shadow:none}}
 #app.bv-welcome .bv-entry-share-actions #sk-invite-circle{flex-basis:100%;background:#164d61;border-color:#164d61;color:#fff}
+
+/* Follow the original desktop player perspective without moving its artwork. */
+@media(min-width:761px){#app.bv-welcome .sk-hero-artwork>.sk-hero-visualiser canvas{transform:translateY(7%) skewY(3.2deg);transform-origin:center}}
