@@ -219,6 +219,7 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <link rel="stylesheet" href="/colourful-pages.css?v=20261026-personal-world-2">
 <link rel="stylesheet" href="/space-design.css?v=20261026-personal-world-2">
 <link rel="stylesheet" href="/panel-close.css?v=20261026-active-panels-1">
+<link rel="stylesheet" href="/glass-controls.css?v=20261026-glass-symbols-1">
 </head>
 <body>
 <div class="bubbles" id="bubbles"></div>
@@ -1106,7 +1107,7 @@ function finishRoom(){
 window.go=go; window.openRoom=openRoom; window.renderAuth=renderAuth; window.sb=sb;
 window.SotaView={invalidate:()=>viewRun()};
 </script>
-<script src="/music-visualiser.js?v=20261026-active-panels-1"></script>
+<script src="/music-visualiser.js?v=20261026-glass-symbols-1"></script>
 <script src="/hero-visualiser.js?v=20261026-active-panels-1"></script>
 <script src="/playback.js?v=20261024-quality"></script>
 <script src="/music-badge.js?v=20261026-spinning-music-badge"></script>
@@ -1129,7 +1130,8 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/life-graph3d.js?v=20261026-galaxy-music-1"></script>
 <script src="/life-connections.js?v=20261026-spatial-life-1"></script>
 <script src="/connections.js?v=20261026-spatial-life-1"></script>
-<script>window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null,getPage:()=>S.user?S.tab:'profile'});window.SotaSpaceDesign?.mount(app);window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());boot();installAuthLifecycle();</script>
+<script src="/icon-controls.js?v=20261026-glass-symbols-1"></script>
+<script>window.SotaIconControls?.init();window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null,getPage:()=>S.user?S.tab:'profile'});window.SotaSpaceDesign?.mount(app);window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261025b" data-app="sota-kece" defer></script>
 </body>
 </html>

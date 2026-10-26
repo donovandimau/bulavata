@@ -1,0 +1,164 @@
+/* Original glass controls. Only controls explicitly converted to vector icons opt in. */
+:is(button,a)[data-sota-icon],.sota-icon-control {
+ --sota-icon-size:44px;
+ --sota-control-tint:var(--ssd-accent,var(--sota-user-accent-alt,#149db7));
+ --sota-control-glass:var(--sota-glass-surface,var(--ssd-panel,#f5fbff));
+ --sota-control-ink:var(--sota-glass-ink,var(--ssd-ink,#142a43));
+ position:relative;isolation:isolate;box-sizing:border-box;display:inline-grid!important;place-items:center;
+ flex:0 0 var(--sota-icon-size)!important;
+ width:var(--sota-icon-size)!important;height:var(--sota-icon-size)!important;
+ min-width:var(--sota-icon-size)!important;min-height:var(--sota-icon-size)!important;
+ max-width:var(--sota-icon-size)!important;max-height:var(--sota-icon-size)!important;
+ margin-block:0;padding:0!important;gap:0!important;border:1.5px solid transparent!important;border-radius:50%!important;
+ --sota-control-border:transparent;
+ --sota-control-background:
+  linear-gradient(150deg,#ffffff8c,#ffffff08 45%,#ffffff00 61%,#ffffff5c) padding-box,
+  linear-gradient(color-mix(in srgb,var(--sota-control-glass) 58%,transparent),color-mix(in srgb,var(--sota-control-glass) 58%,transparent)) padding-box,
+  linear-gradient(145deg,#fff 2%,color-mix(in srgb,var(--sota-control-tint) 58%,#fff) 21%,#ffffff45 43%,var(--sota-control-tint) 69%,#fff 87%,var(--sota-control-tint)) border-box;
+ background:var(--sota-control-background)!important;
+ color:var(--sota-control-ink)!important;
+ box-shadow:0 3px 6px #15254536,inset 0 1px 1px #fff,inset 0 -3px 5px color-mix(in srgb,var(--sota-control-tint) 36%,transparent),0 0 0 .5px #f8ffffbc!important;
+ -webkit-backdrop-filter:blur(9px) saturate(1.25);backdrop-filter:blur(9px) saturate(1.25);
+ font-size:0!important;line-height:1!important;letter-spacing:0;text-indent:0;text-decoration:none!important;text-shadow:none!important;
+ overflow:visible;opacity:.94;cursor:pointer;touch-action:manipulation;vertical-align:middle;
+ transition:box-shadow .15s ease,opacity .15s ease,transform .15s ease;
+}
+/* Saved page themes have deliberate important rules. Opted-in icons retain the
+   glass geometry and use those themes' contrast tokens instead of word-pill paint. */
+html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) :is(button,a)[data-sota-icon].sota-icon-control {
+ display:inline-grid!important;flex:0 0 var(--sota-icon-size)!important;
+ width:var(--sota-icon-size)!important;height:var(--sota-icon-size)!important;
+ min-width:var(--sota-icon-size)!important;min-height:var(--sota-icon-size)!important;
+ max-width:var(--sota-icon-size)!important;max-height:var(--sota-icon-size)!important;
+ padding:0!important;gap:0!important;border-radius:50%!important;
+ border-color:var(--sota-control-border,transparent)!important;
+ background:var(--sota-control-background)!important;color:var(--sota-control-ink)!important;
+}
+:is(button,a)[data-sota-icon]::before,.sota-icon-control::before,.sota-icon-control[data-sota-icon]::before {
+ content:''!important;position:absolute;z-index:0;left:18%;right:18%;top:7%;width:auto;height:16%;
+ margin:0;padding:0;border:0;border-radius:50%;background:linear-gradient(#ffffffed,#ffffff15);
+ box-shadow:none;transform:rotate(-9deg);pointer-events:none;opacity:.9;
+}
+:is(button,a)[data-sota-icon]::after,.sota-icon-control::after,.sota-icon-control[data-sota-icon]::after {
+ content:''!important;position:absolute;z-index:0;inset:2px;width:auto;height:auto;margin:0;padding:0;
+ border:1px solid #ffffff82;border-top-color:#ffffffe6;border-bottom-color:color-mix(in srgb,var(--sota-control-tint) 50%,#ffffffb8);
+ border-radius:50%;background:transparent;box-shadow:inset 0 -1px 1px #ffffffb3;transform:none;pointer-events:none;
+}
+.sota-icon-control>.sota-control-symbol,[data-sota-icon]>.sota-control-symbol {
+ position:relative;z-index:1;display:grid!important;place-items:center;width:24px;height:24px;min-width:0;
+ margin:0;padding:0;border:0;background:none;box-shadow:none;line-height:1;color:inherit!important;
+ pointer-events:none;filter:drop-shadow(0 1px 1px #09233f38);
+}
+html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) [data-sota-icon].sota-icon-control>.sota-control-symbol {
+ color:inherit!important;
+}
+.sota-control-symbol>svg {
+ display:block;width:24px;height:24px;max-width:24px;max-height:24px;overflow:visible;
+ color:inherit;fill:none;stroke:currentColor;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round;
+ pointer-events:none;
+}
+.sota-control-label {
+ position:absolute!important;display:block!important;width:1px!important;height:1px!important;min-width:0!important;min-height:0!important;
+ margin:-1px!important;padding:0!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;clip-path:inset(50%)!important;
+ white-space:nowrap!important;border:0!important;font-size:1px!important;line-height:1!important;pointer-events:none;
+}
+.sota-icon-control:is(:hover,:focus-visible)::after,
+html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) [data-sota-icon].sota-icon-control:is(:hover,:focus-visible)::after {
+ content:attr(aria-label)!important;position:absolute!important;z-index:60;display:block!important;
+ left:var(--sota-tip-left,50%);right:var(--sota-tip-right,auto);top:var(--sota-tip-top,auto);bottom:var(--sota-tip-bottom,calc(100% + 8px));
+ transform:var(--sota-tip-transform,translateX(-50%));width:max-content!important;height:auto!important;min-width:0!important;min-height:0!important;
+ max-width:min(200px,calc(100vw - 24px));margin:0!important;padding:7px 10px!important;overflow:visible!important;
+ clip:auto!important;clip-path:none!important;white-space:normal!important;overflow-wrap:anywhere;
+ border:1px solid var(--ssd-accent,#9ebed1)!important;border-radius:8px;
+ background:var(--sota-tooltip-surface,var(--ssd-panel,#21354f))!important;color:var(--sota-tooltip-ink,var(--ssd-ink,#fff))!important;
+ font:700 11px/1.4 Nunito,system-ui,sans-serif!important;letter-spacing:0;text-align:center;text-shadow:none;
+ box-shadow:0 3px 12px #14263d38;pointer-events:none;
+}
+.sota-icon-control:first-child {--sota-tip-left:0;--sota-tip-right:auto;--sota-tip-transform:none;}
+.sota-icon-control:last-child {--sota-tip-left:auto;--sota-tip-right:0;--sota-tip-transform:none;}
+.sota-icon-control[data-sota-icon="close"],.sota-icon-control[data-sota-icon="cancel"] {
+ --sota-tip-left:auto;--sota-tip-right:0;--sota-tip-top:calc(100% + 8px);--sota-tip-bottom:auto;--sota-tip-transform:none;
+}
+
+/* Small colour cues distinguish actions without replacing their accessible names. */
+.sota-icon-control[data-sota-icon="close"],.sota-icon-control[data-sota-icon="cancel"],.sota-icon-control[data-sota-icon="delete"] {--sota-control-tint:var(--ssd-accent,#e2567e);}
+.sota-icon-control[data-sota-icon="back"],.sota-icon-control[data-sota-icon="undo"],.sota-icon-control[data-sota-icon="previous"] {--sota-control-tint:var(--ssd-accent,#6671d9);}
+.sota-icon-control[data-sota-icon="save"],.sota-icon-control[data-sota-icon="signup"],.sota-icon-control[data-sota-icon="connect"],.sota-icon-control[data-sota-icon="invite"] {--sota-control-tint:var(--ssd-accent,#21a88b);}
+.sota-icon-control[data-sota-icon="signin"],.sota-icon-control[data-sota-icon="search"],.sota-icon-control[data-sota-icon="home"],.sota-icon-control[data-sota-icon="fullscreen"] {--sota-control-tint:var(--ssd-accent,#249ad1);}
+.sota-icon-control[data-sota-icon="music"],.sota-icon-control[data-sota-icon="play"],.sota-icon-control[data-sota-icon="pause"],.sota-icon-control[data-sota-icon="next"] {--sota-control-tint:var(--ssd-accent,#38bac4);}
+.sota-icon-control[data-sota-icon="design"],.sota-icon-control[data-sota-icon="view"],.sota-icon-control[data-sota-icon="edit"] {--sota-control-tint:var(--ssd-accent,#9a60d0);}
+.sota-icon-control[data-sota-icon="upload"],.sota-icon-control[data-sota-icon="refresh"],.sota-icon-control[data-sota-icon="reset"],.sota-icon-control[data-sota-icon="copy"],.sota-icon-control[data-sota-icon="share"] {--sota-control-tint:var(--ssd-accent,#dca745);}
+.sota-icon-control[data-sota-icon="world"] {--sota-control-tint:var(--ssd-accent,#29b698);}
+.sota-icon-control[data-sota-icon="visualiser"] {--sota-control-tint:var(--ssd-accent,#34b8cf);}
+.sota-icon-control[data-sota-icon="playlist"] {--sota-control-tint:var(--ssd-accent,#9a65cf);}
+.sota-icon-control[data-sota-icon="colour"],.sota-icon-control[data-sota-icon="mix"] {--sota-control-tint:var(--ssd-accent,#9a60c9);}
+.sota-icon-control.ssd-one-colour[data-sota-icon],.sota-icon-control.ssd-palette[data-sota-icon] {
+ --sota-icon-size:54px;
+ --sota-control-tint:var(--one-accent,var(--swatch,#4488b9));
+ --sota-control-glass:var(--one-bg,var(--swatch-panel,#edf7ff));
+ --sota-control-ink:var(--one-ink,var(--swatch-ink,#193e56));
+}
+
+/* Dark media and heading surfaces use their own light/dark contrast pair. */
+:is(.sk-music-stage,.sota-music-view-tabs,.nc-toolbar,.nc-live-heading,.bv-studio-head,.bv-account-head,.ssd-head,.tc-dialog-head) [data-sota-icon],
+.spp-dialog>form>header [data-sota-icon] {
+ --sota-glass-surface:var(--ssd-panel,#172b45);
+ --sota-glass-ink:var(--ssd-ink,#f4fbff);
+}
+
+:is(button,a)[data-sota-icon]:not(:disabled):not([aria-disabled="true"]):hover,
+.sota-icon-control:not(:disabled):not([aria-disabled="true"]):hover {
+ opacity:1;filter:none;transform:translateY(-1px);
+ box-shadow:0 4px 9px #15254545,inset 0 1px 2px #fff,inset 0 -3px 6px color-mix(in srgb,var(--sota-control-tint) 52%,transparent),0 0 0 1px #fff,0 0 12px color-mix(in srgb,var(--sota-control-tint) 30%,transparent)!important;
+}
+:is(button,a)[data-sota-icon]:not(:disabled):active,.sota-icon-control:not(:disabled):active {transform:scale(.95);opacity:.86;}
+:is(button,a)[data-sota-icon]:is([aria-pressed="true"],[aria-selected="true"],[aria-current="page"],.on),
+.sota-icon-control:is([aria-pressed="true"],[aria-selected="true"],[aria-current="page"],.on) {
+ opacity:1;
+ box-shadow:0 2px 5px #15254536,inset 0 1px 1px #fff,inset 0 -4px 7px color-mix(in srgb,var(--sota-control-tint) 53%,transparent),0 0 0 2px var(--sota-control-tint),0 0 12px color-mix(in srgb,var(--sota-control-tint) 30%,transparent)!important;
+}
+:is(button,a)[data-sota-icon]:focus-visible,.sota-icon-control:focus-visible {
+ outline:3px solid var(--ssd-ink,var(--sota-page-focus,#263c60))!important;outline-offset:4px;
+}
+:is(button,a)[data-sota-icon]:disabled,.sota-icon-control:disabled,[data-sota-icon][aria-disabled="true"] {opacity:.4;cursor:default;transform:none;}
+
+/* Icon-only rows stay compact instead of retaining their former word-pill widths. */
+:is(.sfp-navigation,.bv-entry-account-actions,.sota-music-view-tabs,.sk-playlist-transport,.ssd-mode-tabs):has(>[data-sota-icon]) {
+ gap:9px;align-items:center;justify-content:flex-start;
+}
+#app nav.bottom:has(>[data-sota-icon]) {width:auto;max-width:calc(100vw - 24px);gap:7px;justify-content:center;padding:8px;flex-wrap:wrap;}
+#app .bv-home-section-nav:has(>[data-sota-icon]) {display:flex;flex-wrap:wrap;gap:9px;justify-content:flex-start;}
+#app .bv-home-section-nav:has(>[data-sota-icon])>span {flex-basis:100%;}
+.ssd-mode-tabs:has(>[data-sota-icon]) {display:flex;}
+.ssd-one-colours:has(>[data-sota-icon]),.ssd-palettes>div:has(>[data-sota-icon]) {display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:13px;}
+.ssd-editor .ssd-one-colours:has(>[data-sota-icon]) {margin-block:18px 12px;}
+
+@media(min-width:761px) {
+ :is(button,a)[data-sota-icon],.sota-icon-control {--sota-icon-size:48px;}
+ :is(.sfp-navigation,.bv-home-section-nav,nav.bottom) [data-sota-icon],
+ .sota-icon-control[data-sota-icon="close"],.sota-icon-control[data-sota-icon="back"],.sota-icon-control[data-sota-icon="cancel"] {--sota-icon-size:44px;}
+}
+@media(max-width:360px) {
+ #app nav.bottom:has(>[data-sota-icon]) {gap:4px;padding:6px;}
+ :is(.sfp-navigation,.bv-entry-account-actions,.sota-music-view-tabs,.sk-playlist-transport):has(>[data-sota-icon]) {gap:6px;}
+}
+@media(prefers-contrast:more) {
+ :is(button,a)[data-sota-icon],.sota-icon-control {--sota-control-glass:var(--sota-glass-surface,var(--ssd-panel,#fff));--sota-control-background:var(--sota-control-glass);--sota-control-border:currentColor;opacity:1;}
+}
+@media(prefers-reduced-motion:reduce) {
+ :is(button,a)[data-sota-icon],.sota-icon-control {transition:none;}
+ :is(button,a)[data-sota-icon]:hover,:is(button,a)[data-sota-icon]:active,.sota-icon-control:hover,.sota-icon-control:active {transform:none;}
+}
+@media(forced-colors:active) {
+ :is(button,a)[data-sota-icon],.sota-icon-control {--sota-tooltip-surface:Canvas;--sota-tooltip-ink:CanvasText;--sota-control-background:ButtonFace;--sota-control-ink:ButtonText;--sota-control-border:ButtonText;background:ButtonFace!important;color:ButtonText!important;border:1px solid ButtonText!important;box-shadow:none!important;backdrop-filter:none;-webkit-backdrop-filter:none;opacity:1;}
+ :is(button,a)[data-sota-icon]::before,:is(button,a)[data-sota-icon]::after,.sota-icon-control::before,.sota-icon-control::after {display:none;}
+ .sota-control-symbol {filter:none;}
+ :is(button,a)[data-sota-icon]:is([aria-pressed="true"],[aria-selected="true"],[aria-current="page"],.on) {outline:2px solid Highlight;outline-offset:2px;}
+ :is(button,a)[data-sota-icon]:focus-visible,.sota-icon-control:focus-visible {outline-color:Highlight!important;}
+}
+
+/* Hidden actions stay hidden in every theme and modal layer. Keep this last. */
+.sota-icon-control[hidden],:is(button,a)[data-sota-icon][hidden],
+html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) :is(button,a)[data-sota-icon].sota-icon-control[hidden] {
+ display:none!important;
+}
