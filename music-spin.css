@@ -1,0 +1,81 @@
+/* The Fiji flag circle turns faster; the central music symbol stays still.
+   Both SVG layers are extracted from the existing original badge artwork. */
+html:root body #app .sk-hero-play,
+html:root body #app.bv-welcome .sk-hero-artwork > .sk-artwork-play {
+  --sota-music-badge-inset: 0px;
+  animation: none;
+  rotate: none;
+}
+
+html:root body #app.bv-welcome .sk-site-header .sk-hero-play {
+  --sota-music-badge-inset: 2px;
+}
+
+html:root body #app .sk-hero-play::before,
+html:root body #app.bv-welcome .sk-site-header .sk-hero-play::before,
+html:root body #app.bv-welcome .sk-hero-artwork > .sk-artwork-play::before {
+  content: '';
+  position: absolute;
+  inset: var(--sota-music-badge-inset);
+  border-radius: 50%;
+  background: transparent url('/assets/music-badge-ring.svg') center/100% 100% no-repeat;
+  animation: sota-music-ring-turn 2.4s linear infinite;
+  animation-play-state: paused;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+html:root body #app .sk-hero-play::after,
+html:root body #app.bv-welcome .sk-site-header .sk-hero-play::after,
+html:root body #app.bv-welcome .sk-hero-artwork > .sk-artwork-play::after {
+  content: '';
+  position: absolute;
+  inset: var(--sota-music-badge-inset);
+  z-index: 1;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 50%;
+  background: transparent url('/assets/music-badge-note.svg') center/100% 100% no-repeat;
+  animation: none;
+  transform: none;
+  rotate: none;
+  pointer-events: none;
+}
+
+/* Keep the playlist's central note still as its outer light ring turns. */
+html:root body .sk-playlist.sk-playlist .sk-playlist-record {
+  animation: none;
+  rotate: none;
+}
+html:root body .sk-playlist.sk-playlist .sk-playlist-record::after {
+  animation: sota-music-ring-turn 2.4s linear infinite;
+  animation-play-state: paused;
+  transform-origin: center;
+}
+html:root body .sk-playlist.sk-playlist .sk-playlist-record-label {
+  position: relative;
+  z-index: 1;
+}
+
+html:root.sota-music-playing body #app .sk-hero-play::before,
+html:root.sota-music-playing body #app.bv-welcome .sk-site-header .sk-hero-play::before,
+html:root.sota-music-playing body #app.bv-welcome .sk-hero-artwork > .sk-artwork-play::before,
+html:root.sota-music-playing body .sk-playlist.sk-playlist .sk-playlist-record::after {
+  animation-play-state: running;
+}
+
+@keyframes sota-music-ring-turn {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:root body #app .sk-hero-play::before,
+html:root body #app.bv-welcome .sk-site-header .sk-hero-play::before,
+  html:root body #app.bv-welcome .sk-hero-artwork > .sk-artwork-play::before,
+  html:root body .sk-playlist.sk-playlist .sk-playlist-record::after {
+    animation: none;
+    transform: none;
+  }
+}
