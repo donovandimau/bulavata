@@ -70,7 +70,7 @@ function hero(h){
   h.get('#app').innerHTML=studio.slice(start,end);
   const draw=h.w.DimauMusicVisuals.draw;
   h.w.DimauMusicVisuals.draw=(ctx,width,height,settings,state,data,background)=>{
-    h.calls.audioDraws.push({width,height,data,background});return draw(ctx,width,height,settings,state,data,background);
+    h.calls.audioDraws.push({width,height,data,background,settings});return draw(ctx,width,height,settings,state,data,background);
   };
   h.w.SotaHeroVisualiser.mount(h.get('#app'));
   return h.get('.sk-hero-visualiser');
@@ -85,6 +85,9 @@ browserTest('actual hero attachment preserves original artwork and account CTA w
   assert.equal(h.get('.sk-original-picture source').getAttribute('srcset'),'/assets/mobile-front-reference-brand.jpg');
   assert.equal(h.get('.sk-original-design').getAttribute('src'),'/assets/front-reference-brand.jpg');
   assert.equal(h.get('.sk-hero-create').getAttribute('onclick'),"renderAuth('up',true)");
+  assert(h.get('.sk-music-stage'),'A large music surface sits immediately after the supplied hero');
+  assert.equal(h.get('.sk-music-stage-picture canvas').getAttribute('aria-hidden'),'true');
+  assert.match(h.get('[data-stage-status]').textContent,/Choose a song/);
   const play=h.get('.sk-artwork-play');assert.equal(play.getAttribute('data-playlist-open'),'');assert.match(play.getAttribute('aria-label'),/Choose music/i);
   await tick();assert.equal(h.calls.contexts.length,0);assert.equal(h.calls.sources.length,0);assert.equal(h.calls.plays.length,0);assert.equal(h.calls.fetches.length,0);assert.equal(h.frames.size,0);
   h.w.SotaHeroVisualiser.mount(h.get('#app'));
@@ -112,13 +115,34 @@ browserTest('hidden, offscreen, modal, buffering, and reduced-motion states stop
   const h=environment(t),host=hero(h),audio=eligibleAudio(h);await audio.play();await tick();assert.equal(h.frames.size,1);
   const assertResting=()=>{assert.equal(h.frames.size,0);assert.equal(audio.paused,false,'Visual suspension does not pause the song');assert.equal(h.calls.audioDraws.at(-1).data,null);};
   h.visibility(true);assertResting();h.visibility(false);assert.equal(h.frames.size,1);
-  h.visible(host,false);assertResting();h.visible(host,true);assert.equal(h.frames.size,1);
+  h.visible(host,false);assert.equal(h.frames.size,1,'The large visible stage keeps the shared loop alive');
+  h.visible(h.get('.sk-music-stage-picture'),false);assertResting();h.visible(host,true);assert.equal(h.frames.size,1);
   const modal=h.d.createElement('dialog');h.d.body.append(modal);modal.showModal();h.advance();assertResting();
   modal.close();assert.equal(h.frames.size,1);modal.remove();
   audio.dispatchEvent(new h.w.Event('waiting'));assertResting();audio.dispatchEvent(new h.w.Event('playing'));await tick();assert.equal(h.frames.size,1);
   h.motion.matches=true;for(const listener of h.motion.listeners)listener();assertResting();assert.equal(host.dataset.state,'reduced-motion');
   h.motion.matches=false;for(const listener of h.motion.listeners)listener();assert.equal(h.frames.size,1);
   h.error(audio);assert.equal(host.dataset.state,'unavailable');assert.equal(h.frames.size,0);h.w.SotaHeroVisualiser.release();h.clean();
+});
+
+browserTest('both music canvases share one sampled frame and stage controls never restart playback',async t=>{
+  const h=environment(t),host=hero(h),audio=eligibleAudio(h);await audio.play();await tick();
+  const samples=h.calls.samples,draws=h.calls.audioDraws.length,plays=h.calls.plays.length;
+  h.advance();
+  assert.equal(h.calls.samples-samples,2,'One frequency and one waveform read are shared across both surfaces');
+  const frame=h.calls.audioDraws.slice(draws);
+  assert.equal(frame.length,3,'Tiny waveform plus large spectrum and its overlaid waveform');
+  assert(frame.every(draw=>draw.data===frame[0].data),'Every surface receives the same analyser sample');
+  assert(frame.some(draw=>draw.settings.mode==='spectrum'&&draw.settings.theme==='rainbow'&&draw.settings.gain===1.5));
+  assert.equal(h.frames.size,1,'A second canvas does not start another loop');
+  h.get('[data-stage-motion]').click();assert.equal(h.frames.size,0);assert.equal(host.dataset.state,'motion-paused');
+  assert.equal(audio.paused,false);assert.equal(h.get('[data-stage-motion]').getAttribute('aria-pressed'),'true');
+  h.get('[data-stage-motion]').click();assert.equal(h.frames.size,1);
+  const mode=h.get('[data-stage-mode]');mode.value='halo';mode.dispatchEvent(new h.w.Event('change'));
+  assert.equal(h.calls.audioDraws.at(-1).settings.mode,'halo');assert.equal(h.calls.plays.length,plays);
+  assert.equal(h.calls.contexts.length,1);assert.equal(h.calls.sources.length,1);
+  h.w.SotaHeroVisualiser.release();assert.equal(h.frames.size,0);
+  h.get('[data-stage-motion]').click();assert.equal(h.frames.size,0,'Release removes the large-stage handlers');h.clean();
 });
 
 browserTest('initial reduced motion and unavailable canvas leave music native and never create an audio context',async t=>{
