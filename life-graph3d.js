@@ -132,6 +132,7 @@
         const labelWidth=Math.min(n.kind==='you'?70:n.kind==='category'?122:102,Math.max(54,n.label.length*7+22));
         const radiusPx=nodeRadius(n)*(n.id===selected?1.22:1)*height/(2*Math.tan(.7/2)*p.depth);
         let x=clamp(p.x,labelWidth/2+4,width-labelWidth/2-4),y=p.y+radiusPx+16;
+        if(y>height-47)y=p.y-radiusPx-16;
         // Keep captions below the sphere surface; move only text to avoid collisions.
         for(let attempt=0;attempt<8;attempt++){
           if(!placed.some(b=>Math.abs(b.x-x)<(b.w+labelWidth)/2+3&&Math.abs(b.y-y)<29))break;
