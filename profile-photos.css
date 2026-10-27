@@ -59,3 +59,7 @@
  .spp-dialog,.spp-dialog :is(button,input,.spp-storage,.spp-preview),.spp-hero-layer .spp-hero-edit {background:Canvas;color:CanvasText;border-color:CanvasText;box-shadow:none;}
  .spp-dialog :is(button,input):focus-visible,.spp-hero-layer .spp-hero-edit:focus-visible {outline-color:Highlight;}
 }
+
+/* Keep the measured photo-edit hit target while presenting the same glass symbol. */
+.spp-hero-layer .spp-hero-edit:has(>.sota-glass-mark) {padding:0;border:0;background:transparent;box-shadow:none;}
+.spp-hero-layer .spp-hero-edit>.sota-glass-mark[data-sota-mark] {width:44px;height:44px;min-width:44px;min-height:44px;max-width:44px;max-height:44px;--sota-action-tint:#b789f1;flex:none;}

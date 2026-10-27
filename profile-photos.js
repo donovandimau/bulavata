@@ -99,7 +99,7 @@
     const image=target.querySelector('.sk-original-design'),artwork=image?.closest('.sk-hero-artwork');if(!image||!artwork)return ()=>{};
     const session=makeSession();current=session;
     const layer=root.document.createElement('div');layer.className='spp-hero-layer';
-    layer.innerHTML='<img class="spp-hero-cover" data-profile-photo="cover" alt="Your banner photo" hidden><img class="spp-hero-avatar" data-profile-photo="avatar" alt="Your profile photo" hidden><button type="button" class="spp-hero-edit" data-profile-photo-edit aria-haspopup="dialog" hidden>Edit profile</button>';
+    layer.innerHTML='<img class="spp-hero-cover" data-profile-photo="cover" alt="Your banner photo" hidden><img class="spp-hero-avatar" data-profile-photo="avatar" alt="Your profile photo" hidden><button type="button" class="spp-hero-edit" data-profile-photo-edit aria-haspopup="dialog" aria-label="Edit profile photos" title="Edit profile photos" hidden><span class="sota-glass-mark" data-sota-mark="edit" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m15 4 5 5M3 21l5-1L21 7a2 2 0 0 0-5-5L3 15v6Z"/></svg></span></button>';
     session.layer=layer;artwork.append(layer);
     const button=layer.querySelector('[data-profile-photo-edit]');
     const listen=(node,type,fn)=>{node.addEventListener(type,fn);session.cleanup.push(()=>node.removeEventListener(type,fn));};

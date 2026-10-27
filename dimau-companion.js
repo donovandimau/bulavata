@@ -203,6 +203,27 @@ const profiles = Object.fromEntries([
 ].map(p => [p.id, p]));
 
 
+
+const glassPaths = {"settings": "<path d=\"M9 3h6l.7 3 2.8 1.6 2.9-.8 3 5.2-2.2 2.2v3.2l2.2 2.2-3 5.2-2.9-.8-2.8 1.6-.7 3H9l-.7-3L5.5 24l-2.9.8-3-5.2 2.2-2.2v-3.2L-.4 12l3-5.2 2.9.8L8.3 6z\" transform=\"translate(3 0) scale(.75)\"/><circle cx=\"12\" cy=\"12\" r=\"3.1\"/>", "close": "<path d=\"M5 12h14\"/>", "hide": "<path d=\"M4 4v16h16M9 9l8 8m-6 0h6v-6\"/>", "restore": "<path d=\"M4 4h16v12H9l-5 4zM8 10h8m-4-4v8\"/>", "attach": "<path d=\"m8 12 6-6a3 3 0 0 1 4 4l-8 8a5 5 0 0 1-7-7l9-9\"/>", "remove": "<path d=\"M14 3H5v18h14V8zM14 3v5h5M8 14h8\"/>", "read": "<path d=\"M3 9h4l5-4v14l-5-4H3zM16 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14\"/>", "send": "<path d=\"m3 3 19 9-19 9 4-9zM7 12h15\"/>", "stop": "<rect x=\"5\" y=\"5\" width=\"14\" height=\"14\" rx=\"2\" fill=\"currentColor\" stroke=\"none\"/>", "clear": "<path d=\"M3 6h18M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7\"/>", "people": "<circle cx=\"9\" cy=\"7\" r=\"3\"/><path d=\"M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6m3 11v-3a6 6 0 0 0-3-5\"/>", "chat": "<path d=\"M3 4h18v13H9l-6 4zM7 9h10M7 13h7\"/>", "call": "<path d=\"m6 3 4 4-2 3a13 13 0 0 0 6 6l3-2 4 4-2 3C10 22 2 14 3 6z\"/>", "find": "<circle cx=\"10\" cy=\"10\" r=\"6\"/><path d=\"m15 15 6 6\"/>", "book": "<path d=\"M12 5C8 2 4 3 2 4v15c4-2 7-1 10 1 3-2 6-3 10-1V4c-2-1-6-2-10 1zM12 5v15\"/>", "route": "<path d=\"M5 20V4m0 0 5 5M5 4l-4 5M12 12h7m-4-4 4 4-4 4\"/>"};
+function glassSymbol(kind) {
+  const holder = document.createElement('span');
+  holder.innerHTML = '<svg class="dg-symbol" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + (glassPaths[kind] || glassPaths.chat) + '</svg>';
+  return holder.firstElementChild;
+}
+function glassAction(button, kind) {
+  const label = button.getAttribute('aria-label') || button.textContent.trim();
+  button.setAttribute('aria-label', label); button.title = label;
+  button.classList.add('dg-action'); button.dataset.glassAction = kind;
+  button.replaceChildren(glassSymbol(kind));
+}
+const glassControlsCSS = "/* Sota glass controls: translucent domes, chrome rims and action-specific symbols. */\nbutton.dg-action,.tasks button{--dg-tint:var(--sota-unified-tint,#aadbf3);position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border:1px solid #42516c88;border-radius:50%;padding:10px;color:#101924;--dg-bg:radial-gradient(ellipse at 50% 110%,color-mix(in srgb,var(--dg-tint) 80%,#fff) 0%,transparent 64%),linear-gradient(155deg,#ffffffc9 0%,#ffffff29 38%,color-mix(in srgb,var(--dg-tint) 65%,transparent) 72%,#ffffffa6 100%);background:var(--dg-bg);background-color:color-mix(in srgb,var(--dg-tint) 48%,transparent);box-shadow:inset 0 2px 1px #fff,inset 2px 0 2px #d7faffcc,inset -2px 0 2px #ffcdf7a3,inset 0 -3px 2px #62728b88,0 1px 0 #ffffffc9,0 5px 12px #152a4538;backdrop-filter:blur(12px) saturate(1.25);-webkit-backdrop-filter:blur(12px) saturate(1.25);text-shadow:0 1px 0 #ffffff70;cursor:pointer;transition:transform .15s,box-shadow .15s;box-sizing:border-box}\n.dg-action{width:48px;flex:0 0 48px;font-size:0}\n.dg-action::before,.tasks button::before{content:'';position:absolute;z-index:-1;left:16%;right:16%;top:5px;height:24%;border-top:4px solid #ffffffe6;border-radius:50%;pointer-events:none}\n.dg-action::after,.tasks button::after{content:'';position:absolute;z-index:-1;right:5px;top:27%;height:31%;width:3px;border-radius:50%;background:linear-gradient(#ffffffc7,#ffffff00);pointer-events:none}\n.dg-action:hover:not(:disabled),.tasks button:hover:not(:disabled){background:var(--dg-bg);transform:translateY(-1px);box-shadow:inset 0 2px 1px #fff,inset 2px 0 3px #d7faff,inset -2px 0 3px #ffcdf7c7,inset 0 -3px 2px #62728b88,0 6px 15px #152a4550}\n.dg-action:active:not(:disabled),.tasks button:active:not(:disabled){transform:translateY(1px)}\n.dg-action:focus-visible,.tasks button:focus-visible{outline:3px solid #0a548a;outline-offset:3px}\n.dg-action[hidden]{display:none!important}.dg-action:disabled,.tasks button:disabled{opacity:.45;cursor:default;transform:none}\n.dg-symbol{position:relative;display:block;flex:none;width:23px;height:23px;overflow:visible;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;fill:none;filter:drop-shadow(0 1px 0 #ffffff80);pointer-events:none}\n.dg-action[data-glass-action=send]{--dg-tint:var(--sota-unified-tint,#57cec2)}.dg-action[data-glass-action=settings]{--dg-tint:var(--sota-unified-tint,#d5daf0)}.dg-action[data-glass-action=close],.dg-action[data-glass-action=remove]{--dg-tint:var(--sota-unified-tint,#f6a2a8)}.dg-action[data-glass-action=hide]{--dg-tint:var(--sota-unified-tint,#d7c8ec)}.dg-action[data-glass-action=restore]{--dg-tint:var(--sota-unified-tint,#8adbd3)}.dg-action[data-glass-action=attach]{--dg-tint:var(--sota-unified-tint,#8bc8f4)}.dg-action[data-glass-action=read]{--dg-tint:var(--sota-unified-tint,#ffd26a)}.dg-action[data-glass-action=stop]{--dg-tint:var(--sota-unified-tint,#ed7e83)}.dg-action[data-glass-action=clear]{--dg-tint:var(--sota-unified-tint,#f4bb88)}\n@media(prefers-reduced-motion:reduce){.dg-action,.tasks button{transition:none}}\n@media(forced-colors:active){.dg-action,.tasks button{background:ButtonFace!important;color:ButtonText!important;border:2px solid ButtonText!important;box-shadow:none!important;backdrop-filter:none}.dg-action::before,.dg-action::after,.tasks button::before,.tasks button::after{display:none}.dg-symbol{filter:none}}" + `
+.tasks button{border-radius:20px;padding:10px 14px;font-size:12px;white-space:nowrap;flex:none}
+.tasks button .dg-symbol{width:19px;height:19px}
+.tasks button:nth-child(3n+1){--dg-tint:var(--sota-unified-tint,#9edee0)}.tasks button:nth-child(3n+2){--dg-tint:var(--sota-unified-tint,#e4b9ee)}.tasks button:nth-child(3n){--dg-tint:var(--sota-unified-tint,#ffd77e)}
+.context-tools{gap:8px;padding:8px 14px}.context-tools .dg-action{padding:10px;border:1px solid #42516c88}
+footer .dg-action{padding:10px;min-height:44px;width:44px;flex-basis:44px}.settings .hide{justify-self:end;align-self:end}.restore.dg-action{position:fixed;padding:10px;min-height:48px;width:48px}.send.dg-action{border-radius:16px;color:#101924}.icon.dg-action{padding:10px;font-size:0}
+`;
+
 const instances = new Map();
 const template = `
 <div class="anchor"><button class="bubble" type="button" aria-expanded="false" aria-controls="companion-panel"><span class="art"></span><span class="badge" aria-hidden="true"></span><span class="sr-only">Open companion</span></button><span class="name-tag"></span></div><button type="button" class="restore" hidden>Show companion</button>
@@ -243,8 +264,10 @@ class CompanionElement extends HTMLElement {
     const link = document.createElement('link');
     link.rel = 'stylesheet'; link.href = options.cssURL;
     this.shadowRoot.prepend(link);
+    const glassStyle = document.createElement('style'); glassStyle.dataset.glassControls = ''; glassStyle.textContent = glassControlsCSS; this.shadowRoot.append(glassStyle);
     this.ui = Object.fromEntries(['anchor','bubble','art','badge','name-tag','panel','portrait','name','role','mode','settings','settings-toggle','avatar-choice','side-choice','calm-choice','hide','close','conversation','tasks','selection','attach','clear-context','read','send','include-page','status','stop','clear','restore'].map(k => [k, this.shadowRoot.querySelector('.' + k)]));
     this.ui.question = this.shadowRoot.querySelector('textarea');
+    for (const [name, kind] of Object.entries({'settings-toggle':'settings',close:'close',hide:'hide',restore:'restore',attach:'attach','clear-context':'remove',read:'read',send:'send',stop:'stop',clear:'clear'})) glassAction(this.ui[name], kind);
     this.setAttribute('data-theme', this.profile.theme);
     this.ui.name.textContent = this.profile.name;
     this.ui['name-tag'].textContent = this.profile.name;
@@ -358,7 +381,9 @@ class CompanionElement extends HTMLElement {
   persist() { try { localStorage.setItem(this.prefKey, JSON.stringify(this.prefs)); } catch { /* Private mode still works. */ } }
   renderTasks() {
     for (const topic of this.profile.topics) {
-      const button = document.createElement('button'); button.type = 'button'; button.textContent = topic.label;
+      const button = document.createElement('button'); button.type = 'button';
+      const kind = /call|video|voice/i.test(topic.id+' '+topic.label)?'call':/friend|community|group|people/i.test(topic.id+' '+topic.label)?'people':/chat|conversation|message/i.test(topic.id+' '+topic.label)?'chat':/read|source|collection|lesson/i.test(topic.id+' '+topic.label)?'book':/find|search|research/i.test(topic.id+' '+topic.label)?'find':'route';
+      const label = document.createElement('span'); label.textContent = topic.label; button.append(glassSymbol(kind), label); button.dataset.glassTask = kind;
       button.addEventListener('click', () => {
         if (this.pending) return;
         this.appendMessage('assistant', topic.help);
