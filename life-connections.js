@@ -85,7 +85,7 @@
       <form class="slc-form" data-slc-form hidden><div class="slc-form-heading"><h4 data-slc-form-title>Add a connection</h4><button class="slc-close" type="button" data-slc-cancel aria-label="Close connection form">×</button></div><label for="${uid}-name">Name<input id="${uid}-name" name="connectionName" required maxlength="60" placeholder="A person, pet or living thing" autocomplete="off"></label>
       <div class="slc-form-row"><label for="${uid}-category">Connection<select id="${uid}-category" name="connectionCategory">${CATEGORIES.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></label><label for="${uid}-kind">Role <span>(optional)</span><input id="${uid}-kind" name="connectionKind" maxlength="40" placeholder="e.g. cousin, horse, mango tree" autocomplete="off"></label></div>
       <p class="slc-form-note">Keep only details you’re comfortable saving in this browser.</p><p class="slc-form-error" data-slc-error role="alert" hidden></p><button type="submit" class="slc-save">Save connection</button></form>
-      </div><div class="slc-storage"><p><strong data-slc-storage-title>Saved on this device</strong><span data-slc-storage-note>${owner?'Personal additions stay in this browser, separate for each account.':'Personal additions stay in this browser. Guest and account maps are separate.'}</span></p></div><p class="slc-status slc-sr-only" data-slc-status role="status" aria-live="polite"></p>`;
+      </div><div class="slc-storage"><p><strong data-slc-storage-title>Saved on this device</strong><span data-slc-storage-note>${owner?'Your connections and node positions stay in this browser, separate for each account.':'Your connections and node positions stay in this browser. Guest and account maps are separate.'}</span></p></div><p class="slc-status slc-sr-only" data-slc-status role="status" aria-live="polite"></p>`;
     function allMembers(){return [...records,...remote];}
     function message(text){q('[data-slc-status]').textContent=text;}
     function setStorageState(){
@@ -146,7 +146,7 @@
       records=editing?records.map(r=>r.id===editing?record:r):[...records,record];selected=record.category;query='';q('[data-slc-search]').value='';persist();closeForm();draw();message(name+(saveAvailable?' saved on this device.':' added temporarily. Saving is unavailable.'));
     });
     on(window,'storage',event=>{if(event.key===keyFor(owner)){const updated=readRecords(storage,owner);records=updated.records;saveAvailable=updated.available;draw();}});
-    if(window.SotaLifeGraph3D){renderer=window.SotaLifeGraph3D.mount(q('[data-slc-graph3d]'),{...sceneFromMembers(allMembers()),onSelect:selectNode,motion});}
+    if(window.SotaLifeGraph3D){renderer=window.SotaLifeGraph3D.mount(q('[data-slc-graph3d]'),{...sceneFromMembers(allMembers()),onSelect:selectNode,motion,storage,storageKey:keyFor(owner)+':layout-v1'});}
     else{q('[data-slc-graph3d]').innerHTML='<p class="slc-graph-unavailable" role="status">3D view could not load. Your connections are available below.</p>';}
     if(motionPreference?.addEventListener)on(motionPreference,'change',event=>{motion=!event.matches;draw();});
     draw();

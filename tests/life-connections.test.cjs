@@ -61,13 +61,13 @@ test('3D scene contains only connection categories and supplied real members',()
   assert(!graph.edges.some(e=>e.source==='family'&&e.target==='member:accepted:ana'));
   assert.deepEqual(life.sceneModel([],[]).nodes.filter(n=>n.kind==='person'),[]);
 });
-let JSDOM;try{({JSDOM}=require('jsdom'));}catch(_){}
+let JSDOM;try{({JSDOM}=require(process.env.JSDOM_MODULE||'jsdom'));}catch(_){}
 test('3D workspace keeps real renderer data, category navigation and local editing in sync',{skip:!JSDOM},()=>{
   const fs=require('node:fs'),path=require('node:path');
   const dom=new JSDOM('<main id="app"><div id="life"></div></main>',{url:'https://sotakece.example/',runScripts:'outside-only'}),w=dom.window;
   w.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){}});
   let options,disposed=0,rotation,selected,scene;
-  w.SotaLifeGraph3D={mount(target,input){options=input;assert(target.matches('[data-slc-graph3d]'));return {update(value){scene=value;},select(id){selected=id;},setMotion(value){rotation=value;},dispose(){disposed++;}};}};
+  w.SotaLifeGraph3D={mount(target,input){options=input;assert(target.matches('[data-slc-graph3d]'));assert.equal(input.storageKey,life.keyFor('owner')+':layout-v1');assert.equal(input.storage,w.localStorage);return {update(value){scene=value;},select(id){selected=id;},setMotion(value){rotation=value;},dispose(){disposed++;}};}};
   w.eval(fs.readFileSync(path.join(__dirname,'../life-connections.js'),'utf8'));
   const host=w.document.querySelector('#life'),component=w.SotaLifeConnections.mount(host,{owner:'owner',friends:[{id:'ana',display_name:'Ana'}]});
   assert.equal(host.querySelectorAll('.slc-node,.slc-node-icon,.slc-intro,svg').length,0,'the old illustrated map must not remain under the 3D view');
