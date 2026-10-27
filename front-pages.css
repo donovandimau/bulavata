@@ -108,3 +108,5 @@
 html:not(.sota-help-ready) [data-sota-help]{display:none}
 
 .sota-help-dock{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:16px;margin:16px auto 0;max-width:1280px;background:#eaf7fb;color:#23485c;font:700 14px/1.4 Nunito,system-ui,sans-serif;border-radius:16px 16px 0 0;}
+
+#app[data-front-page]:not([data-front-page=home]) .sfp-navigation>.ssd-launcher{margin-left:0!important;}
