@@ -52,3 +52,16 @@ test('GPU renderer draws native lines, glows and triangle meshes then releases r
 test('partial shader failure releases earlier programs, shaders and buffers',()=>{
   const {gl,calls}=glStub(3);assert.throws(()=>graph3d.createRenderer(gl),/shader/);assert.deepEqual(calls.deleted,calls.created);
 });
+let JSDOM;try{({JSDOM}=require(process.env.JSDOM_MODULE||'jsdom'));}catch(_){}
+test('sphere captions preserve accessible selection, safe names and updates',{skip:!JSDOM},t=>{
+  const dom=new JSDOM('<!doctype html><main id="graph"></main>',{pretendToBeVisual:true}),w=dom.window,host=w.document.querySelector('main'),{gl}=glStub(),picks=[];
+  t.after(()=>w.close());w.matchMedia=()=>({matches:true});w.HTMLCanvasElement.prototype.getContext=()=>gl;
+  w.HTMLElement.prototype.getBoundingClientRect=()=>({width:600,height:520});
+  const view=graph3d.mount(host,{...scene,onSelect:id=>picks.push(id),motion:false});
+  const family=host.querySelector('.lg3d-label[data-lg3d-pick="family"]'),caption=family.querySelector('.lg3d-caption');
+  assert.equal(family.getAttribute('aria-label'),'family, connection category');assert.equal(family.hidden,false);
+  caption.click();assert.deepEqual(picks,['family']);assert.equal(family.getAttribute('aria-pressed'),'true');assert.equal(family.querySelector('.lg3d-caption'),caption);
+  view.update({...scene,nodes:scene.nodes.map(n=>n.id==='family'?{...n,label:'<img src=x onerror=alert(1)>'}:n)});
+  assert.equal(caption.textContent,'<img src=x onerror=alert(1)>');assert.equal(caption.querySelector('img'),null);assert.equal(family.getAttribute('aria-pressed'),'true');
+  view.zoom(1.2);assert(Number.isFinite(parseFloat(family.style.top)));view.reset();view.dispose();assert.equal(host.children.length,0);
+});

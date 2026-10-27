@@ -99,7 +99,7 @@
     {selector:'#workspace button,#workspace a.link-button,body.cr button,body.cr a.link-button,#nativeCalls button,#ncMoreToggle,.nc-sheet-close,.nc-more-btn,.nc-react,.home-link,.masthead .home-link,#signedOut>a.link-button',action:semantic,label:'Open action',dynamic:true}
   ];
   const preview='.bv-skin-option[data-skin],.bv-collection-card[data-collection]';
-  const content='.sk-playlist-songs button,.bv-local-music-row,.pulse-item,.group-button,[data-circle],.tc-graph-list [data-tc-person],.sc-list button,.sc-neighbours button,.scf-list button,.lg3d-label,.lg3d-list button,.sota-social-panel,.nc-emoji,.sk-emo,.kava-room [data-tip],button[onclick^="walletTopUp"]';
+  const content='.sk-playlist-songs button,.bv-local-music-row,.pulse-item,.group-button,[data-circle],.tc-graph-list [data-tc-person],.sc-list button,.sc-neighbours button,.scf-list button,.lg3d-list button,.sota-social-panel,.nc-emoji,.sk-emo,.kava-room [data-tip],button[onclick^="walletTopUp"]';
   const selector=rules.map(rule=>rule.selector).join(',')+','+content+','+preview;
   const excluded='.sk-hero-play,.sk-artwork-play,.sk-hero-create,.spp-hero-edit,.sfp-visual-link';
   let current=null;
@@ -219,7 +219,7 @@
     if(root.MutationObserver){session.observer=new root.MutationObserver(changes=>{
       if(current!==session)return;
       let removedControls=false;
-      for(const change of changes){const changedElement=change.target.nodeType===1?change.target:change.target.parentElement;if(changedElement?.closest('.lg3d-label[data-sota-glass]'))continue;enqueue(change.target);if(change.type==='childList'){
+      for(const change of changes){const changedElement=change.target.nodeType===1?change.target:change.target.parentElement;if(changedElement?.closest('.lg3d-label'))continue;enqueue(change.target);if(change.type==='childList'){
         change.addedNodes.forEach(node=>enqueue(node,true));
         if(!removedControls)removedControls=[...change.removedNodes].some(node=>node.nodeType===1&&(node.matches(selector)||node.querySelector(selector)));
       }}

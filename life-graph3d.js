@@ -53,13 +53,14 @@
     for(let col=0;col<4;col++)for(let row=0;row<4;row++)for(let k=0;k<4;k++)out[col*4+row]+=projection[k*4+row]*view[col*4+k];
     return {mvp:out,rotation:new Float32Array([cy,sp*sy,-cp*sy,0,cp,sp,sy,-sp*cy,cp*cy])};
   }
+  const nodeRadius=n=>n.kind==='you'?.30:n.kind==='category'?.21:.048;
   function buildGeometry(graph,positions,selected){
     const spheres=[],lines=[],glows=[],byId=new Map(graph.nodes.map(n=>[n.id,n]));
     for(const edge of graph.edges){const a=positions.get(edge.source),b=positions.get(edge.target),n=byId.get(edge.target),c=color(n.color),active=edge.source===selected||edge.target===selected;for(const p of [a,b])lines.push(...p,...c,active?.65:.22);}
     const latitudes=10,segments=16;
     const normal=(lat,lon)=>{const theta=lat*Math.PI/latitudes,phi=lon*TAU/segments;return [Math.sin(theta)*Math.cos(phi),Math.cos(theta),Math.sin(theta)*Math.sin(phi)];};
     for(const n of graph.nodes){
-      const p=positions.get(n.id),c=color(n.color),radius=n.kind==='you'?.23:n.kind==='category'?.135:.048,scale=n.id===selected?1.22:1;
+      const p=positions.get(n.id),c=color(n.color),radius=nodeRadius(n),scale=n.id===selected?1.22:1;
       glows.push(...p,...c,radius*scale);
       for(let lat=0;lat<latitudes;lat++)for(let lon=0;lon<segments;lon++){
         const normals=[normal(lat,lon),normal(lat+1,lon),normal(lat,lon+1),normal(lat,lon+1),normal(lat+1,lon),normal(lat+1,lon+1)];
@@ -69,11 +70,11 @@
     return {spheres:new Float32Array(spheres),lines:new Float32Array(lines),glows:new Float32Array(glows)};
   }
   const VERTEX=`attribute vec3 aPosition;attribute vec3 aNormal;attribute vec3 aColor;uniform mat4 uMatrix;uniform mat3 uRotation;varying vec3 vNormal;varying vec3 vColor;void main(){gl_Position=uMatrix*vec4(aPosition,1.0);vNormal=uRotation*aNormal;vColor=aColor;}`;
-  const FRAGMENT=`precision mediump float;varying vec3 vNormal;varying vec3 vColor;void main(){vec3 n=normalize(vNormal);vec3 light=normalize(vec3(-0.5,0.8,1.0));float diffuse=max(dot(n,light),0.0);float spec=pow(max(dot(reflect(-light,n),vec3(0.0,0.0,1.0)),0.0),28.0);float rim=pow(1.0-max(n.z,0.0),2.0);vec3 c=vColor*(0.22+diffuse*0.8)+vec3(0.75)*spec+vColor*rim*0.35;gl_FragColor=vec4(c,1.0);}`;
+  const FRAGMENT=`precision mediump float;varying vec3 vNormal;varying vec3 vColor;void main(){vec3 n=normalize(vNormal);vec3 light=normalize(vec3(-0.5,0.8,1.0));float diffuse=max(dot(n,light),0.0);float spec=pow(max(dot(reflect(-light,n),vec3(0.0,0.0,1.0)),0.0),28.0);float rim=pow(1.0-max(n.z,0.0),2.0);vec3 c=vColor*(0.30+diffuse*0.8)+vec3(0.85)*spec+vColor*rim*0.48;gl_FragColor=vec4(c,1.0);}`;
   const LINE_VERTEX=`attribute vec3 aPosition;attribute vec3 aColor;attribute float aAlpha;uniform mat4 uMatrix;varying vec4 vColor;void main(){gl_Position=uMatrix*vec4(aPosition,1.0);vColor=vec4(aColor,aAlpha);}`;
   const LINE_FRAGMENT=`precision mediump float;varying vec4 vColor;void main(){gl_FragColor=vColor;}`;
   const GLOW_VERTEX=`attribute vec3 aPosition;attribute vec3 aColor;attribute float aSize;uniform mat4 uMatrix;uniform float uHeight;uniform float uPointMax;varying vec3 vColor;void main(){gl_Position=uMatrix*vec4(aPosition,1.0);gl_PointSize=min(uPointMax,max(3.0,aSize*uHeight*8.5/gl_Position.w));vColor=aColor;}`;
-  const GLOW_FRAGMENT=`precision mediump float;varying vec3 vColor;void main(){float d=length(gl_PointCoord-vec2(0.5))*2.0;if(d>1.0)discard;float glow=pow(1.0-d,3.0)*0.34;gl_FragColor=vec4(vColor,glow);}`;
+  const GLOW_FRAGMENT=`precision mediump float;varying vec3 vColor;void main(){float d=length(gl_PointCoord-vec2(0.5))*2.0;if(d>1.0)discard;float glow=pow(1.0-d,2.5)*0.48;gl_FragColor=vec4(vColor,glow);}`;
   function createRenderer(gl){
     const resources={programs:[],shaders:[],buffers:[]};
     function shader(type,source){const s=gl.createShader(type);resources.shaders.push(s);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error('The 3D shader could not be prepared.');return s;}
@@ -115,7 +116,7 @@
       q('[data-lg3d-list-count]').textContent=String(graph.nodes.length);
       q('[data-lg3d-list]').innerHTML=graph.nodes.map(n=>`<button type="button" data-lg3d-pick="${esc(n.id)}" aria-pressed="${n.id===selected}"><i style="--lg3d-color:${n.color}" aria-hidden="true"></i>${esc(n.label)}<small>${n.kind==='you'?'You':n.kind==='category'?'Connection category':'Connection'}</small></button>`).join('');
       const ids=new Set(graph.nodes.map(n=>n.id));for(const [id,button] of labelButtons)if(!ids.has(id)){button.remove();labelButtons.delete(id);}
-      for(const n of graph.nodes){let button=labelButtons.get(n.id);if(!button){button=doc.createElement('button');button.type='button';button.className='lg3d-label';button.dataset.lg3dPick=n.id;labels.append(button);labelButtons.set(n.id,button);}button.textContent=n.label;button.style.setProperty('--lg3d-color',n.color);button.dataset.kind=n.kind;button.setAttribute('aria-label',n.label+(n.kind==='category'?', connection category':''));button.setAttribute('aria-pressed',String(n.id===selected));}
+      for(const n of graph.nodes){let button=labelButtons.get(n.id);if(!button){button=doc.createElement('button');button.type='button';button.className='lg3d-label';button.dataset.lg3dPick=n.id;labels.append(button);labelButtons.set(n.id,button);}let caption=button.querySelector('.lg3d-caption');if(!caption){caption=doc.createElement('span');caption.className='lg3d-caption';button.replaceChildren(caption);}caption.textContent=n.label;button.style.setProperty('--lg3d-color',n.color);button.dataset.kind=n.kind;button.setAttribute('aria-label',n.label+(n.kind==='category'?', connection category':''));button.setAttribute('aria-pressed',String(n.id===selected));}
       draw();schedule();
     }
     function draw(){
@@ -128,12 +129,13 @@
         const n=p.node,button=labelButtons.get(n.id),show=n.kind!=='person'||n.id===selected||(connected.has(n.id)&&memberLabels++<16);
         button.hidden=!show||!p.visible||p.x<0||p.x>width||p.y<0||p.y>height;
         if(button.hidden)continue;
-        const labelWidth=Math.min(n.kind==='you'?70:n.kind==='category'?122:102,Math.max(50,n.label.length*6.2+12));
-        let x=clamp(p.x,labelWidth/2+4,width-labelWidth/2-4),y=p.y+(n.kind==='you'?27:18);
-        // Move text rather than the 3D nodes. A tiny leader preserves its anchor.
+        const labelWidth=Math.min(n.kind==='you'?70:n.kind==='category'?122:102,Math.max(54,n.label.length*7+22));
+        const radiusPx=nodeRadius(n)*(n.id===selected?1.22:1)*height/(2*Math.tan(.7/2)*p.depth);
+        let x=clamp(p.x,labelWidth/2+4,width-labelWidth/2-4),y=p.y+radiusPx+16;
+        // Keep captions below the sphere surface; move only text to avoid collisions.
         for(let attempt=0;attempt<8;attempt++){
-          if(!placed.some(b=>Math.abs(b.x-x)<(b.w+labelWidth)/2+3&&Math.abs(b.y-y)<21))break;
-          y+=(attempt%2?-1:1)*(12+Math.floor(attempt/2)*11);
+          if(!placed.some(b=>Math.abs(b.x-x)<(b.w+labelWidth)/2+3&&Math.abs(b.y-y)<29))break;
+          y+=(attempt%2?-1:1)*(16+Math.floor(attempt/2)*13);
         }
         y=clamp(y,22,height-47);placed.push({x,y,w:labelWidth});button.style.left=x+'px';button.style.top=y+'px';button.style.maxWidth=labelWidth+'px';button.style.opacity=n.kind==='you'||n.id===selected?'1':String(clamp(1.3-p.depth/22,.68,1));button.style.zIndex=String(100-Math.round(p.depth));button.style.setProperty('--lg3d-leader-x',(p.x-x)+'px');button.style.setProperty('--lg3d-leader-y',(p.y-y)+'px');
       }
