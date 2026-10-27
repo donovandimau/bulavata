@@ -35,11 +35,12 @@ test('native mesh geometry has sphere surfaces and only supplied graph lines',()
 });
 test('large captions stay within a phone graph and avoid nearby names and view controls',()=>{
   const width=320,height=445,w=170,h=34,placed=[];
-  for(const point of [{x:8,y:25,radius:18},{x:15,y:30,radius:18},{x:300,y:425,radius:22}]){
+  for(const point of [{x:8,y:25,radius:18},{x:15,y:30,radius:18},{x:300,y:425,radius:22},{x:300,y:10,radius:18}]){
     const result=graph3d.placeCaption(point,{width,height,w,h},placed,[point]);
     assert(result.x-w/2>=5&&result.x+w/2<=width-5);
     assert(result.y-h/2>=5&&result.y+h/2<=height-12);
-    assert(!(result.x+w/2>width-165&&result.y+h/2>height-62));
+    assert(result.y+h/2<=height-62);
+    assert(!(result.x+w/2>width-120&&result.y-h/2<55));
     for(const other of placed)assert(Math.abs(result.x-other.x)>=(w+other.w)/2||Math.abs(result.y-other.y)>=(h+other.h)/2);
     placed.push({...result,w,h});
   }

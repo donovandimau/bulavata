@@ -72,8 +72,9 @@
       let score=Math.hypot(x-point.x,y-point.y)+(candidate.y<point.y?3:0);
       for(const b of placed){const ox=(w+b.w)/2+5-Math.abs(x-b.x),oy=(h+b.h)/2+5-Math.abs(y-b.y);if(ox>0&&oy>0)score+=ox*oy*100;}
       for(const sphere of spheres){const dx=Math.max(0,Math.abs(sphere.x-x)-w/2),dy=Math.max(0,Math.abs(sphere.y-y)-half),overlap=sphere.radius+4-Math.hypot(dx,dy);if(overlap>0)score+=overlap*overlap*80;}
-      // Keep names away from the existing view controls in the lower-right corner.
-      if(x+w/2>width-165&&y+half>height-62)score+=50000;
+      // Leave the background selector and bottom controls/instructions unobscured.
+      if(x+w/2>width-120&&y-half<55)score+=50000;
+      if(y+half>height-62)score+=50000;
       if(score<bestScore){best={x,y};bestScore=score;}
     }
     return best;
