@@ -291,3 +291,20 @@ browserTest('audio readiness gates live labels and analyser reads before and aft
   assert.notEqual(host.dataset.state,'live');assert.match(h.get('[data-stage-status]').textContent,/AMBIENT PREVIEW/);assert.equal(h.calls.audioDraws.at(-1).data,null);assert.equal(h.calls.samples,samples);
   assert.equal(h.calls.plays.length,plays);assert.equal(audio.paused,false);h.w.SotaHeroVisualiser.release();h.clean();
 });
+
+
+browserTest('Home keeps identical rainbow drawings through playback, resize and page returns',async t=>{
+  const h=environment(t),host=hero(h),app=h.get('#app'),audio=eligibleAudio(h);
+  function show(view){app.dataset.frontPage=view;app.dispatchEvent(new h.w.CustomEvent('sota-front-page-change',{bubbles:true,detail:{view}}));}
+  show('home');assert.equal(host.dataset.state,'still');assert.equal(h.frames.size,0);
+  assert.match(host.getAttribute('aria-label'),/Still rainbow/);
+  const frozen=h.calls.audioDraws.slice(-3).map(({settings,previewTime,data})=>({settings,previewTime,data}));
+  assert(frozen.every(frame=>frame.settings.theme==='rainbow'&&frame.previewTime===1200&&frame.data===null));
+  await audio.play();await tick();assert.equal(audio.paused,false);assert.equal(h.frames.size,0);assert.equal(host.dataset.state,'still');
+  h.w.dispatchEvent(new h.w.Event('resize'));h.advance();
+  assert.deepEqual(h.calls.audioDraws.slice(-3).map(({settings,previewTime,data})=>({settings,previewTime,data})),frozen);
+  show('music');assert.equal(h.frames.size,1);assert.equal(host.dataset.state,'live');h.advance();
+  show('home');assert.equal(h.frames.size,0);assert.equal(host.dataset.state,'still');
+  assert.deepEqual(h.calls.audioDraws.slice(-3).map(({settings,previewTime,data})=>({settings,previewTime,data})),frozen);
+  assert.equal(audio.paused,false);audio.pause();assert.equal(h.frames.size,0);h.w.SotaHeroVisualiser.release();h.clean();
+});

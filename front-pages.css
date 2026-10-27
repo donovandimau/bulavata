@@ -30,8 +30,13 @@
 #app[data-front-page=home] #sota-music-home .sk-music-stage-heading,
 #app[data-front-page=home] #sota-music-home .sk-music-stage-footer{display:none!important}
 #app[data-front-page=home] #sota-music-home [data-music-panel=visualiser]{display:block!important}
-#app[data-front-page=home] #sota-music-home .bv-music-feature{min-height:280px}
-#app[data-front-page=home] #sota-music-home .bv-music-copy{padding-bottom:80px}
+/* Let the original 3:2 photograph determine the banner height, without cropping. */
+#app.bv-welcome[data-front-page=home] #sota-music-home>.bv-music-feature{display:block;min-height:0;height:auto}
+#app.bv-welcome[data-front-page=home] #sota-music-home .bv-music-feature>img{position:relative;inset:auto;display:block;width:100%;height:auto;object-fit:contain;object-position:center}
+#app.bv-welcome[data-front-page=home] #sota-music-home .bv-music-copy{position:absolute;top:0;left:0;max-width:100%;padding:30px}
+#app.bv-welcome[data-front-page=home] #sota-music-home .bv-music-feature::after{background:linear-gradient(125deg,#072d33d9 0%,#102b3740 45%,transparent 70%)}
+#app.bv-welcome[data-front-page=home] #sota-music-home .sk-music-stage{background:radial-gradient(ellipse at 18% 70%,#a70c963b,transparent 55%),radial-gradient(ellipse at 82% 30%,#00dccb40,transparent 55%),linear-gradient(110deg,#341057,#122c5d 55%,#542076)}
+#app.bv-welcome[data-front-page=home] .sk-music-stage-picture canvas{filter:saturate(1.8) brightness(1.45)}
 #app[data-front-page=home] #sota-connections :is(.scf-heading p,.slc-topline,.slc-intro,.slc-under-map,.slc-details,.slc-storage,.slc-friend-sync,.scf-warning,[data-friend-privacy],.lg3d-background,.lg3d-controls,.lg3d-outline,.lg3d-state){display:none!important}
 #app[data-front-page=home] #sota-connections.sc-friends{padding:18px;background:#081322;border-color:#426384}
 #app[data-front-page=home] #sota-connections .scf-heading{margin:0 0 14px}
@@ -64,7 +69,8 @@
  #app[data-front-page] .sfp-detail-heading{margin:12px;padding:18px}
  #app[data-front-page=home] .sfp-visual-link{padding:12px}
  #app[data-front-page=home] .sfp-visual-link>span{font-size:11px;padding:8px 11px}
- #app[data-front-page=home] #sota-music-home .bv-music-feature{min-height:250px}
+ #app.bv-welcome[data-front-page=home] #sota-music-home .bv-music-copy{padding:18px}
+ #app.bv-welcome[data-front-page=home] #sota-music-home .bv-music-copy h1{font-size:clamp(23px,6.5vw,34px)}
  #app[data-front-page=home] #bv-your-room .bv-collection-grid{grid-template-columns:minmax(0,1fr)}
  #app[data-front-page=home] #bv-your-room .sfp-skin-tile:nth-child(n+3){display:none}
  #app[data-front-page=home] #bv-your-room .bv-collection-art{height:230px}
