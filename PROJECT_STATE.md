@@ -1,3 +1,9 @@
+## 27 October 2026 — Apply the supplied chrome glass button design throughout Sota Kece
+
+The owner rejected the faint outline discs and remaining word buttons. The supplied reference is a domed glass control with reflective chrome edges, curved highlights, vivid action colours and bold dark symbols. Apply this material to all action controls in the main app, communications, calls, install prompt and companion; keep song, person, graph and skin content names readable within their existing controls. Connection-category links gain distinct subject symbols. Artwork detail links keep their whole-image hit areas and gain glass symbol markers. A one-colour design still colours the controls consistently, while Mix & match uses distinct action hues. Legacy layered header paint must not override the new material. The stationary music centre and rotating outer ring retain their existing geometry.
+
+Preview, responsive browser evidence, exact checks and production receipt belong to the scoped release PR. No private-account write, actual call, microphone/camera permission or Ops checkpoint is pre-claimed.
+
 ## 26 October 2026 — Music visuals active by default and reachable close controls
 
 Owner asks every music visualiser to show motion before a track starts and for top-right close controls that stay reachable on long panels. The large landing/music stage, artwork waveform and shared native player now animate a labelled ambient preview by default, without playing music or opening an idle audio context. Real analysed audio takes priority during playback. Explicit Pause, reduced motion, hidden pages, offscreen panels and modal visibility retain their controls; recording still requires actual playing audio.

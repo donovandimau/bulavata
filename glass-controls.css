@@ -1,30 +1,74 @@
-/* Original glass controls. Only controls explicitly converted to vector icons opt in. */
+/* Original domed chrome controls. Vector actions opt in; content keeps its labels. */
+:is(button,a)[data-sota-icon],.sota-icon-control,.sota-glass-content[data-sota-glass="content"],.sota-glass-mark[data-sota-mark] {
+ --sota-control-tint:var(--sota-unified-tint,var(--sota-action-tint,#17abc4));
+ --sota-control-glass:color-mix(in srgb,var(--sota-glass-surface,var(--ssd-panel,#f5fbff)) 22%,#fff);
+ --sota-control-ink:var(--sota-glass-symbol-ink,#080e16);
+ --sota-control-border:transparent;
+ --sota-control-background:
+  radial-gradient(ellipse at 50% 112%,#ffffffed 0%,color-mix(in srgb,var(--sota-control-tint) 72%,#fff) 15%,transparent 42%) padding-box,
+  radial-gradient(ellipse at 47% 28%,#ffffff8c 0%,#ffffff12 49%,#142c4933 86%,#ffffff96 100%) padding-box,
+  linear-gradient(145deg,color-mix(in srgb,color-mix(in srgb,var(--sota-control-tint) 36%,var(--sota-control-glass)) 86%,transparent) 0%,color-mix(in srgb,color-mix(in srgb,var(--sota-control-tint) 60%,var(--sota-control-glass)) 86%,transparent) 52%,color-mix(in srgb,color-mix(in srgb,var(--sota-control-tint) 80%,#fff) 88%,transparent) 83%,#f8ffffe6 100%) padding-box,
+  conic-gradient(from 145deg,#faffff 0deg,#9fb6c5 31deg,#fff 56deg,#748a9c 94deg,#303b4d 118deg,#f8ffff 143deg,#d6e4ed 171deg,#fff 201deg,#7897b2 230deg,#fff 257deg,var(--sota-control-tint) 285deg,#f8ffff 316deg,#46516a 339deg,#fff 360deg) border-box;
+ --sota-control-shadow:0 4px 5px #15213b40,0 1px 1px #071a3266,inset 0 1px 1px #fff,inset 0 0 0 1px #ffffffab,inset 1px 0 2px #fff,inset 0 -3px 4px #ffffffc4,0 0 0 .5px #53627a99;
+}
 :is(button,a)[data-sota-icon],.sota-icon-control {
  --sota-icon-size:44px;
- --sota-control-tint:var(--ssd-accent,var(--sota-user-accent-alt,#149db7));
- --sota-control-glass:var(--sota-glass-surface,var(--ssd-panel,#f5fbff));
- --sota-control-ink:var(--sota-glass-ink,var(--ssd-ink,#142a43));
  position:relative;isolation:isolate;box-sizing:border-box;display:inline-grid!important;place-items:center;
  flex:0 0 var(--sota-icon-size)!important;
  width:var(--sota-icon-size)!important;height:var(--sota-icon-size)!important;
  min-width:var(--sota-icon-size)!important;min-height:var(--sota-icon-size)!important;
  max-width:var(--sota-icon-size)!important;max-height:var(--sota-icon-size)!important;
- margin-block:0;padding:0!important;gap:0!important;border:1.5px solid transparent!important;border-radius:50%!important;
- --sota-control-border:transparent;
- --sota-control-background:
-  linear-gradient(150deg,#ffffff8c,#ffffff08 45%,#ffffff00 61%,#ffffff5c) padding-box,
-  linear-gradient(color-mix(in srgb,var(--sota-control-glass) 58%,transparent),color-mix(in srgb,var(--sota-control-glass) 58%,transparent)) padding-box,
-  linear-gradient(145deg,#fff 2%,color-mix(in srgb,var(--sota-control-tint) 58%,#fff) 21%,#ffffff45 43%,var(--sota-control-tint) 69%,#fff 87%,var(--sota-control-tint)) border-box;
- background:var(--sota-control-background)!important;
- color:var(--sota-control-ink)!important;
- box-shadow:0 3px 6px #15254536,inset 0 1px 1px #fff,inset 0 -3px 5px color-mix(in srgb,var(--sota-control-tint) 36%,transparent),0 0 0 .5px #f8ffffbc!important;
- -webkit-backdrop-filter:blur(9px) saturate(1.25);backdrop-filter:blur(9px) saturate(1.25);
+ margin-block:0;padding:0!important;gap:0!important;border:2px solid transparent!important;border-radius:50%!important;
+ background:var(--sota-control-background)!important;color:var(--sota-control-ink)!important;
+ box-shadow:var(--sota-control-shadow)!important;
+ -webkit-backdrop-filter:blur(9px) saturate(1.45);backdrop-filter:blur(9px) saturate(1.45);
  font-size:0!important;line-height:1!important;letter-spacing:0;text-indent:0;text-decoration:none!important;text-shadow:none!important;
- overflow:visible;opacity:.94;cursor:pointer;touch-action:manipulation;vertical-align:middle;
- transition:box-shadow .15s ease,opacity .15s ease,transform .15s ease;
+ overflow:visible;opacity:1;cursor:pointer;touch-action:manipulation;vertical-align:middle;
+ transition:box-shadow .15s ease,filter .15s ease,transform .15s ease;
 }
+/* Home image links keep their full hit area; only their visual marker is circular. */
+.sota-glass-mark[data-sota-mark],
+html:root:root #app[data-front-page] .sfp-visual-link>.sota-glass-mark[data-sota-mark] {
+ position:relative;isolation:isolate;display:grid;place-items:center;box-sizing:border-box;
+ width:52px;height:52px;min-width:52px;min-height:52px;max-width:52px;max-height:52px;
+ margin:0;padding:0;border:2px solid var(--sota-control-border,transparent);border-radius:50%;
+ background:var(--sota-control-background);color:var(--sota-control-ink);box-shadow:var(--sota-control-shadow);
+ -webkit-backdrop-filter:blur(9px) saturate(1.45);backdrop-filter:blur(9px) saturate(1.45);
+ font-size:0;line-height:1;text-shadow:none;pointer-events:none;
+}
+.sota-glass-mark[data-sota-mark]::before {
+ content:'';position:absolute;left:18%;right:18%;top:5%;height:24%;border-radius:50%;
+ background:linear-gradient(180deg,#fff,#ffffff8c 44%,#ffffff00);transform:rotate(-12deg);pointer-events:none;
+}
+.sota-glass-mark[data-sota-mark]>svg {position:relative;z-index:1;display:block;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 0 #ffffffb3);}
+.sota-glass-mark[data-sota-mark="profile"] {--sota-action-tint:#ff905a;}
+.sota-glass-mark[data-sota-mark="music"] {--sota-action-tint:#12c4d4;}
+.sota-glass-mark[data-sota-mark="world"] {--sota-action-tint:#28ca94;}
+.sota-glass-mark[data-sota-mark="talanoa"] {--sota-action-tint:#ffca32;}
+.sota-glass-mark[data-sota-mark="skins"] {--sota-action-tint:#a679ed;}
+/* Content choices share the reflective material while retaining their text and layout. */
+.sota-glass-content[data-sota-glass="content"],
+html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) .sota-glass-content[data-sota-glass="content"] {
+ border:2px solid var(--sota-control-border,transparent)!important;
+ background:var(--sota-control-background)!important;color:var(--sota-control-ink)!important;
+ box-shadow:var(--sota-control-shadow)!important;text-shadow:none!important;
+ -webkit-backdrop-filter:blur(9px) saturate(1.3);backdrop-filter:blur(9px) saturate(1.3);
+}
+/* Keep the selected room/track/content control and keyboard focus unmistakable. */
+html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) .sota-glass-content[data-sota-glass="content"]:is(.selected,.on,[aria-pressed="true"],[aria-selected="true"],[aria-current="page"]) {
+ border-color:#132c44!important;box-shadow:var(--sota-control-shadow),0 0 0 2px #fff,0 0 0 4px var(--sota-control-tint)!important;
+}
+html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) .sota-glass-content[data-sota-glass="content"]:focus-visible {outline:3px solid #132c44!important;outline-offset:3px;}
+@media(forced-colors:active) {
+ html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) .sota-glass-content[data-sota-glass="content"]:is(.selected,.on,[aria-pressed="true"],[aria-selected="true"],[aria-current="page"],:focus-visible) {outline:3px solid Highlight!important;outline-offset:3px;border-color:Highlight!important;}
+}
+/* Literal skin and collection previews retain their chosen colour and artwork. */
+.sota-glass-preview[data-sota-glass="preview"] {
+ border:2px solid #e1f5ffd9;box-shadow:0 4px 7px #15213b40,inset 0 1px 1px #fff,inset 0 0 0 1px #ffffffab,inset 0 -3px 4px #ffffffa6;
+}
+html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) .sota-glass-content[data-sota-glass="content"] :is(span,strong,small,b) {color:inherit!important;-webkit-text-fill-color:inherit!important;}
 /* Saved page themes have deliberate important rules. Opted-in icons retain the
-   glass geometry and use those themes' contrast tokens instead of word-pill paint. */
+   glass geometry and reflective material alongside personalised page colours. */
 html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) :is(button,a)[data-sota-icon].sota-icon-control {
  display:inline-grid!important;flex:0 0 var(--sota-icon-size)!important;
  width:var(--sota-icon-size)!important;height:var(--sota-icon-size)!important;
@@ -35,26 +79,28 @@ html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) :is(butto
  background:var(--sota-control-background)!important;color:var(--sota-control-ink)!important;
 }
 :is(button,a)[data-sota-icon]::before,.sota-icon-control::before,.sota-icon-control[data-sota-icon]::before {
- content:''!important;position:absolute;z-index:0;left:18%;right:18%;top:7%;width:auto;height:16%;
- margin:0;padding:0;border:0;border-radius:50%;background:linear-gradient(#ffffffed,#ffffff15);
- box-shadow:none;transform:rotate(-9deg);pointer-events:none;opacity:.9;
+ content:''!important;position:absolute;z-index:0;left:18%;right:18%;top:5%;width:auto;height:24%;
+ margin:0;padding:0;border:0;border-radius:50%;
+ background:linear-gradient(180deg,#fff 0%,#fffffff2 20%,#ffffff8c 44%,#ffffff00 100%);
+ box-shadow:0 -1px 1px #ffffffeb;transform:rotate(-12deg);pointer-events:none;opacity:.98;
 }
 :is(button,a)[data-sota-icon]::after,.sota-icon-control::after,.sota-icon-control[data-sota-icon]::after {
- content:''!important;position:absolute;z-index:0;inset:2px;width:auto;height:auto;margin:0;padding:0;
- border:1px solid #ffffff82;border-top-color:#ffffffe6;border-bottom-color:color-mix(in srgb,var(--sota-control-tint) 50%,#ffffffb8);
- border-radius:50%;background:transparent;box-shadow:inset 0 -1px 1px #ffffffb3;transform:none;pointer-events:none;
+ content:''!important;position:absolute;z-index:0;inset:1px;width:auto;height:auto;margin:0;padding:0;
+ border:1px solid #ffffffb8;border-top-color:#fff;border-bottom-color:#f2ffff;
+ border-radius:50%;background:transparent;
+ box-shadow:inset 0 1px 2px #fff9,inset 1px 0 1px #394e6840;transform:none;pointer-events:none;
 }
 .sota-icon-control>.sota-control-symbol,[data-sota-icon]>.sota-control-symbol {
- position:relative;z-index:1;display:grid!important;place-items:center;width:24px;height:24px;min-width:0;
+ position:relative;z-index:1;display:grid!important;place-items:center;width:25px;height:25px;min-width:0;
  margin:0;padding:0;border:0;background:none;box-shadow:none;line-height:1;color:inherit!important;
- pointer-events:none;filter:drop-shadow(0 1px 1px #09233f38);
+ pointer-events:none;filter:drop-shadow(0 1px 0 #ffffffb3);
 }
 html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) [data-sota-icon].sota-icon-control>.sota-control-symbol {
  color:inherit!important;
 }
 .sota-control-symbol>svg {
- display:block;width:24px;height:24px;max-width:24px;max-height:24px;overflow:visible;
- color:inherit;fill:none;stroke:currentColor;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round;
+ display:block;width:25px;height:25px;max-width:25px;max-height:25px;overflow:visible;
+ color:inherit;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;
  pointer-events:none;
 }
 .sota-control-label {
@@ -80,47 +126,73 @@ html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) [data-sot
  --sota-tip-left:auto;--sota-tip-right:0;--sota-tip-top:calc(100% + 8px);--sota-tip-bottom:auto;--sota-tip-transform:none;
 }
 
-/* Small colour cues distinguish actions without replacing their accessible names. */
-.sota-icon-control[data-sota-icon="close"],.sota-icon-control[data-sota-icon="cancel"],.sota-icon-control[data-sota-icon="delete"] {--sota-control-tint:var(--ssd-accent,#e2567e);}
-.sota-icon-control[data-sota-icon="back"],.sota-icon-control[data-sota-icon="undo"],.sota-icon-control[data-sota-icon="previous"] {--sota-control-tint:var(--ssd-accent,#6671d9);}
-.sota-icon-control[data-sota-icon="save"],.sota-icon-control[data-sota-icon="signup"],.sota-icon-control[data-sota-icon="connect"],.sota-icon-control[data-sota-icon="invite"] {--sota-control-tint:var(--ssd-accent,#21a88b);}
-.sota-icon-control[data-sota-icon="signin"],.sota-icon-control[data-sota-icon="search"],.sota-icon-control[data-sota-icon="home"],.sota-icon-control[data-sota-icon="fullscreen"] {--sota-control-tint:var(--ssd-accent,#249ad1);}
-.sota-icon-control[data-sota-icon="music"],.sota-icon-control[data-sota-icon="play"],.sota-icon-control[data-sota-icon="pause"],.sota-icon-control[data-sota-icon="next"] {--sota-control-tint:var(--ssd-accent,#38bac4);}
-.sota-icon-control[data-sota-icon="design"],.sota-icon-control[data-sota-icon="view"],.sota-icon-control[data-sota-icon="edit"] {--sota-control-tint:var(--ssd-accent,#9a60d0);}
-.sota-icon-control[data-sota-icon="upload"],.sota-icon-control[data-sota-icon="refresh"],.sota-icon-control[data-sota-icon="reset"],.sota-icon-control[data-sota-icon="copy"],.sota-icon-control[data-sota-icon="share"] {--sota-control-tint:var(--ssd-accent,#dca745);}
-.sota-icon-control[data-sota-icon="world"] {--sota-control-tint:var(--ssd-accent,#29b698);}
-.sota-icon-control[data-sota-icon="visualiser"] {--sota-control-tint:var(--ssd-accent,#34b8cf);}
-.sota-icon-control[data-sota-icon="playlist"] {--sota-control-tint:var(--ssd-accent,#9a65cf);}
-.sota-icon-control[data-sota-icon="colour"],.sota-icon-control[data-sota-icon="mix"] {--sota-control-tint:var(--ssd-accent,#9a60c9);}
+/* Distinct tinted domes keep familiar actions easy to recognise. */
+.sota-icon-control[data-sota-icon="close"],.sota-icon-control[data-sota-icon="cancel"],.sota-icon-control[data-sota-icon="delete"] {--sota-action-tint:#ed355c;}
+.sota-icon-control[data-sota-icon="back"],.sota-icon-control[data-sota-icon="undo"],.sota-icon-control[data-sota-icon="previous"] {--sota-action-tint:#6f72e5;}
+.sota-icon-control[data-sota-icon="save"],.sota-icon-control[data-sota-icon="signup"],.sota-icon-control[data-sota-icon="connect"],.sota-icon-control[data-sota-icon="invite"] {--sota-action-tint:#12b99a;}
+.sota-icon-control[data-sota-icon="signin"],.sota-icon-control[data-sota-icon="search"],.sota-icon-control[data-sota-icon="home"],.sota-icon-control[data-sota-icon="fullscreen"] {--sota-action-tint:#2baff3;}
+.sota-icon-control[data-sota-icon="music"],.sota-icon-control[data-sota-icon="play"],.sota-icon-control[data-sota-icon="pause"],.sota-icon-control[data-sota-icon="next"] {--sota-action-tint:#12c4d4;}
+.sota-icon-control[data-sota-icon="design"],.sota-icon-control[data-sota-icon="view"],.sota-icon-control[data-sota-icon="edit"] {--sota-action-tint:#a679ed;}
+.sota-icon-control[data-sota-icon="upload"],.sota-icon-control[data-sota-icon="refresh"],.sota-icon-control[data-sota-icon="reset"],.sota-icon-control[data-sota-icon="copy"],.sota-icon-control[data-sota-icon="share"] {--sota-action-tint:#ffbb25;}
+.sota-icon-control[data-sota-icon="world"] {--sota-action-tint:#14b784;}
+.sota-icon-control[data-sota-icon="visualiser"] {--sota-action-tint:#12c4d4;}
+.sota-icon-control[data-sota-icon="playlist"] {--sota-action-tint:#a679ed;}
+.sota-icon-control[data-sota-icon="colour"],.sota-icon-control[data-sota-icon="mix"] {--sota-action-tint:#a679ed;}
+.sota-icon-control[data-sota-icon="friends"],.sota-icon-control[data-sota-icon="send"],.sota-icon-control[data-sota-icon="screen"] {--sota-action-tint:#2baff3;}
+.sota-icon-control[data-sota-icon="family"],.sota-icon-control[data-sota-icon="logout"] {--sota-action-tint:#ff905a;}
+.sota-icon-control[data-sota-icon="school"],.sota-icon-control[data-sota-icon="captions"],.sota-icon-control[data-sota-icon="board"] {--sota-action-tint:#ffca32;}
+.sota-icon-control[data-sota-icon="work"],.sota-icon-control[data-sota-icon="video"] {--sota-action-tint:#b789f1;}
+.sota-icon-control[data-sota-icon="pets"],.sota-icon-control[data-sota-icon="heart"] {--sota-action-tint:#ff74b2;}
+.sota-icon-control[data-sota-icon="nature"],.sota-icon-control[data-sota-icon="wallet"],.sota-icon-control[data-sota-icon="join"],.sota-icon-control[data-sota-icon="accept"],.sota-icon-control[data-sota-icon="phone"] {--sota-action-tint:#28ca94;}
+.sota-icon-control[data-sota-icon="chat"],.sota-icon-control[data-sota-icon="download"],.sota-icon-control[data-sota-icon="mic"],.sota-icon-control[data-sota-icon="zoom-in"],.sota-icon-control[data-sota-icon="zoom-out"] {--sota-action-tint:#23d1cc;}
+.sota-icon-control[data-sota-icon="up"],.sota-icon-control[data-sota-icon="down"] {--sota-action-tint:#8a97ee;}
+.sota-icon-control[data-sota-icon="mic-off"],.sota-icon-control[data-sota-icon="video-off"],.sota-icon-control[data-sota-icon="record"],.sota-icon-control[data-sota-icon="stop"] {--sota-action-tint:#f34c68;}
+.sota-icon-control[data-sota-icon="settings"],.sota-icon-control[data-sota-icon="lock"] {--sota-action-tint:#b7c6d2;}
+/* An explicit whole-site one-colour choice can unify the action faces. */
+[data-space-colour-mode="mix"],html[data-space-dialog-colour-mode="mix"] {--sota-unified-tint:initial;}
+[data-space-colour-mode="one"] {--sota-unified-tint:var(--ssd-accent,#17abc4);}
+html[data-space-dialog-colour-mode="one"] {--sota-unified-tint:var(--ssd-accent,#17abc4);}
 .sota-icon-control.ssd-one-colour[data-sota-icon],.sota-icon-control.ssd-palette[data-sota-icon] {
  --sota-icon-size:54px;
  --sota-control-tint:var(--one-accent,var(--swatch,#4488b9));
- --sota-control-glass:var(--one-bg,var(--swatch-panel,#edf7ff));
- --sota-control-ink:var(--one-ink,var(--swatch-ink,#193e56));
+ --sota-control-glass:color-mix(in srgb,var(--one-bg,var(--swatch-panel,#edf7ff)) 22%,#fff);
 }
 
-/* Dark media and heading surfaces use their own light/dark contrast pair. */
+/* The bright dome keeps dark symbols readable over every page and media surface. */
 :is(.sk-music-stage,.sota-music-view-tabs,.nc-toolbar,.nc-live-heading,.bv-studio-head,.bv-account-head,.ssd-head,.tc-dialog-head) [data-sota-icon],
 .spp-dialog>form>header [data-sota-icon] {
  --sota-glass-surface:var(--ssd-panel,#172b45);
- --sota-glass-ink:var(--ssd-ink,#f4fbff);
+ --sota-glass-symbol-ink:#080e16;
 }
 
 :is(button,a)[data-sota-icon]:not(:disabled):not([aria-disabled="true"]):hover,
 .sota-icon-control:not(:disabled):not([aria-disabled="true"]):hover {
- opacity:1;filter:none;transform:translateY(-1px);
- box-shadow:0 4px 9px #15254545,inset 0 1px 2px #fff,inset 0 -3px 6px color-mix(in srgb,var(--sota-control-tint) 52%,transparent),0 0 0 1px #fff,0 0 12px color-mix(in srgb,var(--sota-control-tint) 30%,transparent)!important;
+ opacity:1;filter:brightness(1.04) saturate(1.08);transform:translateY(-1px);
+ --sota-control-state-shadow:var(--sota-control-shadow),0 3px 8px #15254538,0 0 0 1px #fff,0 0 10px color-mix(in srgb,var(--sota-control-tint) 32%,transparent);
+ box-shadow:var(--sota-control-state-shadow)!important;
 }
-:is(button,a)[data-sota-icon]:not(:disabled):active,.sota-icon-control:not(:disabled):active {transform:scale(.95);opacity:.86;}
+:is(button,a)[data-sota-icon]:not(:disabled):active,.sota-icon-control:not(:disabled):active {transform:translateY(1px) scale(.96);filter:brightness(.96);opacity:1;}
 :is(button,a)[data-sota-icon]:is([aria-pressed="true"],[aria-selected="true"],[aria-current="page"],.on),
 .sota-icon-control:is([aria-pressed="true"],[aria-selected="true"],[aria-current="page"],.on) {
  opacity:1;
- box-shadow:0 2px 5px #15254536,inset 0 1px 1px #fff,inset 0 -4px 7px color-mix(in srgb,var(--sota-control-tint) 53%,transparent),0 0 0 2px var(--sota-control-tint),0 0 12px color-mix(in srgb,var(--sota-control-tint) 30%,transparent)!important;
+ --sota-control-state-shadow:var(--sota-control-shadow),0 0 0 2px var(--sota-control-tint),0 0 0 4px #ffffffc7,0 0 12px color-mix(in srgb,var(--sota-control-tint) 35%,transparent);
+ box-shadow:var(--sota-control-state-shadow)!important;
 }
 :is(button,a)[data-sota-icon]:focus-visible,.sota-icon-control:focus-visible {
  outline:3px solid var(--ssd-ink,var(--sota-page-focus,#263c60))!important;outline-offset:4px;
 }
-:is(button,a)[data-sota-icon]:disabled,.sota-icon-control:disabled,[data-sota-icon][aria-disabled="true"] {opacity:.4;cursor:default;transform:none;}
+:is(button,a)[data-sota-icon]:disabled,.sota-icon-control:disabled,[data-sota-icon][aria-disabled="true"] {opacity:.48;cursor:default;transform:none;filter:grayscale(.65);}
+
+/* Category controls retain both their dome reflection and focus tooltip. */
+html:root:root #app.bv-welcome .bv-entry-connections a[data-sota-icon].sota-icon-control::before {
+ content:''!important;background:linear-gradient(180deg,#fff 0%,#fffffff2 20%,#ffffff8c 44%,#ffffff00 100%);box-shadow:0 -1px 1px #ffffffeb;
+}
+html:root:root #app.bv-welcome .bv-entry-connections a[data-sota-icon].sota-icon-control:not(:hover):not(:focus-visible)::after {content:''!important;}
+html:root:root #app.bv-welcome .bv-entry-connections a[data-sota-icon].sota-icon-control:is(:hover,:focus-visible)::after {content:attr(aria-label)!important;}
+html:root:root #app.bv-welcome .bv-entry-share-actions:has(>[data-sota-icon]) {
+ display:flex;grid-template-columns:none;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:10px;
+}
+html:root:root #app.bv-welcome .bv-entry-share-actions>[data-sota-icon].sota-icon-control {grid-column:auto;flex:0 0 var(--sota-icon-size)!important;}
 
 /* Icon-only rows stay compact instead of retaining their former word-pill widths. */
 :is(.sfp-navigation,.bv-entry-account-actions,.sota-music-view-tabs,.sk-playlist-transport,.ssd-mode-tabs):has(>[data-sota-icon]) {
@@ -134,6 +206,7 @@ html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) [data-sot
 .ssd-editor .ssd-one-colours:has(>[data-sota-icon]) {margin-block:18px 12px;}
 
 @media(min-width:761px) {
+ .sota-glass-mark[data-sota-mark],html:root:root #app[data-front-page] .sfp-visual-link>.sota-glass-mark[data-sota-mark] {width:56px;height:56px;min-width:56px;min-height:56px;max-width:56px;max-height:56px;}
  :is(button,a)[data-sota-icon],.sota-icon-control {--sota-icon-size:48px;}
  :is(.sfp-navigation,.bv-home-section-nav,nav.bottom) [data-sota-icon],
  .sota-icon-control[data-sota-icon="close"],.sota-icon-control[data-sota-icon="back"],.sota-icon-control[data-sota-icon="cancel"] {--sota-icon-size:44px;}
@@ -143,22 +216,66 @@ html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) [data-sot
  :is(.sfp-navigation,.bv-entry-account-actions,.sota-music-view-tabs,.sk-playlist-transport):has(>[data-sota-icon]) {gap:6px;}
 }
 @media(prefers-contrast:more) {
- :is(button,a)[data-sota-icon],.sota-icon-control {--sota-control-glass:var(--sota-glass-surface,var(--ssd-panel,#fff));--sota-control-background:var(--sota-control-glass);--sota-control-border:currentColor;opacity:1;}
+ :is(button,a)[data-sota-icon],.sota-icon-control,.sota-glass-content[data-sota-glass="content"],.sota-glass-mark[data-sota-mark] {--sota-control-background:#fff;--sota-control-ink:#080e16;--sota-control-border:currentColor;opacity:1;}
+ .sota-control-symbol,.sota-glass-mark[data-sota-mark]>svg {filter:none;}
+ .sota-glass-preview[data-sota-glass="preview"] {border-color:#080e16;box-shadow:none;}
 }
 @media(prefers-reduced-motion:reduce) {
  :is(button,a)[data-sota-icon],.sota-icon-control {transition:none;}
  :is(button,a)[data-sota-icon]:hover,:is(button,a)[data-sota-icon]:active,.sota-icon-control:hover,.sota-icon-control:active {transform:none;}
 }
 @media(forced-colors:active) {
- :is(button,a)[data-sota-icon],.sota-icon-control {--sota-tooltip-surface:Canvas;--sota-tooltip-ink:CanvasText;--sota-control-background:ButtonFace;--sota-control-ink:ButtonText;--sota-control-border:ButtonText;background:ButtonFace!important;color:ButtonText!important;border:1px solid ButtonText!important;box-shadow:none!important;backdrop-filter:none;-webkit-backdrop-filter:none;opacity:1;}
- :is(button,a)[data-sota-icon]::before,:is(button,a)[data-sota-icon]::after,.sota-icon-control::before,.sota-icon-control::after {display:none;}
- .sota-control-symbol {filter:none;}
+ :is(button,a)[data-sota-icon],.sota-icon-control,.sota-glass-content[data-sota-glass="content"],
+ html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) :is([data-sota-icon].sota-icon-control,.sota-glass-content[data-sota-glass="content"]),
+ html:root:root #app[data-front-page] .sfp-visual-link>.sota-glass-mark[data-sota-mark] {
+  --sota-tooltip-surface:Canvas;--sota-tooltip-ink:CanvasText;--sota-control-background:ButtonFace;--sota-control-ink:ButtonText;--sota-control-border:ButtonText;
+  background:ButtonFace!important;color:ButtonText!important;border:2px solid ButtonText!important;
+  box-shadow:none!important;backdrop-filter:none;-webkit-backdrop-filter:none;opacity:1;filter:none;
+ }
+ :is(button,a)[data-sota-icon]::before,:is(button,a)[data-sota-icon]::after,.sota-icon-control::before,.sota-icon-control::after,.sota-glass-mark[data-sota-mark]::before {display:none!important;}
+ .sota-control-symbol,.sota-glass-mark[data-sota-mark]>svg {filter:none;}
+ .sota-glass-preview[data-sota-glass="preview"] {border-color:ButtonText;box-shadow:none;}
+ html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) [data-sota-icon].sota-icon-control:is(:hover,:focus-visible,:active,[aria-pressed="true"],[aria-selected="true"],[aria-current="page"],.on) {box-shadow:none!important;filter:none;}
  :is(button,a)[data-sota-icon]:is([aria-pressed="true"],[aria-selected="true"],[aria-current="page"],.on) {outline:2px solid Highlight;outline-offset:2px;}
  :is(button,a)[data-sota-icon]:focus-visible,.sota-icon-control:focus-visible {outline-color:Highlight!important;}
 }
 
+/* Historical header pills use layered important declarations. Only converted
+   controls override that layer; the original music badge and brand remain separate. */
+@layer dimau-history-lighting {
+ html:root body :is(#app#app#app#app,#workspace#workspace#workspace#workspace,#nativeCalls#nativeCalls#nativeCalls#nativeCalls) :is(button,a)[data-sota-icon].sota-icon-control {
+  display:inline-grid!important;box-sizing:border-box!important;place-items:center!important;align-items:center!important;justify-content:center!important;
+  flex:0 0 var(--sota-icon-size)!important;width:var(--sota-icon-size)!important;height:var(--sota-icon-size)!important;
+  min-width:var(--sota-icon-size)!important;min-height:var(--sota-icon-size)!important;max-width:var(--sota-icon-size)!important;max-height:var(--sota-icon-size)!important;
+  padding:0!important;gap:0!important;border:2px solid var(--sota-control-border,transparent)!important;border-radius:50%!important;
+  background:var(--sota-control-background)!important;color:var(--sota-control-ink)!important;
+  box-shadow:var(--sota-control-state-shadow,var(--sota-control-shadow))!important;
+  font-size:0!important;line-height:1!important;text-shadow:none!important;letter-spacing:0!important;
+ }
+ html:root body :is(#app#app#app#app,#workspace#workspace#workspace#workspace,#nativeCalls#nativeCalls#nativeCalls#nativeCalls) :is(button,a)[data-sota-icon].sota-icon-control:focus-visible {
+  outline:3px solid var(--ssd-ink,var(--sota-page-focus,#263c60))!important;outline-offset:4px!important;
+ }
+ @media(forced-colors:active) {
+  html:root body :is(#app#app#app#app,#workspace#workspace#workspace#workspace,#nativeCalls#nativeCalls#nativeCalls#nativeCalls) :is(button,a)[data-sota-icon].sota-icon-control {background:ButtonFace!important;color:ButtonText!important;border-color:ButtonText!important;box-shadow:none!important;}
+  html:root body :is(#app#app#app#app,#workspace#workspace#workspace#workspace,#nativeCalls#nativeCalls#nativeCalls#nativeCalls) :is(button,a)[data-sota-icon].sota-icon-control:focus-visible {outline-color:Highlight!important;}
+ }
+}
+
+/* Converted chat/call controls replace their old masked pseudo glyph with a glass reflection. */
+html:root:root body.sk-chat .sk-icon[data-sota-icon].sota-icon-control::before,
+html:root:root body.nc-in-call #ncLive .nc-round[data-sota-icon].sota-icon-control::before {
+ mask:none!important;-webkit-mask:none!important;inset:auto!important;left:18%!important;right:18%!important;top:5%!important;bottom:auto!important;
+ width:auto!important;height:24%!important;min-width:0!important;min-height:0!important;
+ background:linear-gradient(180deg,#fff 0%,#fffffff2 20%,#ffffff8c 44%,#ffffff00 100%)!important;
+ border:0!important;border-radius:50%!important;transform:rotate(-12deg)!important;
+}
+
 /* Hidden actions stay hidden in every theme and modal layer. Keep this last. */
-.sota-icon-control[hidden],:is(button,a)[data-sota-icon][hidden],
+@layer dimau-history-lighting {
+ html:root body :is(#app#app#app#app,#workspace#workspace#workspace#workspace,#nativeCalls#nativeCalls#nativeCalls#nativeCalls) :is(button,a)[data-sota-icon].sota-icon-control[hidden] {display:none!important;}
+}
+.sota-icon-control[hidden],:is(button,a)[data-sota-icon][hidden],.sota-glass-content[hidden],.sota-glass-preview[hidden],.sota-glass-mark[hidden],
+html:root:root #app[data-front-page] .sfp-visual-link>.sota-glass-mark[data-sota-mark][hidden],
 html:root:root :is(#app,#workspace,#nativeCalls,body.cr,dialog,.modal) :is(button,a)[data-sota-icon].sota-icon-control[hidden] {
  display:none!important;
 }

@@ -44,7 +44,9 @@
     function visual(container,view,label){
       if(!container)return;
       const anchor=created('a','sfp-visual-link','visual-link');anchor.href='#'+view;anchor.dataset.frontView=view;anchor.setAttribute('aria-label',label);
-      const caption=root.document.createElement('span');caption.textContent=label+' ↗';anchor.append(caption);container.append(anchor);
+      const caption=root.document.createElement('span');caption.className='sfp-visual-symbol sota-glass-mark';caption.dataset.sotaMark=view;caption.setAttribute('aria-hidden','true');anchor.title=label;
+      const paths={profile:'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21v-2a8 8 0 0 1 16 0v2',music:'M9 17V5l11-2v12M9 8l11-2M9 17c0 2-2 3-4 3s-3-1-3-2.5S4 15 6 15c1 0 2 .5 3 1M20 15c0 2-2 3-4 3s-3-1-3-2.5 2-2.5 4-2.5c1 0 2 .5 3 1',world:'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18Z',talanoa:'M21 11a8 8 0 0 1-8 8H7l-5 3 2-6a8 8 0 1 1 17-5ZM7 10h10M7 14h6',skins:'M20 13a8 8 0 1 0-9 8h2a2 2 0 0 0 1-4 2 2 0 0 1 2-3h2a2 2 0 0 0 2-1ZM7 9h.01M10 6h.01M15 7h.01M6 13h.01'};
+      const svg=root.document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('width','26');svg.setAttribute('height','26');svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','2.5');svg.setAttribute('stroke-linecap','round');svg.setAttribute('stroke-linejoin','round');svg.setAttribute('focusable','false');const path=root.document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',paths[view]||paths.world);svg.append(path);caption.append(svg);anchor.append(caption);container.append(anchor);
     }
     visual(app.querySelector('.sk-hero-artwork'),'profile','Open your space');
     visual(app.querySelector('#sota-music-home .bv-music-feature'),'music','Open music');
