@@ -66,15 +66,15 @@
       candidates.push({x:point.x,y:point.y+vertical+extra},{x:point.x,y:point.y-vertical-extra});
       if(step<3)candidates.push({x:point.x-side,y:point.y+step*(h+7)},{x:point.x+side,y:point.y-step*(h+7)});
     }
+    // On narrow screens, search spare space across the view as well as near the node.
+    for(let y=half+5;y<=height-half-68;y+=h+7)for(let x=w/2+5;x<=width-w/2-5;x+=Math.max(24,w*.45))candidates.push({x,y});
     let best=null,bestScore=Infinity;
     for(const candidate of candidates){
-      const x=clamp(candidate.x,w/2+5,width-w/2-5),y=clamp(candidate.y,half+5,height-half-12);
+      const x=clamp(candidate.x,w/2+5,width-w/2-5),y=clamp(candidate.y,half+5,height-half-68);
+      if(x+w/2>width-120&&y-half<55)continue;
       let score=Math.hypot(x-point.x,y-point.y)+(candidate.y<point.y?3:0);
       for(const b of placed){const ox=(w+b.w)/2+5-Math.abs(x-b.x),oy=(h+b.h)/2+5-Math.abs(y-b.y);if(ox>0&&oy>0)score+=1000000+ox*oy*100;}
       for(const sphere of spheres){const dx=Math.max(0,Math.abs(sphere.x-x)-w/2),dy=Math.max(0,Math.abs(sphere.y-y)-half),overlap=sphere.radius+4-Math.hypot(dx,dy);if(overlap>0)score+=overlap*overlap*80;}
-      // Leave the background selector and bottom controls/instructions unobscured.
-      if(x+w/2>width-120&&y-half<55)score+=50000;
-      if(y+half>height-62)score+=50000;
       if(score<bestScore){best={x,y};bestScore=score;}
     }
     return best;

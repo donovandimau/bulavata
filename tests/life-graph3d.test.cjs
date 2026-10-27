@@ -45,6 +45,19 @@ test('large captions stay within a phone graph and avoid nearby names and view c
     placed.push({...result,w,h});
   }
 });
+test('phone category names remain separate as the graph turns',()=>{
+  const labels=['Friends','Family','Teachers','Workmates','School mates','Dog','Cat','Other pets','Nature','Other connections'];
+  const nodes=[{id:'you',label:'You',kind:'you'},...categories.map((id,i)=>({id,label:labels[i],kind:'category'}))],positions=graph3d.layout({nodes});
+  for(let yaw=0;yaw<Math.PI*2;yaw+=.25){
+    const width=326,height=445,projected=nodes.map(n=>({n,...graph3d.project(positions.get(n.id),{width,height,yaw,pitch:-.08,distance:8.8*height/width})})).sort((a,b)=>a.depth-b.depth),placed=[];
+    const spheres=projected.map(p=>({...p,radius:(p.n.kind==='you'?.44:.32)*(p.n.id==='friends'?1.22:1)*height/(2*Math.tan(.7/2)*p.depth)}));
+    for(const p of spheres){
+      const w=Math.min(p.n.kind==='you'?84:180,Math.max(60,p.n.label.length*8+28)),h=34,r=graph3d.placeCaption(p,{width,height,w,h},placed,spheres);
+      for(const other of placed)assert(Math.abs(r.x-other.x)>=(w+other.w)/2||Math.abs(r.y-other.y)>=(h+other.h)/2,`overlap at yaw ${yaw}: ${p.n.label}`);
+      assert(r.y+h/2<=height-62);assert(!(r.x+w/2>width-120&&r.y-h/2<55));placed.push({...r,w,h});
+    }
+  }
+});
 test('untrusted shape cannot introduce duplicate IDs, dangling edges or CSS colours',()=>{
   const result=graph3d.normalize({nodes:[...scene.nodes,scene.nodes[0],{id:'bad',color:'url(https://example.test)',label:'bad'}],edges:[...scene.edges,scene.edges[0],{source:'you',target:'unknown'},{source:'you',target:'you'}]});
   assert.equal(result.nodes.length,13);assert.equal(result.edges.length,11);assert.equal(result.nodes.at(-1).color,'#55b9ff');
