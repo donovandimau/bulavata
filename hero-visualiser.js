@@ -22,40 +22,42 @@
     const session={host,image,canvas,engine,surfaces,cleanup:[],audio:null,graph:null,frame:0,last:0,buffering:false,failed:false,pending:null,epoch:0,mode:'spectrum',motionPaused:false,previewTime:0};
     current=session;
     const valid=()=>current===session&&host.isConnected;
+    // Home is a still gallery; the Music page retains its live controls.
+    const still=()=>target.dataset.frontPage==='home';
     const listen=(node,event,fn,options)=>{node?.addEventListener(event,fn,options);session.cleanup.push(()=>node?.removeEventListener(event,fn,options));};
     session.stop=()=>{if(session.frame)root.cancelAnimationFrame(session.frame);session.frame=0;session.last=0;};
     const motion=root.matchMedia?.('(prefers-reduced-motion: reduce)');
     const state=value=>{
       host.dataset.state=value;
-      const labels={idle:'Ambient visual preview · choose a song to react to your music',live:'Live music visualiser · reacting to the playing song',paused:'Ambient visual preview · music is paused',waiting:'Ambient visual preview · waiting for audio',unavailable:surfaces.some(part=>part.ctx)?'Ambient visual preview · audio analysis unavailable; music playback is unchanged':'Music visualiser unavailable · music playback is unchanged','reduced-motion':'Visual preview motion paused for your device preference','motion-paused':'Visual motion paused'};
+      const labels={still:'Still rainbow music visual · open Music to explore your soundtrack',idle:'Ambient visual preview · choose a song to react to your music',live:'Live music visualiser · reacting to the playing song',paused:'Ambient visual preview · music is paused',waiting:'Ambient visual preview · waiting for audio',unavailable:surfaces.some(part=>part.ctx)?'Ambient visual preview · audio analysis unavailable; music playback is unchanged':'Music visualiser unavailable · music playback is unchanged','reduced-motion':'Visual preview motion paused for your device preference','motion-paused':'Visual motion paused'};
       host.setAttribute('aria-label',labels[value]||labels.idle);
       if(stage){
         stage.dataset.state=value;stage.querySelector('.sk-music-stage-picture')?.setAttribute('aria-label',labels[value]||labels.idle);
         const status=stage.querySelector('[data-stage-status]');
-        if(status)status.textContent=({idle:'AMBIENT PREVIEW · Choose a song for live audio visuals',live:'LIVE AUDIO · Moving to your music',paused:'AMBIENT PREVIEW · Music is paused',waiting:'AMBIENT PREVIEW · Waiting for audio',unavailable:surfaces.some(part=>part.ctx)?'AMBIENT PREVIEW · Audio analysis unavailable':'Visuals unavailable · music can keep playing','reduced-motion':'Motion paused · following your device preference','motion-paused':'Visuals paused'})[value]||'';
+        if(status)status.textContent=({still:'Still rainbow music visual',idle:'AMBIENT PREVIEW · Choose a song for live audio visuals',live:'LIVE AUDIO · Moving to your music',paused:'AMBIENT PREVIEW · Music is paused',waiting:'AMBIENT PREVIEW · Waiting for audio',unavailable:surfaces.some(part=>part.ctx)?'AMBIENT PREVIEW · Audio analysis unavailable':'Visuals unavailable · music can keep playing','reduced-motion':'Motion paused · following your device preference','motion-paused':'Visuals paused'})[value]||'';
         const toggle=stage.querySelector('[data-stage-motion]');
         if(toggle){toggle.disabled=!!motion?.matches;toggle.setAttribute('aria-pressed',String(session.motionPaused));toggle.textContent=session.motionPaused?'Resume visuals':'Pause visuals';}
       }
     };
     const visible=part=>part.ctx&&part.host?.isConnected&&part.visible&&(!part.host.getClientRects||part.host.getClientRects().length>0)&&part.host.getBoundingClientRect().width>0;
-    const active=()=>valid()&&surfaces.some(visible)&&!root.document.hidden&&!session.motionPaused&&!motion?.matches&&!root.document.querySelector('dialog[open]:not(.sk-playlist-inline)');
+    const active=()=>valid()&&!still()&&surfaces.some(visible)&&!root.document.hidden&&!session.motionPaused&&!motion?.matches&&!root.document.querySelector('dialog[open]:not(.sk-playlist-inline)');
     const liveAudio=()=>session.graph?.context?.state==='running'&&session.audio&&session.audio.readyState>=3&&!session.audio.paused&&!session.audio.ended&&!session.audio.error&&!session.buffering&&!session.failed;
     function displayState(live){
-      return !surfaces.some(part=>part.ctx)?'unavailable':motion?.matches?'reduced-motion':session.motionPaused?'motion-paused':live?'live':session.failed?'unavailable':session.audio?.paused||session.audio?.ended?'paused':session.audio?'waiting':'idle';
+      return !surfaces.some(part=>part.ctx)?'unavailable':still()?'still':motion?.matches?'reduced-motion':session.motionPaused?'motion-paused':live?'live':session.failed?'unavailable':session.audio?.paused||session.audio?.ended?'paused':session.audio?'waiting':'idle';
     }
     function render(live){
       if(!valid())return;
-      const data=live?engine.sample(session.audio):null,ratio=Math.min(root.devicePixelRatio||1,2);
+      const frozen=still(),data=live&&!frozen?engine.sample(session.audio):null,previewTime=frozen?1200:session.previewTime,mode=frozen?'spectrum':session.mode,ratio=Math.min(root.devicePixelRatio||1,2);
       for(const part of surfaces){
         if(!part.ctx||!part.canvas||!visible(part))continue;
         const {ctx,canvas,large}=part,rect=canvas.getBoundingClientRect();
         const width=Math.max(1,Math.min(1920,Math.round(rect.width*ratio))),height=Math.max(1,Math.min(1080,Math.round(rect.height*ratio)));
         if(canvas.width!==width)canvas.width=width;if(canvas.height!==height)canvas.height=height;
-        ctx.clearRect(0,0,width,height);part.drawState.preview=!data;part.drawState.previewTime=session.previewTime;
+        ctx.clearRect(0,0,width,height);if(frozen)part.drawState={};part.drawState.preview=!data;part.drawState.previewTime=previewTime;
         ctx.save();
         if(large){ctx.shadowColor='#ff40dd';ctx.shadowBlur=10*ratio;ctx.globalCompositeOperation='screen';}
-        engine.draw(ctx,width,height,{mode:large?session.mode:'waveform',theme:large?'rainbow':'ocean',gain:large?1.5:1},part.drawState,data,false);
-        if(large&&session.mode==='spectrum')engine.draw(ctx,width,height,{mode:'waveform',theme:'rainbow',gain:1.3},{preview:!data,previewTime:session.previewTime},data,false);
+        engine.draw(ctx,width,height,{mode:large?mode:'waveform',theme:large||frozen?'rainbow':'ocean',gain:large?1.5:1},part.drawState,data,false);
+        if(large&&mode==='spectrum')engine.draw(ctx,width,height,{mode:'waveform',theme:'rainbow',gain:1.3},{preview:!data,previewTime},data,false);
         ctx.restore();
       }
     }
