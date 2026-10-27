@@ -44,4 +44,12 @@
 .lg3d-dragging,.lg3d-dragging .lg3d-label,.lg3d-dragging canvas{cursor:grabbing}
 
 /* A fine tether keeps displaced names visibly connected to their own sphere. */
-#app .slc button.lg3d-label::before{content:"";position:absolute;left:calc(50% + var(--lg3d-tether-x,0px));top:calc(50% + var(--lg3d-tether-y,0px));width:var(--lg3d-tether-length,0px);height:1px;transform:rotate(var(--lg3d-tether-angle,0rad));transform-origin:0 50%;background:var(--lg3d-color,#b9dcff);opacity:.75;pointer-events:none}
+#app .slc button.lg3d-label::before{content:"";position:absolute;left:calc(50% + var(--lg3d-tether-x,0px));top:calc(50% + var(--lg3d-tether-y,0px));width:var(--lg3d-tether-length,0px);height:1px;transform:rotate(var(--lg3d-tether-angle,0rad));transform-origin:0 50%;background:var(--lg3d-color,#b9dcff);opacity:.35;pointer-events:none}
+
+/* Controls have their own row; names and spheres own the whole canvas. */
+#app .slc .lg3d-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 15px;background:#0c1c2d;border-bottom:1px solid #294155}
+#app .slc .lg3d-toolbar select.lg3d-background{position:static;flex:0 1 112px;width:112px;margin:0;font-size:12px;border-radius:12px;background:#152c40}
+#app .slc .lg3d-toolbar .lg3d-controls{position:static;display:flex;flex-shrink:0;gap:8px}
+#app .slc .lg3d-state{position:static;max-width:none;padding:11px 15px;margin:0;border-top:1px solid #23394e;background:#0a1929;font-size:11px;line-height:1.5;text-align:center;color:#afc5d9}
+#app .slc .lg3d-caption{border-color:color-mix(in srgb,var(--lg3d-color) 45%,#263b50);box-shadow:0 3px 10px #02061355}
+@media(max-width:600px){#app .slc .lg3d-stage{height:490px}#app .slc .lg3d-toolbar{padding:10px 12px;gap:10px}#app .slc .lg3d-state{font-size:11px;padding:10px 12px;max-width:none}}

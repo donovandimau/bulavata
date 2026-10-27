@@ -38,9 +38,7 @@ test('large captions stay within a phone graph and avoid nearby names and view c
   for(const point of [{x:8,y:25,radius:18},{x:15,y:30,radius:18},{x:300,y:425,radius:22},{x:300,y:10,radius:18}]){
     const result=graph3d.placeCaption(point,{width,height,w,h},placed,[point]);
     assert(result.x-w/2>=5&&result.x+w/2<=width-5);
-    assert(result.y-h/2>=5&&result.y+h/2<=height-12);
-    assert(result.y+h/2<=height-62);
-    assert(!(result.x+w/2>width-120&&result.y-h/2<55));
+    assert(result.y-h/2>=5&&result.y+h/2<=height-10);
     for(const other of placed)assert(Math.abs(result.x-other.x)>=(w+other.w)/2||Math.abs(result.y-other.y)>=(h+other.h)/2);
     placed.push({...result,w,h});
   }
@@ -54,7 +52,7 @@ test('phone category names remain separate as the graph turns',()=>{
     for(const p of spheres){
       const w=Math.min(p.n.kind==='you'?84:180,Math.max(60,p.n.label.length*8+28)),h=34,r=graph3d.placeCaption(p,{width,height,w,h},placed,spheres);
       for(const other of placed)assert(Math.abs(r.x-other.x)>=(w+other.w)/2||Math.abs(r.y-other.y)>=(h+other.h)/2,`overlap at yaw ${yaw}: ${p.n.label}`);
-      assert(r.y+h/2<=height-62);assert(!(r.x+w/2>width-120&&r.y-h/2<55));placed.push({...r,w,h});
+      assert(r.y+h/2<=height-10);placed.push({...r,w,h});
     }
   }
 });
@@ -83,6 +81,7 @@ test('sphere captions preserve accessible selection, safe names and updates',{sk
   t.after(()=>w.close());w.matchMedia=()=>({matches:true});w.HTMLCanvasElement.prototype.getContext=()=>gl;
   w.HTMLElement.prototype.getBoundingClientRect=()=>({width:600,height:520});
   const view=graph3d.mount(host,{...scene,onSelect:id=>picks.push(id),motion:false});
+  for(const selector of ['.lg3d-background','.lg3d-controls','.lg3d-state'])assert.equal(host.querySelector(selector).closest('.lg3d-stage'),null,'controls and instructions stay outside the canvas');
   const family=host.querySelector('.lg3d-label[data-lg3d-pick="family"]'),caption=family.querySelector('.lg3d-caption');
   assert.equal(family.getAttribute('aria-label'),'family, connection category');assert.equal(family.hidden,false);
   caption.click();assert.deepEqual(picks,['family']);assert.equal(family.getAttribute('aria-pressed'),'true');assert.equal(family.querySelector('.lg3d-caption'),caption);

@@ -35,9 +35,9 @@
 #app.bv-welcome[data-front-page=home] #sota-music-home .bv-music-feature>img{position:relative;inset:auto;display:block;width:100%;height:auto;object-fit:contain;object-position:center}
 #app.bv-welcome[data-front-page=home] #sota-music-home .bv-music-copy{position:absolute;top:0;left:0;max-width:100%;padding:30px}
 #app.bv-welcome[data-front-page=home] #sota-music-home .bv-music-feature::after{background:linear-gradient(125deg,#072d33d9 0%,#102b3740 45%,transparent 70%)}
-#app.bv-welcome[data-front-page=home] #sota-music-home .sk-music-stage{background:radial-gradient(ellipse at 18% 70%,#a70c963b,transparent 55%),radial-gradient(ellipse at 82% 30%,#00dccb40,transparent 55%),linear-gradient(110deg,#341057,#122c5d 55%,#542076)}
-#app.bv-welcome[data-front-page=home] .sk-music-stage-picture canvas{filter:saturate(1.8) brightness(1.45)}
-#app[data-front-page=home] #sota-connections :is(.scf-heading p,.slc-topline,.slc-intro,.slc-under-map,.slc-details,.slc-storage,.slc-friend-sync,.scf-warning,[data-friend-privacy],.lg3d-background,.lg3d-controls,.lg3d-outline,.lg3d-state){display:none!important}
+#app.bv-welcome[data-front-page=home] #sota-music-home .sk-music-stage{background:radial-gradient(ellipse at 15% 85%,#ff542b1a,transparent 45%),radial-gradient(ellipse at 52% 80%,#18efa018,transparent 45%),radial-gradient(ellipse at 88% 70%,#8e48ff26,transparent 45%),#090d25}
+#app.bv-welcome[data-front-page=home] .sk-music-stage-picture canvas{filter:none}
+#app[data-front-page=home] #sota-connections :is(.scf-heading p,.slc-topline,.slc-intro,.slc-under-map,.slc-details,.slc-storage,.slc-friend-sync,.scf-warning,[data-friend-privacy],.lg3d-toolbar,.lg3d-background,.lg3d-controls,.lg3d-outline,.lg3d-state){display:none!important}
 #app[data-front-page=home] #sota-connections.sc-friends{padding:18px;background:#081322;border-color:#426384}
 #app[data-front-page=home] #sota-connections .scf-heading{margin:0 0 14px}
 #app[data-front-page=home] #sota-connections .scf-heading h2{color:#e7f3ff;font-size:26px}
@@ -91,3 +91,6 @@
 #app.bv-welcome[data-front-page] #bv-your-room :is(.bv-discovery-all,.bv-collection-card):focus-visible{outline:3px solid #08768a;outline-offset:4px}
 @media(max-width:760px){#app.bv-welcome[data-front-page] #bv-your-room .bv-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#app.bv-welcome[data-front-page] #bv-your-room .bv-collection-grid>.bv-collection-card{height:190px!important}}
 @media(max-width:480px){#app.bv-welcome[data-front-page] #bv-your-room .bv-collection-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* Keep one close control on the graph card, away from the interactive scene. */
+#app[data-front-page=world] .sfp-page-close{display:none!important}

@@ -67,14 +67,13 @@
       if(step<3)candidates.push({x:point.x-side,y:point.y+step*(h+7)},{x:point.x+side,y:point.y-step*(h+7)});
     }
     // On narrow screens, search spare space across the view as well as near the node.
-    for(let y=half+5;y<=height-half-68;y+=h+7)for(let x=w/2+5;x<=width-w/2-5;x+=Math.max(24,w*.45))candidates.push({x,y});
+    for(let y=half+5;y<=height-half-10;y+=h+7)for(let x=w/2+5;x<=width-w/2-5;x+=Math.max(24,w*.45))candidates.push({x,y});
     let best=null,bestScore=Infinity;
     for(const candidate of candidates){
-      const x=clamp(candidate.x,w/2+5,width-w/2-5),y=clamp(candidate.y,half+5,height-half-68);
-      if(x+w/2>width-120&&y-half<55)continue;
+      const x=clamp(candidate.x,w/2+5,width-w/2-5),y=clamp(candidate.y,half+5,height-half-10);
       let score=Math.hypot(x-point.x,y-point.y)+(candidate.y<point.y?3:0);
       for(const b of placed){const ox=(w+b.w)/2+5-Math.abs(x-b.x),oy=(h+b.h)/2+5-Math.abs(y-b.y);if(ox>0&&oy>0)score+=1000000+ox*oy*100;}
-      for(const sphere of spheres){const dx=Math.max(0,Math.abs(sphere.x-x)-w/2),dy=Math.max(0,Math.abs(sphere.y-y)-half),overlap=sphere.radius+4-Math.hypot(dx,dy);if(overlap>0)score+=overlap*overlap*80;}
+      for(const sphere of spheres){const dx=Math.max(0,Math.abs(sphere.x-x)-w/2),dy=Math.max(0,Math.abs(sphere.y-y)-half),overlap=sphere.radius+4-Math.hypot(dx,dy);if(overlap>0)score+=overlap*overlap*5;}
       if(score<bestScore){best={x,y};bestScore=score;}
     }
     return best;
@@ -128,7 +127,7 @@
     let width=600,height=500,yaw=.28,pitch=-.08,distance=8.8,requestedMotion=!!motion;
     const media=win.matchMedia?.('(prefers-reduced-motion: reduce)');
     const on=(el,event,fn,options)=>{el.addEventListener(event,fn,options);listeners.push(()=>el.removeEventListener(event,fn,options));};
-    host.classList.add('lg3d');host.dataset.background='galaxy';host.innerHTML=`<div class="lg3d-stage" data-lg3d-stage><canvas data-lg3d-canvas aria-label="Three dimensional life connections" role="img"></canvas><div class="lg3d-labels" data-lg3d-labels></div><select class="lg3d-background" data-lg3d-background aria-label="Graph background"><option value="galaxy">Galaxy</option><option value="dark">Dark</option></select><div class="lg3d-controls" aria-label="3D view controls"><button type="button" data-lg3d-zoom-in aria-label="Zoom into connection graph">+</button><button type="button" data-lg3d-zoom-out aria-label="Zoom out of connection graph">−</button><button type="button" data-lg3d-reset>Reset</button></div><p class="lg3d-state" data-lg3d-state role="status">Preparing 3D view…</p></div><details class="lg3d-outline" data-lg3d-outline><summary>Connection list <span data-lg3d-list-count></span></summary><div class="lg3d-list" data-lg3d-list></div></details>`;
+    host.classList.add('lg3d');host.dataset.background='galaxy';host.innerHTML=`<div class="lg3d-toolbar" aria-label="Graph appearance and view"><select class="lg3d-background" data-lg3d-background aria-label="Graph background"><option value="galaxy">Galaxy</option><option value="dark">Dark</option></select><div class="lg3d-controls" aria-label="3D view controls"><button type="button" data-lg3d-zoom-in aria-label="Zoom into connection graph">+</button><button type="button" data-lg3d-zoom-out aria-label="Zoom out of connection graph">−</button><button type="button" data-lg3d-reset>Reset</button></div></div><div class="lg3d-stage" data-lg3d-stage><canvas data-lg3d-canvas aria-label="Three dimensional life connections" role="img"></canvas><div class="lg3d-labels" data-lg3d-labels></div></div><p class="lg3d-state" data-lg3d-state role="status">Preparing 3D view…</p><details class="lg3d-outline" data-lg3d-outline><summary>Connection list <span data-lg3d-list-count></span></summary><div class="lg3d-list" data-lg3d-list></div></details>`;
     const canvas=q('[data-lg3d-canvas]'),stage=q('[data-lg3d-stage]'),labels=q('[data-lg3d-labels]');
     let labelButtons=new Map(),movedPoints=new Map(),suppressClickUntil=0,savingAvailable=true;
     const instructions='Drag a node to move it · drag empty space to rotate';

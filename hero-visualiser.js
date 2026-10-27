@@ -55,8 +55,9 @@
         if(canvas.width!==width)canvas.width=width;if(canvas.height!==height)canvas.height=height;
         ctx.clearRect(0,0,width,height);if(frozen)part.drawState={};part.drawState.preview=!data;part.drawState.previewTime=previewTime;
         ctx.save();
-        if(large){ctx.shadowColor='#ff40dd';ctx.shadowBlur=10*ratio;ctx.globalCompositeOperation='screen';}
-        engine.draw(ctx,width,height,{mode:large?mode:'waveform',theme:large||frozen?'rainbow':'ocean',gain:large?1.5:1},part.drawState,data,false);
+        // Preserve each hue: additive pink glow used to wash the whole spectrum pale.
+        ctx.globalCompositeOperation='source-over';
+        engine.draw(ctx,width,height,{mode:large?mode:'waveform',theme:large||frozen?'rainbow':'ocean',gain:large?1.5:1,vivid:large||frozen},part.drawState,data,false);
         if(large&&mode==='spectrum')engine.draw(ctx,width,height,{mode:'waveform',theme:'rainbow',gain:1.3},{preview:!data,previewTime},data,false);
         ctx.restore();
       }

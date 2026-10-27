@@ -4,7 +4,7 @@
   if(root.DimauMusicVisuals)return;
   const graphs=new WeakMap();
   const modes=['spectrum','waveform','halo','ocean'];
-  const palettes={rainbow:['#df1479','#ee6c12','#d5a000','#009d8c','#176cdb','#8436d3'],ocean:['#009cbe','#3458d4','#00b48b'],ember:['#d9480f','#de2474','#e4a100'],violet:['#8436d3','#146ecc','#d31b8d'],mono:['#456477','#748597','#243b53']};
+  const palettes={rainbow:['#ff3048','#ff8a18','#ffe62e','#8ded24','#16e879','#00dce8','#1786ff','#6248ff','#b944ff','#ff38ca'],ocean:['#009cbe','#3458d4','#00b48b'],ember:['#d9480f','#de2474','#e4a100'],violet:['#8436d3','#146ecc','#d31b8d'],mono:['#456477','#748597','#243b53']};
   const abortError=signal=>signal?.reason||new DOMException('Cancelled','AbortError');
   const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
   let context;
@@ -74,12 +74,13 @@
       const aura=ctx.createRadialGradient(w*.52,h*.4,0,w*.52,h*.4,w*.6);aura.addColorStop(0,colours[1]+'22');aura.addColorStop(1,colours[1]+'00');ctx.fillStyle=aura;ctx.fillRect(0,0,w,h);
       ctx.strokeStyle='#194f6620';ctx.lineWidth=1;for(let i=1;i<5;i++){ctx.beginPath();ctx.moveTo(w*.06,h*i/5);ctx.lineTo(w*.94,h*i/5);ctx.stroke();}
     }
-    const gradient=ctx.createLinearGradient(0,0,w,h*.2);colours.forEach((colour,i)=>gradient.addColorStop(i/(colours.length-1),colour));ctx.fillStyle=gradient;ctx.strokeStyle=gradient;
+    const gradient=ctx.createLinearGradient(w*.07,0,w*.93,0);colours.forEach((colour,i)=>gradient.addColorStop(i/(colours.length-1),colour));ctx.fillStyle=gradient;ctx.strokeStyle=gradient;
     if(mode==='spectrum'){
       if(!state.peaks)state.peaks=new Float32Array(64);
       for(let i=0;i<64;i++){
         const v=clamp(f[i]*gain,0,1),x=w*.07+i*w*.86/64,bw=Math.max(1,w*.86/64*.65),height=Math.max(1,v*h*.62);
-        ctx.globalAlpha=.8;ctx.fillRect(x,base-height,bw,height);ctx.globalAlpha=.1;ctx.fillRect(x,base+4,bw,height*.2);
+        if(settings.vivid){ctx.shadowColor=colours[Math.min(colours.length-1,Math.floor(i/64*colours.length))];ctx.shadowBlur=Math.min(10,h*.035);}
+        ctx.globalAlpha=settings.vivid?1:.8;ctx.fillRect(x,base-height,bw,height);ctx.globalAlpha=settings.vivid?.16:.1;ctx.fillRect(x,base+4,bw,height*.2);
         const decay=Number.isFinite(state.dt)?clamp(state.dt,0,100)/1000*.32:.012;
         state.peaks[i]=Math.max(v,state.peaks[i]-decay);ctx.globalAlpha=.9;ctx.fillStyle=colours[Math.min(colours.length-1,Math.floor(i/64*colours.length))];ctx.fillRect(x,base-state.peaks[i]*h*.62-3,bw,1.5);ctx.fillStyle=gradient;
       }

@@ -73,12 +73,12 @@
     const saved=readRecords(storage,owner);
     let records=saved.records,remote=acceptedFriends(friends),selected='friends',query='',editing='',disposed=false,saveAvailable=saved.available;
     const motionPreference=window.matchMedia?.('(prefers-reduced-motion: reduce)');
-    let motion=!motionPreference?.matches,renderer=null;
+    let motion=false,renderer=null;
     const on=(el,event,fn)=>{el.addEventListener(event,fn);listeners.push(()=>el.removeEventListener(event,fn));};
     host.classList.add('slc');
     host.innerHTML=`<div class="slc-topline"><span class="slc-eyebrow">EXPLORE YOUR CONNECTIONS IN 3D</span><button type="button" class="slc-motion" data-slc-motion aria-pressed="${motion}">${motion?'Pause rotation':'Resume rotation'}</button></div>
       <div class="slc-graph3d" data-slc-graph3d></div>
-      <div class="slc-under-map"><p>Drag to rotate · Select a node to explore</p><strong data-slc-total></strong></div>
+      <div class="slc-under-map"><p>Select a node to explore</p><strong data-slc-total></strong></div>
       <div class="slc-details" id="${uid}-details"><div class="slc-branch-head"><span class="slc-branch-dot" aria-hidden="true"></span><div><h4 data-slc-branch-name></h4><p data-slc-branch-note></p></div><button type="button" class="slc-add" data-slc-add>Add connection</button></div>
       <div class="slc-tools"><label class="slc-category-filter" for="${uid}-filter"><span>Connection type</span><select id="${uid}-filter" data-slc-filter>${CATEGORIES.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></label><label class="slc-search"><span class="slc-sr-only">Search all life connections</span><input type="search" maxlength="60" placeholder="Search names or roles" data-slc-search autocomplete="off"></label></div>
       <p class="slc-results-label" data-slc-results-label hidden></p><div class="slc-members" data-slc-members></div>
@@ -148,7 +148,7 @@
     on(window,'storage',event=>{if(event.key===keyFor(owner)){const updated=readRecords(storage,owner);records=updated.records;saveAvailable=updated.available;draw();}});
     if(window.SotaLifeGraph3D){renderer=window.SotaLifeGraph3D.mount(q('[data-slc-graph3d]'),{...sceneFromMembers(allMembers()),onSelect:selectNode,motion,storage,storageKey:keyFor(owner)+':layout-v1'});}
     else{q('[data-slc-graph3d]').innerHTML='<p class="slc-graph-unavailable" role="status">3D view could not load. Your connections are available below.</p>';}
-    if(motionPreference?.addEventListener)on(motionPreference,'change',event=>{motion=!event.matches;draw();});
+    if(motionPreference?.addEventListener)on(motionPreference,'change',event=>{if(event.matches)motion=false;draw();});
     draw();
     return {updateFriends(next){if(disposed)return;remote=acceptedFriends(next);draw();},dispose(){disposed=true;renderer?.dispose();renderer=null;listeners.forEach(fn=>fn());records=[];remote=[];host.replaceChildren();host.classList.remove('slc','slc-paused');}};
   }
