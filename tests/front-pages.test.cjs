@@ -44,7 +44,7 @@ browserTest('home becomes a visual gallery and moves account, share and search c
 
 browserTest('every front-page visual has a native detail anchor without swallowing existing photo controls',t=>{
  const h=harness(t);
- const routes=[['.sk-hero-artwork','#profile'],['.bv-music-feature','#music'],['.sk-music-stage-picture','#music'],['[data-lg3d-stage]','#world'],['.bv-circle-feature','#talanoa'],['#bv-your-room','#skins']];
+ const routes=[['.sk-hero-artwork','#profile'],['.bv-music-feature','#music'],['.sk-music-stage-picture','#music'],['[data-lg3d-stage]','#world'],['.bv-circle-feature','#talanoa']];
  for(const [selector,href] of routes){const target=h.d.querySelector(selector),link=target.querySelector('a[href="'+href+'"]');assert(link,selector+' has a real '+href+' link');assert(link.textContent.trim()||link.getAttribute('aria-label'),'Visual links have accessible names');assert.equal(link.querySelector('button,input,select'),null,'Native anchors must not wrap active controls');assert(link.querySelector('.sfp-visual-symbol svg'),'Every artwork detail action uses a glass symbol');assert.equal(link.querySelector('.sfp-visual-symbol').getAttribute('aria-hidden'),'true');assert.equal(link.hasAttribute('data-sota-icon'),false,'The whole artwork remains the link hit area');}
  const edit=h.d.querySelector('[data-profile-photo-edit]');assert.equal(edit.closest('a'),null);assert(h.visible(edit));
  const header=h.d.querySelector('.sk-site-header');assert(header.nextElementSibling.querySelector('a[href="#home"]'),'Compact navigation immediately follows the masthead');
@@ -100,12 +100,14 @@ browserTest('navigation preserves the same canvas, playlist, draft fields and na
  assert.equal(search.value,'My playing track');assert.equal(mate.value,'Keep this mate');assert.equal(canvas.dataset.liveRenderer,'preserved');assert.equal(audio.currentTime,42);assert.equal(h.d.querySelector('#pending-upload'),upload);assert.equal(upload.files,files);h.api.open('skins');button.click();assert.equal(clicks,1);assert.equal(h.pauses,0,'Routing must not pause or recreate the audio owner');
 });
 
-browserTest('Home skin thumbnails use separate anchors while original collection buttons reactivate on their detail page',t=>{
- const h=harness(t),grid=h.d.querySelector('.bv-collection-grid'),cards=[...grid.querySelectorAll('.bv-collection-card')],labels=h.d.querySelector('.lg3d-labels');let selected;
- for(const card of cards){card.addEventListener('click',()=>{selected=card.dataset.collection;});assert(card.hasAttribute('inert'),'Covered collection buttons are inactive on Home');assert.equal(card.closest('a'),null);const link=card.parentElement.querySelector('a[href="#skins"]');assert(link,'The image tile has its own native detail anchor');assert.equal(link.querySelector('.bv-collection-card'),null);}
- assert(labels.hasAttribute('inert'),'Covered graph labels are inactive on Home');
- h.api.open('skins');assert(cards.every(card=>!card.hasAttribute('inert')));cards[1].click();assert.equal(selected,'music','The original collection callback still runs on the details page');
- h.api.open('home');assert(cards.every(card=>card.hasAttribute('inert')));h.api.stop();assert(cards.every(card=>card.parentElement===grid),'Stop unwraps each original button into its original parent');assert(cards.every(card=>!card.hasAttribute('inert')));assert(!labels.hasAttribute('inert'));assert.equal(grid.querySelector('a[href="#skins"]'),null);
+browserTest('skin collections retain their labelled native actions without duplicate overlays or empty wrappers',t=>{
+ const h=harness(t),grid=h.d.querySelector('.bv-collection-grid'),cards=[...grid.querySelectorAll('.bv-collection-card')];let selected;
+ for(const card of cards){card.addEventListener('click',()=>{selected=card.dataset.collection;});assert.equal(card.hasAttribute('inert'),false);assert.equal(card.parentElement,grid);assert(card.querySelector('strong').textContent.trim());}
+ assert.equal(grid.querySelector('.sfp-skin-tile,a[href="#skins"]'),null);
+ cards[1].click();assert.equal(selected,'music','Home keeps the original category callback');
+ assert(h.visible('.bv-discovery-all'),'The all-skins action has a visible text label on Home');
+ h.api.open('skins');cards[0].click();assert.equal(selected,'school');
+ h.api.open('home');assert(cards.every(card=>!card.hasAttribute('inert')));h.api.stop();assert(cards.every(card=>card.parentElement===grid));
 });
 
 browserTest('initial hashes, legacy visual links and browser Back select the matching detail view',async t=>{
