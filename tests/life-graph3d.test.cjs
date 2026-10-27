@@ -33,6 +33,17 @@ test('native mesh geometry has sphere surfaces and only supplied graph lines',()
   assert(geometry.spheres instanceof Float32Array);assert.equal(geometry.spheres.length/9,scene.nodes.length*10*16*6);assert.equal(geometry.lines.length/7,scene.edges.length*2);assert.equal(geometry.glows.length/7,scene.nodes.length);
   for(let i=0;i<geometry.spheres.length;i+=9){const n=geometry.spheres.slice(i+3,i+6);assert(Math.abs(Math.hypot(...n)-1)<.00001);}
 });
+test('large captions stay within a phone graph and avoid nearby names and view controls',()=>{
+  const width=320,height=445,w=170,h=34,placed=[];
+  for(const point of [{x:8,y:25,radius:18},{x:15,y:30,radius:18},{x:300,y:425,radius:22}]){
+    const result=graph3d.placeCaption(point,{width,height,w,h},placed,[point]);
+    assert(result.x-w/2>=5&&result.x+w/2<=width-5);
+    assert(result.y-h/2>=5&&result.y+h/2<=height-12);
+    assert(!(result.x+w/2>width-165&&result.y+h/2>height-62));
+    for(const other of placed)assert(Math.abs(result.x-other.x)>=(w+other.w)/2||Math.abs(result.y-other.y)>=(h+other.h)/2);
+    placed.push({...result,w,h});
+  }
+});
 test('untrusted shape cannot introduce duplicate IDs, dangling edges or CSS colours',()=>{
   const result=graph3d.normalize({nodes:[...scene.nodes,scene.nodes[0],{id:'bad',color:'url(https://example.test)',label:'bad'}],edges:[...scene.edges,scene.edges[0],{source:'you',target:'unknown'},{source:'you',target:'you'}]});
   assert.equal(result.nodes.length,13);assert.equal(result.edges.length,11);assert.equal(result.nodes.at(-1).color,'#55b9ff');

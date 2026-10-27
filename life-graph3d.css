@@ -9,9 +9,9 @@
 #app .slc select.lg3d-background:focus-visible{outline:2px solid #9dccff;outline-offset:2px}
 #app .slc .lg3d-labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 /* The spheres carry the colour. Captions float below them without chrome boxes. */
-#app .slc button.lg3d-label{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0;border:0;border-radius:999px;background:none;color:#eef6ff;font-family:inherit;font-size:12px;font-weight:600;line-height:1.35;letter-spacing:.01em;text-transform:none;white-space:nowrap;overflow:visible;box-shadow:none;text-shadow:0 1px 4px #020613;cursor:pointer;transition:color .15s}
-#app .slc .lg3d-caption{display:block;max-width:100%;box-sizing:border-box;padding:5px 9px;border:1px solid #e2f3ff26;border-radius:999px;background:#071326bd;box-shadow:0 3px 12px #02061340;overflow:hidden;text-overflow:ellipsis;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .15s,border-color .15s,box-shadow .15s}
-#app .slc button.lg3d-label[data-kind="you"]{font-size:13px;font-weight:750;color:#fff}
+#app .slc button.lg3d-label{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0;border:0;border-radius:999px;background:none;color:#fff;font-family:inherit;font-size:16px;font-weight:700;line-height:1.25;letter-spacing:.01em;text-transform:none;white-space:nowrap;overflow:visible;box-shadow:none;text-shadow:0 1px 4px #020613;cursor:pointer;transition:color .15s}
+#app .slc .lg3d-caption{position:relative;z-index:1;display:block;max-width:100%;box-sizing:border-box;padding:6px 11px;border:1px solid #e2f3ff59;border-radius:999px;background:#061222f5;box-shadow:0 3px 12px #02061340;overflow:hidden;text-overflow:ellipsis;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .15s,border-color .15s,box-shadow .15s}
+#app .slc button.lg3d-label[data-kind="you"]{font-size:18px;font-weight:750;color:#fff}
 #app .slc button.lg3d-label[aria-pressed="true"]{color:#fff;text-decoration:none}
 #app .slc button.lg3d-label[aria-pressed="true"] .lg3d-caption{border-color:var(--lg3d-color);background:#0a1932e8;box-shadow:0 0 16px color-mix(in srgb,var(--lg3d-color) 28%,transparent),inset 0 0 10px color-mix(in srgb,var(--lg3d-color) 10%,transparent)}
 #app .slc button.lg3d-label:hover .lg3d-caption{background:#142943ee;border-color:var(--lg3d-color)}
@@ -34,7 +34,7 @@
 #app .slc .lg3d-unavailable .lg3d-stage{height:115px}
 #app .slc .lg3d-unavailable .lg3d-stage canvas,#app .slc .lg3d-unavailable .lg3d-background{display:none}
 #app .slc .lg3d-unavailable .lg3d-state{left:20px;right:20px;bottom:auto;top:32px;max-width:none;color:#a4bddc;font-size:12px}
-@media(max-width:600px){#app .slc .lg3d-stage{height:445px}#app .slc button.lg3d-label{font-size:11px}#app .slc .lg3d-caption{padding:4px 7px}#app .slc .lg3d-state{left:12px;bottom:23px;font-size:9px;max-width:calc(100% - 172px)}#app .slc .lg3d-controls{right:10px;bottom:12px;gap:4px}#app .slc .lg3d-controls button{padding:7px 9px;font-size:11px;min-width:44px;min-height:44px}#app .slc .lg3d-list{grid-template-columns:repeat(2,minmax(0,1fr))}#app .slc .lg3d-outline{padding:0 12px}}
+@media(max-width:600px){#app .slc .lg3d-stage{height:445px}#app .slc button.lg3d-label{font-size:14px}#app .slc button.lg3d-label[data-kind="you"]{font-size:16px}#app .slc .lg3d-caption{padding:6px 9px}#app .slc .lg3d-state{left:12px;bottom:23px;font-size:9px;max-width:calc(100% - 172px)}#app .slc .lg3d-controls{right:10px;bottom:12px;gap:4px}#app .slc .lg3d-controls button{padding:7px 9px;font-size:11px;min-width:44px;min-height:44px}#app .slc .lg3d-list{grid-template-columns:repeat(2,minmax(0,1fr))}#app .slc .lg3d-outline{padding:0 12px}}
 @media(prefers-reduced-motion:reduce){#app .slc .lg3d *{transition:none!important}}
 
 @media(forced-colors:active){#app .slc .lg3d-caption{color:ButtonText;background:ButtonFace;border-color:ButtonText;box-shadow:none;text-shadow:none}#app .slc button.lg3d-label[aria-pressed="true"] .lg3d-caption{border:2px solid Highlight}}
@@ -42,3 +42,6 @@
 /* Node dragging keeps touch gestures inside the graph. */
 .lg3d-label{touch-action:none;cursor:grab}
 .lg3d-dragging,.lg3d-dragging .lg3d-label,.lg3d-dragging canvas{cursor:grabbing}
+
+/* A fine tether keeps displaced names visibly connected to their own sphere. */
+#app .slc button.lg3d-label::before{content:"";position:absolute;left:calc(50% + var(--lg3d-tether-x,0px));top:calc(50% + var(--lg3d-tether-y,0px));width:var(--lg3d-tether-length,0px);height:1px;transform:rotate(var(--lg3d-tether-angle,0rad));transform-origin:0 50%;background:var(--lg3d-color,#b9dcff);opacity:.75;pointer-events:none}
