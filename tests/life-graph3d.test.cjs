@@ -65,3 +65,22 @@ test('sphere captions preserve accessible selection, safe names and updates',{sk
   assert.equal(caption.textContent,'<img src=x onerror=alert(1)>');assert.equal(caption.querySelector('img'),null);assert.equal(family.getAttribute('aria-pressed'),'true');
   view.zoom(1.2);assert(Number.isFinite(parseFloat(family.style.top)));view.reset();view.dispose();assert.equal(host.children.length,0);
 });
+
+test('drag projection follows the pointer at any camera angle without changing depth',()=>{
+  for(const [yaw,pitch] of [[0,0],[.6,-.3],[-.8,.7]])for(const width of [320,900]){
+    const camera={width,height:520,yaw,pitch,distance:14},point=[1,2,-1],before=graph3d.project(point,camera),after=graph3d.project(graph3d.moveInView(point,80,-35,camera),camera);
+    assert(Math.abs(after.x-before.x-80)<1e-8);assert(Math.abs(after.y-before.y+35)<1e-8);assert(Math.abs(after.depth-before.depth)<1e-8);
+  }
+});
+test('node pointer drag survives updates, ignores other pointers, and reset restores layout',{skip:!JSDOM},t=>{
+  const dom=new JSDOM('<main></main>',{pretendToBeVisual:true}),w=dom.window,host=w.document.querySelector('main'),{gl}=glStub(),picks=[];
+  t.after(()=>w.close());w.matchMedia=()=>({matches:true});w.HTMLCanvasElement.prototype.getContext=()=>gl;
+  w.HTMLElement.prototype.getBoundingClientRect=()=>({width:600,height:520,left:0,top:0});
+  const view=graph3d.mount(host,{...scene,motion:false,onSelect:id=>picks.push(id)}),stage=host.querySelector('.lg3d-stage'),label=host.querySelector('[data-lg3d-labels] [data-lg3d-pick="you"]');
+  const send=(target,type,x,y,id=1)=>{const e=new w.Event(type,{bubbles:true,cancelable:true});Object.assign(e,{clientX:x,clientY:y,button:0,pointerId:id,pointerType:'touch'});target.dispatchEvent(e);};
+  const original=parseFloat(label.style.left);send(label,'pointerdown',300,260);send(stage,'pointermove',380,260,2);assert.equal(parseFloat(label.style.left),original);
+  send(stage,'pointermove',380,260);assert(Math.abs(parseFloat(label.style.left)-original-80)<.001);send(stage,'pointerup',380,260);label.click();assert.deepEqual(picks,[]);
+  view.update({...scene,nodes:scene.nodes.map(n=>({...n,label:n.label+'!'}))});assert(Math.abs(parseFloat(label.style.left)-original-80)<.001);
+  view.reset();assert.equal(parseFloat(label.style.left),original);
+  send(label,'pointerdown',300,260);send(stage,'pointercancel',300,260);assert.equal(stage.classList.contains('lg3d-dragging'),false);view.dispose();
+});
