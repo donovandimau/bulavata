@@ -195,7 +195,7 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <link rel="stylesheet" href="/front-page.css?v=20261026-spinning-music-badge">
 <link rel="stylesheet" href="/music-playlist.css?v=20261026-colourful-music">
 <link rel="stylesheet" href="/kava.css?v=20261025-talanoa-circles"><link rel="stylesheet" href="/circle-groups.css?v=20261025-talanoa-circles">
-<link rel="stylesheet" href="/connections.css?v=20261025-personal-graph"><link rel="stylesheet" href="/life-connections.css?v=20261026-spatial-life-1"><link rel="stylesheet" href="/life-graph3d.css?v=20261027-orb-nodes"><link rel="stylesheet" href="/dimau-visuals.css?v=20261024">
+<link rel="stylesheet" href="/connections.css?v=20261025-personal-graph"><link rel="stylesheet" href="/life-connections.css?v=20261026-spatial-life-1"><link rel="stylesheet" href="/life-graph3d.css?v=20261027-node-drag-1"><link rel="stylesheet" href="/dimau-visuals.css?v=20261024">
 <script src="/room-media.js"></script>
 <script src="/skin-identities.js?v=20261025-identity"></script>
 <script src="/skin-visuals.js?v=20261025-editorial-v3"></script>
@@ -215,7 +215,7 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 <link rel="stylesheet" href="/hero-music-stage.css?v=20261026-music-stage-1">
 <link rel="stylesheet" href="/profile-photos.css?v=20261027-chrome-buttons-1">
 <link rel="stylesheet" href="/music-home.css?v=20261026-active-panels-1">
-<link rel="stylesheet" href="/front-pages.css?v=20261027-still-music-full-banner">
+<link rel="stylesheet" href="/front-pages.css?v=20261027-belong-labels">
 <link rel="stylesheet" href="/colourful-pages.css?v=20261026-personal-world-2">
 <link rel="stylesheet" href="/space-design.css?v=20261026-personal-world-2">
 <link rel="stylesheet" href="/panel-close.css?v=20261026-active-panels-1">
@@ -1117,7 +1117,7 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/room-atmosphere.js?v=20261025-1"></script>
 <script src="/room-social-layout.js?v=20261026-live-panels"></script>
 <script src="/music-home.js?v=20261026-active-panels-1"></script>
-<script src="/front-pages.js?v=20261027-chrome-buttons-1"></script>
+<script src="/front-pages.js?v=20261027-belong-labels"></script>
 <script src="/space-design.js?v=20261027-chrome-buttons-1"></script>
 <script src="/skin-studio.js?v=20261026-personal-world-2"></script>
 <script src="/offline.js?v=20261024-quality"></script>
@@ -1127,13 +1127,14 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/friend-feed.js?v=20261025-personal-graph"></script>
 <script src="/room-social.js?v=20261026-spatial-life-1"></script>
 <script src="/profile-photos.js?v=20261027-chrome-buttons-1"></script>
-<script src="/life-graph3d.js?v=20261027-orb-nodes-2"></script>
+<script src="/life-graph3d.js?v=20261027-node-drag-1"></script>
 <script src="/life-connections.js?v=20261026-spatial-life-1"></script>
 <script src="/connections.js?v=20261026-spatial-life-1"></script>
-<script src="/icon-controls.js?v=20261027-orb-nodes"></script>
+<script src="/icon-controls.js?v=20261027-belong-labels"></script>
 <script>window.SotaIconControls?.init();window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null,getPage:()=>S.user?S.tab:'profile'});window.SotaSpaceDesign?.mount(app);window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261027-chrome-buttons-1" data-app="sota-kece" defer></script>
 </body>
 </html>
+
 
 

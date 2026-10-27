@@ -53,13 +53,10 @@
     visual(app.querySelector('#sota-music-home .sk-music-stage-picture'),'music','Open the music visualiser');
     visual(app.querySelector('#sota-connections [data-lg3d-stage], #sota-connections .lg3d-stage'),'world','Open 3D connections');
     visual(app.querySelector('#bv-circle .bv-circle-art')||app.querySelector('#bv-circle .bv-circle-feature'),'talanoa','Open Talanoa');
-    const collections=[...app.querySelectorAll('#bv-your-room .bv-collection-card')];
-    for(const node of collections){
-      const wrapper=created('div','sfp-skin-tile','skin-tile');node.before(wrapper);wrapper.append(node);session.wrappers.push({wrapper,node});
-      visual(wrapper,'skins','Explore '+(node.querySelector('strong')?.textContent.trim()||'room')+' skins');
-    }
-    if(!collections.length)visual(app.querySelector('#bv-your-room .bv-collection-grid')||app.querySelector('#bv-your-room'),'skins','Explore room skins');
-    for(const node of [...collections,...app.querySelectorAll('#sota-connections .lg3d-labels, .sk-hero-artwork .sota-social-hero, .sk-hero-artwork .sk-hero-create')])session.inert.set(node,node.getAttribute('inert'));
+    // Skin collection buttons already have meaningful labels and category
+    // callbacks. Keep those original actions instead of covering each with a
+    // second, unlabelled shortcut to the same Skins page.
+    for(const node of [...app.querySelectorAll('#sota-connections .lg3d-labels, .sk-hero-artwork .sota-social-hero, .sk-hero-artwork .sk-hero-create')])session.inert.set(node,node.getAttribute('inert'));
     function scrollTop(){
       // Reset the document itself, not merely the navigation's position. Temporarily
       // remove smooth scrolling so returning Home is immediate even after a long page.

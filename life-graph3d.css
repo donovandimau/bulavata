@@ -38,3 +38,7 @@
 @media(prefers-reduced-motion:reduce){#app .slc .lg3d *{transition:none!important}}
 
 @media(forced-colors:active){#app .slc .lg3d-caption{color:ButtonText;background:ButtonFace;border-color:ButtonText;box-shadow:none;text-shadow:none}#app .slc button.lg3d-label[aria-pressed="true"] .lg3d-caption{border:2px solid Highlight}}
+
+/* Node dragging keeps touch gestures inside the graph. */
+.lg3d-label{touch-action:none;cursor:grab}
+.lg3d-dragging,.lg3d-dragging .lg3d-label,.lg3d-dragging canvas{cursor:grabbing}

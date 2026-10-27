@@ -45,6 +45,12 @@
     const r=rotate(point,yaw,pitch),depth=distance-r[2],f=1/Math.tan(.7/2),aspect=width/height;
     return {x:width/2+(r[0]*f/aspect/depth)*width/2,y:height/2-(r[1]*f/depth)*height/2,depth,visible:depth>.1};
   }
+  function moveInView(point,dx,dy,camera){
+    const r=rotate(point,camera.yaw,camera.pitch),scale=2*(camera.distance-r[2])*Math.tan(.7/2)/camera.height;
+    const x=r[0]+dx*scale,y=r[1]-dy*scale,z=r[2],cp=Math.cos(camera.pitch),sp=Math.sin(camera.pitch),cy=Math.cos(camera.yaw),sy=Math.sin(camera.yaw);
+    const worldY=cp*y+sp*z,worldZ=-sp*y+cp*z;
+    return [cy*x-sy*worldZ,worldY,sy*x+cy*worldZ];
+  }
   function matrix({width,height,yaw,pitch,distance}){
     const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch),f=1/Math.tan(.7/2),a=width/height,near=.1,far=50;
     // Column-major projection * translation * camera rotation.
@@ -104,7 +110,7 @@
     const on=(el,event,fn,options)=>{el.addEventListener(event,fn,options);listeners.push(()=>el.removeEventListener(event,fn,options));};
     host.classList.add('lg3d');host.dataset.background='galaxy';host.innerHTML=`<div class="lg3d-stage" data-lg3d-stage><canvas data-lg3d-canvas aria-label="Three dimensional life connections" role="img"></canvas><div class="lg3d-labels" data-lg3d-labels></div><select class="lg3d-background" data-lg3d-background aria-label="Graph background"><option value="galaxy">Galaxy</option><option value="dark">Dark</option></select><div class="lg3d-controls" aria-label="3D view controls"><button type="button" data-lg3d-zoom-in aria-label="Zoom into connection graph">+</button><button type="button" data-lg3d-zoom-out aria-label="Zoom out of connection graph">−</button><button type="button" data-lg3d-reset>Reset</button></div><p class="lg3d-state" data-lg3d-state role="status">Preparing 3D view…</p></div><details class="lg3d-outline" data-lg3d-outline><summary>Connection list <span data-lg3d-list-count></span></summary><div class="lg3d-list" data-lg3d-list></div></details>`;
     const canvas=q('[data-lg3d-canvas]'),stage=q('[data-lg3d-stage]'),labels=q('[data-lg3d-labels]');
-    let labelButtons=new Map();
+    let labelButtons=new Map(),movedPoints=new Map(),suppressClickUntil=0;
     function active(){return !disposed&&!lost&&renderer&&inView&&!doc.hidden;}
     function moving(){return active()&&requestedMotion&&!media?.matches;}
     function cancel(){if(raf)win.cancelAnimationFrame(raf);raf=0;lastFrame=0;}
@@ -150,26 +156,55 @@
     function select(id){if(disposed||id===selected||!graph.nodes.some(n=>n.id===id))return;selected=id;rebuild();}
     function pick(id){select(id);onSelect(id);}
     function zoom(factor){if(disposed||!Number.isFinite(factor)||factor<=0)return;distance=clamp(distance/factor,5.5,15);draw();}
-    function reset(){yaw=.28;pitch=-.08;distance=8.8;draw();}
+    function reset(){end();movedPoints.clear();points=layout(graph);yaw=.28;pitch=-.08;distance=8.8;rebuild();}
     function unavailable(text){lost=true;cancel();host.classList.add('lg3d-unavailable');host.dataset.renderer='unavailable';labels.hidden=true;host.querySelector('.lg3d-controls').hidden=true;q('[data-lg3d-outline]').open=true;setState(text);}
     function start(){
-      try{gl=canvas.getContext('webgl',{alpha:true,antialias:true,depth:true,powerPreference:'low-power',preserveDrawingBuffer:false});if(!gl)throw Error('WebGL is unavailable.');renderer=createRenderer(gl);lost=false;host.classList.remove('lg3d-unavailable');host.dataset.renderer='webgl';labels.hidden=false;host.querySelector('.lg3d-controls').hidden=false;setState('3D view · drag to rotate');rebuild();resize();}catch(_){renderer?.dispose();renderer=null;unavailable('3D is unavailable on this device. Use the connection list below.');}
+      try{gl=canvas.getContext('webgl',{alpha:true,antialias:true,depth:true,powerPreference:'low-power',preserveDrawingBuffer:false});if(!gl)throw Error('WebGL is unavailable.');renderer=createRenderer(gl);lost=false;host.classList.remove('lg3d-unavailable');host.dataset.renderer='webgl';labels.hidden=false;host.querySelector('.lg3d-controls').hidden=false;setState('Drag a node to move it · drag empty space to rotate');rebuild();resize();}catch(_){renderer?.dispose();renderer=null;unavailable('3D is unavailable on this device. Use the connection list below.');}
     }
-    on(host,'click',event=>{const item=event.target.closest('[data-lg3d-pick]');if(item&&host.contains(item))pick(item.dataset.lg3dPick);});
+    on(host,'click',event=>{const item=event.target.closest('[data-lg3d-pick]');if(item&&host.contains(item)){if(Date.now()<suppressClickUntil){event.preventDefault();return;}pick(item.dataset.lg3dPick);}});
     on(q('[data-lg3d-background]'),'change',event=>{host.dataset.background=event.target.value==='dark'?'dark':'galaxy';});
     on(q('[data-lg3d-zoom-in]'),'click',()=>zoom(1.2));on(q('[data-lg3d-zoom-out]'),'click',()=>zoom(1/1.2));on(q('[data-lg3d-reset]'),'click',reset);
-    on(canvas,'pointerdown',event=>{if(event.button!==0||lost)return;drag={x:event.clientX,y:event.clientY,yaw,pitch};canvas.setPointerCapture?.(event.pointerId);});
-    on(canvas,'pointermove',event=>{if(!drag)return;yaw=drag.yaw+(event.clientX-drag.x)*.008;pitch=clamp(drag.pitch+(event.clientY-drag.y)*.006,-1.1,1.1);draw();});
-    const end=()=>{drag=null;};on(canvas,'pointerup',end);on(canvas,'pointercancel',end);on(canvas,'lostpointercapture',end);
-    on(canvas,'webglcontextlost',event=>{event.preventDefault();unavailable('3D view interrupted. Your connections remain available in the list below.');});
+    function hitNode(event){
+      const rect=stage.getBoundingClientRect(),x=event.clientX-rect.left,y=event.clientY-rect.top,c=camera();
+      return graph.nodes.map(n=>({n,p:project(points.get(n.id),c)})).filter(({n,p})=>p.visible&&Math.hypot(x-p.x,y-p.y)<=Math.max(14,nodeRadius(n)*(n.id===selected?1.22:1)*height/(2*Math.tan(.7/2)*p.depth)+5)).sort((a,b)=>a.p.depth-b.p.depth)[0]?.n.id;
+    }
+    function end(event){
+      if(!drag||(event&&event.pointerId!==drag.pointerId))return;
+      const finished=drag;drag=null;stage.classList.remove('lg3d-dragging');
+      if(finished.moved)suppressClickUntil=Date.now()+300;
+      else if(event?.type==='pointerup'&&finished.id&&finished.canvas)pick(finished.id);
+      if(finished.capture.hasPointerCapture?.(finished.pointerId))finished.capture.releasePointerCapture(finished.pointerId);
+    }
+    on(stage,'pointerdown',event=>{
+      if(event.button!==0||event.isPrimary===false||lost||drag)return;
+      const label=event.target.closest('.lg3d-label'),isCanvas=event.target===canvas;
+      if(!label&&!isCanvas)return;
+      const id=label?.dataset.lg3dPick||hitNode(event);
+      drag={pointerId:event.pointerId,x:event.clientX,y:event.clientY,yaw,pitch,id,capture:label||canvas,canvas:isCanvas,point:id?[...points.get(id)]:null,camera:camera(),moved:false};
+      drag.capture.setPointerCapture?.(event.pointerId);
+    });
+    on(stage,'pointermove',event=>{
+      if(!drag||event.pointerId!==drag.pointerId)return;
+      const dx=event.clientX-drag.x,dy=event.clientY-drag.y;
+      if(!drag.moved&&Math.hypot(dx,dy)<4)return;
+      drag.moved=true;stage.classList.add('lg3d-dragging');event.preventDefault();
+      if(drag.id){
+        const origin=project(drag.point,drag.camera),next=moveInView(drag.point,clamp(origin.x+dx,18,width-18)-origin.x,clamp(origin.y+dy,18,height-18)-origin.y,drag.camera);
+        points.set(drag.id,next);movedPoints.set(drag.id,next);renderer?.setData(buildGeometry(graph,points,selected));
+      }else{yaw=drag.yaw+dx*.008;pitch=clamp(drag.pitch+dy*.006,-1.1,1.1);}
+      draw();
+    });
+    on(stage,'pointerup',end);on(stage,'pointercancel',end);on(stage,'lostpointercapture',end);
+    on(canvas,'webglcontextlost',event=>{event.preventDefault();end();unavailable('3D view interrupted. Your connections remain available in the list below.');});
     on(canvas,'webglcontextrestored',()=>{if(disposed)return;renderer=null;start();});
     on(doc,'visibilitychange',()=>{if(active())draw();schedule();});
     if(media?.addEventListener)on(media,'change',()=>{draw();schedule();});
     const observer=win.IntersectionObserver?new win.IntersectionObserver(entries=>{inView=entries.some(e=>e.isIntersecting);if(active())draw();schedule();},{rootMargin:'120px'}):null;observer?.observe(host);
     const resizeObserver=win.ResizeObserver?new win.ResizeObserver(resize):null;resizeObserver?.observe(stage);if(!resizeObserver)on(win,'resize',resize);
     rebuild();start();
-    return {update(next){if(disposed)return;const normalized=normalize(next);if(JSON.stringify(normalized)===JSON.stringify(graph))return;graph=normalized;points=layout(graph);if(!graph.nodes.some(n=>n.id===selected))selected=graph.nodes.find(n=>n.kind==='you')?.id||'';rebuild();},select,setMotion(value){requestedMotion=!!value;if(active())draw();schedule();},zoom,reset,
-      dispose(){if(disposed)return;disposed=true;cancel();observer?.disconnect();resizeObserver?.disconnect();listeners.forEach(fn=>fn());if(!lost)renderer?.dispose();try{gl?.getExtension('WEBGL_lose_context')?.loseContext();}catch(_){}renderer=null;gl=null;graph={nodes:[],edges:[]};points.clear();labelButtons.clear();host.replaceChildren();host.classList.remove('lg3d','lg3d-unavailable');delete host.dataset.renderer;delete host.dataset.background;}};
+    return {update(next){if(disposed)return;const normalized=normalize(next);if(JSON.stringify(normalized)===JSON.stringify(graph))return;end();graph=normalized;points=layout(graph);for(const [id,p] of movedPoints){if(points.has(id))points.set(id,p);else movedPoints.delete(id);}if(!graph.nodes.some(n=>n.id===selected))selected=graph.nodes.find(n=>n.kind==='you')?.id||'';rebuild();},select,setMotion(value){requestedMotion=!!value;if(active())draw();schedule();},zoom,reset,
+      dispose(){if(disposed)return;end();disposed=true;cancel();observer?.disconnect();resizeObserver?.disconnect();listeners.forEach(fn=>fn());if(!lost)renderer?.dispose();try{gl?.getExtension('WEBGL_lose_context')?.loseContext();}catch(_){}renderer=null;gl=null;graph={nodes:[],edges:[]};points.clear();movedPoints.clear();labelButtons.clear();host.replaceChildren();host.classList.remove('lg3d','lg3d-unavailable');delete host.dataset.renderer;delete host.dataset.background;}};
   }
-  return {mount,normalize,layout,rotate,project,matrix,buildGeometry,createRenderer};
+  return {mount,normalize,layout,rotate,project,moveInView,matrix,buildGeometry,createRenderer};
 });
+
