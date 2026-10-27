@@ -69,3 +69,12 @@ browserTest('Where you belong keeps readable native labels without changing othe
  const h=harness(t,'<section id="bv-your-room"><button class="bv-discovery-all">Explore all 94 skins</button><button class="bv-collection-card" data-collection="school"><strong>School pride</strong></button></section><button class="ssd-launcher">Design your space</button>');
  h.api.init();await flush();const section=h.d.querySelector('#bv-your-room');assert.equal(section.querySelector('[data-sota-icon],.sota-glass-preview,.sota-control-symbol'),null);assert.equal(section.querySelector('.bv-discovery-all').textContent,'Explore all 94 skins');assert.equal(h.d.querySelector('.ssd-launcher').dataset.sotaIcon,'design');
 });
+
+browserTest('page exit remains a close icon in navigation and playlist return remains a back action',async t=>{
+ const h=harness(t,'<nav class="sfp-navigation"><a class="sfp-page-close" data-front-view="home" href="#home" aria-label="Close Music and return to home">×</a></nav><section class="sk-playlist-inline"><button class="sk-playlist-close" aria-label="Back to visualiser">×</button></section>');
+ h.api.init();await flush();
+ assert.equal(h.d.querySelector('.sfp-page-close').dataset.sotaIcon,'close');
+ const button=h.d.querySelector('.sk-playlist-close');assert.equal(button.dataset.sotaIcon,'back');assert.equal(button.getAttribute('aria-label'),'Back to visualiser');
+ h.d.querySelector('section').classList.remove('sk-playlist-inline');button.setAttribute('aria-label','Close music playlist');await flush();
+ assert.equal(button.dataset.sotaIcon,'close');assert.equal(button.getAttribute('aria-label'),'Close music playlist');
+});

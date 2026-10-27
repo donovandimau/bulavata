@@ -57,6 +57,7 @@
     more:'M5 12h.01M12 12h.01M19 12h.01',emoji:'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM8 9h.01M16 9h.01M7 14c3 4 7 4 10 0'
   };
   const rules=[
+    {selector:'.sfp-navigation a.sfp-page-close',action:'close',label:'Close page'},
     {selector:'.sfp-navigation a[data-front-view]',action:node=>({home:'home',music:'music',world:'world',connect:'connect',skins:'design',profile:'edit',talanoa:'connect'}[node.dataset.frontView]||'view'),label:node=>node.dataset.frontView==='world'?'3D connections':''},
     {selector:'.bv-entry-connections a',action:node=>({friends:'friends',family:'family',school:'school',work:'work',pets:'pets',nature:'nature'}[words(node.textContent).toLowerCase()]||'connect'),label:'Explore your connections'},
     {selector:'.bv-home-section-nav a,.bv-entry-map-link,nav.bottom button[data-tab],header.top .luvchip',action:semantic,label:'Open page',dynamic:true},
@@ -203,7 +204,8 @@
         record.symbol?.remove();if(record.label?.parentNode===node)record.label.replaceWith(...record.label.childNodes);
         const wrapper=root.document.createElement('span');wrapper.className='sota-control-label';while(node.firstChild)wrapper.append(node.firstChild);node.append(wrapper);record.label=wrapper;record.symbol=symbol(action);node.prepend(record.symbol);record.action=action;
       }else if(record.action!==action){const next=symbol(action);record.symbol.replaceWith(next);record.symbol=next;record.action=action;}
-      if(record.label.dataset.caption!==label)record.label.dataset.caption=label;
+      const caption=node.id==='bv-home-play'?'Choose a song':node.matches('.bv-account-dialog>.bv-link')?(action==='signup'?'Sign up':'Sign in'):label;
+      if(record.label.dataset.caption!==caption)record.label.dataset.caption=caption;
       node.classList.add('sota-icon-control');if(node.getAttribute('data-sota-icon')!==action)node.setAttribute('data-sota-icon',action);
       if(node.getAttribute('aria-label')!==label)node.setAttribute('aria-label',label);record.lastAria=label;
       if(node.getAttribute('title')!==label)node.setAttribute('title',label);record.lastTitle=label;

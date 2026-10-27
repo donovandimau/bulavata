@@ -45,6 +45,10 @@
       style.textContent = '.bub,.hint{display:none!important}.panel{position:fixed;left:12px;right:auto;bottom:12px;width:min(380px,calc(100vw - 24px));height:min(600px,calc(100dvh - 24px))}';
       widget.shadowRoot.appendChild(style);
       document.documentElement.classList.add('sota-help-ready');
+      var dock = document.createElement('footer');
+      dock.className = 'sota-help-dock';
+      dock.innerHTML = '<span>Need a hand?</span><button type="button" class="bv-help-link" data-sota-help aria-haspopup="dialog">Ask Volau</button>';
+      document.querySelector('#app')?.after(dock);
       var opener;
       document.addEventListener('click', function (event) {
         var button = event.target.closest('[data-sota-help]');

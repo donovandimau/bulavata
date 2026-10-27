@@ -92,7 +92,6 @@
 @media(max-width:760px){#app.bv-welcome[data-front-page] #bv-your-room .bv-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#app.bv-welcome[data-front-page] #bv-your-room .bv-collection-grid>.bv-collection-card{height:190px!important}}
 @media(max-width:480px){#app.bv-welcome[data-front-page] #bv-your-room .bv-collection-grid{grid-template-columns:minmax(0,1fr)}}
 
-/* Keep one close control on the graph card, away from the interactive scene. */
 
 
 /* Keep the exit in the navigation layout, clear of content and panel actions. */
@@ -107,3 +106,5 @@
 .bv-install-link,.bv-help-link{min-height:44px;padding:10px 16px;border:1px solid #286b78;border-radius:12px;background:#f5fffc;color:#23485c;font:800 14px/1.4 Nunito,system-ui,sans-serif;cursor:pointer;}
 
 html:not(.sota-help-ready) [data-sota-help]{display:none}
+
+.sota-help-dock{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:16px;margin:16px auto 0;max-width:1280px;background:#eaf7fb;color:#23485c;font:700 14px/1.4 Nunito,system-ui,sans-serif;border-radius:16px 16px 0 0;}
