@@ -84,3 +84,27 @@ test('node pointer drag survives updates, ignores other pointers, and reset rest
   view.reset();assert.equal(parseFloat(label.style.left),original);
   send(label,'pointerdown',300,260);send(stage,'pointercancel',300,260);assert.equal(stage.classList.contains('lg3d-dragging'),false);view.dispose();
 });
+
+test('node layout restores across visits, isolates owners and Reset removes the saved layout',{skip:!JSDOM},t=>{
+  const dom=new JSDOM('<main></main>',{pretendToBeVisual:true,url:'https://sotakece.example'}),w=dom.window,host=w.document.querySelector('main'),{gl}=glStub();
+  t.after(()=>w.close());w.matchMedia=()=>({matches:true});w.HTMLCanvasElement.prototype.getContext=()=>gl;w.HTMLElement.prototype.getBoundingClientRect=()=>({width:600,height:520,left:0,top:0});
+  const key='layout:account:a',storage=w.localStorage;
+  const mount=(storageKey=key)=>graph3d.mount(host,{...scene,motion:false,storage,storageKey});
+  const label=()=>host.querySelector('.lg3d-label[data-lg3d-pick="you"]');
+  const send=(target,type,x,y)=>{const e=new w.Event(type,{bubbles:true,cancelable:true});Object.assign(e,{button:0,pointerId:1,clientX:x,clientY:y});target.dispatchEvent(e);};
+  let view=mount(),initial=label().style.left;
+  send(label(),'pointerdown',300,260);send(host.querySelector('.lg3d-stage'),'pointermove',390,300);send(host.querySelector('.lg3d-stage'),'pointerup',390,300);
+  const moved=[label().style.left,label().style.top];assert.notEqual(moved[0],initial);assert(storage.getItem(key));
+  view.dispose();view=mount();assert.deepEqual([label().style.left,label().style.top],moved);view.dispose();
+  for(const other of ['layout:guest','layout:account:b']){view=mount(other);assert.equal(label().style.left,initial);view.dispose();}
+  view=mount();view.reset();assert.equal(storage.getItem(key),null);view.dispose();view=mount();assert.equal(label().style.left,initial);view.dispose();
+});
+test('invalid and unavailable layout storage never breaks the graph',{skip:!JSDOM},t=>{
+  const dom=new JSDOM('<main></main>',{pretendToBeVisual:true}),w=dom.window,host=w.document.querySelector('main'),{gl}=glStub();
+  t.after(()=>w.close());w.matchMedia=()=>({matches:true});w.HTMLCanvasElement.prototype.getContext=()=>gl;w.HTMLElement.prototype.getBoundingClientRect=()=>({width:600,height:520,left:0,top:0});
+  for(const raw of ['{broken',JSON.stringify({version:8,positions:[['you',[1,1,1]]]}),JSON.stringify({version:1,positions:[['missing',[1,2,3]],['you',[null,2,3]],['you',[999,0,0]]],camera:{yaw:0,pitch:0,distance:1}})]){
+    const view=graph3d.mount(host,{...scene,motion:false,storageKey:'test',storage:{getItem:()=>raw}});assert.equal(host.querySelector('.lg3d-label[data-lg3d-pick="you"]').style.left,'300px');view.dispose();
+  }
+  const view=graph3d.mount(host,{...scene,motion:false,storageKey:'test',storage:{getItem(){throw Error('denied');},removeItem(){throw Error('denied');}}});
+  assert.match(host.querySelector('[role="status"]').textContent,/temporary/);view.reset();assert.match(host.querySelector('[role="status"]').textContent,/temporary/);view.dispose();
+});

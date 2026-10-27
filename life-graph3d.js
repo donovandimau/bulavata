@@ -101,7 +101,7 @@
       },dispose:cleanup};
   }
   let instance=0;
-  function mount(host,{nodes=[],edges=[],onSelect=()=>{},motion=true}={}){
+  function mount(host,{nodes=[],edges=[],onSelect=()=>{},motion=true,storage=null,storageKey=''}={}){
     if(!host)throw Error('A 3D graph container is required.');
     const uid='lg3d-'+(++instance),listeners=[],q=s=>host.querySelector(s),doc=host.ownerDocument||document,win=doc.defaultView||window;
     let graph=normalize({nodes,edges}),points=layout(graph),selected=graph.nodes.find(n=>n.kind==='you')?.id||'',renderer=null,gl=null,disposed=false,lost=false,inView=true,raf=0,lastFrame=0,drag=null;
@@ -110,7 +110,36 @@
     const on=(el,event,fn,options)=>{el.addEventListener(event,fn,options);listeners.push(()=>el.removeEventListener(event,fn,options));};
     host.classList.add('lg3d');host.dataset.background='galaxy';host.innerHTML=`<div class="lg3d-stage" data-lg3d-stage><canvas data-lg3d-canvas aria-label="Three dimensional life connections" role="img"></canvas><div class="lg3d-labels" data-lg3d-labels></div><select class="lg3d-background" data-lg3d-background aria-label="Graph background"><option value="galaxy">Galaxy</option><option value="dark">Dark</option></select><div class="lg3d-controls" aria-label="3D view controls"><button type="button" data-lg3d-zoom-in aria-label="Zoom into connection graph">+</button><button type="button" data-lg3d-zoom-out aria-label="Zoom out of connection graph">−</button><button type="button" data-lg3d-reset>Reset</button></div><p class="lg3d-state" data-lg3d-state role="status">Preparing 3D view…</p></div><details class="lg3d-outline" data-lg3d-outline><summary>Connection list <span data-lg3d-list-count></span></summary><div class="lg3d-list" data-lg3d-list></div></details>`;
     const canvas=q('[data-lg3d-canvas]'),stage=q('[data-lg3d-stage]'),labels=q('[data-lg3d-labels]');
-    let labelButtons=new Map(),movedPoints=new Map(),suppressClickUntil=0;
+    let labelButtons=new Map(),movedPoints=new Map(),suppressClickUntil=0,savingAvailable=true;
+    const instructions='Drag a node to move it · drag empty space to rotate';
+    function storageState(){if(!lost)setState(instructions+(savingAvailable?'':' · Layout saving unavailable; changes are temporary.'));}
+    function saveLayout(){
+      if(!storageKey)return;
+      try{
+        if(!storage)throw Error('Storage unavailable');
+        if(!movedPoints.size)storage.removeItem(storageKey);
+        else storage.setItem(storageKey,JSON.stringify({version:1,positions:[...movedPoints],camera:{yaw,pitch,distance}}));
+        savingAvailable=true;
+      }catch(_){savingAvailable=false;}
+      storageState();
+    }
+    if(storageKey){
+      try{
+        if(!storage)throw Error('Storage unavailable');
+        const raw=storage.getItem(storageKey),saved=raw&&raw.length<100000?JSON.parse(raw):null;
+        if(saved?.version===1&&Array.isArray(saved.positions)){
+          for(const entry of saved.positions.slice(0,MAX_NODES)){
+            if(!Array.isArray(entry)||entry.length!==2)continue;
+            const [id,p]=entry;
+            if(!points.has(id)||!Array.isArray(p)||p.length!==3||!p.every(v=>typeof v==='number'&&Number.isFinite(v)&&Math.abs(v)<=50))continue;
+            movedPoints.set(id,[...p]);points.set(id,[...p]);
+          }
+          const c=saved.camera;
+          if(movedPoints.size&&c&&[c.yaw,c.pitch,c.distance].every(v=>typeof v==='number'&&Number.isFinite(v))&&Math.abs(c.yaw)<100000&&Math.abs(c.pitch)<=1.1&&c.distance>=5.5&&c.distance<=15){yaw=c.yaw;pitch=c.pitch;distance=c.distance;}
+        }
+      }catch(_){savingAvailable=false;}
+    }
+
     function active(){return !disposed&&!lost&&renderer&&inView&&!doc.hidden;}
     function moving(){return active()&&requestedMotion&&!media?.matches;}
     function cancel(){if(raf)win.cancelAnimationFrame(raf);raf=0;lastFrame=0;}
@@ -155,11 +184,11 @@
     }
     function select(id){if(disposed||id===selected||!graph.nodes.some(n=>n.id===id))return;selected=id;rebuild();}
     function pick(id){select(id);onSelect(id);}
-    function zoom(factor){if(disposed||!Number.isFinite(factor)||factor<=0)return;distance=clamp(distance/factor,5.5,15);draw();}
-    function reset(){end();movedPoints.clear();points=layout(graph);yaw=.28;pitch=-.08;distance=8.8;rebuild();}
+    function zoom(factor){if(disposed||!Number.isFinite(factor)||factor<=0)return;distance=clamp(distance/factor,5.5,15);draw();if(movedPoints.size)saveLayout();}
+    function reset(){end();movedPoints.clear();points=layout(graph);yaw=.28;pitch=-.08;distance=8.8;saveLayout();rebuild();}
     function unavailable(text){lost=true;cancel();host.classList.add('lg3d-unavailable');host.dataset.renderer='unavailable';labels.hidden=true;host.querySelector('.lg3d-controls').hidden=true;q('[data-lg3d-outline]').open=true;setState(text);}
     function start(){
-      try{gl=canvas.getContext('webgl',{alpha:true,antialias:true,depth:true,powerPreference:'low-power',preserveDrawingBuffer:false});if(!gl)throw Error('WebGL is unavailable.');renderer=createRenderer(gl);lost=false;host.classList.remove('lg3d-unavailable');host.dataset.renderer='webgl';labels.hidden=false;host.querySelector('.lg3d-controls').hidden=false;setState('Drag a node to move it · drag empty space to rotate');rebuild();resize();}catch(_){renderer?.dispose();renderer=null;unavailable('3D is unavailable on this device. Use the connection list below.');}
+      try{gl=canvas.getContext('webgl',{alpha:true,antialias:true,depth:true,powerPreference:'low-power',preserveDrawingBuffer:false});if(!gl)throw Error('WebGL is unavailable.');renderer=createRenderer(gl);lost=false;host.classList.remove('lg3d-unavailable');host.dataset.renderer='webgl';labels.hidden=false;host.querySelector('.lg3d-controls').hidden=false;storageState();rebuild();resize();}catch(_){renderer?.dispose();renderer=null;unavailable('3D is unavailable on this device. Use the connection list below.');}
     }
     on(host,'click',event=>{const item=event.target.closest('[data-lg3d-pick]');if(item&&host.contains(item)){if(Date.now()<suppressClickUntil){event.preventDefault();return;}pick(item.dataset.lg3dPick);}});
     on(q('[data-lg3d-background]'),'change',event=>{host.dataset.background=event.target.value==='dark'?'dark':'galaxy';});
@@ -171,7 +200,7 @@
     function end(event){
       if(!drag||(event&&event.pointerId!==drag.pointerId))return;
       const finished=drag;drag=null;stage.classList.remove('lg3d-dragging');
-      if(finished.moved)suppressClickUntil=Date.now()+300;
+      if(finished.moved){suppressClickUntil=Date.now()+300;if(movedPoints.size)saveLayout();}
       else if(event?.type==='pointerup'&&finished.id&&finished.canvas)pick(finished.id);
       if(finished.capture.hasPointerCapture?.(finished.pointerId))finished.capture.releasePointerCapture(finished.pointerId);
     }
@@ -202,7 +231,7 @@
     const observer=win.IntersectionObserver?new win.IntersectionObserver(entries=>{inView=entries.some(e=>e.isIntersecting);if(active())draw();schedule();},{rootMargin:'120px'}):null;observer?.observe(host);
     const resizeObserver=win.ResizeObserver?new win.ResizeObserver(resize):null;resizeObserver?.observe(stage);if(!resizeObserver)on(win,'resize',resize);
     rebuild();start();
-    return {update(next){if(disposed)return;const normalized=normalize(next);if(JSON.stringify(normalized)===JSON.stringify(graph))return;end();graph=normalized;points=layout(graph);for(const [id,p] of movedPoints){if(points.has(id))points.set(id,p);else movedPoints.delete(id);}if(!graph.nodes.some(n=>n.id===selected))selected=graph.nodes.find(n=>n.kind==='you')?.id||'';rebuild();},select,setMotion(value){requestedMotion=!!value;if(active())draw();schedule();},zoom,reset,
+    return {update(next){if(disposed)return;const normalized=normalize(next);if(JSON.stringify(normalized)===JSON.stringify(graph))return;end();graph=normalized;points=layout(graph);for(const [id,p] of movedPoints){if(points.has(id))points.set(id,p);else movedPoints.delete(id);}if(storageKey)saveLayout();if(!graph.nodes.some(n=>n.id===selected))selected=graph.nodes.find(n=>n.kind==='you')?.id||'';rebuild();},select,setMotion(value){requestedMotion=!!value;if(active())draw();schedule();},zoom,reset,
       dispose(){if(disposed)return;end();disposed=true;cancel();observer?.disconnect();resizeObserver?.disconnect();listeners.forEach(fn=>fn());if(!lost)renderer?.dispose();try{gl?.getExtension('WEBGL_lose_context')?.loseContext();}catch(_){}renderer=null;gl=null;graph={nodes:[],edges:[]};points.clear();movedPoints.clear();labelButtons.clear();host.replaceChildren();host.classList.remove('lg3d','lg3d-unavailable');delete host.dataset.renderer;delete host.dataset.background;}};
   }
   return {mount,normalize,layout,rotate,project,moveInView,matrix,buildGeometry,createRenderer};
