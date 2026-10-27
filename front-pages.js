@@ -1,7 +1,7 @@
 /* Visual front gallery and detail pages. Existing views, players and drafts keep their DOM owners. */
 (function(root,factory){const api=factory(root);if(typeof module==='object'&&module.exports)module.exports=api;else root.SotaFrontPages=api;})(typeof globalThis==='object'?globalThis:this,function(root){
   'use strict';
-  const pages={home:{name:'Home'},music:{name:'Music',title:'Your music. Your way.',note:'Choose a song, switch the visuals or bring your own soundtrack.'},world:{name:'3D connections',title:'Your world, connected.',note:'Explore the live map. Add the people, pets and living things that belong in your world.'},connect:{name:'Connect',title:'Bring your people together.',note:'Create your account, invite your people or find someone you already know.'},talanoa:{name:'Talanoa',title:'Pull up a seat.',note:'A circle brings people together for conversation. Explore the Talanoa Circle, then create or join your own with an invitation.'},skins:{name:'Skins',title:'A space that feels like you.',note:'Explore your school, vanua, music and memories. Choose a collection to preview and personalise your room.'},profile:{name:'Your space',title:'Make this space your own.',note:'Use Edit profile to choose your circular profile photo and rectangular banner. Your photo editor keeps the existing account and device saving options.'}};
+  const pages={home:{name:'Home'},music:{name:'Music',title:'Your music. Your way.',note:'Choose a song, switch the visuals or bring your own soundtrack.'},world:{name:'3D connections',title:'Your world, connected.',note:'Explore the live map. Add the people, pets and living things that belong in your world.'},connect:{name:'Connect',title:'Bring your people together.',note:'Create your account, invite your people or find someone you already know.'},talanoa:{name:'Talanoa',title:'Pull up a seat.',note:'A circle brings people together for conversation. Explore the Talanoa Circle, then create or join your own with an invitation.'},skins:{name:'Skins',title:'A space that feels like you.',note:'Explore your school, vanua, music and memories. Choose a collection to preview and personalise your room.'},profile:{name:'Your space',title:'Make this space your own.',note:'Choose Edit photos to add your profile photo and banner. Make this example space your own.'}};
   const aliases={'bv-music':'music','sota-music-home':'music','sota-connections':'world','bv-circle':'talanoa','bv-your-room':'skins'};
   let current=null;
   function fromHash(hash){const value=String(hash||'').replace(/^#/,'');return !value?'home':Object.hasOwn(pages,value)?value:aliases[value]||null;}
@@ -18,7 +18,7 @@
   function mount(app){
     stop();if(!app)return ()=>{};
     const header=app.querySelector('.sk-site-header');if(!header)return ()=>{};
-    const session={app,oldPage:app.dataset.frontPage,oldScrollRestoration:root.history.scrollRestoration,listeners:[],added:[],wrappers:[],panelCloses:[],hidden:new Map(),inert:new Map(),blocks:[],view:'home'};current=session;
+    const session={app,oldPage:app.dataset.frontPage,oldScrollRestoration:root.history.scrollRestoration,listeners:[],added:[],wrappers:[],hidden:new Map(),inert:new Map(),blocks:[],view:'home'};current=session;
     if(session.oldScrollRestoration!==undefined)root.history.scrollRestoration='manual';
     const valid=()=>current===session&&app.isConnected&&navigation.isConnected;
     const listen=(node,event,fn,capture=false)=>{node.addEventListener(event,fn,capture);session.listeners.push(()=>node.removeEventListener(event,fn,capture));};
@@ -32,15 +32,7 @@
     const detail=created('section','sfp-detail-heading','heading'),back=root.document.createElement('a'),heading=root.document.createElement('h1'),note=root.document.createElement('p'),close=root.document.createElement('a');
     back.href='#home';back.className='sfp-back';back.dataset.frontPages='back';back.dataset.frontView='home';back.textContent='← Back to home';
     close.href='#home';close.className='sfp-page-close';close.dataset.frontPages='close';close.dataset.frontView='home';close.textContent='×';
-    heading.tabIndex=-1;detail.append(back,heading,note,close);navigation.after(detail);
-    function panelClose(selector,view,label){
-      const panel=app.querySelector(selector);if(!panel)return;
-      const anchor=created('a','sfp-panel-close','panel-close');anchor.href='#home';anchor.dataset.frontView='home';anchor.dataset.frontPanelPage=view;anchor.textContent='×';anchor.setAttribute('aria-label','Close '+label+' and return to home');anchor.title='Close '+label;
-      panel.append(anchor);session.panelCloses.push({anchor,view});
-    }
-    panelClose('#sota-music-home .bv-music-feature','music','music');panelClose('#sota-music-home .sk-music-stage','music','music visualiser');
-    panelClose('#sota-connections','world','3D connections');panelClose('#bv-circle','talanoa','Talanoa');panelClose('#bv-your-room','skins','skins');
-    panelClose('.sk-hero-artwork','profile','your space');panelClose('.bv-connect-header','connect','Connect');
+    heading.tabIndex=-1;detail.append(back,heading,note);navigation.append(close);navigation.after(detail);
     function visual(container,view,label){
       if(!container)return;
       const anchor=created('a','sfp-visual-link','visual-link');anchor.href='#'+view;anchor.dataset.frontView=view;anchor.setAttribute('aria-label',label);
@@ -56,7 +48,7 @@
     // Skin collection buttons already have meaningful labels and category
     // callbacks. Keep those original actions instead of covering each with a
     // second, unlabelled shortcut to the same Skins page.
-    for(const node of [...app.querySelectorAll('#sota-connections .lg3d-labels, .sk-hero-artwork .sota-social-hero, .sk-hero-artwork .sk-hero-create')])session.inert.set(node,node.getAttribute('inert'));
+    for(const node of [...app.querySelectorAll('#sota-connections .lg3d-labels, .sk-hero-artwork .sota-social-hero')])session.inert.set(node,node.getAttribute('inert'));
     function scrollTop(){
       // Reset the document itself, not merely the navigation's position. Temporarily
       // remove smooth scrolling so returning Home is immediate even after a long page.
@@ -71,8 +63,7 @@
       session.blocks.forEach(({node,views})=>{node.hidden=!views.includes(view)||session.hidden.get(node);});
       session.inert.forEach((original,node)=>{if(view==='home')node.setAttribute('inert','');else if(original===null)node.removeAttribute('inert');else node.setAttribute('inert',original);});
       detail.hidden=view==='home';heading.textContent=pages[view].title||'';note.textContent=pages[view].note||'';
-      close.hidden=view==='home'||view==='world';close.setAttribute('aria-label','Close '+pages[view].name+' and return to home');close.title='Close '+pages[view].name;
-      session.panelCloses.forEach(item=>{item.anchor.hidden=item.view!==view;});
+      close.hidden=view==='home';close.setAttribute('aria-label','Close '+pages[view].name+' and return to home');close.title='Close '+pages[view].name;
       navigation.querySelectorAll('[data-front-view]').forEach(anchor=>{if(anchor.dataset.frontView===view)anchor.setAttribute('aria-current','page');else anchor.removeAttribute('aria-current');});
       if(focus)(view==='home'?navigation.querySelector('[data-front-view="home"]'):heading).focus({preventScroll:true});
       if(scroll)scrollTop();

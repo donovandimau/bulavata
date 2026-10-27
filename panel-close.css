@@ -52,9 +52,9 @@
 .sota-modal-head>button {border:1px solid #b29acb;border-radius:11px;background:var(--ssd-panel,#f2e4ff);color:var(--ssd-ink,#4c2d71);font:400 28px/1 system-ui,sans-serif;}
 
 /* Talanoa can scroll as a full page; its own exit stays below modal layers. */
-#app .kava-room .kava-room-toolbar {padding-right:58px;}
+#app .kava-room .kava-room-toolbar {position:sticky;top:0;z-index:30;gap:12px;padding:10px;background:#e5f4f1;border-radius:12px;flex-wrap:wrap;}
 #app .kava-room #kc-close.kava-panel-close {
- position:fixed;top:max(12px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));z-index:110;
+ position:relative;top:auto;right:auto;z-index:auto;
  box-sizing:border-box;display:grid;place-items:center;width:44px;height:44px;min-width:44px;min-height:44px;
  margin:0;padding:0;border:1px solid var(--ssd-accent,#8c66a8);border-radius:12px;
  background:var(--ssd-panel,#fff0bc);color:var(--ssd-ink,#4b2b67);
@@ -65,7 +65,7 @@
 #app.bv-welcome #sota-music-home .sota-music-views {overflow:visible;}
 #app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline {overflow:visible;}
 #app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline>.sk-playlist-head {
- position:sticky;top:8px;z-index:20;border-radius:10px;padding:10px;
+ position:relative;top:auto;z-index:1;border-radius:10px;padding:10px;
 }
 #app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline .sk-playlist-close {display:inline-grid;}
 
@@ -85,9 +85,9 @@
  .bv-account-head,.spp-dialog>form>header,.ssd-head,.bv-music-dialog-head,
  .sk-playlist-head,.tc-dialog-head,.bv-studio-head {column-gap:8px;}
  .bv-account-head>h2,.spp-dialog>form>header h2,.ssd-head h2 {overflow-wrap:anywhere;}
- #app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline>.sk-playlist-head {top:4px;}
- #app .kava-room .kava-room-toolbar {padding-right:52px;}
- #app .kava-room #kc-close.kava-panel-close {right:max(10px,env(safe-area-inset-right));top:max(8px,env(safe-area-inset-top));}
+ #app.bv-welcome #sota-music-home .sk-playlist.sk-playlist-inline>.sk-playlist-head {top:auto;}
+ #app .kava-room .kava-room-toolbar {padding-right:10px;}
+ #app .kava-room #kc-close.kava-panel-close {right:auto;top:auto;}
 }
 @media(prefers-reduced-motion:reduce) {
  .sota-panel-close,.bv-account-head>#bv-account-close,.spp-close,.ssd-close,
@@ -111,3 +111,6 @@
 .ssd-editor>.ssd-head{background:linear-gradient(115deg,#66349b,#176b78);color:#fff;}
 .ssd-editor>.ssd-head :is(h2,small){color:#fff;}
 @media(forced-colors:active){.ssd-editor>.ssd-head{background:Canvas;color:CanvasText}.ssd-editor>.ssd-head :is(h2,small){color:CanvasText}}
+
+#app .kava-room .kava-room-toolbar #kc-close{margin-left:auto;}
+#app .kava-room .kava-room-toolbar .kava-back{margin-bottom:0;}

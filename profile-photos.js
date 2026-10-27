@@ -5,8 +5,8 @@
   const roomMounts=new Set();
   const kinds=['avatar','cover'];
   const slots={
-    desktop:{width:1360,height:832,avatar:[646,358,150,158],cover:[662,155,615,201],edit:[1147,409,91,38],clip:'polygon(0 14%,100% 0,100% 100%,0 100%)'},
-    mobile:{width:1008,height:1896,avatar:[122,1051,215,219],cover:[137,822,741,226],edit:[701,1124,135,53],clip:'none'}
+    desktop:{width:1360,height:832,avatar:[646,358,150,158],cover:[662,155,615,201],edit:[1133,399,164,55],clip:'polygon(0 14%,100% 0,100% 100%,0 100%)'},
+    mobile:{width:1008,height:1896,avatar:[122,1051,215,219],cover:[137,822,741,226],edit:[678,1105,244,104],clip:'none'}
   };
   function owner(){return String(context?.state?.user?.id||'');}
   function own(session){return !!session&&current===session&&!session.disposed&&owner()===session.owner&&(!session.owner||String(context.state.me?.id||'')===session.owner);}
@@ -99,7 +99,7 @@
     const image=target.querySelector('.sk-original-design'),artwork=image?.closest('.sk-hero-artwork');if(!image||!artwork)return ()=>{};
     const session=makeSession();current=session;
     const layer=root.document.createElement('div');layer.className='spp-hero-layer';
-    layer.innerHTML='<img class="spp-hero-cover" data-profile-photo="cover" alt="Your banner photo" hidden><img class="spp-hero-avatar" data-profile-photo="avatar" alt="Your profile photo" hidden><button type="button" class="spp-hero-edit" data-profile-photo-edit aria-haspopup="dialog" aria-label="Edit profile photos" title="Edit profile photos" hidden><span class="sota-glass-mark" data-sota-mark="edit" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m15 4 5 5M3 21l5-1L21 7a2 2 0 0 0-5-5L3 15v6Z"/></svg></span></button>';
+    layer.innerHTML='<img class="spp-hero-cover" data-profile-photo="cover" alt="Your banner photo" hidden><img class="spp-hero-avatar" data-profile-photo="avatar" alt="Your profile photo" hidden><button type="button" class="spp-hero-edit" data-profile-photo-edit aria-haspopup="dialog" aria-label="Edit profile photos" title="Edit profile photos" hidden><span class="sota-glass-mark" data-sota-mark="edit" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m15 4 5 5M3 21l5-1L21 7a2 2 0 0 0-5-5L3 15v6Z"/></svg></span><span class="spp-edit-caption">Edit photos</span></button>';
     session.layer=layer;artwork.append(layer);
     const button=layer.querySelector('[data-profile-photo-edit]');
     const listen=(node,type,fn)=>{node.addEventListener(type,fn);session.cleanup.push(()=>node.removeEventListener(type,fn));};
@@ -107,7 +107,7 @@
       if(!own(session)||!layer.isConnected)return;
       const dimensions=geometry(image,artwork);if(!dimensions)return;
       const {slot,scale,left,top}=dimensions;
-      for(const kind of [...kinds,'edit']){const node=kind==='edit'?button:layer.querySelector('[data-profile-photo="'+kind+'"]'),[x,y,width,height]=slot[kind];node.style.left=(left+x*scale)+'px';node.style.top=(top+y*scale)+'px';node.style.width=(width*scale)+'px';node.style.height=(height*scale)+'px';}
+      for(const kind of [...kinds,'edit']){const node=kind==='edit'?button:layer.querySelector('[data-profile-photo="'+kind+'"]'),[x,y,width,height]=slot[kind];node.style.left=(left+x*scale)+'px';node.style.top=(top+y*scale)+'px';node.style.width=(width*scale)+'px';node.style.height=(kind==='edit'?Math.max(44,height*scale):height*scale)+'px';}
       layer.querySelector('[data-profile-photo="cover"]').style.clipPath=slot.clip;
       button.hidden=false;
       button.style.fontSize=Math.max(9,Math.min(16,15*scale))+'px';button.style.setProperty('--spp-edit-scale',String(scale));

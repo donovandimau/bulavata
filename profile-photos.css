@@ -63,3 +63,13 @@
 /* Keep the measured photo-edit hit target while presenting the same glass symbol. */
 .spp-hero-layer .spp-hero-edit:has(>.sota-glass-mark) {padding:0;border:0;background:transparent;box-shadow:none;}
 .spp-hero-layer .spp-hero-edit>.sota-glass-mark[data-sota-mark] {width:44px;height:44px;min-width:44px;min-height:44px;max-width:44px;max-height:44px;--sota-action-tint:#b789f1;flex:none;}
+
+/* This opaque action replaces the printed button and ellipsis, not just its text. */
+.spp-hero-layer .spp-hero-edit:has(>.sota-glass-mark){gap:10px;min-height:44px;padding:5px 10px;border:1px solid #ffffffd9;border-radius:14px;background:#f7eee4;color:#26394c;box-shadow:0 2px 8px #172b4533;white-space:normal;}
+.spp-hero-layer .spp-hero-edit::before{inset:0;min-height:0;min-width:0;}
+.spp-hero-edit .spp-edit-caption{font:800 14px/1.2 Nunito,system-ui,sans-serif;text-align:left;}
+.spp-hero-layer[data-photo-layout=mobile] .spp-hero-edit:has(>.sota-glass-mark){gap:5px;padding:3px 5px;border-radius:12px;}
+.spp-hero-layer[data-photo-layout=mobile] .spp-hero-edit>.sota-glass-mark[data-sota-mark]{width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;}
+.spp-hero-layer[data-photo-layout=mobile] .spp-edit-caption{font-size:11px;}
+@media(forced-colors:active){.spp-hero-layer .spp-hero-edit:has(>.sota-glass-mark){background:ButtonFace;color:ButtonText;border-color:ButtonText;}}
+

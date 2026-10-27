@@ -61,7 +61,8 @@
     {selector:'.bv-entry-connections a',action:node=>({friends:'friends',family:'family',school:'school',work:'work',pets:'pets',nature:'nature'}[words(node.textContent).toLowerCase()]||'connect'),label:'Explore your connections'},
     {selector:'.bv-home-section-nav a,.bv-entry-map-link,nav.bottom button[data-tab],header.top .luvchip',action:semantic,label:'Open page',dynamic:true},
     {selector:'a.sfp-back,#kc-back',action:'back',label:'Back to home'},
-    {selector:'a.sfp-page-close,a.sfp-panel-close,.sk-playlist-close,.spp-close,.ssd-close,.ssd-feedback-close,[data-tc-close],.bv-music-dialog-head button,#bv-account-close,.bv-close,#kc-close,.sota-modal-head>button',action:'close',label:'Close panel'},
+    {selector:'.sk-playlist-close',action:node=>node.closest('.sk-playlist-inline')?'back':'close',label:'Close music playlist'},
+    {selector:'a.sfp-page-close,a.sfp-panel-close,.spp-close,.ssd-close,.ssd-feedback-close,[data-tc-close],.bv-music-dialog-head button,#bv-account-close,.bv-close,#kc-close,.sota-modal-head>button',action:'close',label:'Close panel'},
     {selector:'.ssd-launcher,.ssd-dialog-design',action:'design',label:'Design your space'},
     {selector:'[data-music-view]',action:node=>node.dataset.musicView==='playlist'?'playlist':'visualiser',label:node=>node.dataset.musicView==='playlist'?'Music playlist':'Music visualiser'},
     {selector:'.ssd-mode-tabs [data-ssd-mode]',action:node=>node.dataset.ssdMode==='one'?'colour':'mix',label:node=>node.dataset.ssdMode==='one'?'One colour':'Mix and match colours'},
@@ -197,10 +198,12 @@
       // over a stale Play/Pause aria label until both describe the same state.
       if(base&&(!rule.dynamic||!text||infer(base,'')===action))label=base;
       if(node.matches('.sfp-navigation [data-front-view="world"]'))label='3D connections';
+      if(node.matches('header.top .luvchip'))label='Your wallet';
       if(!record.label||record.label.parentNode!==node||node.childNodes.length!==2||record.symbol?.parentNode!==node){
         record.symbol?.remove();if(record.label?.parentNode===node)record.label.replaceWith(...record.label.childNodes);
         const wrapper=root.document.createElement('span');wrapper.className='sota-control-label';while(node.firstChild)wrapper.append(node.firstChild);node.append(wrapper);record.label=wrapper;record.symbol=symbol(action);node.prepend(record.symbol);record.action=action;
       }else if(record.action!==action){const next=symbol(action);record.symbol.replaceWith(next);record.symbol=next;record.action=action;}
+      if(record.label.dataset.caption!==label)record.label.dataset.caption=label;
       node.classList.add('sota-icon-control');if(node.getAttribute('data-sota-icon')!==action)node.setAttribute('data-sota-icon',action);
       if(node.getAttribute('aria-label')!==label)node.setAttribute('aria-label',label);record.lastAria=label;
       if(node.getAttribute('title')!==label)node.setAttribute('title',label);record.lastTitle=label;

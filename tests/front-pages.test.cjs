@@ -50,12 +50,12 @@ browserTest('every front-page visual has a native detail anchor without swallowi
  const header=h.d.querySelector('.sk-site-header');assert(header.nextElementSibling.querySelector('a[href="#home"]'),'Compact navigation immediately follows the masthead');
 });
 
-browserTest('Home disables obscured hero controls and restores them on Profile without disabling music or Edit profile',t=>{
+browserTest('Home keeps the printed Create action live while restoring social controls on Profile',t=>{
  const h=harness(t),social=h.d.querySelector('.sota-social-hero'),create=h.d.querySelector('.sk-hero-create'),edit=h.d.querySelector('.spp-hero-edit'),music=h.d.querySelector('.sk-artwork-play');
- assert(social.hasAttribute('inert'));assert(create.hasAttribute('inert'));
+ assert(social.hasAttribute('inert'));assert.equal(create.hasAttribute('inert'),false);
  assert.equal(edit.closest('[inert]'),null);assert.equal(music.closest('[inert]'),null);
  h.api.open('profile');assert.equal(social.hasAttribute('inert'),false);assert.equal(create.hasAttribute('inert'),false);assert(h.visible(social));assert(h.visible(create));
- h.api.open('home');assert(social.hasAttribute('inert'));assert(create.hasAttribute('inert'));
+ h.api.open('home');assert(social.hasAttribute('inert'));assert.equal(create.hasAttribute('inert'),false);
  h.api.stop();assert.equal(social.hasAttribute('inert'),false);assert.equal(create.hasAttribute('inert'),false);
 });
 
@@ -66,12 +66,12 @@ browserTest('detail routes reveal the existing full controls and keep unrelated 
  assert([...h.app.querySelectorAll('a[href="#home"]')].some(a=>/back/i.test(a.textContent+' '+a.getAttribute('aria-label'))),'Detail routes have a Back to home link');
 });
 
-browserTest('other detail pages keep a fixed reachable X without stopping music',t=>{
+browserTest('detail pages keep one reachable X in sticky navigation without stopping music',t=>{
  const h=harness(t),close=h.d.querySelector('[data-front-pages="close"]'),audio=h.d.querySelector('#active-audio');audio.currentTime=42;
  assert.equal(h.visible(close),false);assert.equal(h.w.history.scrollRestoration,'manual');
- for(const view of ['music','connect','talanoa','skins','profile']){
+ for(const view of ['music','world','connect','talanoa','skins','profile']){
   h.api.open(view);assert(h.visible(close));assert.equal(close.getAttribute('href'),'#home');assert.match(close.getAttribute('aria-label'),/Close .+ and return to home/);
-  const style=h.w.getComputedStyle(close);assert.equal(style.position,'fixed','Close stays reachable after scrolling past its heading');assert(parseFloat(style.minWidth)>=44);assert(parseFloat(style.minHeight)>=44);
+  const style=h.w.getComputedStyle(close);assert.equal(style.position,'relative');assert.equal(close.parentElement,h.d.querySelector('.sfp-navigation'));assert.equal(h.w.getComputedStyle(close.parentElement).position,'sticky','Close stays reachable inside the navigation layout');assert(parseFloat(style.minWidth)>=44);assert(parseFloat(style.minHeight)>=44);
   h.d.documentElement.style.scrollBehavior='smooth';h.d.documentElement.scrollTop=2400;h.d.body.scrollTop=1800;close.click();
   assert.equal(h.app.dataset.frontPage,'home');assert.equal(h.w.location.hash,'#home');assert.equal(h.visible(close),false);assert.equal(h.d.documentElement.scrollTop,0);assert.equal(h.d.body.scrollTop,0);assert.equal(h.d.documentElement.style.scrollBehavior,'smooth','The user scroll preference is restored');
   const last=h.scrollCalls.at(-1);assert.equal(last.top,0);assert.equal(last.left,0);assert.equal(last.behavior,'instant');
@@ -81,16 +81,13 @@ browserTest('other detail pages keep a fixed reachable X without stopping music'
  h.api.stop();assert.equal(h.d.querySelector('[data-front-pages="close"]'),null);assert.equal(h.w.history.scrollRestoration,'auto');
 });
 
-browserTest('each main panel exposes its own native close only on its matching detail page',t=>{
- const h=harness(t),cases=[['music','.bv-music-feature'],['music','.sk-music-stage'],['world','#sota-connections'],['talanoa','#bv-circle'],['skins','#bv-your-room'],['profile','.sk-hero-artwork'],['connect','.bv-connect-header']];
- const closes=[...h.d.querySelectorAll('[data-front-pages="panel-close"]')];assert.equal(closes.length,7);assert(closes.every(close=>!h.visible(close)),'Panel close links never cover the Home gallery');
- for(const [view,selector] of cases){
-  h.api.open(view);const close=h.d.querySelector(selector+'>[data-front-pages="panel-close"]');assert(close);assert(h.visible(close));assert.equal(close.getAttribute('href'),'#home');assert.match(close.getAttribute('aria-label'),/Close .+ and return to home/);assert.equal(h.w.getComputedStyle(close).position,'absolute');
-  if(view==='world')assert.equal(h.visible('[data-front-pages="close"]'),false,'the graph uses one card close, with no floating duplicate over its names');
-  for(const other of closes)if(other.dataset.frontPanelPage!==view)assert.equal(h.visible(other),false,'Other pages do not leave a close control visible');
-  close.click();assert.equal(h.app.dataset.frontPage,'home');assert(closes.every(control=>!h.visible(control)));assert.equal(h.pauses,0);
+browserTest('route changes never leave duplicate panel exits over content',t=>{
+ const h=harness(t);
+ for(const view of ['music','world','connect','talanoa','skins','profile']){
+  h.api.open(view);assert.equal(h.d.querySelectorAll('[data-front-pages="panel-close"]').length,0);
+  const exits=[...h.d.querySelectorAll('[data-front-pages="close"]')].filter(h.visible);assert.equal(exits.length,1);
+  exits[0].click();assert.equal(h.app.dataset.frontPage,'home');assert.equal(h.pauses,0);
  }
- h.api.stop();assert.equal(h.d.querySelector('[data-front-pages="panel-close"]'),null);
 });
 
 browserTest('navigation preserves the same canvas, playlist, draft fields and native event listeners',t=>{

@@ -93,4 +93,17 @@
 @media(max-width:480px){#app.bv-welcome[data-front-page] #bv-your-room .bv-collection-grid{grid-template-columns:minmax(0,1fr)}}
 
 /* Keep one close control on the graph card, away from the interactive scene. */
-#app[data-front-page=world] .sfp-page-close{display:none!important}
+
+
+/* Keep the exit in the navigation layout, clear of content and panel actions. */
+#app[data-front-page] .sfp-navigation{position:sticky;top:0;z-index:40;padding-block:8px;background:var(--ssd-panel,#eaf7fb);border-radius:0 0 16px 16px;box-shadow:0 3px 10px #12354b24;}
+#app[data-front-page]:not([data-front-page=home]) .sfp-navigation{padding-right:20px;}
+#app[data-front-page] .sfp-page-close{position:relative;inset:auto;z-index:auto;margin-left:auto;flex:none;}
+#app[data-front-page=home] .sk-hero-create{z-index:5;pointer-events:auto;}
+@media(max-width:700px){#app[data-front-page]:not([data-front-page=home]) .sfp-navigation{padding-right:12px;}}
+@media(forced-colors:active){#app[data-front-page] .sfp-navigation{background:Canvas;}}
+
+
+.bv-install-link,.bv-help-link{min-height:44px;padding:10px 16px;border:1px solid #286b78;border-radius:12px;background:#f5fffc;color:#23485c;font:800 14px/1.4 Nunito,system-ui,sans-serif;cursor:pointer;}
+
+html:not(.sota-help-ready) [data-sota-help]{display:none}
