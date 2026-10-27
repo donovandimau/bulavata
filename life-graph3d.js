@@ -71,7 +71,8 @@
     let best=null,bestScore=Infinity;
     for(const candidate of candidates){
       const x=clamp(candidate.x,w/2+5,width-w/2-5),y=clamp(candidate.y,half+5,height-half-10);
-      let score=Math.hypot(x-point.x,y-point.y)+(candidate.y<point.y?3:0);
+      const distance=Math.hypot(x-point.x,y-point.y);
+      let score=distance*distance+(candidate.y<point.y?100:0);
       for(const b of placed){const ox=(w+b.w)/2+5-Math.abs(x-b.x),oy=(h+b.h)/2+5-Math.abs(y-b.y);if(ox>0&&oy>0)score+=1000000+ox*oy*100;}
       for(const sphere of spheres){const dx=Math.max(0,Math.abs(sphere.x-x)-w/2),dy=Math.max(0,Math.abs(sphere.y-y)-half),overlap=sphere.radius+4-Math.hypot(dx,dy);if(overlap>0)score+=overlap*overlap*5;}
       if(score<bestScore){best={x,y};bestScore=score;}

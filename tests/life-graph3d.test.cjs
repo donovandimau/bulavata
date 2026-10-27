@@ -102,10 +102,11 @@ test('node pointer drag survives updates, ignores other pointers, and reset rest
   w.HTMLElement.prototype.getBoundingClientRect=()=>({width:600,height:520,left:0,top:0});
   const view=graph3d.mount(host,{...scene,motion:false,onSelect:id=>picks.push(id)}),stage=host.querySelector('.lg3d-stage'),label=host.querySelector('[data-lg3d-labels] [data-lg3d-pick="you"]');
   const send=(target,type,x,y,id=1)=>{const e=new w.Event(type,{bubbles:true,cancelable:true});Object.assign(e,{clientX:x,clientY:y,button:0,pointerId:id,pointerType:'touch'});target.dispatchEvent(e);};
-  const original=parseFloat(label.style.left);send(label,'pointerdown',300,260);send(stage,'pointermove',380,260,2);assert.equal(parseFloat(label.style.left),original);
-  send(stage,'pointermove',380,260);assert(Math.abs(parseFloat(label.style.left)-original-80)<.001);send(stage,'pointerup',380,260);label.click();assert.deepEqual(picks,[]);
-  view.update({...scene,nodes:scene.nodes.map(n=>({...n,label:n.label+'!'}))});assert(Math.abs(parseFloat(label.style.left)-original-80)<.001);
-  view.reset();assert.equal(parseFloat(label.style.left),original);
+  const anchorX=()=>parseFloat(label.style.left)+parseFloat(label.style.getPropertyValue('--lg3d-leader-x'));
+  const original=anchorX();send(label,'pointerdown',300,260);send(stage,'pointermove',380,260,2);assert.equal(anchorX(),original);
+  send(stage,'pointermove',380,260);assert(Math.abs(anchorX()-original-80)<.001);send(stage,'pointerup',380,260);label.click();assert.deepEqual(picks,[]);
+  view.update({...scene,nodes:scene.nodes.map(n=>({...n,label:n.label+'!'}))});assert(Math.abs(anchorX()-original-80)<.001);
+  view.reset();assert.equal(anchorX(),original);
   send(label,'pointerdown',300,260);send(stage,'pointercancel',300,260);assert.equal(stage.classList.contains('lg3d-dragging'),false);view.dispose();
 });
 
@@ -127,7 +128,7 @@ test('invalid and unavailable layout storage never breaks the graph',{skip:!JSDO
   const dom=new JSDOM('<main></main>',{pretendToBeVisual:true}),w=dom.window,host=w.document.querySelector('main'),{gl}=glStub();
   t.after(()=>w.close());w.matchMedia=()=>({matches:true});w.HTMLCanvasElement.prototype.getContext=()=>gl;w.HTMLElement.prototype.getBoundingClientRect=()=>({width:600,height:520,left:0,top:0});
   for(const raw of ['{broken',JSON.stringify({version:8,positions:[['you',[1,1,1]]]}),JSON.stringify({version:1,positions:[['missing',[1,2,3]],['you',[null,2,3]],['you',[999,0,0]]],camera:{yaw:0,pitch:0,distance:1}})]){
-    const view=graph3d.mount(host,{...scene,motion:false,storageKey:'test',storage:{getItem:()=>raw}});assert.equal(host.querySelector('.lg3d-label[data-lg3d-pick="you"]').style.left,'300px');view.dispose();
+    const view=graph3d.mount(host,{...scene,motion:false,storageKey:'test',storage:{getItem:()=>raw}}),label=host.querySelector('.lg3d-label[data-lg3d-pick="you"]');assert.equal(parseFloat(label.style.left)+parseFloat(label.style.getPropertyValue('--lg3d-leader-x')),300);view.dispose();
   }
   const view=graph3d.mount(host,{...scene,motion:false,storageKey:'test',storage:{getItem(){throw Error('denied');},removeItem(){throw Error('denied');}}});
   assert.match(host.querySelector('[role="status"]').textContent,/temporary/);view.reset();assert.match(host.querySelector('[role="status"]').textContent,/temporary/);view.dispose();

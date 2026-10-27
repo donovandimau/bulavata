@@ -71,7 +71,7 @@
       session.blocks.forEach(({node,views})=>{node.hidden=!views.includes(view)||session.hidden.get(node);});
       session.inert.forEach((original,node)=>{if(view==='home')node.setAttribute('inert','');else if(original===null)node.removeAttribute('inert');else node.setAttribute('inert',original);});
       detail.hidden=view==='home';heading.textContent=pages[view].title||'';note.textContent=pages[view].note||'';
-      close.hidden=view==='home';close.setAttribute('aria-label','Close '+pages[view].name+' and return to home');close.title='Close '+pages[view].name;
+      close.hidden=view==='home'||view==='world';close.setAttribute('aria-label','Close '+pages[view].name+' and return to home');close.title='Close '+pages[view].name;
       session.panelCloses.forEach(item=>{item.anchor.hidden=item.view!==view;});
       navigation.querySelectorAll('[data-front-view]').forEach(anchor=>{if(anchor.dataset.frontView===view)anchor.setAttribute('aria-current','page');else anchor.removeAttribute('aria-current');});
       if(focus)(view==='home'?navigation.querySelector('[data-front-view="home"]'):heading).focus({preventScroll:true});

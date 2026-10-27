@@ -66,10 +66,10 @@ browserTest('detail routes reveal the existing full controls and keep unrelated 
  assert([...h.app.querySelectorAll('a[href="#home"]')].some(a=>/back/i.test(a.textContent+' '+a.getAttribute('aria-label'))),'Detail routes have a Back to home link');
 });
 
-browserTest('every detail page has a fixed reachable X that returns Home at document top without stopping music',t=>{
+browserTest('other detail pages keep a fixed reachable X without stopping music',t=>{
  const h=harness(t),close=h.d.querySelector('[data-front-pages="close"]'),audio=h.d.querySelector('#active-audio');audio.currentTime=42;
  assert.equal(h.visible(close),false);assert.equal(h.w.history.scrollRestoration,'manual');
- for(const view of ['music','world','connect','talanoa','skins','profile']){
+ for(const view of ['music','connect','talanoa','skins','profile']){
   h.api.open(view);assert(h.visible(close));assert.equal(close.getAttribute('href'),'#home');assert.match(close.getAttribute('aria-label'),/Close .+ and return to home/);
   const style=h.w.getComputedStyle(close);assert.equal(style.position,'fixed','Close stays reachable after scrolling past its heading');assert(parseFloat(style.minWidth)>=44);assert(parseFloat(style.minHeight)>=44);
   h.d.documentElement.style.scrollBehavior='smooth';h.d.documentElement.scrollTop=2400;h.d.body.scrollTop=1800;close.click();
@@ -86,6 +86,7 @@ browserTest('each main panel exposes its own native close only on its matching d
  const closes=[...h.d.querySelectorAll('[data-front-pages="panel-close"]')];assert.equal(closes.length,7);assert(closes.every(close=>!h.visible(close)),'Panel close links never cover the Home gallery');
  for(const [view,selector] of cases){
   h.api.open(view);const close=h.d.querySelector(selector+'>[data-front-pages="panel-close"]');assert(close);assert(h.visible(close));assert.equal(close.getAttribute('href'),'#home');assert.match(close.getAttribute('aria-label'),/Close .+ and return to home/);assert.equal(h.w.getComputedStyle(close).position,'absolute');
+  if(view==='world')assert.equal(h.visible('[data-front-pages="close"]'),false,'the graph uses one card close, with no floating duplicate over its names');
   for(const other of closes)if(other.dataset.frontPanelPage!==view)assert.equal(h.visible(other),false,'Other pages do not leave a close control visible');
   close.click();assert.equal(h.app.dataset.frontPage,'home');assert(closes.every(control=>!h.visible(control)));assert.equal(h.pauses,0);
  }
