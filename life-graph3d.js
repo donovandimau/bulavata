@@ -59,7 +59,7 @@
     for(let col=0;col<4;col++)for(let row=0;row<4;row++)for(let k=0;k<4;k++)out[col*4+row]+=projection[k*4+row]*view[col*4+k];
     return {mvp:out,rotation:new Float32Array([cy,sp*sy,-cp*sy,0,cp,sp,sy,-sp*cy,cp*cy])};
   }
-  const nodeRadius=n=>n.kind==='you'?.30:n.kind==='category'?.21:.048;
+  const nodeRadius=n=>n.kind==='you'?.44:n.kind==='category'?.32:.075;
   function buildGeometry(graph,positions,selected){
     const spheres=[],lines=[],glows=[],byId=new Map(graph.nodes.map(n=>[n.id,n]));
     for(const edge of graph.edges){const a=positions.get(edge.source),b=positions.get(edge.target),n=byId.get(edge.target),c=color(n.color),active=edge.source===selected||edge.target===selected;for(const p of [a,b])lines.push(...p,...c,active?.65:.22);}
@@ -135,16 +135,17 @@
         const n=p.node,button=labelButtons.get(n.id),show=n.kind!=='person'||n.id===selected||(connected.has(n.id)&&memberLabels++<16);
         button.hidden=!show||!p.visible||p.x<0||p.x>width||p.y<0||p.y>height;
         if(button.hidden)continue;
-        const labelWidth=Math.min(n.kind==='you'?70:n.kind==='category'?122:102,Math.max(54,n.label.length*7+22));
+        const compact=width<=600,labelWidth=Math.min(width-16,n.kind==='you'?84:compact?180:220,Math.max(60,n.label.length*(compact?8:9)+28));
         const radiusPx=nodeRadius(n)*(n.id===selected?1.22:1)*height/(2*Math.tan(.7/2)*p.depth);
-        let x=clamp(p.x,labelWidth/2+4,width-labelWidth/2-4),y=p.y+radiusPx+16;
-        if(y>height-47)y=p.y-radiusPx-16;
+        let x=clamp(p.x,labelWidth/2+4,width-labelWidth/2-4),y=p.y+radiusPx+23;
+        if(y>height-47)y=p.y-radiusPx-23;
         // Keep captions below the sphere surface; move only text to avoid collisions.
-        for(let attempt=0;attempt<8;attempt++){
-          if(!placed.some(b=>Math.abs(b.x-x)<(b.w+labelWidth)/2+3&&Math.abs(b.y-y)<29))break;
-          y+=(attempt%2?-1:1)*(16+Math.floor(attempt/2)*13);
+        const preferredY=y;
+        for(let attempt=0;attempt<16;attempt++){
+          if(!placed.some(b=>Math.abs(b.x-x)<(b.w+labelWidth)/2+3&&Math.abs(b.y-y)<40))break;
+          y=clamp(preferredY+(attempt%2?-1:1)*(Math.floor(attempt/2)+1)*40,24,height-47);
         }
-        y=clamp(y,22,height-47);placed.push({x,y,w:labelWidth});button.style.left=x+'px';button.style.top=y+'px';button.style.maxWidth=labelWidth+'px';button.style.opacity=n.kind==='you'||n.id===selected?'1':String(clamp(1.3-p.depth/22,.68,1));button.style.zIndex=String(100-Math.round(p.depth));button.style.setProperty('--lg3d-leader-x',(p.x-x)+'px');button.style.setProperty('--lg3d-leader-y',(p.y-y)+'px');
+        y=clamp(y,22,height-47);placed.push({x,y,w:labelWidth});button.style.left=x+'px';button.style.top=y+'px';button.style.maxWidth=labelWidth+'px';button.style.opacity='1';button.style.zIndex=String(100-Math.round(p.depth));button.style.setProperty('--lg3d-leader-x',(p.x-x)+'px');button.style.setProperty('--lg3d-leader-y',(p.y-y)+'px');
       }
     }
     function frame(time){raf=0;if(!moving())return;if(!lastFrame||time-lastFrame>=1000/30){const delta=lastFrame?Math.min(.1,(time-lastFrame)/1000):0;lastFrame=time;if(!drag)yaw+=delta*.065;draw();}if(moving())raf=win.requestAnimationFrame(frame);}
