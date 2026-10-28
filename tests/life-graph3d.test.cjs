@@ -33,6 +33,29 @@ test('native mesh geometry has sphere surfaces and only supplied graph lines',()
   assert(geometry.spheres instanceof Float32Array);assert.equal(geometry.spheres.length/9,scene.nodes.length*10*16*6);assert.equal(geometry.lines.length/7,scene.edges.length*2);assert.equal(geometry.glows.length/7,scene.nodes.length);
   for(let i=0;i<geometry.spheres.length;i+=9){const n=geometry.spheres.slice(i+3,i+6);assert(Math.abs(Math.hypot(...n)-1)<.00001);}
 });
+test('large captions stay within a phone graph and avoid nearby names and view controls',()=>{
+  const width=320,height=445,w=170,h=34,placed=[];
+  for(const point of [{x:8,y:25,radius:18},{x:15,y:30,radius:18},{x:300,y:425,radius:22},{x:300,y:10,radius:18}]){
+    const result=graph3d.placeCaption(point,{width,height,w,h},placed,[point]);
+    assert(result.x-w/2>=5&&result.x+w/2<=width-5);
+    assert(result.y-h/2>=5&&result.y+h/2<=height-10);
+    for(const other of placed)assert(Math.abs(result.x-other.x)>=(w+other.w)/2||Math.abs(result.y-other.y)>=(h+other.h)/2);
+    placed.push({...result,w,h});
+  }
+});
+test('phone category names remain separate as the graph turns',()=>{
+  const labels=['Friends','Family','Teachers','Workmates','School mates','Dog','Cat','Other pets','Nature','Other connections'];
+  const nodes=[{id:'you',label:'You',kind:'you'},...categories.map((id,i)=>({id,label:labels[i],kind:'category'}))],positions=graph3d.layout({nodes});
+  for(let yaw=0;yaw<Math.PI*2;yaw+=.25){
+    const width=326,height=445,projected=nodes.map(n=>({n,...graph3d.project(positions.get(n.id),{width,height,yaw,pitch:-.08,distance:8.8*height/width})})).sort((a,b)=>a.depth-b.depth),placed=[];
+    const spheres=projected.map(p=>({...p,radius:(p.n.kind==='you'?.44:.32)*(p.n.id==='friends'?1.22:1)*height/(2*Math.tan(.7/2)*p.depth)}));
+    for(const p of spheres){
+      const w=Math.min(p.n.kind==='you'?84:180,Math.max(60,p.n.label.length*8+28)),h=34,r=graph3d.placeCaption(p,{width,height,w,h},placed,spheres);
+      for(const other of placed)assert(Math.abs(r.x-other.x)>=(w+other.w)/2||Math.abs(r.y-other.y)>=(h+other.h)/2,`overlap at yaw ${yaw}: ${p.n.label}`);
+      assert(r.y+h/2<=height-10);placed.push({...r,w,h});
+    }
+  }
+});
 test('untrusted shape cannot introduce duplicate IDs, dangling edges or CSS colours',()=>{
   const result=graph3d.normalize({nodes:[...scene.nodes,scene.nodes[0],{id:'bad',color:'url(https://example.test)',label:'bad'}],edges:[...scene.edges,scene.edges[0],{source:'you',target:'unknown'},{source:'you',target:'you'}]});
   assert.equal(result.nodes.length,13);assert.equal(result.edges.length,11);assert.equal(result.nodes.at(-1).color,'#55b9ff');
@@ -58,6 +81,7 @@ test('sphere captions preserve accessible selection, safe names and updates',{sk
   t.after(()=>w.close());w.matchMedia=()=>({matches:true});w.HTMLCanvasElement.prototype.getContext=()=>gl;
   w.HTMLElement.prototype.getBoundingClientRect=()=>({width:600,height:520});
   const view=graph3d.mount(host,{...scene,onSelect:id=>picks.push(id),motion:false});
+  for(const selector of ['.lg3d-background','.lg3d-controls','.lg3d-state'])assert.equal(host.querySelector(selector).closest('.lg3d-stage'),null,'controls and instructions stay outside the canvas');
   const family=host.querySelector('.lg3d-label[data-lg3d-pick="family"]'),caption=family.querySelector('.lg3d-caption');
   assert.equal(family.getAttribute('aria-label'),'family, connection category');assert.equal(family.hidden,false);
   caption.click();assert.deepEqual(picks,['family']);assert.equal(family.getAttribute('aria-pressed'),'true');assert.equal(family.querySelector('.lg3d-caption'),caption);
@@ -78,10 +102,11 @@ test('node pointer drag survives updates, ignores other pointers, and reset rest
   w.HTMLElement.prototype.getBoundingClientRect=()=>({width:600,height:520,left:0,top:0});
   const view=graph3d.mount(host,{...scene,motion:false,onSelect:id=>picks.push(id)}),stage=host.querySelector('.lg3d-stage'),label=host.querySelector('[data-lg3d-labels] [data-lg3d-pick="you"]');
   const send=(target,type,x,y,id=1)=>{const e=new w.Event(type,{bubbles:true,cancelable:true});Object.assign(e,{clientX:x,clientY:y,button:0,pointerId:id,pointerType:'touch'});target.dispatchEvent(e);};
-  const original=parseFloat(label.style.left);send(label,'pointerdown',300,260);send(stage,'pointermove',380,260,2);assert.equal(parseFloat(label.style.left),original);
-  send(stage,'pointermove',380,260);assert(Math.abs(parseFloat(label.style.left)-original-80)<.001);send(stage,'pointerup',380,260);label.click();assert.deepEqual(picks,[]);
-  view.update({...scene,nodes:scene.nodes.map(n=>({...n,label:n.label+'!'}))});assert(Math.abs(parseFloat(label.style.left)-original-80)<.001);
-  view.reset();assert.equal(parseFloat(label.style.left),original);
+  const anchorX=()=>parseFloat(label.style.left)+parseFloat(label.style.getPropertyValue('--lg3d-leader-x'));
+  const original=anchorX();send(label,'pointerdown',300,260);send(stage,'pointermove',380,260,2);assert.equal(anchorX(),original);
+  send(stage,'pointermove',380,260);assert(Math.abs(anchorX()-original-80)<.001);send(stage,'pointerup',380,260);label.click();assert.deepEqual(picks,[]);
+  view.update({...scene,nodes:scene.nodes.map(n=>({...n,label:n.label+'!'}))});assert(Math.abs(anchorX()-original-80)<.001);
+  view.reset();assert.equal(anchorX(),original);
   send(label,'pointerdown',300,260);send(stage,'pointercancel',300,260);assert.equal(stage.classList.contains('lg3d-dragging'),false);view.dispose();
 });
 
@@ -103,7 +128,7 @@ test('invalid and unavailable layout storage never breaks the graph',{skip:!JSDO
   const dom=new JSDOM('<main></main>',{pretendToBeVisual:true}),w=dom.window,host=w.document.querySelector('main'),{gl}=glStub();
   t.after(()=>w.close());w.matchMedia=()=>({matches:true});w.HTMLCanvasElement.prototype.getContext=()=>gl;w.HTMLElement.prototype.getBoundingClientRect=()=>({width:600,height:520,left:0,top:0});
   for(const raw of ['{broken',JSON.stringify({version:8,positions:[['you',[1,1,1]]]}),JSON.stringify({version:1,positions:[['missing',[1,2,3]],['you',[null,2,3]],['you',[999,0,0]]],camera:{yaw:0,pitch:0,distance:1}})]){
-    const view=graph3d.mount(host,{...scene,motion:false,storageKey:'test',storage:{getItem:()=>raw}});assert.equal(host.querySelector('.lg3d-label[data-lg3d-pick="you"]').style.left,'300px');view.dispose();
+    const view=graph3d.mount(host,{...scene,motion:false,storageKey:'test',storage:{getItem:()=>raw}}),label=host.querySelector('.lg3d-label[data-lg3d-pick="you"]');assert.equal(parseFloat(label.style.left)+parseFloat(label.style.getPropertyValue('--lg3d-leader-x')),300);view.dispose();
   }
   const view=graph3d.mount(host,{...scene,motion:false,storageKey:'test',storage:{getItem(){throw Error('denied');},removeItem(){throw Error('denied');}}});
   assert.match(host.querySelector('[role="status"]').textContent,/temporary/);view.reset();assert.match(host.querySelector('[role="status"]').textContent,/temporary/);view.dispose();

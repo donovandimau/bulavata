@@ -34,5 +34,33 @@
   s.setAttribute('data-app', app);
   s.setAttribute('data-side', (me && me.getAttribute('data-side')) || 'left');
   s.async = true;
+  if (app === 'sota-kece') {
+    // Sota reserves help in its footer instead of covering page controls.
+    s.addEventListener('load', function () {
+      var widget = Array.from(document.body.children).find(function (el) {
+        return el.shadowRoot && el.shadowRoot.querySelector('.bub[aria-label^="Open Volau"]');
+      });
+      if (!widget || !window.Volau || typeof window.Volau.open !== 'function') return;
+      var style = document.createElement('style');
+      style.textContent = '.bub,.hint{display:none!important}.panel{position:fixed;left:12px;right:auto;bottom:12px;width:min(380px,calc(100vw - 24px));height:min(600px,calc(100dvh - 24px))}';
+      widget.shadowRoot.appendChild(style);
+      document.documentElement.classList.add('sota-help-ready');
+      var dock = document.createElement('footer');
+      dock.className = 'sota-help-dock';
+      dock.innerHTML = '<span>Need a hand?</span><button type="button" class="bv-help-link" data-sota-help aria-haspopup="dialog">Ask Volau</button>';
+      document.querySelector('#app')?.after(dock);
+      var opener;
+      document.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-sota-help]');
+        if (!button) return;
+        opener = button;
+        window.Volau.open();
+        widget.shadowRoot.querySelector('textarea')?.focus();
+      });
+      widget.shadowRoot.querySelector('.x')?.addEventListener('click', function () {
+        if (opener?.isConnected) opener.focus();
+      });
+    });
+  }
   (document.head || document.documentElement).appendChild(s);
 })();

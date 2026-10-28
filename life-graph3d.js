@@ -59,7 +59,27 @@
     for(let col=0;col<4;col++)for(let row=0;row<4;row++)for(let k=0;k<4;k++)out[col*4+row]+=projection[k*4+row]*view[col*4+k];
     return {mvp:out,rotation:new Float32Array([cy,sp*sy,-cp*sy,0,cp,sp,sy,-sp*cy,cp*cy])};
   }
-  const nodeRadius=n=>n.kind==='you'?.30:n.kind==='category'?.21:.048;
+  function placeCaption(point,box,placed,spheres){
+    const {width,height,w,h}=box,gap=7,half=h/2,side=point.radius+w/2+gap,vertical=point.radius+half+gap,candidates=[];
+    for(let step=0;step<7;step++){
+      const extra=step*(h+7);
+      candidates.push({x:point.x,y:point.y+vertical+extra},{x:point.x,y:point.y-vertical-extra});
+      if(step<3)candidates.push({x:point.x-side,y:point.y+step*(h+7)},{x:point.x+side,y:point.y-step*(h+7)});
+    }
+    // On narrow screens, search spare space across the view as well as near the node.
+    for(let y=half+5;y<=height-half-10;y+=h+7)for(let x=w/2+5;x<=width-w/2-5;x+=Math.max(24,w*.45))candidates.push({x,y});
+    let best=null,bestScore=Infinity;
+    for(const candidate of candidates){
+      const x=clamp(candidate.x,w/2+5,width-w/2-5),y=clamp(candidate.y,half+5,height-half-10);
+      const distance=Math.hypot(x-point.x,y-point.y);
+      let score=distance*distance+(candidate.y<point.y?100:0);
+      for(const b of placed){const ox=(w+b.w)/2+5-Math.abs(x-b.x),oy=(h+b.h)/2+5-Math.abs(y-b.y);if(ox>0&&oy>0)score+=1000000+ox*oy*100;}
+      for(const sphere of spheres){const dx=Math.max(0,Math.abs(sphere.x-x)-w/2),dy=Math.max(0,Math.abs(sphere.y-y)-half),overlap=sphere.radius+4-Math.hypot(dx,dy);if(overlap>0)score+=overlap*overlap*5;}
+      if(score<bestScore){best={x,y};bestScore=score;}
+    }
+    return best;
+  }
+  const nodeRadius=n=>n.kind==='you'?.44:n.kind==='category'?.32:.075;
   function buildGeometry(graph,positions,selected){
     const spheres=[],lines=[],glows=[],byId=new Map(graph.nodes.map(n=>[n.id,n]));
     for(const edge of graph.edges){const a=positions.get(edge.source),b=positions.get(edge.target),n=byId.get(edge.target),c=color(n.color),active=edge.source===selected||edge.target===selected;for(const p of [a,b])lines.push(...p,...c,active?.65:.22);}
@@ -108,7 +128,7 @@
     let width=600,height=500,yaw=.28,pitch=-.08,distance=8.8,requestedMotion=!!motion;
     const media=win.matchMedia?.('(prefers-reduced-motion: reduce)');
     const on=(el,event,fn,options)=>{el.addEventListener(event,fn,options);listeners.push(()=>el.removeEventListener(event,fn,options));};
-    host.classList.add('lg3d');host.dataset.background='galaxy';host.innerHTML=`<div class="lg3d-stage" data-lg3d-stage><canvas data-lg3d-canvas aria-label="Three dimensional life connections" role="img"></canvas><div class="lg3d-labels" data-lg3d-labels></div><select class="lg3d-background" data-lg3d-background aria-label="Graph background"><option value="galaxy">Galaxy</option><option value="dark">Dark</option></select><div class="lg3d-controls" aria-label="3D view controls"><button type="button" data-lg3d-zoom-in aria-label="Zoom into connection graph">+</button><button type="button" data-lg3d-zoom-out aria-label="Zoom out of connection graph">−</button><button type="button" data-lg3d-reset>Reset</button></div><p class="lg3d-state" data-lg3d-state role="status">Preparing 3D view…</p></div><details class="lg3d-outline" data-lg3d-outline><summary>Connection list <span data-lg3d-list-count></span></summary><div class="lg3d-list" data-lg3d-list></div></details>`;
+    host.classList.add('lg3d');host.dataset.background='galaxy';host.innerHTML=`<div class="lg3d-toolbar" aria-label="Graph appearance and view"><select class="lg3d-background" data-lg3d-background aria-label="Graph background"><option value="galaxy">Galaxy</option><option value="dark">Dark</option></select><div class="lg3d-controls" aria-label="3D view controls"><button type="button" data-lg3d-zoom-in aria-label="Zoom into connection graph">+</button><button type="button" data-lg3d-zoom-out aria-label="Zoom out of connection graph">−</button><button type="button" data-lg3d-reset>Reset</button></div></div><div class="lg3d-stage" data-lg3d-stage><canvas data-lg3d-canvas aria-label="Three dimensional life connections" role="img"></canvas><div class="lg3d-labels" data-lg3d-labels></div></div><p class="lg3d-state" data-lg3d-state role="status">Preparing 3D view…</p><details class="lg3d-outline" data-lg3d-outline><summary>Connection list <span data-lg3d-list-count></span></summary><div class="lg3d-list" data-lg3d-list></div></details>`;
     const canvas=q('[data-lg3d-canvas]'),stage=q('[data-lg3d-stage]'),labels=q('[data-lg3d-labels]');
     let labelButtons=new Map(),movedPoints=new Map(),suppressClickUntil=0,savingAvailable=true;
     const instructions='Drag a node to move it · drag empty space to rotate';
@@ -159,21 +179,19 @@
       renderer.draw(camera(),canvas.width,canvas.height);
       const connected=new Set([selected]);graph.edges.forEach(e=>{if(e.source===selected)connected.add(e.target);if(e.target===selected)connected.add(e.source);});
       const projected=graph.nodes.map(n=>({node:n,...project(points.get(n.id),camera())})).sort((a,b)=>a.depth-b.depth),placed=[];
+      const spheres=projected.filter(p=>p.visible).map(p=>({...p,radius:nodeRadius(p.node)*(p.node.id===selected?1.22:1)*height/(2*Math.tan(.7/2)*p.depth)}));
       let memberLabels=0;
       for(const p of projected){
         const n=p.node,button=labelButtons.get(n.id),show=n.kind!=='person'||n.id===selected||(connected.has(n.id)&&memberLabels++<16);
         button.hidden=!show||!p.visible||p.x<0||p.x>width||p.y<0||p.y>height;
         if(button.hidden)continue;
-        const labelWidth=Math.min(n.kind==='you'?70:n.kind==='category'?122:102,Math.max(54,n.label.length*7+22));
+        const compact=width<=600,labelWidth=Math.min(width-16,n.kind==='you'?84:compact?180:220,Math.max(60,n.label.length*(compact?8:9)+28));
         const radiusPx=nodeRadius(n)*(n.id===selected?1.22:1)*height/(2*Math.tan(.7/2)*p.depth);
-        let x=clamp(p.x,labelWidth/2+4,width-labelWidth/2-4),y=p.y+radiusPx+16;
-        if(y>height-47)y=p.y-radiusPx-16;
-        // Keep captions below the sphere surface; move only text to avoid collisions.
-        for(let attempt=0;attempt<8;attempt++){
-          if(!placed.some(b=>Math.abs(b.x-x)<(b.w+labelWidth)/2+3&&Math.abs(b.y-y)<29))break;
-          y+=(attempt%2?-1:1)*(16+Math.floor(attempt/2)*13);
-        }
-        y=clamp(y,22,height-47);placed.push({x,y,w:labelWidth});button.style.left=x+'px';button.style.top=y+'px';button.style.maxWidth=labelWidth+'px';button.style.opacity=n.kind==='you'||n.id===selected?'1':String(clamp(1.3-p.depth/22,.68,1));button.style.zIndex=String(100-Math.round(p.depth));button.style.setProperty('--lg3d-leader-x',(p.x-x)+'px');button.style.setProperty('--lg3d-leader-y',(p.y-y)+'px');
+        const labelHeight=compact?34:38,{x,y}=placeCaption({...p,radius:radiusPx},{width,height,w:labelWidth,h:labelHeight},placed,spheres);
+        placed.push({x,y,w:labelWidth,h:labelHeight});
+        const dx=p.x-x,dy=p.y-y,length=Math.hypot(dx,dy)||1,ux=dx/length,uy=dy/length,start=Math.min(labelWidth/(2*Math.abs(ux)||1e-9),labelHeight/(2*Math.abs(uy)||1e-9))+1;
+        button.style.setProperty('--lg3d-tether-x',(ux*start)+'px');button.style.setProperty('--lg3d-tether-y',(uy*start)+'px');button.style.setProperty('--lg3d-tether-length',Math.max(0,length-start-radiusPx-2)+'px');button.style.setProperty('--lg3d-tether-angle',Math.atan2(dy,dx)+'rad');
+        button.style.left=x+'px';button.style.top=y+'px';button.style.maxWidth=labelWidth+'px';button.style.opacity='1';button.style.zIndex=String(100-Math.round(p.depth));button.style.setProperty('--lg3d-leader-x',(p.x-x)+'px');button.style.setProperty('--lg3d-leader-y',(p.y-y)+'px');
       }
     }
     function frame(time){raf=0;if(!moving())return;if(!lastFrame||time-lastFrame>=1000/30){const delta=lastFrame?Math.min(.1,(time-lastFrame)/1000):0;lastFrame=time;if(!drag)yaw+=delta*.065;draw();}if(moving())raf=win.requestAnimationFrame(frame);}
@@ -234,6 +252,6 @@
     return {update(next){if(disposed)return;const normalized=normalize(next);if(JSON.stringify(normalized)===JSON.stringify(graph))return;end();graph=normalized;points=layout(graph);for(const [id,p] of movedPoints){if(points.has(id))points.set(id,p);else movedPoints.delete(id);}if(storageKey)saveLayout();if(!graph.nodes.some(n=>n.id===selected))selected=graph.nodes.find(n=>n.kind==='you')?.id||'';rebuild();},select,setMotion(value){requestedMotion=!!value;if(active())draw();schedule();},zoom,reset,
       dispose(){if(disposed)return;end();disposed=true;cancel();observer?.disconnect();resizeObserver?.disconnect();listeners.forEach(fn=>fn());if(!lost)renderer?.dispose();try{gl?.getExtension('WEBGL_lose_context')?.loseContext();}catch(_){}renderer=null;gl=null;graph={nodes:[],edges:[]};points.clear();movedPoints.clear();labelButtons.clear();host.replaceChildren();host.classList.remove('lg3d','lg3d-unavailable');delete host.dataset.renderer;delete host.dataset.background;}};
   }
-  return {mount,normalize,layout,rotate,project,moveInView,matrix,buildGeometry,createRenderer};
+  return {mount,normalize,layout,rotate,project,moveInView,placeCaption,matrix,buildGeometry,createRenderer};
 });
 

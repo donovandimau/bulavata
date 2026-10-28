@@ -134,7 +134,7 @@ if(inlineHost===host&&dialog.parentNode===host&&dialog.open){sync();return dialo
 const active=root.document.activeElement;
 focusBefore=null;
 if(dialog.open)dialog.close();
-inlineHost=host;dialog.classList.add('sk-playlist-inline');
+inlineHost=host;dialog.classList.add('sk-playlist-inline');dialog.querySelector('.sk-playlist-close').setAttribute('aria-label','Back to visualiser');
 relocate(host);dialog.show();sync();
 if(active&&active!==root.document.body&&active.isConnected)active.focus({preventScroll:true});
 dialog.querySelector('dimau-music-visualiser')?.wake?.();
@@ -146,7 +146,7 @@ if(!dialog||!inlineHost)return;
 const active=root.document.activeElement;
 focusBefore=null;
 if(dialog.open)dialog.close();
-inlineHost=null;dialog.classList.remove('sk-playlist-inline');
+inlineHost=null;dialog.classList.remove('sk-playlist-inline');dialog.querySelector('.sk-playlist-close').setAttribute('aria-label','Close music playlist');
 relocate(root.document.body);stopVisuals();sync();
 if(active&&active!==root.document.body&&active.isConnected&&!dialog.contains(active))active.focus({preventScroll:true});
 }

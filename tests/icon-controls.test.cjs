@@ -7,7 +7,7 @@ function harness(t,markup){const dom=new JSDOM('<!doctype html><body>'+markup+'<
 
 browserTest('navigation becomes original SVG symbols while retaining anchors, current route and click handlers',async t=>{
  const h=harness(t,'<nav class="sfp-navigation"><a href="#home" data-front-view="home" aria-current="page">Home</a><a href="#world" data-front-view="world">3D</a></nav><input value="draft">');const anchor=h.d.querySelector('a'),input=h.d.querySelector('input');let clicks=0;anchor.addEventListener('click',event=>{event.preventDefault();clicks++;});h.api.init();
- assert.equal(h.d.querySelector('a'),anchor);assert.equal(anchor.getAttribute('aria-current'),'page');assert.equal(anchor.getAttribute('href'),'#home');assert.equal(anchor.dataset.sotaIcon,'home');assert.equal(anchor.querySelectorAll('svg').length,1);assert.equal(anchor.querySelector('svg').getAttribute('stroke'),'currentColor');assert.equal(anchor.querySelector('.sota-control-label').textContent,'Home');assert.equal(h.d.querySelector('[data-front-view=world]').getAttribute('aria-label'),'3D connections');anchor.click();assert.equal(clicks,1);assert.equal(input.value,'draft');assert.equal(h.w.location.hash,'#home');
+ assert.equal(h.d.querySelector('a'),anchor);assert.equal(anchor.getAttribute('aria-current'),'page');assert.equal(anchor.getAttribute('href'),'#home');assert.equal(anchor.querySelector('.sota-control-label').dataset.caption,'Home');assert.equal(anchor.dataset.sotaIcon,'home');assert.equal(anchor.querySelectorAll('svg').length,1);assert.equal(anchor.querySelector('svg').getAttribute('stroke'),'currentColor');assert.equal(anchor.querySelector('.sota-control-label').textContent,'Home');assert.equal(h.d.querySelector('[data-front-view=world]').getAttribute('aria-label'),'3D connections');anchor.click();assert.equal(clicks,1);assert.equal(input.value,'draft');assert.equal(h.w.location.hash,'#home');
 });
 
 browserTest('dynamic Play and Pause text updates the existing control, icon, accessible label and tooltip',async t=>{
@@ -68,4 +68,13 @@ browserTest('stop restores current button labels and attributes, removes wrapper
 browserTest('Where you belong keeps readable native labels without changing other icon controls',async t=>{
  const h=harness(t,'<section id="bv-your-room"><button class="bv-discovery-all">Explore all 94 skins</button><button class="bv-collection-card" data-collection="school"><strong>School pride</strong></button></section><button class="ssd-launcher">Design your space</button>');
  h.api.init();await flush();const section=h.d.querySelector('#bv-your-room');assert.equal(section.querySelector('[data-sota-icon],.sota-glass-preview,.sota-control-symbol'),null);assert.equal(section.querySelector('.bv-discovery-all').textContent,'Explore all 94 skins');assert.equal(h.d.querySelector('.ssd-launcher').dataset.sotaIcon,'design');
+});
+
+browserTest('page exit remains a close icon in navigation and playlist return remains a back action',async t=>{
+ const h=harness(t,'<nav class="sfp-navigation"><a class="sfp-page-close" data-front-view="home" href="#home" aria-label="Close Music and return to home">×</a></nav><section class="sk-playlist-inline"><button class="sk-playlist-close" aria-label="Back to visualiser">×</button></section>');
+ h.api.init();await flush();
+ assert.equal(h.d.querySelector('.sfp-page-close').dataset.sotaIcon,'close');
+ const button=h.d.querySelector('.sk-playlist-close');assert.equal(button.dataset.sotaIcon,'back');assert.equal(button.getAttribute('aria-label'),'Back to visualiser');
+ h.d.querySelector('section').classList.remove('sk-playlist-inline');button.setAttribute('aria-label','Close music playlist');await flush();
+ assert.equal(button.dataset.sotaIcon,'close');assert.equal(button.getAttribute('aria-label'),'Close music playlist');
 });

@@ -70,6 +70,7 @@ test('3D workspace keeps real renderer data, category navigation and local editi
   w.SotaLifeGraph3D={mount(target,input){options=input;assert(target.matches('[data-slc-graph3d]'));assert.equal(input.storageKey,life.keyFor('owner')+':layout-v1');assert.equal(input.storage,w.localStorage);return {update(value){scene=value;},select(id){selected=id;},setMotion(value){rotation=value;},dispose(){disposed++;}};}};
   w.eval(fs.readFileSync(path.join(__dirname,'../life-connections.js'),'utf8'));
   const host=w.document.querySelector('#life'),component=w.SotaLifeConnections.mount(host,{owner:'owner',friends:[{id:'ana',display_name:'Ana'}]});
+  assert.equal(rotation,false,'the map starts settled so its names are easy to read');
   assert.equal(host.querySelectorAll('.slc-node,.slc-node-icon,.slc-intro,svg').length,0,'the old illustrated map must not remain under the 3D view');
   assert(scene.nodes.some(n=>n.label==='Ana'&&n.kind==='person'));assert.equal(scene.nodes.filter(n=>n.kind==='person').length,1);
   options.onSelect('family');assert.equal(host.querySelector('[data-slc-filter]').value,'family');assert.equal(selected,'family');
@@ -81,7 +82,7 @@ test('3D workspace keeps real renderer data, category navigation and local editi
   const filter=host.querySelector('[data-slc-filter]');filter.value='cat';filter.dispatchEvent(new w.Event('change',{bubbles:true}));
   const search=host.querySelector('[data-slc-search]');search.value='cousin';search.dispatchEvent(new w.Event('input',{bubbles:true}));
   assert(host.querySelector('[data-slc-members]').textContent.includes('Mere'),'search still covers categories outside the current view');
-  host.querySelector('[data-slc-motion]').click();assert.equal(rotation,false);
+  host.querySelector('[data-slc-motion]').click();assert.equal(rotation,true);
   const edit=host.querySelector('[data-slc-edit]');edit.click();host.querySelector('[data-slc-remove]').click();assert(!scene.nodes.some(n=>n.label==='Mere'));
   component.updateFriends([]);assert(!scene.nodes.some(n=>n.label==='Ana'));
   component.dispose();assert.equal(disposed,1);assert.equal(host.innerHTML,'');dom.window.close();
