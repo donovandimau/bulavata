@@ -32,7 +32,13 @@ Sample people and conversations are fictional. Sample changes are stored only un
 
 Real account mutations require a signed-in person using the interface. Automated adapter checks and local sample browser checks do not prove live authenticated operation. The build must report that distinction. Member favourites and saved feed selections last for the current session; local music files last until the tab closes. Circle messages use an explicit Refresh control, not realtime subscriptions.
 
-Community music is an optional existing content source. Its recordings are not represented as ChatGPT creations. Sota Sessions, the new SVG art and the revised product interface are original work for this project. No third-party AI was used.
+Community music is an optional existing content source. Its recordings are not represented as ChatGPT creations. Sota Sessions, the original artwork and the revised product interface are original work for this project. No third-party AI was used.
+
+## Original image library
+
+18 original images were art-directed and generated with OpenAI's built-in image generation on 28 October 2026: a community hero, six fictional portraits, six interest/community scenes, a botanical identity image and four distinct Sota Sessions album covers. They replace the former hero, emoji avatars, CSS post illustrations, blank covers, topic symbols and gradient album sleeves across the welcome page, Home, People, Talanoa, Music, Discover and personal spaces, including small player/chat/sidebar slots. The original vector logo and navigation icons remain vector artwork. User-uploaded photos and member-chosen symbols remain user content.
+
+`artwork.mjs` owns the allowlisted image registry and context mapping; `artwork.css` provides responsive composition; `assets/manifest.json` records dimensions, byte counts and SHA256 hashes. The 18 web assets total 2,871,510 bytes, proportionally resized and encoded as WebP from retained PNG originals. No stock images or remote image dependencies are used. Portraits belong only to explicitly fictional sample people; real members are never assigned those identities. The sample owner can choose from five original botanical/album artworks, with their selection preserved in existing local sample storage. Covers follow the existing four themes. All 44 focused checks pass, including asset completeness, safe path selection, identity separation, profile persistence and album updates during playback.
 
 ## Publication
 

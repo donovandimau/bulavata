@@ -1,0 +1,153 @@
+{
+  "project": "Sota Kece Revised",
+  "date": "2026-10-28",
+  "generationMode": "OpenAI built-in image_gen, one original per call",
+  "deliveryProcessing": "Proportional downscale and WebP encoding only. No generative or compositing edits outside image_gen.",
+  "fictionalPeople": true,
+  "assets": [
+    {
+      "id": "hero",
+      "file": "hero.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 260994,
+      "sha256": "fc6d6b2b29a4b37a13c07ef4674de48aca27cbc851a79dfad87aa9165cf51c65"
+    },
+    {
+      "id": "ani",
+      "file": "ani.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 30872,
+      "sha256": "b24a388f86bda943eb2606e013c9a6f360157fb1a1cef38cc390ace083476a20"
+    },
+    {
+      "id": "jo",
+      "file": "jo.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 31806,
+      "sha256": "229efd50467d972c69cb6b173162eafa5ea6ae7226043c79df983d287ba1974e"
+    },
+    {
+      "id": "lani",
+      "file": "lani.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 40548,
+      "sha256": "8e86610538db00d3c2c4588ef7e92309ed015b4ec3a7018c9180a8c5c89cac3d"
+    },
+    {
+      "id": "eli",
+      "file": "eli.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 30152,
+      "sha256": "de63feca622b2c4bd83a520c323a63c3a98aee325b290cda1b5bf08139b9164f"
+    },
+    {
+      "id": "mika",
+      "file": "mika.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 43464,
+      "sha256": "ea04f6664fc5e84ed5d85045b7fb1c7822018fd0b3a6a90d67be93bf7210debc"
+    },
+    {
+      "id": "sela",
+      "file": "sela.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 35804,
+      "sha256": "d40ef56dcb663eb64fb9642e24674ddaf6723ffa1db18bb4842a52139f6f35fb"
+    },
+    {
+      "id": "making",
+      "file": "making.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 284430,
+      "sha256": "c2221e5dd2883010c1c90ac8a06fa8987592f4a7f3d203e82af05a7e7c64fdc0"
+    },
+    {
+      "id": "outside",
+      "file": "outside.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 290038,
+      "sha256": "b55c313a8083a98797fa4296e3997adca0e5051750fd4bd3adb456aa6a759008"
+    },
+    {
+      "id": "music",
+      "file": "music.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 266878,
+      "sha256": "c60d6dd364e1c3e765d8c361c47375bb5e8390ff74795842ea188a1dd4df6530"
+    },
+    {
+      "id": "food",
+      "file": "food.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 283274,
+      "sha256": "80b0cbbe0a179ec3dd6ecfc57a5b738989f325af256253866f16503c4bd2fc30"
+    },
+    {
+      "id": "photos",
+      "file": "photos.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 242944,
+      "sha256": "d2f35e5375c655733cad6bc2b6eb7260528a696cbb675a8e0064db36d2bd2cec"
+    },
+    {
+      "id": "culture",
+      "file": "culture.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 258454,
+      "sha256": "c4166c3ebb8d3e78f1823d418877a0b849c8faa91900e87f5a57ab5b3a8896f1"
+    },
+    {
+      "id": "identity",
+      "file": "identity.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 59716,
+      "sha256": "e58093555c9e8200d8f3cc417e0bafd5d268081d03bba0b17efa6b91e2804e80"
+    },
+    {
+      "id": "album-lagoon",
+      "file": "album-lagoon.webp",
+      "width": 768,
+      "height": 768,
+      "bytes": 177658,
+      "sha256": "024c58f4cc42b686444efbd1979afc0b46d4ac853006597a998863c8d6a16629"
+    },
+    {
+      "id": "album-gold",
+      "file": "album-gold.webp",
+      "width": 768,
+      "height": 768,
+      "bytes": 192562,
+      "sha256": "14e794a63bb44e6a783034366f79a9e4bd49726fa2cdca27c3cfe91723e0e217"
+    },
+    {
+      "id": "album-coral",
+      "file": "album-coral.webp",
+      "width": 768,
+      "height": 768,
+      "bytes": 175792,
+      "sha256": "c2ad8772637d56dadcb27c0754447d0dba3dd4b9c34c568fcd68ca420deb24ff"
+    },
+    {
+      "id": "album-night",
+      "file": "album-night.webp",
+      "width": 768,
+      "height": 768,
+      "bytes": 166124,
+      "sha256": "8cc2bc27cce0bfa8351c2c5e7840578e6c659d47426ebd1e21c12bff4b07a726"
+    }
+  ]
+}
