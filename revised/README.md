@@ -1,12 +1,22 @@
 # Sota Kece Revised
 
-An original, standalone application stored at `/revised/` in this repository. Its dedicated preview deploys this directory as the site root, so Ops Room opens directly into the new app. Created and designed by ChatGPT for Donovan on 28 October 2026. This directory contains newly authored interface code, design, SVG illustrations, copy, sample community and synthesized instrumental compositions. It does not import the existing Sota Kece frontend. The existing repository and Supabase account/data service are retained, as are standard browser APIs, open-source client software and Google Fonts.
+The combined Sota Kece preview lives at `/revised/` in the canonical repository. It combines the original ChatGPT-designed social interface and 18 original artworks with selected working components from the live site at commit `5c43a4aa9a47ae56a677eff1d59465d5ebc3bb38`. Its preview deploys this directory as the root. The original social implementation remains intact; legacy features are reused explicitly, with their provenance retained in `live/PROVENANCE.md`.
+
+## Combined experience — 28 October 2026
+
+- Room Studio browses/searches all 94 live skins across 15 categories, previews each design with the revised profile, and applies/restores its artwork and colours. Choices save locally per account. They do not overwrite existing cloud room settings.
+- Native WebGL life map reuses the live renderer and CRUD model. It supports 10 categories, adding/editing/removing explicit personal connections, search, node placement, zoom, rotation, galaxy/dark backgrounds and an accessible list fallback. Real member maps include only the accepted friends returned by the existing service. Fictional sample people are never imported as real connections.
+- The live music analyser and drawing engine share the revised player's one audio element. Spectrum, waves, halo and ocean views react to actual playback, respect reduced motion and stop drawing when not visible. Playback continues across routes. The 82-track public live catalogue is bundled as a validated local manifest, alongside four original Sota Sessions and local files.
+- Top Mates selects up to 16 already-connected people, including a deliberately empty choice. It is a local profile preference, partitioned between sample and each member; it does not alter friendship or server privacy.
+- Home, People, My space and the welcome page expose these features through the existing responsive navigation. There is no iframe or second app to navigate.
+
+The live site's voice/video calling, private media studio and advanced cloud room editing remain in the existing live application; they were not ported into this combined preview. No database, authentication, ownership, live user records or production settings were changed.
 
 ## Run
 
 Serve the repository with any static HTTP server, then open `/revised/`. There is no build step. For example, `python -m http.server 8065` and `http://localhost:8065/revised/`.
 
-Run `node --test tests/revised-app.test.cjs tests/revised-ui.test.cjs` from the repository root. UI tests use the existing `tests/talanoa-tools` jsdom dependency; set `NODE_PATH=tests/talanoa-tools/node_modules` after installing that lockfile. A dedicated CI workflow runs both suites.
+Run `node --test tests/revised-app.test.cjs tests/revised-ui.test.cjs tests/revised-combined.test.cjs` from the repository root. UI tests use the existing `tests/talanoa-tools` jsdom dependency; set `NODE_PATH=tests/talanoa-tools/node_modules` after installing that lockfile. The dedicated CI workflow runs all three revised suites. The verification run also includes existing life-map, WebGL and audio preparation suites (91 checks total).
 
 ## Working journeys
 
@@ -28,7 +38,7 @@ Rich media, polls, advanced profile fields, post editing, pinning and reactions 
 
 ## Data and verification boundaries
 
-Sample people and conversations are fictional. Sample changes are stored only under `sota.revised.sample.v1` in localStorage. No automatic sample replies are generated and no sample content migrates into member accounts. Real member content/drafts are held in memory and cleared at account boundaries; the auth SDK uses its normal separate session storage. Member colour preference is per-account sessionStorage. Late private responses are rejected after an account epoch changes.
+Sample people and conversations are fictional. Sample social changes are stored under `sota.revised.sample.v1` in localStorage. Combined design/Top Mates settings use `sota.combined.space.v1:<owner>`; life map records and layouts retain the live engine’s separate owner-scoped keys. No automatic sample replies are generated and no sample content migrates into member accounts. Real member content/drafts are held in memory and cleared at account boundaries; the auth SDK uses its normal separate session storage. Member colour preference is per-account sessionStorage. Late private responses are rejected after an account epoch changes.
 
 Real account mutations require a signed-in person using the interface. Automated adapter checks and local sample browser checks do not prove live authenticated operation. The build must report that distinction. Member favourites and saved feed selections last for the current session; local music files last until the tab closes. Circle messages use an explicit Refresh control, not realtime subscriptions.
 
@@ -38,7 +48,7 @@ Community music is an optional existing content source. Its recordings are not r
 
 18 original images were art-directed and generated with OpenAI's built-in image generation on 28 October 2026: a community hero, six fictional portraits, six interest/community scenes, a botanical identity image and four distinct Sota Sessions album covers. They replace the former hero, emoji avatars, CSS post illustrations, blank covers, topic symbols and gradient album sleeves across the welcome page, Home, People, Talanoa, Music, Discover and personal spaces, including small player/chat/sidebar slots. The original vector logo and navigation icons remain vector artwork. User-uploaded photos and member-chosen symbols remain user content.
 
-`artwork.mjs` owns the allowlisted image registry and context mapping; `artwork.css` provides responsive composition; `assets/manifest.json` records dimensions, byte counts and SHA256 hashes. The 18 web assets total 2,871,510 bytes, proportionally resized and encoded as WebP from retained PNG originals. No stock images or remote image dependencies are used. Portraits belong only to explicitly fictional sample people; real members are never assigned those identities. The sample owner can choose from five original botanical/album artworks, with their selection preserved in existing local sample storage. Covers follow the existing four themes. All 44 focused checks pass, including asset completeness, safe path selection, identity separation, profile persistence and album updates during playback.
+`artwork.mjs` owns the allowlisted image registry and context mapping; `artwork.css` provides responsive composition; `assets/manifest.json` records dimensions, byte counts and SHA256 hashes. The 18 web assets total 2,871,510 bytes, proportionally resized and encoded as WebP from retained PNG originals. No stock images or remote image dependencies are used. Portraits belong only to explicitly fictional sample people; real members are never assigned those identities. The sample owner can choose from five original botanical/album artworks, with their selection preserved in existing local sample storage. Covers follow the existing four themes. The original artwork checks cover asset completeness, safe path selection, identity separation, profile persistence and album updates during playback.
 
 ## Publication
 
