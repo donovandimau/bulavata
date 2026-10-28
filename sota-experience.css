@@ -97,3 +97,8 @@ html body.sx-enabled #app.sx-app .sx-panel .bv-home-search button{background:#d4
 html body.sx-enabled #app.sx-app .sx-panel .bv-entry-share-actions button{background:#e5f0e6!important;color:#173e4b!important;box-shadow:none!important;border:1px solid #c5d8c9!important;border-radius:8px!important;font:800 11px Nunito,system-ui,sans-serif!important}
 html body.sx-enabled #app.sx-app .sx-panel .bv-entry-invite h3{color:#173e4b!important;font:900 25px/1.15 Nunito,system-ui,sans-serif!important}
 html body.sx-enabled #app.sx-app .sx-panel .bv-entry-invite-icon{background:#edf4e7!important;color:#386251!important;box-shadow:none!important;border:0!important}
+/* Allow the layout to fit narrow viewports even when a desktop scrollbar is present. */
+body.sx-enabled{min-width:0}
+.sx-account-actions{flex:0 0 auto}
+body.sx-enabled #app.sx-app .sx-account-actions button{flex:0 0 auto!important;max-width:none!important}
+@media(max-width:760px){body.sx-enabled #app.sx-app{padding-bottom:calc(80px + env(safe-area-inset-bottom))!important}}
