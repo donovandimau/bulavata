@@ -6,6 +6,7 @@ const path=require('node:path');
 let JSDOM;try{({JSDOM}=require(process.env.JSDOM_MODULE||'jsdom'));}catch(_){}
 const browserTest=(name,fn)=>test(name,{skip:!JSDOM?'Install jsdom or set JSDOM_MODULE to run music home integration':false},fn);
 const root=path.join(__dirname,'..');
+let sharedMusic='';
 const source=name=>fs.readFileSync(path.join(root,name),'utf8');
 const flush=async()=>{for(let i=0;i<4;i++)await new Promise(resolve=>setImmediate(resolve));};
 const markup=`<section id="sota-music-home" aria-label="Your music">

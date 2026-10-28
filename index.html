@@ -469,8 +469,7 @@ async function viewPulse(){
   if(!currentView(run))return;
   if(pf.error||sp.error){
     viewError('the Pulse','viewPulse()');mountPulseSocial();
-    $('#view')?.insertAdjacentHTML('beforeend',window.SotaConnections?.entryHtml?.()||'');
-    window.SotaConnections?.mountEntry();return;
+    return;
   }
   const pulses = (pf.data||[]).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
   let spark = sp.data, mine=null, answers=[];
@@ -534,8 +533,8 @@ async function viewPulse(){
         </div>
       </div>
     </div>
-  </div>${window.SotaConnections?.entryHtml?.()||''}`);
-  mountPulseSocial();window.SotaConnections?.mountEntry();
+  </div>`);
+  mountPulseSocial();
 }
 function mountPulseSocial(){
   const view=$("#view");if(!view||S.tab!=="pulse"||!S.user||!S.me)return;
