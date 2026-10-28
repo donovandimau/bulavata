@@ -6,7 +6,7 @@ export function readSpace(storage,owner){try{const v=JSON.parse(storage.getItem(
 export function saveSpace(storage,owner,value){const next={skin:skinById(value.skin)?.id||'',mates:Array.isArray(value.mates)?[...new Set(value.mates)].filter(x=>typeof x==='string'&&x.length<100).slice(0,16):null};storage.setItem(spaceKey(owner),JSON.stringify(next));return next;}
 export function topMates(friends,ids=null){return Array.isArray(ids)?ids.map(id=>friends.find(p=>p.id===id)).filter(Boolean):friends.slice(0,16);}
 export function toggleMate(ids,id,allowed){if(!allowed.includes(id))throw Error('Choose someone from your connected people.');if(ids.includes(id))return ids.filter(x=>x!==id);if(ids.length>=16)throw Error('Your Top Mates has room for 16. Remove one before adding another.');return [...ids,id];}
-export function skinStyle(s){if(!s)return '';const color=x=>/^#[\da-f]{6}$/i.test(x)?x:'#173e38';return `--room-bg:${color(s.bg)};--room-panel:${color(s.panel)};--room-ink:${color(s.ink)};--room-muted:${color(s.muted)};--room-accent:${color(s.accent)}`;}
+export function skinStyle(s){if(!s)return '';const color=x=>/^#[\da-f]{6}$/i.test(x)?x:'#173e38';return `--room-bg:${color(s.bg)};--room-panel:${color(s.panel)};--room-ink:${color(s.ink)};--room-muted:${color(s.muted)};--room-accent:${color(s.accent)};--room-type:${s.font==='serif'?'var(--serif)':'var(--sans)'}`;}
 
 // The proven live analyser shares the revised app's sole audio element.
 // Disposing this view removes drawing work, never the speaker route or playback.

@@ -52,10 +52,14 @@ All assets remain local WebP files with proportional resizing and encoding only,
 
 The link-preview metadata uses the same new community hero. No backend, authentication, audio, user record or production setting changes.
 
-## Island colour refresh — 28 October 2026
-
-The shared shell uses a light lagoon-blue background with an original geometric wave pattern, a deep ocean navigation rail, coral and sunshine accents, translucent controls and brighter photographic cards. Home has a full-width community photograph and three colourful feature shortcuts; Talanoa, Music, Discover and welcome use complementary colour families. Mobile headings have a full row and the persistent navigation has a clear filled active state. Existing theme IDs remain available with refreshed palettes; Room Studio palettes, saved choices and all 94 skin IDs are unchanged. The final `island-colour.css` layer is scoped to preserve personal room colours and respects reduced motion. No backend or account behavior changes.
-
 ## Publication
 
 The preview remains on the held PR branch. Production at sotakece.com is unchanged. Do not merge or promote without Donovan's publication instruction.
+# Editorial room collection — 28 October 2026
+
+The 94 stable room-skin IDs now use an adult editorial treatment: eight original photographic studies (ocean, basalt, linen, botanical shadows, bronze, vinyl, terracotta and mountain mist), restrained light/dark palettes, serif or sans typography, clear colour previews and a compact responsive studio. Former playful names remain searchable aliases, so existing saved choices continue to resolve. School, province, cultural and music identities and source credits remain available. These are community design editions, not official identities or documentary images.
+
+The selected cover, colours and heading type apply to the room preview and the owner's profile. Selection stays device-local and account-partitioned as before. Eight original PNGs and exact prompts are retained in the deliverable archive; optimized WebP assets and provenance live in `assets/skins/`. They were generated with OpenAI's built-in image tool; WebP resizing/re-encoding is delivery optimization only. The separately authored photorealistic Fijian community artwork is preserved.
+
+Validation adds text contrast for every palette, legacy saved-ID compatibility and old-name search/default-apply behavior to the existing tests. This revision is a held preview under PR267; production publication remains separate.
+

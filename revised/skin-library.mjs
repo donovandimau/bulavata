@@ -1,3 +1,3747 @@
-// Existing live Sota Kece identities and credits, source commit 5c43a4a.
-// Generated community mood scenes are illustrative: not documentary images of named schools, places or artists.
-export const SKINS=[{"id":"lagoon","name":"Lagoon Club","category":"Island","note":"Salt air. Good company.","bg":"#e1f4f3","panel":"#ffffff","ink":"#173e49","muted":"#506b72","accent":"#086779","cover":"#86ded5","pattern":"waves","font":"rounded","look":"social","identityLabel":"Lagoon Club","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-lagoon.webp"},{"id":"kula","name":"Kula Classic","category":"Classic","note":"A little loud. All you.","bg":"#fae8ed","panel":"#ffffff","ink":"#412132","muted":"#775866","accent":"#b52b50","cover":"#f3abc0","pattern":"dots","font":"rounded","look":"social","identityLabel":"Kula Classic","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/photos.webp"},{"id":"midnight","name":"Midnight Mixtape","category":"Dark","note":"For the after-hours crowd.","bg":"#17172c","panel":"#25253e","ink":"#f4f1ff","muted":"#c1b9dc","accent":"#c6a8ff","cover":"#48416e","pattern":"stars","font":"rounded","look":"music","identityLabel":"Midnight Mixtape","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-night.webp"},{"id":"bloom","name":"Island Bloom","category":"Island","note":"Full colour. Soft heart.","bg":"#fcecdf","panel":"#fffaf5","ink":"#4b3040","muted":"#796074","accent":"#ad376e","cover":"#f2b88c","pattern":"flowers","font":"serif","look":"social","identityLabel":"Island Bloom","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-coral.webp"},{"id":"palm","name":"Palm Social","category":"Island","note":"Your little green corner.","bg":"#e4eedc","panel":"#fbfff7","ink":"#274231","muted":"#5c715f","accent":"#326342","cover":"#a7c98a","pattern":"stripes","font":"rounded","look":"social","identityLabel":"Palm Social","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"sunset","name":"Golden Hour","category":"Bright","note":"Stay for one more sunset.","bg":"#fff0d9","panel":"#fffdf8","ink":"#583725","muted":"#80684d","accent":"#a34321","cover":"#ffbf7a","pattern":"waves","font":"serif","look":"social","identityLabel":"Golden Hour","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-gold.webp"},{"id":"pixel","name":"Pixel Party","category":"Bright","note":"Main-character energy.","bg":"#eee6ff","panel":"#fffaff","ink":"#3e255a","muted":"#755b87","accent":"#7938bc","cover":"#c5a4f0","pattern":"checker","font":"mono","look":"social","identityLabel":"Pixel Party","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-gold.webp"},{"id":"notebook","name":"Notebook","category":"Classic","note":"Leave a little note.","bg":"#eeeee8","panel":"#fffef5","ink":"#303f55","muted":"#697283","accent":"#3558a1","cover":"#c2d2e4","pattern":"grid","font":"mono","look":"social","identityLabel":"Notebook","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/making.webp"},{"id":"electric","name":"Bula Electric","category":"Bright","note":"Big bula. Bigger energy.","bg":"#151025","panel":"#261c3b","ink":"#fff5fd","muted":"#d1bedf","accent":"#6cedee","cover":"#ba399f","pattern":"checker","font":"rounded","look":"social","identityLabel":"Bula Electric","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-gold.webp"},{"id":"masi","name":"Masi Social","category":"Masi-inspired","note":"Island roots. Your story.","bg":"#efe1c6","panel":"#fff8eb","ink":"#3d2920","muted":"#705d4c","accent":"#6e3827","cover":"#d9b984","pattern":"masi","font":"serif","look":"masi","identityLabel":"Masi Social","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/culture.webp"},{"id":"drua","name":"Drua Day","category":"Sport","note":"Bring the whole crew.","bg":"#d9f1ff","panel":"#ffffff","ink":"#102c50","muted":"#475d78","accent":"#1458a0","cover":"#66c5ef","pattern":"stripes","font":"rounded","look":"social","identityLabel":"Drua Day","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/hero.webp"},{"id":"hibiscus","name":"Hibiscus Heat","category":"Island","note":"Full bloom. Full volume.","bg":"#ffe1f0","panel":"#fff9fd","ink":"#531932","muted":"#795063","accent":"#bb2066","cover":"#ee69a5","pattern":"flowers","font":"rounded","look":"social","identityLabel":"Hibiscus Heat","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-coral.webp"},{"id":"reef","name":"Reef Rave","category":"Bright","note":"Ocean air. Electric nights.","bg":"#08232d","panel":"#103440","ink":"#e8ffff","muted":"#b7d9de","accent":"#64f2d7","cover":"#0d776d","pattern":"waves","font":"mono","look":"social","identityLabel":"Reef Rave","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-gold.webp"},{"id":"kava","name":"Yaqona Nights","category":"Dark","note":"Good stories. Late nights.","bg":"#231b17","panel":"#352b25","ink":"#fff0d5","muted":"#d4c1ac","accent":"#edc086","cover":"#624b35","pattern":"masi","font":"serif","look":"music","identityLabel":"Yaqona Nights","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-night.webp"},{"id":"mango","name":"Mango Season","category":"Island","note":"A little sunshine goes a long way.","bg":"#fff0cf","panel":"#fffaf0","ink":"#5c3619","muted":"#78604d","accent":"#a6450e","cover":"#ffc05c","pattern":"dots","font":"rounded","look":"social","identityLabel":"Mango Season","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"candy","name":"Candy Crush","category":"Soft","note":"Sweet colours. Big personality.","bg":"#f6e5ff","panel":"#fffbff","ink":"#4a255d","muted":"#725583","accent":"#8a399c","cover":"#e4a3e8","pattern":"checker","font":"rounded","look":"social","identityLabel":"Candy Crush","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-coral.webp"},{"id":"cloud","name":"Cloud Nine","category":"Soft","note":"Soft days. Good company.","bg":"#e8eefb","panel":"#fcfdff","ink":"#273750","muted":"#536782","accent":"#3d5ea7","cover":"#bacdf8","pattern":"stars","font":"serif","look":"social","identityLabel":"Cloud Nine","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-coral.webp"},{"id":"ink","name":"Ink & Paper","category":"Classic","note":"Your words take the stage.","bg":"#e7e4dd","panel":"#fffdf5","ink":"#232b31","muted":"#59636c","accent":"#343e46","cover":"#c9c4b7","pattern":"grid","font":"mono","look":"social","identityLabel":"Ink & Paper","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/photos.webp"},{"id":"disco","name":"Disco Cousins","category":"Bright","note":"One more song for the cousins.","bg":"#27113d","panel":"#3a1c4c","ink":"#fff2fc","muted":"#dab8e7","accent":"#ffb2e9","cover":"#9e327e","pattern":"dots","font":"rounded","look":"music","identityLabel":"Disco Cousins","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-gold.webp"},{"id":"acid","name":"Lime Limelight","category":"Bright","note":"Main stage. Main character.","bg":"#162110","panel":"#26351c","ink":"#f2ffe5","muted":"#c4d9b2","accent":"#c7ff48","cover":"#5e732a","pattern":"checker","font":"mono","look":"social","identityLabel":"Lime Limelight","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-gold.webp"},{"id":"varsity","name":"Schoolyard Stories","category":"Sport","note":"Same mates. New stories.","bg":"#eee5e0","panel":"#fffaf6","ink":"#3d2328","muted":"#70555c","accent":"#8f2d40","cover":"#ca7f89","pattern":"stripes","font":"serif","look":"social","identityLabel":"Schoolyard Stories","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/hero.webp"},{"id":"comic","name":"Comic Crew","category":"Bright","note":"Big laughs. Bold lines.","bg":"#fff3bc","panel":"#fffdf1","ink":"#2b263f","muted":"#605772","accent":"#6a37a5","cover":"#f9d647","pattern":"dots","font":"mono","look":"social","identityLabel":"Comic Crew","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-gold.webp"},{"id":"afterglow","name":"Island Afterglow","category":"Dark","note":"Stay for one more story.","bg":"#221326","panel":"#39223b","ink":"#fff0eb","muted":"#e4bfc7","accent":"#ffbe94","cover":"#a05c76","pattern":"waves","font":"serif","look":"social","identityLabel":"Island Afterglow","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-night.webp"},{"id":"mint","name":"Mint Condition","category":"Soft","note":"Fresh space. Fresh start.","bg":"#dcefe8","panel":"#f8fffb","ink":"#224638","muted":"#577468","accent":"#25634a","cover":"#a4d2bb","pattern":"flowers","font":"rounded","look":"social","identityLabel":"Mint Condition","identitySources":[],"identityNote":"Community-made design","coverArt":"./assets/album-coral.webp"},{"id":"school-natabua-high-school","catalogueId":"school-natabua-high-school","name":"Natabua","category":"Schools","note":"In Scientia Fortitudo.","bg":"#081e48","panel":"#102f61","ink":"#f8fbff","muted":"#c9d7e5","accent":"#99d9ff","cover":"#99d9ff","pattern":"plain","font":"rounded","cardStyle":"square","material":"glass","artwork":"/assets/skins/core/school-natabua-high-school.svg","border":"/assets/skins/core/school-natabua-high-school-border.svg","artDescription":"Natabua: ice illustration","designNote":"Original fan design; decorative palette, no official crest.","songs":[{"title":"In Scientia Fortitudo","performer":"Natabua students","url":"https://www.facebook.com/thefijitimes/videos/local-news-natabua-high-school-students-singing-their-school-song-in-scientia-fo/957525369265531/","relationship":"documented school association"},{"title":"Cool as Ice","performer":"Makare featuring Natabua High School","url":"https://open.spotify.com/track/759Q6k8aRhkxSZUkiAQPpZ","relationship":"published school collaboration"}],"look":"varsity","identityLabel":"Natabua High School","identitySources":["https://secondaryschoolsathletics.org/schools-zones/","https://www.facebook.com/thefijitimes/videos/local-news-natabua-high-school-students-singing-their-school-song-in-scientia-fo/957525369265531/"],"identityNote":"School community design","coverArt":"./assets/hero.webp"},{"id":"school-marist-brothers-high-school","catalogueId":"school-marist-brothers-high-school","name":"Marist","category":"Schools","note":"Red Fire. Same mates.","bg":"#240c20","panel":"#38142b","ink":"#f8fbff","muted":"#c9d7e5","accent":"#ffb3bc","cover":"#ffb3bc","pattern":"plain","font":"rounded","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/school-marist-brothers-high-school.svg","border":"/assets/skins/core/school-marist-brothers-high-school-border.svg","artDescription":"Marist: fire illustration","designNote":"Original fan design; decorative palette, no official crest.","songs":[{"title":"Redfire Guide My Soul","performer":"Marist Brothers High School performance","url":"https://www.youtube.com/watch?v=i3xElGelmGk","relationship":"published school-themed recording"}],"look":"varsity","identityLabel":"Marist Brothers High School","identitySources":["https://secondaryschoolsathletics.org/schools-zones/","https://en.wikipedia.org/wiki/Marist_Brothers_High_School,_Fiji","https://www.facebook.com/fijisun/videos/marist-brothers-high-school-old-boys-and-supporters-chanting-the-school-song-aft/650511829794840/"],"identityNote":"School community design","coverArt":"./assets/hero.webp"},{"id":"school-suva-grammar-school","catalogueId":"school-suva-grammar-school","name":"Suva Grammar","category":"Schools","note":"Grammar. Through and through.","bg":"#0c2250","panel":"#163568","ink":"#f8fbff","muted":"#c9d7e5","accent":"#ffdc57","cover":"#ffdc57","pattern":"plain","font":"rounded","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/school-suva-grammar-school.svg","border":"/assets/skins/core/school-suva-grammar-school-border.svg","artDescription":"Suva Grammar: school illustration","designNote":"Original fan design; decorative palette, no official crest.","songs":[{"title":"Grammar Tu Ga","performer":"Natalie Raikadroka, Patco Muzik, Drixstar, Mr. Grin","url":"https://open.spotify.com/track/4CodGFhOr6srF38IBtdN4d","relationship":"documented alumni anthem"}],"look":"varsity","identityLabel":"Suva Grammar School","identitySources":["https://secondaryschoolsathletics.org/schools-zones/","https://www.fijivillage.com/feature/-We-are-here-we-are-here--Grammar-celebrates-65th-Sapphire-Anniversary-in-60s-Elegance-f458xr/"],"identityNote":"School community design","coverArt":"./assets/hero.webp"},{"id":"school-queen-victoria-school","catalogueId":"school-queen-victoria-school","name":"QVS","category":"Schools","note":"Floreat Viti.","bg":"#062b54","panel":"#104475","ink":"#f8fbff","muted":"#c9d7e5","accent":"#a1dcff","cover":"#a1dcff","pattern":"plain","font":"rounded","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/school-queen-victoria-school.svg","border":"/assets/skins/core/school-queen-victoria-school-border.svg","artDescription":"QVS: school illustration","designNote":"Original fan design; decorative palette, no official crest.","songs":[{"title":"Na Noqu Koronivuli","performer":"QVS students / supporters","url":"https://www.facebook.com/lescoolx/videos/na-noqu-koronivuli-au-na-bole-mate-kina-qvs-school-song-/1190279593271289/","relationship":"school-song performance reference"}],"look":"varsity","identityLabel":"Queen Victoria School","identitySources":["https://secondaryschoolsathletics.org/schools-zones/","https://www.facebook.com/fijisun/videos/queen-victoria-school-students-sing-their-school-song-following-the-official-ope/307482298318156/"],"identityNote":"School community design","coverArt":"./assets/hero.webp"},{"id":"school-ratu-kadavulevu-school","catalogueId":"school-ratu-kadavulevu-school","name":"RKS","category":"Schools","note":"Mai Lodoni Mai.","bg":"#101d40","panel":"#1a2e59","ink":"#f8fbff","muted":"#c9d7e5","accent":"#f3cd62","cover":"#f3cd62","pattern":"plain","font":"rounded","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/school-ratu-kadavulevu-school.svg","border":"/assets/skins/core/school-ratu-kadavulevu-school-border.svg","artDescription":"RKS: school illustration","designNote":"Original fan design; decorative palette, no official crest.","songs":[{"title":"Noqu Koronivuli Uasivi","performer":"RKS students / school choir","url":"https://www.youtube.com/watch?v=ouXJM0Y-H7A","relationship":"documented school association"},{"title":"Mai Lodoni Mai","performer":"Published recording produced by Red River Badamu","url":"https://www.youtube.com/watch?v=0OLC-2ccSgQ","relationship":"published school-themed recording"}],"look":"varsity","identityLabel":"Ratu Kadavulevu School","identitySources":["https://secondaryschoolsathletics.org/schools-zones/","https://rksosa.wordpress.com/2019/08/30/lodoni-80-series-part-01/","https://www.pmoffice.gov.fj/centennial-celebrations-for-the-establishment-of-ratu-kadavulevu-school-provincial-school-eastern/"],"identityNote":"School community design","coverArt":"./assets/hero.webp"},{"id":"school-adi-cakobau-school","catalogueId":"school-adi-cakobau-school","name":"ACS","category":"Schools","note":"Sawani stays with you.","bg":"#650f2f","panel":"#fff6ed","ink":"#172433","muted":"#48586a","accent":"#a11d46","cover":"#a11d46","pattern":"plain","font":"serif","cardStyle":"square","material":"raised","artwork":"/assets/skins/core/school-adi-cakobau-school.svg","border":"/assets/skins/core/school-adi-cakobau-school-border.svg","artDescription":"ACS: lily illustration","designNote":"Original fan design; decorative palette, no official crest.","songs":[{"title":"Seni Waterlily","performer":"ACS Year 13 students","url":"https://www.facebook.com/fijisun/videos/acs-year-13s-visit-parliamentmore-than-80-year-13-students-from-adi-cakobau-scho/2348721745561716/","relationship":"documented school association"}],"look":"varsity","identityLabel":"Adi Cakobau School","identitySources":["https://secondaryschoolsathletics.org/schools-zones/","https://acsog.org/acs-history/","https://acsog.org/tag/acs/"],"identityNote":"School community design","coverArt":"./assets/hero.webp"},{"id":"school-fnu","catalogueId":"school-fnu","name":"FNU","category":"Schools","note":"Your next chapter.","bg":"#071e38","panel":"#113351","ink":"#f8fbff","muted":"#c9d7e5","accent":"#8dbaff","cover":"#8dbaff","pattern":"plain","font":"rounded","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/school-fnu.svg","border":"/assets/skins/core/school-fnu-border.svg","artDescription":"FNU: book illustration","designNote":"Original fan design; decorative palette, no official crest.","songs":[],"look":"varsity","identityLabel":"Fiji National University","identitySources":["https://www.fnu.ac.fj/","https://www.facebook.com/maitvfiji/videos/the-student-choir-from-the-fiji-national-universitys-lautoka-teaching-campus-ser/4681153278876522/"],"identityNote":"School community design","coverArt":"./assets/hero.webp"},{"id":"school-usp","catalogueId":"school-usp","name":"USP","category":"Schools","note":"Our Pacific. Our future.","bg":"#00263e","panel":"#063e50","ink":"#f8fbff","muted":"#c9d7e5","accent":"#62dfdb","cover":"#62dfdb","pattern":"plain","font":"rounded","cardStyle":"square","material":"glass","artwork":"/assets/skins/core/school-usp.svg","border":"/assets/skins/core/school-usp-border.svg","artDescription":"USP: canoe illustration","designNote":"Original fan design; decorative palette, no official crest.","songs":[{"title":"Garland of Achievement","performer":"USP Choir","url":"https://www.youtube.com/watch?v=RYheeIzwggY","relationship":"official institutional association"}],"look":"varsity","identityLabel":"University of the South Pacific","identitySources":["https://www.usp.ac.fj/","https://www.facebook.com/USP.Team/posts/a-song-that-brings-the-usp-community-togetherthe-usp-choir-performs-garland-of-a/1528909485946112/"],"identityNote":"School community design","coverArt":"./assets/hero.webp"},{"id":"core-masi","catalogueId":"masi","name":"Masi / masi kesa","category":"Culture","note":"Island roots. Your story.","bg":"#ecdfc5","panel":"#fff8e9","ink":"#412a1b","muted":"#755c46","accent":"#7a412c","cover":"#d1ad78","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/masi.svg","border":"/assets/skins/core/masi-border.svg","artDescription":"Masi / masi kesa: cloth illustration","designNote":"Original artwork inspired by the researched theme.","songs":[],"look":"masi","identityLabel":"Masi / masi kesa","identitySources":["https://maa.cam.ac.uk/masi","https://www.metmuseum.org/art/collection/search/310412","https://tapa.gla.ac.uk/fiji/"],"identityNote":"Community-made design","coverArt":"./assets/culture.webp"},{"id":"masi-white","catalogueId":"masi-white","name":"White Masi","category":"Culture","note":"Quiet cloth. Bright stories.","bg":"#f0ede4","panel":"#fffdf8","ink":"#3e4142","muted":"#666c6d","accent":"#756035","cover":"#ded5bd","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/masi-white.svg","border":"/assets/skins/core/masi-white-border.svg","artDescription":"White Masi: cloth illustration","designNote":"Original cloth-inspired artwork; not a documented regional pattern.","songs":[],"look":"masi","identityLabel":"White Masi","identitySources":["https://maa.cam.ac.uk/masi"],"identityNote":"Community-made design","coverArt":"./assets/culture.webp"},{"id":"masi-smoked","catalogueId":"masi-smoked","name":"Smoked Masi","category":"Culture","note":"Warm fibres. Deep memories.","bg":"#382820","panel":"#4c382d","ink":"#fff3dc","muted":"#d9c5ae","accent":"#efc187","cover":"#826447","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/masi-smoked.svg","border":"/assets/skins/core/masi-smoked-border.svg","artDescription":"Smoked Masi: cloth illustration","designNote":"Original cloth-inspired artwork; not a documented regional pattern.","songs":[],"look":"masi","identityLabel":"Smoked Masi","identitySources":["https://maa.cam.ac.uk/masi"],"identityNote":"Community-made design","coverArt":"./assets/culture.webp"},{"id":"masi-lau","catalogueId":"masi-lau","name":"Lau • Cloth Study","category":"Culture","note":"A cloth-inspired island space.","bg":"#e9d9bd","panel":"#fff7e7","ink":"#4c3525","muted":"#765e48","accent":"#795336","cover":"#c8aa75","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/masi-lau.svg","border":"/assets/skins/core/masi-lau-border.svg","artDescription":"Lau • Cloth Study: cloth illustration","designNote":"Original cloth-inspired artwork; not a documented regional pattern.","songs":[{"title":"Lomaloma","performer":"Josateki Koroituicakau","url":"https://www.youtube.com/watch?v=EBVu0YstnPQ","relationship":"documented place and belonging story"}],"look":"masi","identityLabel":"Lau • Cloth Study","identitySources":["https://maa.cam.ac.uk/masi","https://tapa.gla.ac.uk/fiji/"],"identityNote":"Community-made design","coverArt":"./assets/culture.webp"},{"id":"masi-cakaudrove","catalogueId":"masi-cakaudrove","name":"Cakaudrove • Cloth Study","category":"Culture","note":"A painted-cloth inspiration.","bg":"#2b111c","panel":"#431d2b","ink":"#fff2e6","muted":"#dcc0bb","accent":"#ffbc8c","cover":"#a33d4e","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/masi-cakaudrove.svg","border":"/assets/skins/core/masi-cakaudrove-border.svg","artDescription":"Cakaudrove • Cloth Study: cloth illustration","designNote":"Original cloth-inspired artwork; not a documented regional pattern.","songs":[{"title":"Cakaudrove Bua Macuata","performer":"Nem & Talei featuring Sofaia","url":"https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/","relationship":"direct named-place association"}],"look":"masi","identityLabel":"Cakaudrove • Cloth Study","identitySources":["https://tapa.gla.ac.uk/fiji/"],"identityNote":"Community-made design","coverArt":"./assets/culture.webp"},{"id":"grog","catalogueId":"grog","name":"Grog Circle","category":"Culture","note":"Pull up a mat. Stay for a story.","bg":"#382820","panel":"#4c382d","ink":"#fff3dc","muted":"#d9c5ae","accent":"#efc187","cover":"#826447","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/grog.svg","border":"/assets/skins/core/grog-border.svg","artDescription":"Grog Circle: tanoa illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Kauwai","performer":"Vegas 6 with Naomi from Marama","url":"https://www.abc.net.au/pacific/programs/sista-sounds/sista-sounds/106894994","relationship":"documented genre fit; suggested skin pairing"},{"title":"Lomaloma","performer":"Josateki Koroituicakau","url":"https://www.youtube.com/watch?v=EBVu0YstnPQ","relationship":"documented place and belonging story"},{"title":"Noqu Vanua","performer":"Kuki","url":"https://www.youtube.com/watch?v=F4HnJgZ_YeQ","relationship":"thematic suggestion"}],"look":"social","identityLabel":"Grog Circle","identitySources":["https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064","https://folkways-media.si.edu/docs/folkways/artwork/UNES08316.pdf","https://www.fiji.travel/things-to-do/arts/a-travellers-guide-to-drinking-kava-in-fiji"],"identityNote":"Community-made design","coverArt":"./assets/album-night.webp"},{"id":"sigidrigi","catalogueId":"sigidrigi","name":"Sigidrigi Veranda","category":"Culture","note":"One more harmony.","bg":"#141b30","panel":"#222a44","ink":"#f4eeff","muted":"#c0c8df","accent":"#c4b7fc","cover":"#475077","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/sigidrigi.svg","border":"/assets/skins/core/sigidrigi-border.svg","artDescription":"Sigidrigi Veranda: guitar illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Kauwai","performer":"Vegas 6 with Naomi from Marama","url":"https://www.abc.net.au/pacific/programs/sista-sounds/sista-sounds/106894994","relationship":"documented genre fit; suggested skin pairing"},{"title":"Lomaloma","performer":"Josateki Koroituicakau","url":"https://www.youtube.com/watch?v=EBVu0YstnPQ","relationship":"documented place and belonging story"}],"look":"music","identityLabel":"Sigidrigi Veranda","identitySources":["https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064","https://folkways-media.si.edu/docs/folkways/artwork/UNES08316.pdf"],"identityNote":"Community-made design","coverArt":"./assets/music.webp"},{"id":"woven-mats","catalogueId":"woven-mats","name":"Ibe / Woven Mats","category":"Culture","note":"Made of stories. Woven together.","bg":"#e9d9bd","panel":"#fff7e7","ink":"#4c3525","muted":"#765e48","accent":"#795336","cover":"#c8aa75","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/woven-mats.svg","border":"/assets/skins/core/woven-mats-border.svg","artDescription":"Ibe / Woven Mats: weave illustration","designNote":"Original artwork inspired by the researched theme.","songs":[],"look":"masi","identityLabel":"Ibe / Woven Mats","identitySources":["https://csrm.uq.edu.au/media/docs/560/AustronesianSoundscapes.pdf","https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/","https://www.fijitimes.com.fj/five-years-in-the-making/"],"identityNote":"Community-made design","coverArt":"./assets/culture.webp"},{"id":"village","catalogueId":"village","name":"My Village","category":"Culture","note":"The place that knows my name.","bg":"#dce9dc","panel":"#f7fcf4","ink":"#203f30","muted":"#526e5a","accent":"#246347","cover":"#8dbd8b","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/village.svg","border":"/assets/skins/core/village-border.svg","artDescription":"My Village: village illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Noqu Vanua","performer":"Kuki","url":"https://www.youtube.com/watch?v=F4HnJgZ_YeQ","relationship":"thematic suggestion"},{"title":"Lomaloma","performer":"Josateki Koroituicakau","url":"https://www.youtube.com/watch?v=EBVu0YstnPQ","relationship":"documented place and belonging story"}],"look":"social","identityLabel":"My Village","identitySources":["https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064","https://www.fiji.travel/things-to-do/arts/navala-s-tribute-to-tradition"],"identityNote":"Community-made design","coverArt":"./assets/hero.webp"},{"id":"navala","catalogueId":"navala","name":"Navala / Bure Village","category":"Culture","note":"Home beneath the hills.","bg":"#382820","panel":"#4c382d","ink":"#fff3dc","muted":"#d9c5ae","accent":"#efc187","cover":"#826447","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/navala.svg","border":"/assets/skins/core/navala-border.svg","artDescription":"Navala / Bure Village: bure illustration","designNote":"Original artwork inspired by the researched theme.","songs":[],"look":"social","identityLabel":"Navala / Bure Village","identitySources":["https://www.fiji.travel/things-to-do/arts/navala-s-tribute-to-tradition"],"identityNote":"Community-made design","coverArt":"./assets/hero.webp"},{"id":"salusalu","catalogueId":"salusalu","name":"Salusalu","category":"Culture","note":"Wear the good memories.","bg":"#f8dedc","panel":"#fff8f5","ink":"#562a36","muted":"#7d5861","accent":"#a83859","cover":"#ed929f","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/salusalu.svg","border":"/assets/skins/core/salusalu-border.svg","artDescription":"Salusalu: garland illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Fijian happy birthday song — Sofitel Nadi performance","performer":"Sofitel Nadi singers (visitor recording)","url":"https://www.youtube.com/watch?v=kVaqjEvtQro","relationship":"documented birthday performance"},{"title":"Na Watiqu","performer":"Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni","url":"https://www.youtube.com/watch?v=Nzo7f-veMO0","relationship":"thematic suggestion"}],"look":"botanical","identityLabel":"Salusalu","identitySources":["https://www.facebook.com/TravelwellSouthPacific/videos/salusalu-a-beautifully-handcrafted-flower-necklace-worn-for-special-occasions-an/1306627124133906/"],"identityNote":"Community-made design","coverArt":"./assets/making.webp"},{"id":"core-drua","catalogueId":"drua","name":"Drua / Canoe Heritage","category":"Culture","note":"Carry our stories across the sea.","bg":"#0a3040","panel":"#144858","ink":"#effffe","muted":"#bfd8db","accent":"#77efcd","cover":"#137c8c","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/drua.svg","border":"/assets/skins/core/drua-border.svg","artDescription":"Drua / Canoe Heritage: canoe illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Lomaloma","performer":"Josateki Koroituicakau","url":"https://www.youtube.com/watch?v=EBVu0YstnPQ","relationship":"documented place and belonging story"}],"look":"social","identityLabel":"Drua / Canoe Heritage","identitySources":["https://www.fiji.travel/deals-and-offers/experiences/the-drua-experience"],"identityNote":"Community-made design","coverArt":"./assets/culture.webp"},{"id":"province-ba","catalogueId":"province-ba","name":"Ba","category":"Provinces","note":"My vanua. My people.","bg":"#f5e7cb","panel":"#fff9ed","ink":"#4f351b","muted":"#715d43","accent":"#875016","cover":"#e8b45a","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/province-ba.svg","border":"/assets/skins/core/province-ba-border.svg","artDescription":"Ba: river illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[],"look":"social","identityLabel":"Ba","identitySources":["https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-bua","catalogueId":"province-bua","name":"Bua","category":"Provinces","note":"Rooted in Bua.","bg":"#dce9dc","panel":"#f7fcf4","ink":"#203f30","muted":"#526e5a","accent":"#246347","cover":"#8dbd8b","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/province-bua.svg","border":"/assets/skins/core/province-bua-border.svg","artDescription":"Bua: forest illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Cakaudrove Bua Macuata","performer":"Nem & Talei featuring Sofaia","url":"https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/","relationship":"direct named-place association"}],"look":"botanical","identityLabel":"Bua","identitySources":["https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-cakaudrove","catalogueId":"province-cakaudrove","name":"Cakaudrove","category":"Provinces","note":"A northern story.","bg":"#101f42","panel":"#1d3059","ink":"#f6f1dc","muted":"#c6cce2","accent":"#f7cd66","cover":"#283f6c","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/province-cakaudrove.svg","border":"/assets/skins/core/province-cakaudrove-border.svg","artDescription":"Cakaudrove: mountain illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Cakaudrove Bua Macuata","performer":"Nem & Talei featuring Sofaia","url":"https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/","relationship":"direct named-place association"}],"look":"social","identityLabel":"Cakaudrove","identitySources":["https://tapa.gla.ac.uk/fiji/","https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-kadavu","catalogueId":"province-kadavu","name":"Kadavu","category":"Provinces","note":"Island roots. Ocean stories.","bg":"#0a3040","panel":"#144858","ink":"#effffe","muted":"#bfd8db","accent":"#77efcd","cover":"#137c8c","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/province-kadavu.svg","border":"/assets/skins/core/province-kadavu-border.svg","artDescription":"Kadavu: reef illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Sili Wai Na Me","performer":"Polynesian Cultural Center performers","url":"https://www.youtube.com/shorts/G4UB9C_jzss","relationship":"documented provincial motif"}],"look":"social","identityLabel":"Kadavu","identitySources":["https://tab.gov.fj/","https://www.youtube.com/shorts/G4UB9C_jzss"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-lau","catalogueId":"province-lau","name":"Lau","category":"Provinces","note":"Islands close to my heart.","bg":"#e9d9bd","panel":"#fff7e7","ink":"#4c3525","muted":"#765e48","accent":"#795336","cover":"#c8aa75","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/province-lau.svg","border":"/assets/skins/core/province-lau-border.svg","artDescription":"Lau: islands illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Lomaloma","performer":"Josateki Koroituicakau","url":"https://www.youtube.com/watch?v=EBVu0YstnPQ","relationship":"documented place and belonging story"}],"look":"social","identityLabel":"Lau","identitySources":["https://tapa.gla.ac.uk/fiji/","https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-lomaiviti","catalogueId":"province-lomaiviti","name":"Lomaiviti","category":"Provinces","note":"Home across the water.","bg":"#dceaf8","panel":"#f8fcff","ink":"#173b61","muted":"#50647d","accent":"#17548d","cover":"#7eb2da","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/province-lomaiviti.svg","border":"/assets/skins/core/province-lomaiviti-border.svg","artDescription":"Lomaiviti: harbour illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[],"look":"social","identityLabel":"Lomaiviti","identitySources":["https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-macuata","catalogueId":"province-macuata","name":"Macuata","category":"Provinces","note":"Where land and sea meet.","bg":"#dce9dc","panel":"#f7fcf4","ink":"#203f30","muted":"#526e5a","accent":"#246347","cover":"#8dbd8b","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/province-macuata.svg","border":"/assets/skins/core/province-macuata-border.svg","artDescription":"Macuata: mangrove illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Cakaudrove Bua Macuata","performer":"Nem & Talei featuring Sofaia","url":"https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/","relationship":"direct named-place association"}],"look":"social","identityLabel":"Macuata","identitySources":["https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-nadroga-navosa","catalogueId":"province-nadroga-navosa","name":"Nadroga-Navosa","category":"Provinces","note":"Stallion spirit. Home pride.","bg":"#f5e7cb","panel":"#fff9ed","ink":"#4f351b","muted":"#715d43","accent":"#875016","cover":"#e8b45a","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/province-nadroga-navosa.svg","border":"/assets/skins/core/province-nadroga-navosa-border.svg","artDescription":"Nadroga-Navosa: horse illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"O Nadroga Okwe E Kodaki O America","performer":"VLY featuring Ruci Tuiwai","url":"https://www.youtube.com/watch?v=-zlSweeyPoY","relationship":"direct named-place association"},{"title":"Nadroga Okwe","performer":"Fo Sho","url":"https://www.youtube.com/watch?v=p5sH9jCcrQ4","relationship":"direct named-place association"},{"title":"Ki Nadroga","performer":"Taus Vocal","url":"https://www.youtube.com/watch?v=Idxw6grGj54","relationship":"documented place and romance story"}],"look":"social","identityLabel":"Nadroga-Navosa","identitySources":["https://tab.gov.fj/","https://www.facebook.com/fijirugby/posts/the-blk-nadroga-rugby-fiji-official-team-page-stallions-are-on-tour-in-southland/2876285202410835/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-naitasiri","catalogueId":"province-naitasiri","name":"Naitasiri","category":"Provinces","note":"Stories from the highlands.","bg":"#dce9dc","panel":"#f7fcf4","ink":"#203f30","muted":"#526e5a","accent":"#246347","cover":"#8dbd8b","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/province-naitasiri.svg","border":"/assets/skins/core/province-naitasiri-border.svg","artDescription":"Naitasiri: mountain illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[],"look":"social","identityLabel":"Naitasiri","identitySources":["https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-namosi","catalogueId":"province-namosi","name":"Namosi","category":"Provinces","note":"A valley full of memories.","bg":"#382820","panel":"#4c382d","ink":"#fff3dc","muted":"#d9c5ae","accent":"#efc187","cover":"#826447","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/province-namosi.svg","border":"/assets/skins/core/province-namosi-border.svg","artDescription":"Namosi: valley illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[],"look":"social","identityLabel":"Namosi","identitySources":["https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-ra","catalogueId":"province-ra","name":"Ra","category":"Provinces","note":"Rise with Ra.","bg":"#2b111c","panel":"#431d2b","ink":"#fff2e6","muted":"#dcc0bb","accent":"#ffbc8c","cover":"#a33d4e","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/province-ra.svg","border":"/assets/skins/core/province-ra-border.svg","artDescription":"Ra: rooster illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Ara Na Yadra (Ko ‘Ra’ Me Sautu Ka Qaqa)","performer":"Voqa Kei Valenisau","url":"https://www.youtube.com/watch?v=yJZ8QC1jE8U","relationship":"direct named-place association"}],"look":"social","identityLabel":"Ra","identitySources":["https://tab.gov.fj/","https://parliament.gov.fj/wp-content/uploads/2023/02/Daily-Hansard-Thursday-16th-February-2023.pdf"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-rewa","catalogueId":"province-rewa","name":"Rewa","category":"Provinces","note":"The river brings us together.","bg":"#dceaf8","panel":"#f8fcff","ink":"#173b61","muted":"#50647d","accent":"#17548d","cover":"#7eb2da","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/province-rewa.svg","border":"/assets/skins/core/province-rewa-border.svg","artDescription":"Rewa: river illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Rosi Ni Rewa","performer":"Senibua Koula Sigidrigi","url":"https://music.apple.com/us/artist/senibua-koula-sigidrigi/1752317228","relationship":"named-place recording metadata"}],"look":"social","identityLabel":"Rewa","identitySources":["https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-serua","catalogueId":"province-serua","name":"Serua","category":"Provinces","note":"Coastline stories.","bg":"#f8dedc","panel":"#fff8f5","ink":"#562a36","muted":"#7d5861","accent":"#a83859","cover":"#ed929f","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/province-serua.svg","border":"/assets/skins/core/province-serua-border.svg","artDescription":"Serua: coast illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[],"look":"social","identityLabel":"Serua","identitySources":["https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"province-tailevu","catalogueId":"province-tailevu","name":"Tailevu","category":"Provinces","note":"Our place. Our people.","bg":"#dce9dc","panel":"#f7fcf4","ink":"#203f30","muted":"#526e5a","accent":"#246347","cover":"#8dbd8b","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/province-tailevu.svg","border":"/assets/skins/core/province-tailevu-border.svg","artDescription":"Tailevu: village illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[],"look":"social","identityLabel":"Tailevu","identitySources":["https://tab.gov.fj/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"island","catalogueId":"island","name":"My Island","category":"Places","note":"Home is an island feeling.","bg":"#0a3040","panel":"#144858","ink":"#effffe","muted":"#bfd8db","accent":"#77efcd","cover":"#137c8c","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/island.svg","border":"/assets/skins/core/island-border.svg","artDescription":"My Island: island illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Noqu Vanua","performer":"Kuki","url":"https://www.youtube.com/watch?v=F4HnJgZ_YeQ","relationship":"thematic suggestion"},{"title":"Lomaloma","performer":"Josateki Koroituicakau","url":"https://www.youtube.com/watch?v=EBVu0YstnPQ","relationship":"documented place and belonging story"}],"look":"social","identityLabel":"My Island","identitySources":["https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064","https://www.thecoconet.tv/songbook/learn-language-songs-from-the-pacific/acoustic-sessons-lomaloma-performed-by-josateki/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"vanua-levu","catalogueId":"vanua-levu","name":"Vanua Levu","category":"Places","note":"Northern roots.","bg":"#dce9dc","panel":"#f7fcf4","ink":"#203f30","muted":"#526e5a","accent":"#246347","cover":"#8dbd8b","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/vanua-levu.svg","border":"/assets/skins/core/vanua-levu-border.svg","artDescription":"Vanua Levu: forest illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Cakaudrove Bua Macuata","performer":"Nem & Talei featuring Sofaia","url":"https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/","relationship":"direct named-place association"}],"look":"botanical","identityLabel":"Vanua Levu","identitySources":["https://tab.gov.fj/","https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"taveuni","catalogueId":"taveuni","name":"Taveuni / Tagimoucia","category":"Places","note":"A garden of memories.","bg":"#2b111c","panel":"#431d2b","ink":"#fff2e6","muted":"#dcc0bb","accent":"#ffbc8c","cover":"#a33d4e","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/taveuni.svg","border":"/assets/skins/core/taveuni-border.svg","artDescription":"Taveuni / Tagimoucia: flower illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Tagimoucia","performer":"K.K.U (Kula Kei Uluivuya)","url":"https://open.spotify.com/track/6W6J3EacEZ2GrS3ENrKkI3","relationship":"documented named-island association"}],"look":"botanical","identityLabel":"Taveuni / Tagimoucia","identitySources":["https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064","https://open.spotify.com/track/6W6J3EacEZ2GrS3ENrKkI3"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"rotuma","catalogueId":"rotuma","name":"Rotuma","category":"Places","note":"My island. My own story.","bg":"#f8dedc","panel":"#fff8f5","ink":"#562a36","muted":"#7d5861","accent":"#a83859","cover":"#ed929f","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/rotuma.svg","border":"/assets/skins/core/rotuma-border.svg","artDescription":"Rotuma: coast illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Hanua Helava","performer":"Rako Pasefika","url":"https://www.youtube.com/watch?v=GHUaMCU06sM","relationship":"Rotuman repertoire association"}],"look":"social","identityLabel":"Rotuma","identitySources":["https://tapa.gla.ac.uk/fiji/","https://tab.gov.fj/","https://www.youtube.com/watch?v=GHUaMCU06sM"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"yasawa","catalogueId":"yasawa","name":"Yasawa","category":"Places","note":"A little closer to home.","bg":"#0a3040","panel":"#144858","ink":"#effffe","muted":"#bfd8db","accent":"#77efcd","cover":"#137c8c","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/yasawa.svg","border":"/assets/skins/core/yasawa-border.svg","artDescription":"Yasawa: islands illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[],"look":"social","identityLabel":"Yasawa","identitySources":["https://www.fipra.com.fj/fipramas/past-winners/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"lomaloma","catalogueId":"lomaloma","name":"Lomaloma","category":"Places","note":"A harbour in my heart.","bg":"#dceaf8","panel":"#f8fcff","ink":"#173b61","muted":"#50647d","accent":"#17548d","cover":"#7eb2da","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/lomaloma.svg","border":"/assets/skins/core/lomaloma-border.svg","artDescription":"Lomaloma: harbour illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Lomaloma","performer":"Josateki Koroituicakau","url":"https://www.youtube.com/watch?v=EBVu0YstnPQ","relationship":"documented place and belonging story"}],"look":"social","identityLabel":"Lomaloma","identitySources":["https://www.thecoconet.tv/songbook/learn-language-songs-from-the-pacific/acoustic-sessons-lomaloma-performed-by-josateki/"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"nadi","catalogueId":"nadi","name":"Nadi Homecoming","category":"Places","note":"Welcome home.","bg":"#e0f1fa","panel":"#f9feff","ink":"#24415a","muted":"#526c81","accent":"#2b617f","cover":"#a9d6e8","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/nadi.svg","border":"/assets/skins/core/nadi-border.svg","artDescription":"Nadi Homecoming: flight illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Nadi International Airport","performer":"Makare","url":"https://music.apple.com/us/song/nadi-international-airport/1656187589","relationship":"direct named-place recording"},{"title":"Coming Home","performer":"Knox (Inoke Kalounisiga)","url":"https://music.apple.com/us/album/fading-ep/946880959","relationship":"thematic suggestion"}],"look":"social","identityLabel":"Nadi Homecoming","identitySources":["https://music.apple.com/us/song/nadi-international-airport/1656187589"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"diaspora","catalogueId":"diaspora","name":"Coming Home","category":"Places","note":"Miles apart. Close at heart.","bg":"#141b30","panel":"#222a44","ink":"#f4eeff","muted":"#c0c8df","accent":"#c4b7fc","cover":"#475077","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/diaspora.svg","border":"/assets/skins/core/diaspora-border.svg","artDescription":"Coming Home: journey illustration","designNote":"Original illustrative landscape or motif; not a place photograph.","songs":[{"title":"Coming Home","performer":"Knox (Inoke Kalounisiga)","url":"https://music.apple.com/us/album/fading-ep/946880959","relationship":"thematic suggestion"},{"title":"Noqu Vanua","performer":"Kuki","url":"https://www.youtube.com/watch?v=F4HnJgZ_YeQ","relationship":"thematic suggestion"}],"look":"social","identityLabel":"Coming Home","identitySources":["https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064","https://music.apple.com/us/album/fading-ep/946880959"],"identityNote":"Community-made design","coverArt":"./assets/outside.webp"},{"id":"occasion-birthday","catalogueId":"occasion-birthday","name":"Birthday","category":"Celebrations","note":"A whole new year of you.","bg":"#ece2fa","panel":"#fffaff","ink":"#402758","muted":"#695878","accent":"#74409b","cover":"#d6b1e8","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/occasion-birthday.svg","border":"/assets/skins/core/occasion-birthday-border.svg","artDescription":"Birthday: balloons illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Fijian happy birthday song — Sofitel Nadi performance","performer":"Sofitel Nadi singers (visitor recording)","url":"https://www.youtube.com/watch?v=kVaqjEvtQro","relationship":"documented birthday performance"},{"title":"Siga Ni Sucu ‘Kaila Tu’ (Rauni)","performer":"Children’s Songbook repertoire","url":"https://www.churchofjesuschrist.org/study/manual/childrens-songbook/youve-had-a-birthday-round?lang=fij","relationship":"published Fijian-language birthday repertoire"}],"look":"social","identityLabel":"Birthday","identitySources":["https://www.facebook.com/TravelwellSouthPacific/videos/salusalu-a-beautifully-handcrafted-flower-necklace-worn-for-special-occasions-an/1306627124133906/","https://www.youtube.com/watch?v=kVaqjEvtQro"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-first-birthday","catalogueId":"occasion-first-birthday","name":"First Birthday","category":"Celebrations","note":"One little year. So much love.","bg":"#e1f0e7","panel":"#fafffa","ink":"#284b3d","muted":"#5b7668","accent":"#356b53","cover":"#a8d8c2","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/occasion-first-birthday.svg","border":"/assets/skins/core/occasion-first-birthday-border.svg","artDescription":"First Birthday: balloons illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Fijian happy birthday song — Sofitel Nadi performance","performer":"Sofitel Nadi singers (visitor recording)","url":"https://www.youtube.com/watch?v=kVaqjEvtQro","relationship":"documented birthday performance"},{"title":"Siga Ni Sucu ‘Kaila Tu’ (Rauni)","performer":"Children’s Songbook repertoire","url":"https://www.churchofjesuschrist.org/study/manual/childrens-songbook/youve-had-a-birthday-round?lang=fij","relationship":"published Fijian-language birthday repertoire"}],"look":"social","identityLabel":"First Birthday","identitySources":["https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/","https://www.youtube.com/watch?v=kVaqjEvtQro"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-milestone-birthday","catalogueId":"occasion-milestone-birthday","name":"Milestone Birthday","category":"Celebrations","note":"Here is to your next chapter.","bg":"#141b30","panel":"#222a44","ink":"#f4eeff","muted":"#c0c8df","accent":"#c4b7fc","cover":"#475077","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/occasion-milestone-birthday.svg","border":"/assets/skins/core/occasion-milestone-birthday-border.svg","artDescription":"Milestone Birthday: sparkle illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Fijian happy birthday song — Sofitel Nadi performance","performer":"Sofitel Nadi singers (visitor recording)","url":"https://www.youtube.com/watch?v=kVaqjEvtQro","relationship":"documented birthday performance"}],"look":"social","identityLabel":"Milestone Birthday","identitySources":["https://www.facebook.com/TravelwellSouthPacific/videos/salusalu-a-beautifully-handcrafted-flower-necklace-worn-for-special-occasions-an/1306627124133906/","https://www.youtube.com/watch?v=kVaqjEvtQro"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-wedding","catalogueId":"occasion-wedding","name":"Wedding","category":"Celebrations","note":"Our story starts here.","bg":"#f0ede4","panel":"#fffdf8","ink":"#3e4142","muted":"#666c6d","accent":"#756035","cover":"#ded5bd","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/occasion-wedding.svg","border":"/assets/skins/core/occasion-wedding-border.svg","artDescription":"Wedding: rings illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Na Watiqu","performer":"Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni","url":"https://www.youtube.com/watch?v=Nzo7f-veMO0","relationship":"thematic suggestion"},{"title":"Noqu Senibua","performer":"Kuki","url":"https://www.youtube.com/watch?v=JxXZrDvrIZI","relationship":"thematic suggestion"}],"look":"social","identityLabel":"Wedding","identitySources":["https://www.fijitimes.com.fj/five-years-in-the-making/"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-masi-wedding","catalogueId":"occasion-masi-wedding","name":"Masi Wedding","category":"Celebrations","note":"Two stories. One beautiful day.","bg":"#ecdfc5","panel":"#fff8e9","ink":"#412a1b","muted":"#755c46","accent":"#7a412c","cover":"#d1ad78","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/occasion-masi-wedding.svg","border":"/assets/skins/core/occasion-masi-wedding-border.svg","artDescription":"Masi Wedding: rings illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Na Watiqu","performer":"Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni","url":"https://www.youtube.com/watch?v=Nzo7f-veMO0","relationship":"thematic suggestion"}],"look":"social","identityLabel":"Masi Wedding","identitySources":["https://maa.cam.ac.uk/masi","https://tapa.gla.ac.uk/fiji/","https://www.fijitimes.com.fj/five-years-in-the-making/"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-tevutevu","catalogueId":"occasion-tevutevu","name":"Tevutevu","category":"Celebrations","note":"Family. Love. Together.","bg":"#e9d9bd","panel":"#fff7e7","ink":"#4c3525","muted":"#765e48","accent":"#795336","cover":"#c8aa75","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/occasion-tevutevu.svg","border":"/assets/skins/core/occasion-tevutevu-border.svg","artDescription":"Tevutevu: weave illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Na Watiqu","performer":"Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni","url":"https://www.youtube.com/watch?v=Nzo7f-veMO0","relationship":"thematic suggestion"}],"look":"masi","identityLabel":"Tevutevu","identitySources":["https://www.fijitimes.com.fj/five-years-in-the-making/"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-anniversary","catalogueId":"occasion-anniversary","name":"Anniversary","category":"Celebrations","note":"Still choosing each other.","bg":"#f5e7cb","panel":"#fff9ed","ink":"#4f351b","muted":"#715d43","accent":"#875016","cover":"#e8b45a","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/occasion-anniversary.svg","border":"/assets/skins/core/occasion-anniversary-border.svg","artDescription":"Anniversary: rings illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Na Watiqu","performer":"Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni","url":"https://www.youtube.com/watch?v=Nzo7f-veMO0","relationship":"thematic suggestion"},{"title":"Noqu Senibua","performer":"Kuki","url":"https://www.youtube.com/watch?v=JxXZrDvrIZI","relationship":"thematic suggestion"}],"look":"social","identityLabel":"Anniversary","identitySources":["https://www.fijitimes.com.fj/five-years-in-the-making/","https://www.facebook.com/TravelwellSouthPacific/videos/salusalu-a-beautifully-handcrafted-flower-necklace-worn-for-special-occasions-an/1306627124133906/"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-childbirth","catalogueId":"occasion-childbirth","name":"Newborn Welcome","category":"Celebrations","note":"A little life. A whole lot of love.","bg":"#e1f0e7","panel":"#fafffa","ink":"#284b3d","muted":"#5b7668","accent":"#356b53","cover":"#a8d8c2","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/occasion-childbirth.svg","border":"/assets/skins/core/occasion-childbirth-border.svg","artDescription":"Newborn Welcome: cradle illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"A Wi Cava A Wi Dreu — Sere Ni Vaka Moce Gone","performer":"Lagasere kei Dr T performance","url":"https://www.youtube.com/watch?v=euiClsWxGgc","relationship":"published Fijian lullaby performance"}],"look":"social","identityLabel":"Newborn Welcome","identitySources":["https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-roqoroqo","catalogueId":"occasion-roqoroqo","name":"i Roqoroqo Welcome","category":"Celebrations","note":"A family welcome.","bg":"#e9d9bd","panel":"#fff7e7","ink":"#4c3525","muted":"#765e48","accent":"#795336","cover":"#c8aa75","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/occasion-roqoroqo.svg","border":"/assets/skins/core/occasion-roqoroqo-border.svg","artDescription":"i Roqoroqo Welcome: cradle illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"A Wi Cava A Wi Dreu — Sere Ni Vaka Moce Gone","performer":"Lagasere kei Dr T performance","url":"https://www.youtube.com/watch?v=euiClsWxGgc","relationship":"published Fijian lullaby performance"}],"look":"social","identityLabel":"i Roqoroqo Welcome","identitySources":["https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-mother-support","catalogueId":"occasion-mother-support","name":"Mother & Baby","category":"Celebrations","note":"Held in love.","bg":"#ece2fa","panel":"#fffaff","ink":"#402758","muted":"#695878","accent":"#74409b","cover":"#d6b1e8","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/occasion-mother-support.svg","border":"/assets/skins/core/occasion-mother-support-border.svg","artDescription":"Mother & Baby: moon illustration","designNote":"Original artwork inspired by the researched theme.","songs":[],"look":"social","identityLabel":"Mother & Baby","identitySources":["https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-baby-shower","catalogueId":"occasion-baby-shower","name":"Baby Shower","category":"Celebrations","note":"Something wonderful is coming.","bg":"#e0f1fa","panel":"#f9feff","ink":"#24415a","muted":"#526c81","accent":"#2b617f","cover":"#a9d6e8","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/occasion-baby-shower.svg","border":"/assets/skins/core/occasion-baby-shower-border.svg","artDescription":"Baby Shower: clouds illustration","designNote":"Original artwork inspired by the researched theme.","songs":[],"look":"social","identityLabel":"Baby Shower","identitySources":["https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-faith-birth","catalogueId":"occasion-faith-birth","name":"Faith Blessing","category":"Celebrations","note":"Blessings for this new beginning.","bg":"#f0ede4","panel":"#fffdf8","ink":"#3e4142","muted":"#666c6d","accent":"#756035","cover":"#ded5bd","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/occasion-faith-birth.svg","border":"/assets/skins/core/occasion-faith-birth-border.svg","artDescription":"Faith Blessing: dove illustration","designNote":"Original artwork inspired by the researched theme.","songs":[],"look":"social","identityLabel":"Faith Blessing","identitySources":["https://www.fipra.com.fj/fipramas/past-winners/"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-graduation","catalogueId":"occasion-graduation","name":"Graduation","category":"Celebrations","note":"Look how far you have come.","bg":"#101f42","panel":"#1d3059","ink":"#f6f1dc","muted":"#c6cce2","accent":"#f7cd66","cover":"#283f6c","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/occasion-graduation.svg","border":"/assets/skins/core/occasion-graduation-border.svg","artDescription":"Graduation: cap illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Garland of Achievement","performer":"USP Choir","url":"https://www.youtube.com/watch?v=RYheeIzwggY","relationship":"official institutional association"}],"look":"social","identityLabel":"Graduation","identitySources":["https://www.facebook.com/USP.Team/posts/a-song-that-brings-the-usp-community-togetherthe-usp-choir-performs-garland-of-a/1528909485946112/","https://www.fnu.ac.fj/"],"identityNote":"Community-made design","coverArt":"./assets/food.webp"},{"id":"occasion-school-reunion","catalogueId":"occasion-school-reunion","name":"School Reunion","category":"Celebrations","note":"Remember when?","bg":"#f5e7cb","panel":"#fff9ed","ink":"#4f351b","muted":"#715d43","accent":"#875016","cover":"#e8b45a","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/occasion-school-reunion.svg","border":"/assets/skins/core/occasion-school-reunion-border.svg","artDescription":"School Reunion: book illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Grammar Tu Ga","performer":"Natalie Raikadroka, Patco Muzik, Drixstar, Mr. Grin","url":"https://open.spotify.com/track/4CodGFhOr6srF38IBtdN4d","relationship":"documented alumni anthem"},{"title":"Noqu Koronivuli Uasivi","performer":"RKS students / school choir","url":"https://www.youtube.com/watch?v=ouXJM0Y-H7A","relationship":"documented school association"},{"title":"Seni Waterlily","performer":"ACS Year 13 students","url":"https://www.facebook.com/fijisun/videos/acs-year-13s-visit-parliamentmore-than-80-year-13-students-from-adi-cakobau-scho/2348721745561716/","relationship":"documented school association"},{"title":"Redfire Guide My Soul","performer":"Marist Brothers High School performance","url":"https://www.youtube.com/watch?v=i3xElGelmGk","relationship":"published school-themed recording"}],"look":"social","identityLabel":"School Reunion","identitySources":["https://rksosa.wordpress.com/2019/08/30/lodoni-80-series-part-01/","https://www.fijivillage.com/feature/-We-are-here-we-are-here--Grammar-celebrates-65th-Sapphire-Anniversary-in-60s-Elegance-f458xr/"],"identityNote":"Community-made design","coverArt":"./assets/hero.webp"},{"id":"occasion-family-reunion","catalogueId":"occasion-family-reunion","name":"Family Reunion","category":"Celebrations","note":"Back together. Right where we belong.","bg":"#dce9dc","panel":"#f7fcf4","ink":"#203f30","muted":"#526e5a","accent":"#246347","cover":"#8dbd8b","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/occasion-family-reunion.svg","border":"/assets/skins/core/occasion-family-reunion-border.svg","artDescription":"Family Reunion: tree illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Coming Home","performer":"Knox (Inoke Kalounisiga)","url":"https://music.apple.com/us/album/fading-ep/946880959","relationship":"thematic suggestion"},{"title":"Noqu Vanua","performer":"Kuki","url":"https://www.youtube.com/watch?v=F4HnJgZ_YeQ","relationship":"thematic suggestion"},{"title":"Lomaloma","performer":"Josateki Koroituicakau","url":"https://www.youtube.com/watch?v=EBVu0YstnPQ","relationship":"documented place and belonging story"}],"look":"social","identityLabel":"Family Reunion","identitySources":["https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064","https://www.thecoconet.tv/songbook/learn-language-songs-from-the-pacific/acoustic-sessons-lomaloma-performed-by-josateki/"],"identityNote":"Community-made design","coverArt":"./assets/culture.webp"},{"id":"memory-love","catalogueId":"memory-love","name":"Love","category":"Love & Memories","note":"A little space for us.","bg":"#f8dedc","panel":"#fff8f5","ink":"#562a36","muted":"#7d5861","accent":"#a83859","cover":"#ed929f","pattern":"plain","font":"rounded","cardStyle":"round","material":"raised","artwork":"/assets/skins/core/memory-love.svg","border":"/assets/skins/core/memory-love-border.svg","artDescription":"Love: heart illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Noqu Senibua","performer":"Kuki","url":"https://www.youtube.com/watch?v=JxXZrDvrIZI","relationship":"thematic suggestion"},{"title":"Na Watiqu","performer":"Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni","url":"https://www.youtube.com/watch?v=Nzo7f-veMO0","relationship":"thematic suggestion"},{"title":"Isa Lei Lia","performer":"FIJI (George Veikoso)","url":"https://www.thecoconet.tv/songbook/islandjams/isa-lei-lia-fiji-george-veikoso/","relationship":"documented performance; thematic suggestion"}],"look":"social","identityLabel":"Love","identitySources":["https://www.fijitimes.com.fj/five-years-in-the-making/","https://www.thecoconet.tv/songbook/islandjams/isa-lei-lia-fiji-george-veikoso/"],"identityNote":"Community-made design","coverArt":"./assets/album-lagoon.webp"},{"id":"memory-broken-hearted","catalogueId":"memory-broken-hearted","name":"Brokenhearted","category":"Love & Memories","note":"Some feelings need their own sky.","bg":"#0d1021","panel":"#171b32","ink":"#f1edff","muted":"#b9b9d8","accent":"#eeb0e3","cover":"#475077","pattern":"plain","font":"serif","cardStyle":"round","material":"glass","artwork":"/assets/skins/core/memory-broken-hearted.svg","border":"/assets/skins/core/memory-broken-hearted-border.svg","artDescription":"Brokenhearted: rain illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Noqu Daulomani","performer":"Naseda","url":"https://www.youtube.com/watch?v=1mJ7FOtaw1w","relationship":"documented lost-love story; restricted suggestion"}],"look":"rain","coverArt":"./assets/album-night.webp","identityLabel":"Brokenhearted","identitySources":["https://www.thecoconet.tv/songbook/islandjams/noqu-daulomani-naseda/"],"identityNote":"Community-made design"},{"id":"memory-childhood-memory","catalogueId":"memory-childhood-memory","name":"Childhood Memories","category":"Love & Memories","note":"The garden. The stories. Home.","bg":"#382820","panel":"#4c382d","ink":"#fff3dc","muted":"#d9c5ae","accent":"#efc187","cover":"#826447","pattern":"plain","font":"serif","cardStyle":"square","material":"paper","artwork":"/assets/skins/core/memory-childhood-memory.svg","border":"/assets/skins/core/memory-childhood-memory-border.svg","artDescription":"Childhood Memories: dalo illustration","designNote":"Original artwork inspired by the researched theme.","songs":[{"title":"Lai Tei Dalo Ko Tamaqu (also Lei spelling)","performer":"Traditional repertoire / Coconet presentation","url":"https://www.thecoconet.tv/coco-kids/coco-kids-jams/lai-tei-dalo/","relationship":"documented lullaby, with sensitive historical context"}],"look":"botanical","identityLabel":"Childhood Memories","identitySources":["https://www.thecoconet.tv/coco-talanoa/pacific-blog/lai-tei-dalo-ko-tamaqu-a-lullaby-of-loss/"],"identityNote":"Community-made design","coverArt":"./assets/culture.webp"},{"id":"studio-ocean","name":"Ocean","category":"New picks","note":"Good company. Open horizons.","bg":"#081e2c","panel":"#102f41","ink":"#eefbff","muted":"#b4d8e3","accent":"#6de6dd","cover":"#82d9d5","pattern":"waves","font":"rounded","cardStyle":"round","look":"ocean","coverArt":"./assets/album-lagoon.webp","material":"glass","identityLabel":"Ocean","identitySources":[],"identityNote":"Community-made design"},{"id":"studio-masi","name":"Masi","category":"New picks","note":"Your roots. Your own story.","bg":"#d6c1a0","panel":"#fff6e7","ink":"#312418","muted":"#6c543a","accent":"#7d402a","cover":"#e3cba2","pattern":"masi","font":"serif","material":"paper","cardStyle":"square","look":"masi","coverArt":"./assets/culture.webp","coverRepeat":true,"identityLabel":"Masi","identitySources":[],"identityNote":"Community-made design"},{"id":"studio-coral","name":"Coral Sunset","category":"New picks","note":"Stay for one more story.","bg":"#2b152d","panel":"#48263c","ink":"#fff2ef","muted":"#e3bfcb","accent":"#ffb38d","cover":"#f5a486","pattern":"waves","font":"serif","material":"glass","cardStyle":"round","look":"coral","coverArt":"./assets/album-coral.webp","identityLabel":"Coral Sunset","identitySources":[],"identityNote":"Community-made design"},{"id":"studio-retro","name":"Bebo Retro","category":"New picks","note":"Your space. Your people. Your playlist.","bg":"#2b124a","panel":"#fff1fa","ink":"#39104b","muted":"#795577","accent":"#b82181","cover":"#efb0da","pattern":"checker","font":"rounded","material":"paper","cardStyle":"soft","effect":"sticker","look":"retro","coverArt":"./assets/album-gold.webp","identityLabel":"Bebo Retro","identitySources":[],"identityNote":"Community-made design"},{"id":"music-makare","name":"Makare","category":"Music & bands","note":"The songs that take you home.","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","songs":[{"title":"Cool as Ice","performer":"Makare featuring Natabua High School","url":"https://open.spotify.com/track/759Q6k8aRhkxSZUkiAQPpZ","relationship":"published school collaboration"}],"bg":"#0b243a","panel":"#133e55","accent":"#68dce4","ink":"#f8fbff","muted":"#c9d7e5","cover":"#68dce4","look":"music","identityLabel":"Makare","identitySources":[],"identityNote":"Music fan design","coverArt":"./assets/music.webp"},{"id":"music-paradise-rootz","name":"Paradise Rootz","category":"Music & bands","note":"The songs that take you home.","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","songs":[{"title":"Na Watiqu","performer":"Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni","url":"https://www.youtube.com/watch?v=Nzo7f-veMO0","relationship":"thematic suggestion"}],"bg":"#1a2431","panel":"#2d3548","accent":"#ffcb87","ink":"#f8fbff","muted":"#c9d7e5","cover":"#ffcb87","look":"music","identityLabel":"Paradise Rootz","identitySources":[],"identityNote":"Music fan design","coverArt":"./assets/music.webp"},{"id":"music-kku","name":"Kula Kei Uluivuya","category":"Music & bands","note":"The songs that take you home.","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","songs":[{"title":"Tagimoucia","performer":"K.K.U (Kula Kei Uluivuya)","url":"https://open.spotify.com/track/6W6J3EacEZ2GrS3ENrKkI3","relationship":"documented named-island association"}],"bg":"#182d20","panel":"#294a34","accent":"#e5abcb","ink":"#f8fbff","muted":"#c9d7e5","cover":"#e5abcb","look":"music","identityLabel":"Kula Kei Uluivuya","identitySources":[],"identityNote":"Music fan design","coverArt":"./assets/music.webp"},{"id":"music-valenisau","name":"Voqa Kei Valenisau","category":"Music & bands","note":"The songs that take you home.","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","songs":[{"title":"Ara Na Yadra (Ko ‘Ra’ Me Sautu Ka Qaqa)","performer":"Voqa Kei Valenisau","url":"https://www.youtube.com/watch?v=yJZ8QC1jE8U","relationship":"direct named-place association"}],"bg":"#331b20","panel":"#502a30","accent":"#ffd889","ink":"#f8fbff","muted":"#c9d7e5","cover":"#ffd889","look":"music","identityLabel":"Voqa Kei Valenisau","identitySources":[],"identityNote":"Music fan design","coverArt":"./assets/music.webp"},{"id":"music-rako","name":"Rako Pasefika","category":"Music & bands","note":"The songs that take you home.","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","songs":[{"title":"Hanua Helava","performer":"Rako Pasefika","url":"https://www.youtube.com/watch?v=GHUaMCU06sM","relationship":"Rotuman repertoire association"}],"bg":"#153047","panel":"#22475d","accent":"#f6c57c","ink":"#f8fbff","muted":"#c9d7e5","cover":"#f6c57c","look":"music","identityLabel":"Rako Pasefika","identitySources":[],"identityNote":"Music fan design","coverArt":"./assets/music.webp"},{"id":"music-knox","name":"Knox","category":"Music & bands","note":"The songs that take you home.","pattern":"plain","font":"rounded","cardStyle":"round","material":"glass","songs":[{"title":"Coming Home","performer":"Knox (Inoke Kalounisiga)","url":"https://music.apple.com/us/album/fading-ep/946880959","relationship":"thematic suggestion"}],"bg":"#231b36","panel":"#382c4d","accent":"#d8bcff","ink":"#f8fbff","muted":"#c9d7e5","cover":"#d8bcff","look":"music","identityLabel":"Knox","identitySources":[],"identityNote":"Music fan design","coverArt":"./assets/music.webp"}];
+// Existing 94 stable IDs and identity credits preserved. Original adult editorial collection, 28 October 2026.
+// Art is an imagined material/landscape study, not an official or documentary depiction.
+export const SKINS=[
+  {
+    "id": "lagoon",
+    "name": "Pacific Depths",
+    "category": "Signature",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "look": "social",
+    "identityLabel": "Pacific Depths",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "Lagoon Club",
+      "Island"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "01",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "midnight",
+    "name": "Midnight Stone",
+    "category": "Signature",
+    "note": "Volcanic stone · Modern sans",
+    "bg": "#111517",
+    "panel": "#202528",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "accent": "#c7c7b8",
+    "cover": "#111517",
+    "pattern": "plain",
+    "font": "sans",
+    "look": "music",
+    "identityLabel": "Midnight Stone",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/basalt.webp",
+    "aliases": [
+      "Midnight Mixtape",
+      "Dark"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "03",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "notebook",
+    "name": "Linen Journal",
+    "category": "Signature",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Linen Journal",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Notebook",
+      "Classic"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "08",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "palm",
+    "name": "Palm House",
+    "category": "Signature",
+    "note": "Botanical shadows · Editorial serif",
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "accent": "#d3ccab",
+    "cover": "#18231c",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Palm House",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "Palm Social",
+      "Island"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "05",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "sunset",
+    "name": "Bronze Hour",
+    "category": "Signature",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Bronze Hour",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Golden Hour",
+      "Bright"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "06",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "disco",
+    "name": "The Listening Room",
+    "category": "Signature",
+    "note": "Analogue sound · Modern sans",
+    "bg": "#181715",
+    "panel": "#2a2824",
+    "ink": "#f4eee4",
+    "muted": "#c9c2b7",
+    "accent": "#dabf96",
+    "cover": "#181715",
+    "pattern": "plain",
+    "font": "sans",
+    "look": "music",
+    "identityLabel": "The Listening Room",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/vinyl.webp",
+    "aliases": [
+      "Disco Cousins",
+      "Bright"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "vinyl",
+    "materialName": "Analogue sound",
+    "edition": "19",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "bloom",
+    "name": "Terracotta",
+    "category": "Signature",
+    "note": "Sculpted clay · Editorial serif",
+    "bg": "#e4d4c5",
+    "panel": "#f5ece2",
+    "ink": "#482f27",
+    "muted": "#72544a",
+    "accent": "#844b36",
+    "cover": "#e4d4c5",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Terracotta",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/terracotta.webp",
+    "aliases": [
+      "Island Bloom",
+      "Island"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "terracotta",
+    "materialName": "Sculpted clay",
+    "edition": "04",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "cloud",
+    "name": "Mountain Air",
+    "category": "Signature",
+    "note": "Mountain mist · Editorial serif",
+    "bg": "#dfe4e0",
+    "panel": "#f0f3ef",
+    "ink": "#263d3c",
+    "muted": "#536b66",
+    "accent": "#36645c",
+    "cover": "#dfe4e0",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Mountain Air",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/mist.webp",
+    "aliases": [
+      "Cloud Nine",
+      "Soft"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "mist",
+    "materialName": "Mountain mist",
+    "edition": "17",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "kula",
+    "name": "Kula / Archive",
+    "category": "Signature",
+    "note": "Sculpted clay · Editorial serif",
+    "bg": "#e4d4c5",
+    "panel": "#f5ece2",
+    "ink": "#482f27",
+    "muted": "#72544a",
+    "accent": "#844b36",
+    "cover": "#e4d4c5",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Kula / Archive",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/terracotta.webp",
+    "aliases": [
+      "Kula Classic",
+      "Classic"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "terracotta",
+    "materialName": "Sculpted clay",
+    "edition": "02",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "pixel",
+    "name": "Monograph",
+    "category": "Signature",
+    "note": "Volcanic stone · Modern sans",
+    "bg": "#111517",
+    "panel": "#202528",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "accent": "#c7c7b8",
+    "cover": "#111517",
+    "pattern": "plain",
+    "font": "sans",
+    "look": "social",
+    "identityLabel": "Monograph",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/basalt.webp",
+    "aliases": [
+      "Pixel Party",
+      "Bright"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "07",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "electric",
+    "name": "After Hours",
+    "category": "Signature",
+    "note": "Analogue sound · Modern sans",
+    "bg": "#181715",
+    "panel": "#2a2824",
+    "ink": "#f4eee4",
+    "muted": "#c9c2b7",
+    "accent": "#dabf96",
+    "cover": "#181715",
+    "pattern": "plain",
+    "font": "sans",
+    "look": "social",
+    "identityLabel": "After Hours",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/vinyl.webp",
+    "aliases": [
+      "Bula Electric",
+      "Bright"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "vinyl",
+    "materialName": "Analogue sound",
+    "edition": "09",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "masi",
+    "name": "Masi / Natural",
+    "category": "Signature",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "masi",
+    "identityLabel": "Masi / Natural",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Masi Social",
+      "Masi-inspired"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "10",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "drua",
+    "name": "Drua / Ocean",
+    "category": "Signature",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "look": "social",
+    "identityLabel": "Drua / Ocean",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "Drua Day",
+      "Sport"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "11",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "hibiscus",
+    "name": "Hibiscus / Clay",
+    "category": "Signature",
+    "note": "Sculpted clay · Editorial serif",
+    "bg": "#e4d4c5",
+    "panel": "#f5ece2",
+    "ink": "#482f27",
+    "muted": "#72544a",
+    "accent": "#844b36",
+    "cover": "#e4d4c5",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Hibiscus / Clay",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/terracotta.webp",
+    "aliases": [
+      "Hibiscus Heat",
+      "Island"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "terracotta",
+    "materialName": "Sculpted clay",
+    "edition": "12",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "reef",
+    "name": "Reef / Deep Water",
+    "category": "Signature",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "look": "social",
+    "identityLabel": "Reef / Deep Water",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "Reef Rave",
+      "Bright"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "13",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "kava",
+    "name": "Yaqona / Evening",
+    "category": "Signature",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "music",
+    "identityLabel": "Yaqona / Evening",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Yaqona Nights",
+      "Dark"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "14",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "mango",
+    "name": "Ochre",
+    "category": "Signature",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Ochre",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Mango Season",
+      "Island"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "15",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "candy",
+    "name": "Rosewood",
+    "category": "Signature",
+    "note": "Sculpted clay · Editorial serif",
+    "bg": "#e4d4c5",
+    "panel": "#f5ece2",
+    "ink": "#482f27",
+    "muted": "#72544a",
+    "accent": "#844b36",
+    "cover": "#e4d4c5",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Rosewood",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/terracotta.webp",
+    "aliases": [
+      "Candy Crush",
+      "Soft"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "terracotta",
+    "materialName": "Sculpted clay",
+    "edition": "16",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "ink",
+    "name": "Ink & Paper",
+    "category": "Signature",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Ink & Paper",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Ink & Paper",
+      "Classic"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "18",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "acid",
+    "name": "Olive Study",
+    "category": "Signature",
+    "note": "Botanical shadows · Editorial serif",
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "accent": "#d3ccab",
+    "cover": "#18231c",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Olive Study",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "Lime Limelight",
+      "Bright"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "20",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "varsity",
+    "name": "Alumni / Archive",
+    "category": "Signature",
+    "note": "Volcanic stone · Modern sans",
+    "bg": "#111517",
+    "panel": "#202528",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "accent": "#c7c7b8",
+    "cover": "#111517",
+    "pattern": "plain",
+    "font": "sans",
+    "look": "social",
+    "identityLabel": "Alumni / Archive",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/basalt.webp",
+    "aliases": [
+      "Schoolyard Stories",
+      "Sport"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "21",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "comic",
+    "name": "The Editorial",
+    "category": "Signature",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "The Editorial",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Comic Crew",
+      "Bright"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "22",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "afterglow",
+    "name": "Afterglow",
+    "category": "Signature",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Afterglow",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Island Afterglow",
+      "Dark"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "23",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "mint",
+    "name": "Sage House",
+    "category": "Signature",
+    "note": "Mountain mist · Editorial serif",
+    "bg": "#dfe4e0",
+    "panel": "#f0f3ef",
+    "ink": "#263d3c",
+    "muted": "#536b66",
+    "accent": "#36645c",
+    "cover": "#dfe4e0",
+    "pattern": "plain",
+    "font": "serif",
+    "look": "social",
+    "identityLabel": "Sage House",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "coverArt": "./assets/skins/mist.webp",
+    "aliases": [
+      "Mint Condition",
+      "Soft"
+    ],
+    "material": "matte",
+    "cardStyle": "tailored",
+    "family": "mist",
+    "materialName": "Mountain mist",
+    "edition": "24",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "school-natabua-high-school",
+    "catalogueId": "school-natabua-high-school",
+    "name": "Natabua",
+    "category": "Schools",
+    "note": "Volcanic stone · Modern sans",
+    "bg": "#111517",
+    "panel": "#202528",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "accent": "#c7c7b8",
+    "cover": "#111517",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/school-natabua-high-school.svg",
+    "border": "/assets/skins/core/school-natabua-high-school-border.svg",
+    "artDescription": "Natabua: ice illustration",
+    "designNote": "Original fan design; decorative palette, no official crest.",
+    "songs": [
+      {
+        "title": "In Scientia Fortitudo",
+        "performer": "Natabua students",
+        "url": "https://www.facebook.com/thefijitimes/videos/local-news-natabua-high-school-students-singing-their-school-song-in-scientia-fo/957525369265531/",
+        "relationship": "documented school association"
+      },
+      {
+        "title": "Cool as Ice",
+        "performer": "Makare featuring Natabua High School",
+        "url": "https://open.spotify.com/track/759Q6k8aRhkxSZUkiAQPpZ",
+        "relationship": "published school collaboration"
+      }
+    ],
+    "look": "varsity",
+    "identityLabel": "Natabua",
+    "identitySources": [
+      "https://secondaryschoolsathletics.org/schools-zones/",
+      "https://www.facebook.com/thefijitimes/videos/local-news-natabua-high-school-students-singing-their-school-song-in-scientia-fo/957525369265531/"
+    ],
+    "identityNote": "School community design",
+    "coverArt": "./assets/skins/basalt.webp",
+    "aliases": [
+      "Natabua",
+      "Schools"
+    ],
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "25",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "school-marist-brothers-high-school",
+    "catalogueId": "school-marist-brothers-high-school",
+    "name": "Marist",
+    "category": "Schools",
+    "note": "Sculpted clay · Editorial serif",
+    "bg": "#e4d4c5",
+    "panel": "#f5ece2",
+    "ink": "#482f27",
+    "muted": "#72544a",
+    "accent": "#844b36",
+    "cover": "#e4d4c5",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/school-marist-brothers-high-school.svg",
+    "border": "/assets/skins/core/school-marist-brothers-high-school-border.svg",
+    "artDescription": "Marist: fire illustration",
+    "designNote": "Original fan design; decorative palette, no official crest.",
+    "songs": [
+      {
+        "title": "Redfire Guide My Soul",
+        "performer": "Marist Brothers High School performance",
+        "url": "https://www.youtube.com/watch?v=i3xElGelmGk",
+        "relationship": "published school-themed recording"
+      }
+    ],
+    "look": "varsity",
+    "identityLabel": "Marist",
+    "identitySources": [
+      "https://secondaryschoolsathletics.org/schools-zones/",
+      "https://en.wikipedia.org/wiki/Marist_Brothers_High_School,_Fiji",
+      "https://www.facebook.com/fijisun/videos/marist-brothers-high-school-old-boys-and-supporters-chanting-the-school-song-aft/650511829794840/"
+    ],
+    "identityNote": "School community design",
+    "coverArt": "./assets/skins/terracotta.webp",
+    "aliases": [
+      "Marist",
+      "Schools"
+    ],
+    "family": "terracotta",
+    "materialName": "Sculpted clay",
+    "edition": "26",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "school-suva-grammar-school",
+    "catalogueId": "school-suva-grammar-school",
+    "name": "Suva Grammar",
+    "category": "Schools",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/school-suva-grammar-school.svg",
+    "border": "/assets/skins/core/school-suva-grammar-school-border.svg",
+    "artDescription": "Suva Grammar: school illustration",
+    "designNote": "Original fan design; decorative palette, no official crest.",
+    "songs": [
+      {
+        "title": "Grammar Tu Ga",
+        "performer": "Natalie Raikadroka, Patco Muzik, Drixstar, Mr. Grin",
+        "url": "https://open.spotify.com/track/4CodGFhOr6srF38IBtdN4d",
+        "relationship": "documented alumni anthem"
+      }
+    ],
+    "look": "varsity",
+    "identityLabel": "Suva Grammar",
+    "identitySources": [
+      "https://secondaryschoolsathletics.org/schools-zones/",
+      "https://www.fijivillage.com/feature/-We-are-here-we-are-here--Grammar-celebrates-65th-Sapphire-Anniversary-in-60s-Elegance-f458xr/"
+    ],
+    "identityNote": "School community design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Suva Grammar",
+      "Schools"
+    ],
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "27",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "school-queen-victoria-school",
+    "catalogueId": "school-queen-victoria-school",
+    "name": "QVS",
+    "category": "Schools",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/school-queen-victoria-school.svg",
+    "border": "/assets/skins/core/school-queen-victoria-school-border.svg",
+    "artDescription": "QVS: school illustration",
+    "designNote": "Original fan design; decorative palette, no official crest.",
+    "songs": [
+      {
+        "title": "Na Noqu Koronivuli",
+        "performer": "QVS students / supporters",
+        "url": "https://www.facebook.com/lescoolx/videos/na-noqu-koronivuli-au-na-bole-mate-kina-qvs-school-song-/1190279593271289/",
+        "relationship": "school-song performance reference"
+      }
+    ],
+    "look": "varsity",
+    "identityLabel": "QVS",
+    "identitySources": [
+      "https://secondaryschoolsathletics.org/schools-zones/",
+      "https://www.facebook.com/fijisun/videos/queen-victoria-school-students-sing-their-school-song-following-the-official-ope/307482298318156/"
+    ],
+    "identityNote": "School community design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "QVS",
+      "Schools"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "28",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "school-ratu-kadavulevu-school",
+    "catalogueId": "school-ratu-kadavulevu-school",
+    "name": "RKS",
+    "category": "Schools",
+    "note": "Volcanic stone · Modern sans",
+    "bg": "#111517",
+    "panel": "#202528",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "accent": "#c7c7b8",
+    "cover": "#111517",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/school-ratu-kadavulevu-school.svg",
+    "border": "/assets/skins/core/school-ratu-kadavulevu-school-border.svg",
+    "artDescription": "RKS: school illustration",
+    "designNote": "Original fan design; decorative palette, no official crest.",
+    "songs": [
+      {
+        "title": "Noqu Koronivuli Uasivi",
+        "performer": "RKS students / school choir",
+        "url": "https://www.youtube.com/watch?v=ouXJM0Y-H7A",
+        "relationship": "documented school association"
+      },
+      {
+        "title": "Mai Lodoni Mai",
+        "performer": "Published recording produced by Red River Badamu",
+        "url": "https://www.youtube.com/watch?v=0OLC-2ccSgQ",
+        "relationship": "published school-themed recording"
+      }
+    ],
+    "look": "varsity",
+    "identityLabel": "RKS",
+    "identitySources": [
+      "https://secondaryschoolsathletics.org/schools-zones/",
+      "https://rksosa.wordpress.com/2019/08/30/lodoni-80-series-part-01/",
+      "https://www.pmoffice.gov.fj/centennial-celebrations-for-the-establishment-of-ratu-kadavulevu-school-provincial-school-eastern/"
+    ],
+    "identityNote": "School community design",
+    "coverArt": "./assets/skins/basalt.webp",
+    "aliases": [
+      "RKS",
+      "Schools"
+    ],
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "29",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "school-adi-cakobau-school",
+    "catalogueId": "school-adi-cakobau-school",
+    "name": "ACS",
+    "category": "Schools",
+    "note": "Botanical shadows · Editorial serif",
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "accent": "#d3ccab",
+    "cover": "#18231c",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/school-adi-cakobau-school.svg",
+    "border": "/assets/skins/core/school-adi-cakobau-school-border.svg",
+    "artDescription": "ACS: lily illustration",
+    "designNote": "Original fan design; decorative palette, no official crest.",
+    "songs": [
+      {
+        "title": "Seni Waterlily",
+        "performer": "ACS Year 13 students",
+        "url": "https://www.facebook.com/fijisun/videos/acs-year-13s-visit-parliamentmore-than-80-year-13-students-from-adi-cakobau-scho/2348721745561716/",
+        "relationship": "documented school association"
+      }
+    ],
+    "look": "varsity",
+    "identityLabel": "ACS",
+    "identitySources": [
+      "https://secondaryschoolsathletics.org/schools-zones/",
+      "https://acsog.org/acs-history/",
+      "https://acsog.org/tag/acs/"
+    ],
+    "identityNote": "School community design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "ACS",
+      "Schools"
+    ],
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "30",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "school-fnu",
+    "catalogueId": "school-fnu",
+    "name": "FNU",
+    "category": "Schools",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/school-fnu.svg",
+    "border": "/assets/skins/core/school-fnu-border.svg",
+    "artDescription": "FNU: book illustration",
+    "designNote": "Original fan design; decorative palette, no official crest.",
+    "songs": [],
+    "look": "varsity",
+    "identityLabel": "FNU",
+    "identitySources": [
+      "https://www.fnu.ac.fj/",
+      "https://www.facebook.com/maitvfiji/videos/the-student-choir-from-the-fiji-national-universitys-lautoka-teaching-campus-ser/4681153278876522/"
+    ],
+    "identityNote": "School community design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "FNU",
+      "Schools"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "31",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "school-usp",
+    "catalogueId": "school-usp",
+    "name": "USP",
+    "category": "Schools",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/school-usp.svg",
+    "border": "/assets/skins/core/school-usp-border.svg",
+    "artDescription": "USP: canoe illustration",
+    "designNote": "Original fan design; decorative palette, no official crest.",
+    "songs": [
+      {
+        "title": "Garland of Achievement",
+        "performer": "USP Choir",
+        "url": "https://www.youtube.com/watch?v=RYheeIzwggY",
+        "relationship": "official institutional association"
+      }
+    ],
+    "look": "varsity",
+    "identityLabel": "USP",
+    "identitySources": [
+      "https://www.usp.ac.fj/",
+      "https://www.facebook.com/USP.Team/posts/a-song-that-brings-the-usp-community-togetherthe-usp-choir-performs-garland-of-a/1528909485946112/"
+    ],
+    "identityNote": "School community design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "USP",
+      "Schools"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "32",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "core-masi",
+    "catalogueId": "masi",
+    "name": "Masi / masi kesa",
+    "category": "Culture",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/masi.svg",
+    "border": "/assets/skins/core/masi-border.svg",
+    "artDescription": "Masi / masi kesa: cloth illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [],
+    "look": "masi",
+    "identityLabel": "Masi / masi kesa",
+    "identitySources": [
+      "https://maa.cam.ac.uk/masi",
+      "https://www.metmuseum.org/art/collection/search/310412",
+      "https://tapa.gla.ac.uk/fiji/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Masi / masi kesa",
+      "Culture"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "33",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "masi-white",
+    "catalogueId": "masi-white",
+    "name": "White Masi",
+    "category": "Culture",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/masi-white.svg",
+    "border": "/assets/skins/core/masi-white-border.svg",
+    "artDescription": "White Masi: cloth illustration",
+    "designNote": "Original cloth-inspired artwork; not a documented regional pattern.",
+    "songs": [],
+    "look": "masi",
+    "identityLabel": "White Masi",
+    "identitySources": [
+      "https://maa.cam.ac.uk/masi"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "White Masi",
+      "Culture"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "34",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "masi-smoked",
+    "catalogueId": "masi-smoked",
+    "name": "Smoked Masi",
+    "category": "Culture",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/masi-smoked.svg",
+    "border": "/assets/skins/core/masi-smoked-border.svg",
+    "artDescription": "Smoked Masi: cloth illustration",
+    "designNote": "Original cloth-inspired artwork; not a documented regional pattern.",
+    "songs": [],
+    "look": "masi",
+    "identityLabel": "Smoked Masi",
+    "identitySources": [
+      "https://maa.cam.ac.uk/masi"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Smoked Masi",
+      "Culture"
+    ],
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "35",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "masi-lau",
+    "catalogueId": "masi-lau",
+    "name": "Lau • Cloth Study",
+    "category": "Culture",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/masi-lau.svg",
+    "border": "/assets/skins/core/masi-lau-border.svg",
+    "artDescription": "Lau • Cloth Study: cloth illustration",
+    "designNote": "Original cloth-inspired artwork; not a documented regional pattern.",
+    "songs": [
+      {
+        "title": "Lomaloma",
+        "performer": "Josateki Koroituicakau",
+        "url": "https://www.youtube.com/watch?v=EBVu0YstnPQ",
+        "relationship": "documented place and belonging story"
+      }
+    ],
+    "look": "masi",
+    "identityLabel": "Lau • Cloth Study",
+    "identitySources": [
+      "https://maa.cam.ac.uk/masi",
+      "https://tapa.gla.ac.uk/fiji/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Lau • Cloth Study",
+      "Culture"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "36",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "masi-cakaudrove",
+    "catalogueId": "masi-cakaudrove",
+    "name": "Cakaudrove • Cloth Study",
+    "category": "Culture",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/masi-cakaudrove.svg",
+    "border": "/assets/skins/core/masi-cakaudrove-border.svg",
+    "artDescription": "Cakaudrove • Cloth Study: cloth illustration",
+    "designNote": "Original cloth-inspired artwork; not a documented regional pattern.",
+    "songs": [
+      {
+        "title": "Cakaudrove Bua Macuata",
+        "performer": "Nem & Talei featuring Sofaia",
+        "url": "https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/",
+        "relationship": "direct named-place association"
+      }
+    ],
+    "look": "masi",
+    "identityLabel": "Cakaudrove • Cloth Study",
+    "identitySources": [
+      "https://tapa.gla.ac.uk/fiji/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Cakaudrove • Cloth Study",
+      "Culture"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "37",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "grog",
+    "catalogueId": "grog",
+    "name": "Grog Circle",
+    "category": "Culture",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/grog.svg",
+    "border": "/assets/skins/core/grog-border.svg",
+    "artDescription": "Grog Circle: tanoa illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Kauwai",
+        "performer": "Vegas 6 with Naomi from Marama",
+        "url": "https://www.abc.net.au/pacific/programs/sista-sounds/sista-sounds/106894994",
+        "relationship": "documented genre fit; suggested skin pairing"
+      },
+      {
+        "title": "Lomaloma",
+        "performer": "Josateki Koroituicakau",
+        "url": "https://www.youtube.com/watch?v=EBVu0YstnPQ",
+        "relationship": "documented place and belonging story"
+      },
+      {
+        "title": "Noqu Vanua",
+        "performer": "Kuki",
+        "url": "https://www.youtube.com/watch?v=F4HnJgZ_YeQ",
+        "relationship": "thematic suggestion"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Grog Circle",
+    "identitySources": [
+      "https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064",
+      "https://folkways-media.si.edu/docs/folkways/artwork/UNES08316.pdf",
+      "https://www.fiji.travel/things-to-do/arts/a-travellers-guide-to-drinking-kava-in-fiji"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Grog Circle",
+      "Culture"
+    ],
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "38",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "sigidrigi",
+    "catalogueId": "sigidrigi",
+    "name": "Sigidrigi Veranda",
+    "category": "Culture",
+    "note": "Analogue sound · Modern sans",
+    "bg": "#181715",
+    "panel": "#2a2824",
+    "ink": "#f4eee4",
+    "muted": "#c9c2b7",
+    "accent": "#dabf96",
+    "cover": "#181715",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/sigidrigi.svg",
+    "border": "/assets/skins/core/sigidrigi-border.svg",
+    "artDescription": "Sigidrigi Veranda: guitar illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Kauwai",
+        "performer": "Vegas 6 with Naomi from Marama",
+        "url": "https://www.abc.net.au/pacific/programs/sista-sounds/sista-sounds/106894994",
+        "relationship": "documented genre fit; suggested skin pairing"
+      },
+      {
+        "title": "Lomaloma",
+        "performer": "Josateki Koroituicakau",
+        "url": "https://www.youtube.com/watch?v=EBVu0YstnPQ",
+        "relationship": "documented place and belonging story"
+      }
+    ],
+    "look": "music",
+    "identityLabel": "Sigidrigi Veranda",
+    "identitySources": [
+      "https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064",
+      "https://folkways-media.si.edu/docs/folkways/artwork/UNES08316.pdf"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/vinyl.webp",
+    "aliases": [
+      "Sigidrigi Veranda",
+      "Culture"
+    ],
+    "family": "vinyl",
+    "materialName": "Analogue sound",
+    "edition": "39",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "woven-mats",
+    "catalogueId": "woven-mats",
+    "name": "Ibe / Woven Mats",
+    "category": "Culture",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/woven-mats.svg",
+    "border": "/assets/skins/core/woven-mats-border.svg",
+    "artDescription": "Ibe / Woven Mats: weave illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [],
+    "look": "masi",
+    "identityLabel": "Ibe / Woven Mats",
+    "identitySources": [
+      "https://csrm.uq.edu.au/media/docs/560/AustronesianSoundscapes.pdf",
+      "https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/",
+      "https://www.fijitimes.com.fj/five-years-in-the-making/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Ibe / Woven Mats",
+      "Culture"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "40",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "village",
+    "catalogueId": "village",
+    "name": "My Village",
+    "category": "Culture",
+    "note": "Botanical shadows · Editorial serif",
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "accent": "#d3ccab",
+    "cover": "#18231c",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/village.svg",
+    "border": "/assets/skins/core/village-border.svg",
+    "artDescription": "My Village: village illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Noqu Vanua",
+        "performer": "Kuki",
+        "url": "https://www.youtube.com/watch?v=F4HnJgZ_YeQ",
+        "relationship": "thematic suggestion"
+      },
+      {
+        "title": "Lomaloma",
+        "performer": "Josateki Koroituicakau",
+        "url": "https://www.youtube.com/watch?v=EBVu0YstnPQ",
+        "relationship": "documented place and belonging story"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "My Village",
+    "identitySources": [
+      "https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064",
+      "https://www.fiji.travel/things-to-do/arts/navala-s-tribute-to-tradition"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "My Village",
+      "Culture"
+    ],
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "41",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "navala",
+    "catalogueId": "navala",
+    "name": "Navala / Bure Village",
+    "category": "Culture",
+    "note": "Mountain mist · Editorial serif",
+    "bg": "#dfe4e0",
+    "panel": "#f0f3ef",
+    "ink": "#263d3c",
+    "muted": "#536b66",
+    "accent": "#36645c",
+    "cover": "#dfe4e0",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/navala.svg",
+    "border": "/assets/skins/core/navala-border.svg",
+    "artDescription": "Navala / Bure Village: bure illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Navala / Bure Village",
+    "identitySources": [
+      "https://www.fiji.travel/things-to-do/arts/navala-s-tribute-to-tradition"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/mist.webp",
+    "aliases": [
+      "Navala / Bure Village",
+      "Culture"
+    ],
+    "family": "mist",
+    "materialName": "Mountain mist",
+    "edition": "42",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "salusalu",
+    "catalogueId": "salusalu",
+    "name": "Salusalu",
+    "category": "Culture",
+    "note": "Botanical shadows · Editorial serif",
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "accent": "#d3ccab",
+    "cover": "#18231c",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/salusalu.svg",
+    "border": "/assets/skins/core/salusalu-border.svg",
+    "artDescription": "Salusalu: garland illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Fijian happy birthday song — Sofitel Nadi performance",
+        "performer": "Sofitel Nadi singers (visitor recording)",
+        "url": "https://www.youtube.com/watch?v=kVaqjEvtQro",
+        "relationship": "documented birthday performance"
+      },
+      {
+        "title": "Na Watiqu",
+        "performer": "Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni",
+        "url": "https://www.youtube.com/watch?v=Nzo7f-veMO0",
+        "relationship": "thematic suggestion"
+      }
+    ],
+    "look": "botanical",
+    "identityLabel": "Salusalu",
+    "identitySources": [
+      "https://www.facebook.com/TravelwellSouthPacific/videos/salusalu-a-beautifully-handcrafted-flower-necklace-worn-for-special-occasions-an/1306627124133906/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "Salusalu",
+      "Culture"
+    ],
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "43",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "core-drua",
+    "catalogueId": "drua",
+    "name": "Drua / Canoe Heritage",
+    "category": "Culture",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/drua.svg",
+    "border": "/assets/skins/core/drua-border.svg",
+    "artDescription": "Drua / Canoe Heritage: canoe illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Lomaloma",
+        "performer": "Josateki Koroituicakau",
+        "url": "https://www.youtube.com/watch?v=EBVu0YstnPQ",
+        "relationship": "documented place and belonging story"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Drua / Canoe Heritage",
+    "identitySources": [
+      "https://www.fiji.travel/deals-and-offers/experiences/the-drua-experience"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "Drua / Canoe Heritage",
+      "Culture"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "44",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-ba",
+    "catalogueId": "province-ba",
+    "name": "Ba",
+    "category": "Provinces",
+    "note": "Volcanic stone · Modern sans",
+    "bg": "#111517",
+    "panel": "#202528",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "accent": "#c7c7b8",
+    "cover": "#111517",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-ba.svg",
+    "border": "/assets/skins/core/province-ba-border.svg",
+    "artDescription": "Ba: river illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Ba",
+    "identitySources": [
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/basalt.webp",
+    "aliases": [
+      "Ba",
+      "Provinces"
+    ],
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "45",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-bua",
+    "catalogueId": "province-bua",
+    "name": "Bua",
+    "category": "Provinces",
+    "note": "Botanical shadows · Editorial serif",
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "accent": "#d3ccab",
+    "cover": "#18231c",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-bua.svg",
+    "border": "/assets/skins/core/province-bua-border.svg",
+    "artDescription": "Bua: forest illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Cakaudrove Bua Macuata",
+        "performer": "Nem & Talei featuring Sofaia",
+        "url": "https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/",
+        "relationship": "direct named-place association"
+      }
+    ],
+    "look": "botanical",
+    "identityLabel": "Bua",
+    "identitySources": [
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "Bua",
+      "Provinces"
+    ],
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "46",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-cakaudrove",
+    "catalogueId": "province-cakaudrove",
+    "name": "Cakaudrove",
+    "category": "Provinces",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-cakaudrove.svg",
+    "border": "/assets/skins/core/province-cakaudrove-border.svg",
+    "artDescription": "Cakaudrove: mountain illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Cakaudrove Bua Macuata",
+        "performer": "Nem & Talei featuring Sofaia",
+        "url": "https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/",
+        "relationship": "direct named-place association"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Cakaudrove",
+    "identitySources": [
+      "https://tapa.gla.ac.uk/fiji/",
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "Cakaudrove",
+      "Provinces"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "47",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-kadavu",
+    "catalogueId": "province-kadavu",
+    "name": "Kadavu",
+    "category": "Provinces",
+    "note": "Botanical shadows · Editorial serif",
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "accent": "#d3ccab",
+    "cover": "#18231c",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-kadavu.svg",
+    "border": "/assets/skins/core/province-kadavu-border.svg",
+    "artDescription": "Kadavu: reef illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Sili Wai Na Me",
+        "performer": "Polynesian Cultural Center performers",
+        "url": "https://www.youtube.com/shorts/G4UB9C_jzss",
+        "relationship": "documented provincial motif"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Kadavu",
+    "identitySources": [
+      "https://tab.gov.fj/",
+      "https://www.youtube.com/shorts/G4UB9C_jzss"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "Kadavu",
+      "Provinces"
+    ],
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "48",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-lau",
+    "catalogueId": "province-lau",
+    "name": "Lau",
+    "category": "Provinces",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-lau.svg",
+    "border": "/assets/skins/core/province-lau-border.svg",
+    "artDescription": "Lau: islands illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Lomaloma",
+        "performer": "Josateki Koroituicakau",
+        "url": "https://www.youtube.com/watch?v=EBVu0YstnPQ",
+        "relationship": "documented place and belonging story"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Lau",
+    "identitySources": [
+      "https://tapa.gla.ac.uk/fiji/",
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "Lau",
+      "Provinces"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "49",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-lomaiviti",
+    "catalogueId": "province-lomaiviti",
+    "name": "Lomaiviti",
+    "category": "Provinces",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-lomaiviti.svg",
+    "border": "/assets/skins/core/province-lomaiviti-border.svg",
+    "artDescription": "Lomaiviti: harbour illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Lomaiviti",
+    "identitySources": [
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Lomaiviti",
+      "Provinces"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "50",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-macuata",
+    "catalogueId": "province-macuata",
+    "name": "Macuata",
+    "category": "Provinces",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-macuata.svg",
+    "border": "/assets/skins/core/province-macuata-border.svg",
+    "artDescription": "Macuata: mangrove illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Cakaudrove Bua Macuata",
+        "performer": "Nem & Talei featuring Sofaia",
+        "url": "https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/",
+        "relationship": "direct named-place association"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Macuata",
+    "identitySources": [
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Macuata",
+      "Provinces"
+    ],
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "51",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-nadroga-navosa",
+    "catalogueId": "province-nadroga-navosa",
+    "name": "Nadroga-Navosa",
+    "category": "Provinces",
+    "note": "Sculpted clay · Editorial serif",
+    "bg": "#e4d4c5",
+    "panel": "#f5ece2",
+    "ink": "#482f27",
+    "muted": "#72544a",
+    "accent": "#844b36",
+    "cover": "#e4d4c5",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-nadroga-navosa.svg",
+    "border": "/assets/skins/core/province-nadroga-navosa-border.svg",
+    "artDescription": "Nadroga-Navosa: horse illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "O Nadroga Okwe E Kodaki O America",
+        "performer": "VLY featuring Ruci Tuiwai",
+        "url": "https://www.youtube.com/watch?v=-zlSweeyPoY",
+        "relationship": "direct named-place association"
+      },
+      {
+        "title": "Nadroga Okwe",
+        "performer": "Fo Sho",
+        "url": "https://www.youtube.com/watch?v=p5sH9jCcrQ4",
+        "relationship": "direct named-place association"
+      },
+      {
+        "title": "Ki Nadroga",
+        "performer": "Taus Vocal",
+        "url": "https://www.youtube.com/watch?v=Idxw6grGj54",
+        "relationship": "documented place and romance story"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Nadroga-Navosa",
+    "identitySources": [
+      "https://tab.gov.fj/",
+      "https://www.facebook.com/fijirugby/posts/the-blk-nadroga-rugby-fiji-official-team-page-stallions-are-on-tour-in-southland/2876285202410835/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/terracotta.webp",
+    "aliases": [
+      "Nadroga-Navosa",
+      "Provinces"
+    ],
+    "family": "terracotta",
+    "materialName": "Sculpted clay",
+    "edition": "52",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-naitasiri",
+    "catalogueId": "province-naitasiri",
+    "name": "Naitasiri",
+    "category": "Provinces",
+    "note": "Mountain mist · Editorial serif",
+    "bg": "#dfe4e0",
+    "panel": "#f0f3ef",
+    "ink": "#263d3c",
+    "muted": "#536b66",
+    "accent": "#36645c",
+    "cover": "#dfe4e0",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-naitasiri.svg",
+    "border": "/assets/skins/core/province-naitasiri-border.svg",
+    "artDescription": "Naitasiri: mountain illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Naitasiri",
+    "identitySources": [
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/mist.webp",
+    "aliases": [
+      "Naitasiri",
+      "Provinces"
+    ],
+    "family": "mist",
+    "materialName": "Mountain mist",
+    "edition": "53",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-namosi",
+    "catalogueId": "province-namosi",
+    "name": "Namosi",
+    "category": "Provinces",
+    "note": "Mountain mist · Editorial serif",
+    "bg": "#dfe4e0",
+    "panel": "#f0f3ef",
+    "ink": "#263d3c",
+    "muted": "#536b66",
+    "accent": "#36645c",
+    "cover": "#dfe4e0",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-namosi.svg",
+    "border": "/assets/skins/core/province-namosi-border.svg",
+    "artDescription": "Namosi: valley illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Namosi",
+    "identitySources": [
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/mist.webp",
+    "aliases": [
+      "Namosi",
+      "Provinces"
+    ],
+    "family": "mist",
+    "materialName": "Mountain mist",
+    "edition": "54",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-ra",
+    "catalogueId": "province-ra",
+    "name": "Ra",
+    "category": "Provinces",
+    "note": "Volcanic stone · Modern sans",
+    "bg": "#111517",
+    "panel": "#202528",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "accent": "#c7c7b8",
+    "cover": "#111517",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-ra.svg",
+    "border": "/assets/skins/core/province-ra-border.svg",
+    "artDescription": "Ra: rooster illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Ara Na Yadra (Ko ‘Ra’ Me Sautu Ka Qaqa)",
+        "performer": "Voqa Kei Valenisau",
+        "url": "https://www.youtube.com/watch?v=yJZ8QC1jE8U",
+        "relationship": "direct named-place association"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Ra",
+    "identitySources": [
+      "https://tab.gov.fj/",
+      "https://parliament.gov.fj/wp-content/uploads/2023/02/Daily-Hansard-Thursday-16th-February-2023.pdf"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/basalt.webp",
+    "aliases": [
+      "Ra",
+      "Provinces"
+    ],
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "55",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-rewa",
+    "catalogueId": "province-rewa",
+    "name": "Rewa",
+    "category": "Provinces",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-rewa.svg",
+    "border": "/assets/skins/core/province-rewa-border.svg",
+    "artDescription": "Rewa: river illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Rosi Ni Rewa",
+        "performer": "Senibua Koula Sigidrigi",
+        "url": "https://music.apple.com/us/artist/senibua-koula-sigidrigi/1752317228",
+        "relationship": "named-place recording metadata"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Rewa",
+    "identitySources": [
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "Rewa",
+      "Provinces"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "56",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-serua",
+    "catalogueId": "province-serua",
+    "name": "Serua",
+    "category": "Provinces",
+    "note": "Mountain mist · Editorial serif",
+    "bg": "#dfe4e0",
+    "panel": "#f0f3ef",
+    "ink": "#263d3c",
+    "muted": "#536b66",
+    "accent": "#36645c",
+    "cover": "#dfe4e0",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-serua.svg",
+    "border": "/assets/skins/core/province-serua-border.svg",
+    "artDescription": "Serua: coast illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Serua",
+    "identitySources": [
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/mist.webp",
+    "aliases": [
+      "Serua",
+      "Provinces"
+    ],
+    "family": "mist",
+    "materialName": "Mountain mist",
+    "edition": "57",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "province-tailevu",
+    "catalogueId": "province-tailevu",
+    "name": "Tailevu",
+    "category": "Provinces",
+    "note": "Botanical shadows · Editorial serif",
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "accent": "#d3ccab",
+    "cover": "#18231c",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/province-tailevu.svg",
+    "border": "/assets/skins/core/province-tailevu-border.svg",
+    "artDescription": "Tailevu: village illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Tailevu",
+    "identitySources": [
+      "https://tab.gov.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "Tailevu",
+      "Provinces"
+    ],
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "58",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "island",
+    "catalogueId": "island",
+    "name": "My Island",
+    "category": "Places",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/island.svg",
+    "border": "/assets/skins/core/island-border.svg",
+    "artDescription": "My Island: island illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Noqu Vanua",
+        "performer": "Kuki",
+        "url": "https://www.youtube.com/watch?v=F4HnJgZ_YeQ",
+        "relationship": "thematic suggestion"
+      },
+      {
+        "title": "Lomaloma",
+        "performer": "Josateki Koroituicakau",
+        "url": "https://www.youtube.com/watch?v=EBVu0YstnPQ",
+        "relationship": "documented place and belonging story"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "My Island",
+    "identitySources": [
+      "https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064",
+      "https://www.thecoconet.tv/songbook/learn-language-songs-from-the-pacific/acoustic-sessons-lomaloma-performed-by-josateki/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "My Island",
+      "Places"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "59",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "vanua-levu",
+    "catalogueId": "vanua-levu",
+    "name": "Vanua Levu",
+    "category": "Places",
+    "note": "Botanical shadows · Editorial serif",
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "accent": "#d3ccab",
+    "cover": "#18231c",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/vanua-levu.svg",
+    "border": "/assets/skins/core/vanua-levu-border.svg",
+    "artDescription": "Vanua Levu: forest illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Cakaudrove Bua Macuata",
+        "performer": "Nem & Talei featuring Sofaia",
+        "url": "https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/",
+        "relationship": "direct named-place association"
+      }
+    ],
+    "look": "botanical",
+    "identityLabel": "Vanua Levu",
+    "identitySources": [
+      "https://tab.gov.fj/",
+      "https://www.facebook.com/100066729187071/videos/cakaudrove-bua-macuatanem-talei-ft-sofaia/401283551221438/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "Vanua Levu",
+      "Places"
+    ],
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "60",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "taveuni",
+    "catalogueId": "taveuni",
+    "name": "Taveuni / Tagimoucia",
+    "category": "Places",
+    "note": "Mountain mist · Editorial serif",
+    "bg": "#dfe4e0",
+    "panel": "#f0f3ef",
+    "ink": "#263d3c",
+    "muted": "#536b66",
+    "accent": "#36645c",
+    "cover": "#dfe4e0",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/taveuni.svg",
+    "border": "/assets/skins/core/taveuni-border.svg",
+    "artDescription": "Taveuni / Tagimoucia: flower illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Tagimoucia",
+        "performer": "K.K.U (Kula Kei Uluivuya)",
+        "url": "https://open.spotify.com/track/6W6J3EacEZ2GrS3ENrKkI3",
+        "relationship": "documented named-island association"
+      }
+    ],
+    "look": "botanical",
+    "identityLabel": "Taveuni / Tagimoucia",
+    "identitySources": [
+      "https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064",
+      "https://open.spotify.com/track/6W6J3EacEZ2GrS3ENrKkI3"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/mist.webp",
+    "aliases": [
+      "Taveuni / Tagimoucia",
+      "Places"
+    ],
+    "family": "mist",
+    "materialName": "Mountain mist",
+    "edition": "61",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "rotuma",
+    "catalogueId": "rotuma",
+    "name": "Rotuma",
+    "category": "Places",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/rotuma.svg",
+    "border": "/assets/skins/core/rotuma-border.svg",
+    "artDescription": "Rotuma: coast illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Hanua Helava",
+        "performer": "Rako Pasefika",
+        "url": "https://www.youtube.com/watch?v=GHUaMCU06sM",
+        "relationship": "Rotuman repertoire association"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Rotuma",
+    "identitySources": [
+      "https://tapa.gla.ac.uk/fiji/",
+      "https://tab.gov.fj/",
+      "https://www.youtube.com/watch?v=GHUaMCU06sM"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "Rotuma",
+      "Places"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "62",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "yasawa",
+    "catalogueId": "yasawa",
+    "name": "Yasawa",
+    "category": "Places",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/yasawa.svg",
+    "border": "/assets/skins/core/yasawa-border.svg",
+    "artDescription": "Yasawa: islands illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Yasawa",
+    "identitySources": [
+      "https://www.fipra.com.fj/fipramas/past-winners/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Yasawa",
+      "Places"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "63",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "lomaloma",
+    "catalogueId": "lomaloma",
+    "name": "Lomaloma",
+    "category": "Places",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/lomaloma.svg",
+    "border": "/assets/skins/core/lomaloma-border.svg",
+    "artDescription": "Lomaloma: harbour illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Lomaloma",
+        "performer": "Josateki Koroituicakau",
+        "url": "https://www.youtube.com/watch?v=EBVu0YstnPQ",
+        "relationship": "documented place and belonging story"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Lomaloma",
+    "identitySources": [
+      "https://www.thecoconet.tv/songbook/learn-language-songs-from-the-pacific/acoustic-sessons-lomaloma-performed-by-josateki/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "Lomaloma",
+      "Places"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "64",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "nadi",
+    "catalogueId": "nadi",
+    "name": "Nadi Homecoming",
+    "category": "Places",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/nadi.svg",
+    "border": "/assets/skins/core/nadi-border.svg",
+    "artDescription": "Nadi Homecoming: flight illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Nadi International Airport",
+        "performer": "Makare",
+        "url": "https://music.apple.com/us/song/nadi-international-airport/1656187589",
+        "relationship": "direct named-place recording"
+      },
+      {
+        "title": "Coming Home",
+        "performer": "Knox (Inoke Kalounisiga)",
+        "url": "https://music.apple.com/us/album/fading-ep/946880959",
+        "relationship": "thematic suggestion"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Nadi Homecoming",
+    "identitySources": [
+      "https://music.apple.com/us/song/nadi-international-airport/1656187589"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Nadi Homecoming",
+      "Places"
+    ],
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "65",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "diaspora",
+    "catalogueId": "diaspora",
+    "name": "Coming Home",
+    "category": "Places",
+    "note": "Mountain mist · Editorial serif",
+    "bg": "#dfe4e0",
+    "panel": "#f0f3ef",
+    "ink": "#263d3c",
+    "muted": "#536b66",
+    "accent": "#36645c",
+    "cover": "#dfe4e0",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/diaspora.svg",
+    "border": "/assets/skins/core/diaspora-border.svg",
+    "artDescription": "Coming Home: journey illustration",
+    "designNote": "Original illustrative landscape or motif; not a place photograph.",
+    "songs": [
+      {
+        "title": "Coming Home",
+        "performer": "Knox (Inoke Kalounisiga)",
+        "url": "https://music.apple.com/us/album/fading-ep/946880959",
+        "relationship": "thematic suggestion"
+      },
+      {
+        "title": "Noqu Vanua",
+        "performer": "Kuki",
+        "url": "https://www.youtube.com/watch?v=F4HnJgZ_YeQ",
+        "relationship": "thematic suggestion"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Coming Home",
+    "identitySources": [
+      "https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064",
+      "https://music.apple.com/us/album/fading-ep/946880959"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/mist.webp",
+    "aliases": [
+      "Coming Home",
+      "Places"
+    ],
+    "family": "mist",
+    "materialName": "Mountain mist",
+    "edition": "66",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-birthday",
+    "catalogueId": "occasion-birthday",
+    "name": "Birthday",
+    "category": "Occasions",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-birthday.svg",
+    "border": "/assets/skins/core/occasion-birthday-border.svg",
+    "artDescription": "Birthday: balloons illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Fijian happy birthday song — Sofitel Nadi performance",
+        "performer": "Sofitel Nadi singers (visitor recording)",
+        "url": "https://www.youtube.com/watch?v=kVaqjEvtQro",
+        "relationship": "documented birthday performance"
+      },
+      {
+        "title": "Siga Ni Sucu ‘Kaila Tu’ (Rauni)",
+        "performer": "Children’s Songbook repertoire",
+        "url": "https://www.churchofjesuschrist.org/study/manual/childrens-songbook/youve-had-a-birthday-round?lang=fij",
+        "relationship": "published Fijian-language birthday repertoire"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Birthday",
+    "identitySources": [
+      "https://www.facebook.com/TravelwellSouthPacific/videos/salusalu-a-beautifully-handcrafted-flower-necklace-worn-for-special-occasions-an/1306627124133906/",
+      "https://www.youtube.com/watch?v=kVaqjEvtQro"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Birthday",
+      "Celebrations"
+    ],
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "67",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-first-birthday",
+    "catalogueId": "occasion-first-birthday",
+    "name": "First Birthday",
+    "category": "Occasions",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-first-birthday.svg",
+    "border": "/assets/skins/core/occasion-first-birthday-border.svg",
+    "artDescription": "First Birthday: balloons illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Fijian happy birthday song — Sofitel Nadi performance",
+        "performer": "Sofitel Nadi singers (visitor recording)",
+        "url": "https://www.youtube.com/watch?v=kVaqjEvtQro",
+        "relationship": "documented birthday performance"
+      },
+      {
+        "title": "Siga Ni Sucu ‘Kaila Tu’ (Rauni)",
+        "performer": "Children’s Songbook repertoire",
+        "url": "https://www.churchofjesuschrist.org/study/manual/childrens-songbook/youve-had-a-birthday-round?lang=fij",
+        "relationship": "published Fijian-language birthday repertoire"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "First Birthday",
+    "identitySources": [
+      "https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/",
+      "https://www.youtube.com/watch?v=kVaqjEvtQro"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "First Birthday",
+      "Celebrations"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "68",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-milestone-birthday",
+    "catalogueId": "occasion-milestone-birthday",
+    "name": "Milestone Birthday",
+    "category": "Occasions",
+    "note": "Volcanic stone · Modern sans",
+    "bg": "#111517",
+    "panel": "#202528",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "accent": "#c7c7b8",
+    "cover": "#111517",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-milestone-birthday.svg",
+    "border": "/assets/skins/core/occasion-milestone-birthday-border.svg",
+    "artDescription": "Milestone Birthday: sparkle illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Fijian happy birthday song — Sofitel Nadi performance",
+        "performer": "Sofitel Nadi singers (visitor recording)",
+        "url": "https://www.youtube.com/watch?v=kVaqjEvtQro",
+        "relationship": "documented birthday performance"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Milestone Birthday",
+    "identitySources": [
+      "https://www.facebook.com/TravelwellSouthPacific/videos/salusalu-a-beautifully-handcrafted-flower-necklace-worn-for-special-occasions-an/1306627124133906/",
+      "https://www.youtube.com/watch?v=kVaqjEvtQro"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/basalt.webp",
+    "aliases": [
+      "Milestone Birthday",
+      "Celebrations"
+    ],
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "69",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-wedding",
+    "catalogueId": "occasion-wedding",
+    "name": "Wedding",
+    "category": "Occasions",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-wedding.svg",
+    "border": "/assets/skins/core/occasion-wedding-border.svg",
+    "artDescription": "Wedding: rings illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Na Watiqu",
+        "performer": "Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni",
+        "url": "https://www.youtube.com/watch?v=Nzo7f-veMO0",
+        "relationship": "thematic suggestion"
+      },
+      {
+        "title": "Noqu Senibua",
+        "performer": "Kuki",
+        "url": "https://www.youtube.com/watch?v=JxXZrDvrIZI",
+        "relationship": "thematic suggestion"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Wedding",
+    "identitySources": [
+      "https://www.fijitimes.com.fj/five-years-in-the-making/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Wedding",
+      "Celebrations"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "70",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-masi-wedding",
+    "catalogueId": "occasion-masi-wedding",
+    "name": "Masi Wedding",
+    "category": "Occasions",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-masi-wedding.svg",
+    "border": "/assets/skins/core/occasion-masi-wedding-border.svg",
+    "artDescription": "Masi Wedding: rings illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Na Watiqu",
+        "performer": "Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni",
+        "url": "https://www.youtube.com/watch?v=Nzo7f-veMO0",
+        "relationship": "thematic suggestion"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Masi Wedding",
+    "identitySources": [
+      "https://maa.cam.ac.uk/masi",
+      "https://tapa.gla.ac.uk/fiji/",
+      "https://www.fijitimes.com.fj/five-years-in-the-making/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Masi Wedding",
+      "Celebrations"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "71",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-tevutevu",
+    "catalogueId": "occasion-tevutevu",
+    "name": "Tevutevu",
+    "category": "Occasions",
+    "note": "Sculpted clay · Editorial serif",
+    "bg": "#e4d4c5",
+    "panel": "#f5ece2",
+    "ink": "#482f27",
+    "muted": "#72544a",
+    "accent": "#844b36",
+    "cover": "#e4d4c5",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-tevutevu.svg",
+    "border": "/assets/skins/core/occasion-tevutevu-border.svg",
+    "artDescription": "Tevutevu: weave illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Na Watiqu",
+        "performer": "Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni",
+        "url": "https://www.youtube.com/watch?v=Nzo7f-veMO0",
+        "relationship": "thematic suggestion"
+      }
+    ],
+    "look": "masi",
+    "identityLabel": "Tevutevu",
+    "identitySources": [
+      "https://www.fijitimes.com.fj/five-years-in-the-making/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/terracotta.webp",
+    "aliases": [
+      "Tevutevu",
+      "Celebrations"
+    ],
+    "family": "terracotta",
+    "materialName": "Sculpted clay",
+    "edition": "72",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-anniversary",
+    "catalogueId": "occasion-anniversary",
+    "name": "Anniversary",
+    "category": "Occasions",
+    "note": "Bronze reflection · Editorial serif",
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "accent": "#e1bd8c",
+    "cover": "#211b18",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-anniversary.svg",
+    "border": "/assets/skins/core/occasion-anniversary-border.svg",
+    "artDescription": "Anniversary: rings illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Na Watiqu",
+        "performer": "Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni",
+        "url": "https://www.youtube.com/watch?v=Nzo7f-veMO0",
+        "relationship": "thematic suggestion"
+      },
+      {
+        "title": "Noqu Senibua",
+        "performer": "Kuki",
+        "url": "https://www.youtube.com/watch?v=JxXZrDvrIZI",
+        "relationship": "thematic suggestion"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Anniversary",
+    "identitySources": [
+      "https://www.fijitimes.com.fj/five-years-in-the-making/",
+      "https://www.facebook.com/TravelwellSouthPacific/videos/salusalu-a-beautifully-handcrafted-flower-necklace-worn-for-special-occasions-an/1306627124133906/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Anniversary",
+      "Celebrations"
+    ],
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "73",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-childbirth",
+    "catalogueId": "occasion-childbirth",
+    "name": "Newborn Welcome",
+    "category": "Occasions",
+    "note": "Mountain mist · Editorial serif",
+    "bg": "#dfe4e0",
+    "panel": "#f0f3ef",
+    "ink": "#263d3c",
+    "muted": "#536b66",
+    "accent": "#36645c",
+    "cover": "#dfe4e0",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-childbirth.svg",
+    "border": "/assets/skins/core/occasion-childbirth-border.svg",
+    "artDescription": "Newborn Welcome: cradle illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "A Wi Cava A Wi Dreu — Sere Ni Vaka Moce Gone",
+        "performer": "Lagasere kei Dr T performance",
+        "url": "https://www.youtube.com/watch?v=euiClsWxGgc",
+        "relationship": "published Fijian lullaby performance"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Newborn Welcome",
+    "identitySources": [
+      "https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/mist.webp",
+    "aliases": [
+      "Newborn Welcome",
+      "Celebrations"
+    ],
+    "family": "mist",
+    "materialName": "Mountain mist",
+    "edition": "74",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-roqoroqo",
+    "catalogueId": "occasion-roqoroqo",
+    "name": "i Roqoroqo Welcome",
+    "category": "Occasions",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-roqoroqo.svg",
+    "border": "/assets/skins/core/occasion-roqoroqo-border.svg",
+    "artDescription": "i Roqoroqo Welcome: cradle illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "A Wi Cava A Wi Dreu — Sere Ni Vaka Moce Gone",
+        "performer": "Lagasere kei Dr T performance",
+        "url": "https://www.youtube.com/watch?v=euiClsWxGgc",
+        "relationship": "published Fijian lullaby performance"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "i Roqoroqo Welcome",
+    "identitySources": [
+      "https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "i Roqoroqo Welcome",
+      "Celebrations"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "75",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-mother-support",
+    "catalogueId": "occasion-mother-support",
+    "name": "Mother & Baby",
+    "category": "Occasions",
+    "note": "Sculpted clay · Editorial serif",
+    "bg": "#e4d4c5",
+    "panel": "#f5ece2",
+    "ink": "#482f27",
+    "muted": "#72544a",
+    "accent": "#844b36",
+    "cover": "#e4d4c5",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-mother-support.svg",
+    "border": "/assets/skins/core/occasion-mother-support-border.svg",
+    "artDescription": "Mother & Baby: moon illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Mother & Baby",
+    "identitySources": [
+      "https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/terracotta.webp",
+    "aliases": [
+      "Mother & Baby",
+      "Celebrations"
+    ],
+    "family": "terracotta",
+    "materialName": "Sculpted clay",
+    "edition": "76",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-baby-shower",
+    "catalogueId": "occasion-baby-shower",
+    "name": "Baby Shower",
+    "category": "Occasions",
+    "note": "Mountain mist · Editorial serif",
+    "bg": "#dfe4e0",
+    "panel": "#f0f3ef",
+    "ink": "#263d3c",
+    "muted": "#536b66",
+    "accent": "#36645c",
+    "cover": "#dfe4e0",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-baby-shower.svg",
+    "border": "/assets/skins/core/occasion-baby-shower-border.svg",
+    "artDescription": "Baby Shower: clouds illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Baby Shower",
+    "identitySources": [
+      "https://www.thecoconet.tv/coco-talanoa/pacific-blog/the-fijian-mothers-tradition-of-na-i-roqoroqo/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/mist.webp",
+    "aliases": [
+      "Baby Shower",
+      "Celebrations"
+    ],
+    "family": "mist",
+    "materialName": "Mountain mist",
+    "edition": "77",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-faith-birth",
+    "catalogueId": "occasion-faith-birth",
+    "name": "Faith Blessing",
+    "category": "Occasions",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-faith-birth.svg",
+    "border": "/assets/skins/core/occasion-faith-birth-border.svg",
+    "artDescription": "Faith Blessing: dove illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [],
+    "look": "social",
+    "identityLabel": "Faith Blessing",
+    "identitySources": [
+      "https://www.fipra.com.fj/fipramas/past-winners/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Faith Blessing",
+      "Celebrations"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "78",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-graduation",
+    "catalogueId": "occasion-graduation",
+    "name": "Graduation",
+    "category": "Occasions",
+    "note": "Volcanic stone · Modern sans",
+    "bg": "#111517",
+    "panel": "#202528",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "accent": "#c7c7b8",
+    "cover": "#111517",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-graduation.svg",
+    "border": "/assets/skins/core/occasion-graduation-border.svg",
+    "artDescription": "Graduation: cap illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Garland of Achievement",
+        "performer": "USP Choir",
+        "url": "https://www.youtube.com/watch?v=RYheeIzwggY",
+        "relationship": "official institutional association"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Graduation",
+    "identitySources": [
+      "https://www.facebook.com/USP.Team/posts/a-song-that-brings-the-usp-community-togetherthe-usp-choir-performs-garland-of-a/1528909485946112/",
+      "https://www.fnu.ac.fj/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/basalt.webp",
+    "aliases": [
+      "Graduation",
+      "Celebrations"
+    ],
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "79",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-school-reunion",
+    "catalogueId": "occasion-school-reunion",
+    "name": "School Reunion",
+    "category": "Occasions",
+    "note": "Analogue sound · Modern sans",
+    "bg": "#181715",
+    "panel": "#2a2824",
+    "ink": "#f4eee4",
+    "muted": "#c9c2b7",
+    "accent": "#dabf96",
+    "cover": "#181715",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-school-reunion.svg",
+    "border": "/assets/skins/core/occasion-school-reunion-border.svg",
+    "artDescription": "School Reunion: book illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Grammar Tu Ga",
+        "performer": "Natalie Raikadroka, Patco Muzik, Drixstar, Mr. Grin",
+        "url": "https://open.spotify.com/track/4CodGFhOr6srF38IBtdN4d",
+        "relationship": "documented alumni anthem"
+      },
+      {
+        "title": "Noqu Koronivuli Uasivi",
+        "performer": "RKS students / school choir",
+        "url": "https://www.youtube.com/watch?v=ouXJM0Y-H7A",
+        "relationship": "documented school association"
+      },
+      {
+        "title": "Seni Waterlily",
+        "performer": "ACS Year 13 students",
+        "url": "https://www.facebook.com/fijisun/videos/acs-year-13s-visit-parliamentmore-than-80-year-13-students-from-adi-cakobau-scho/2348721745561716/",
+        "relationship": "documented school association"
+      },
+      {
+        "title": "Redfire Guide My Soul",
+        "performer": "Marist Brothers High School performance",
+        "url": "https://www.youtube.com/watch?v=i3xElGelmGk",
+        "relationship": "published school-themed recording"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "School Reunion",
+    "identitySources": [
+      "https://rksosa.wordpress.com/2019/08/30/lodoni-80-series-part-01/",
+      "https://www.fijivillage.com/feature/-We-are-here-we-are-here--Grammar-celebrates-65th-Sapphire-Anniversary-in-60s-Elegance-f458xr/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/vinyl.webp",
+    "aliases": [
+      "School Reunion",
+      "Celebrations"
+    ],
+    "family": "vinyl",
+    "materialName": "Analogue sound",
+    "edition": "80",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "occasion-family-reunion",
+    "catalogueId": "occasion-family-reunion",
+    "name": "Family Reunion",
+    "category": "Occasions",
+    "note": "Botanical shadows · Editorial serif",
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "accent": "#d3ccab",
+    "cover": "#18231c",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/occasion-family-reunion.svg",
+    "border": "/assets/skins/core/occasion-family-reunion-border.svg",
+    "artDescription": "Family Reunion: tree illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Coming Home",
+        "performer": "Knox (Inoke Kalounisiga)",
+        "url": "https://music.apple.com/us/album/fading-ep/946880959",
+        "relationship": "thematic suggestion"
+      },
+      {
+        "title": "Noqu Vanua",
+        "performer": "Kuki",
+        "url": "https://www.youtube.com/watch?v=F4HnJgZ_YeQ",
+        "relationship": "thematic suggestion"
+      },
+      {
+        "title": "Lomaloma",
+        "performer": "Josateki Koroituicakau",
+        "url": "https://www.youtube.com/watch?v=EBVu0YstnPQ",
+        "relationship": "documented place and belonging story"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Family Reunion",
+    "identitySources": [
+      "https://epress.lib.uts.edu.au/journals/index.php/TfC/article/view/1064",
+      "https://www.thecoconet.tv/songbook/learn-language-songs-from-the-pacific/acoustic-sessons-lomaloma-performed-by-josateki/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "Family Reunion",
+      "Celebrations"
+    ],
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "81",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "memory-love",
+    "catalogueId": "memory-love",
+    "name": "Love",
+    "category": "Memories",
+    "note": "Sculpted clay · Editorial serif",
+    "bg": "#e4d4c5",
+    "panel": "#f5ece2",
+    "ink": "#482f27",
+    "muted": "#72544a",
+    "accent": "#844b36",
+    "cover": "#e4d4c5",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/memory-love.svg",
+    "border": "/assets/skins/core/memory-love-border.svg",
+    "artDescription": "Love: heart illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Noqu Senibua",
+        "performer": "Kuki",
+        "url": "https://www.youtube.com/watch?v=JxXZrDvrIZI",
+        "relationship": "thematic suggestion"
+      },
+      {
+        "title": "Na Watiqu",
+        "performer": "Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni",
+        "url": "https://www.youtube.com/watch?v=Nzo7f-veMO0",
+        "relationship": "thematic suggestion"
+      },
+      {
+        "title": "Isa Lei Lia",
+        "performer": "FIJI (George Veikoso)",
+        "url": "https://www.thecoconet.tv/songbook/islandjams/isa-lei-lia-fiji-george-veikoso/",
+        "relationship": "documented performance; thematic suggestion"
+      }
+    ],
+    "look": "social",
+    "identityLabel": "Love",
+    "identitySources": [
+      "https://www.fijitimes.com.fj/five-years-in-the-making/",
+      "https://www.thecoconet.tv/songbook/islandjams/isa-lei-lia-fiji-george-veikoso/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/terracotta.webp",
+    "aliases": [
+      "Love",
+      "Love & Memories"
+    ],
+    "family": "terracotta",
+    "materialName": "Sculpted clay",
+    "edition": "82",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "memory-broken-hearted",
+    "catalogueId": "memory-broken-hearted",
+    "name": "Brokenhearted",
+    "category": "Memories",
+    "note": "Volcanic stone · Modern sans",
+    "bg": "#111517",
+    "panel": "#202528",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "accent": "#c7c7b8",
+    "cover": "#111517",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/memory-broken-hearted.svg",
+    "border": "/assets/skins/core/memory-broken-hearted-border.svg",
+    "artDescription": "Brokenhearted: rain illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Noqu Daulomani",
+        "performer": "Naseda",
+        "url": "https://www.youtube.com/watch?v=1mJ7FOtaw1w",
+        "relationship": "documented lost-love story; restricted suggestion"
+      }
+    ],
+    "look": "rain",
+    "coverArt": "./assets/skins/basalt.webp",
+    "identityLabel": "Brokenhearted",
+    "identitySources": [
+      "https://www.thecoconet.tv/songbook/islandjams/noqu-daulomani-naseda/"
+    ],
+    "identityNote": "Community-made design",
+    "aliases": [
+      "Brokenhearted",
+      "Love & Memories"
+    ],
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "83",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "memory-childhood-memory",
+    "catalogueId": "memory-childhood-memory",
+    "name": "Childhood Memories",
+    "category": "Memories",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "artwork": "/assets/skins/core/memory-childhood-memory.svg",
+    "border": "/assets/skins/core/memory-childhood-memory-border.svg",
+    "artDescription": "Childhood Memories: dalo illustration",
+    "designNote": "Original artwork inspired by the researched theme.",
+    "songs": [
+      {
+        "title": "Lai Tei Dalo Ko Tamaqu (also Lei spelling)",
+        "performer": "Traditional repertoire / Coconet presentation",
+        "url": "https://www.thecoconet.tv/coco-kids/coco-kids-jams/lai-tei-dalo/",
+        "relationship": "documented lullaby, with sensitive historical context"
+      }
+    ],
+    "look": "botanical",
+    "identityLabel": "Childhood Memories",
+    "identitySources": [
+      "https://www.thecoconet.tv/coco-talanoa/pacific-blog/lai-tei-dalo-ko-tamaqu-a-lullaby-of-loss/"
+    ],
+    "identityNote": "Community-made design",
+    "coverArt": "./assets/skins/linen.webp",
+    "aliases": [
+      "Childhood Memories",
+      "Love & Memories"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "84",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "studio-ocean",
+    "name": "Open Water",
+    "category": "Signature",
+    "note": "Ocean study · Modern sans",
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "accent": "#c2d4cb",
+    "cover": "#0c252c",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "look": "ocean",
+    "coverArt": "./assets/skins/ocean.webp",
+    "material": "matte",
+    "identityLabel": "Open Water",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "aliases": [
+      "Ocean",
+      "New picks"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "85",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "studio-masi",
+    "name": "Masi / Ivory",
+    "category": "Signature",
+    "note": "Natural linen · Editorial serif",
+    "bg": "#e7dfd2",
+    "panel": "#f5f0e7",
+    "ink": "#332d25",
+    "muted": "#665d51",
+    "accent": "#6f5035",
+    "cover": "#e7dfd2",
+    "pattern": "plain",
+    "font": "serif",
+    "material": "matte",
+    "cardStyle": "tailored",
+    "look": "masi",
+    "coverArt": "./assets/skins/linen.webp",
+    "coverRepeat": true,
+    "identityLabel": "Masi / Ivory",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "aliases": [
+      "Masi",
+      "New picks"
+    ],
+    "family": "linen",
+    "materialName": "Natural linen",
+    "edition": "86",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "studio-coral",
+    "name": "Coral / Earth",
+    "category": "Signature",
+    "note": "Sculpted clay · Editorial serif",
+    "bg": "#e4d4c5",
+    "panel": "#f5ece2",
+    "ink": "#482f27",
+    "muted": "#72544a",
+    "accent": "#844b36",
+    "cover": "#e4d4c5",
+    "pattern": "plain",
+    "font": "serif",
+    "material": "matte",
+    "cardStyle": "tailored",
+    "look": "coral",
+    "coverArt": "./assets/skins/terracotta.webp",
+    "identityLabel": "Coral / Earth",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "aliases": [
+      "Coral Sunset",
+      "New picks"
+    ],
+    "family": "terracotta",
+    "materialName": "Sculpted clay",
+    "edition": "87",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "studio-retro",
+    "name": "Analogue",
+    "category": "Signature",
+    "note": "Analogue sound · Modern sans",
+    "bg": "#181715",
+    "panel": "#2a2824",
+    "ink": "#f4eee4",
+    "muted": "#c9c2b7",
+    "accent": "#dabf96",
+    "cover": "#181715",
+    "pattern": "plain",
+    "font": "sans",
+    "material": "matte",
+    "cardStyle": "tailored",
+    "effect": "sticker",
+    "look": "retro",
+    "coverArt": "./assets/skins/vinyl.webp",
+    "identityLabel": "Analogue",
+    "identitySources": [],
+    "identityNote": "Original Sota Kece design",
+    "aliases": [
+      "Bebo Retro",
+      "New picks"
+    ],
+    "family": "vinyl",
+    "materialName": "Analogue sound",
+    "edition": "88",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "music-makare",
+    "name": "Makare",
+    "category": "Music",
+    "note": "Analogue sound · Modern sans",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "songs": [
+      {
+        "title": "Cool as Ice",
+        "performer": "Makare featuring Natabua High School",
+        "url": "https://open.spotify.com/track/759Q6k8aRhkxSZUkiAQPpZ",
+        "relationship": "published school collaboration"
+      }
+    ],
+    "bg": "#181715",
+    "panel": "#2a2824",
+    "accent": "#dabf96",
+    "ink": "#f4eee4",
+    "muted": "#c9c2b7",
+    "cover": "#181715",
+    "look": "music",
+    "identityLabel": "Makare",
+    "identitySources": [],
+    "identityNote": "Music fan design",
+    "coverArt": "./assets/skins/vinyl.webp",
+    "aliases": [
+      "Makare",
+      "Music & bands"
+    ],
+    "family": "vinyl",
+    "materialName": "Analogue sound",
+    "edition": "89",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "music-paradise-rootz",
+    "name": "Paradise Rootz",
+    "category": "Music",
+    "note": "Botanical shadows · Editorial serif",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "songs": [
+      {
+        "title": "Na Watiqu",
+        "performer": "Paradise Rootz featuring Cakau Ni Mana & Nasio Domoni",
+        "url": "https://www.youtube.com/watch?v=Nzo7f-veMO0",
+        "relationship": "thematic suggestion"
+      }
+    ],
+    "bg": "#18231c",
+    "panel": "#29372c",
+    "accent": "#d3ccab",
+    "ink": "#f2f0e5",
+    "muted": "#c4cebf",
+    "cover": "#18231c",
+    "look": "music",
+    "identityLabel": "Paradise Rootz",
+    "identitySources": [],
+    "identityNote": "Music fan design",
+    "coverArt": "./assets/skins/botanical.webp",
+    "aliases": [
+      "Paradise Rootz",
+      "Music & bands"
+    ],
+    "family": "botanical",
+    "materialName": "Botanical shadows",
+    "edition": "90",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "music-kku",
+    "name": "Kula Kei Uluivuya",
+    "category": "Music",
+    "note": "Analogue sound · Modern sans",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "songs": [
+      {
+        "title": "Tagimoucia",
+        "performer": "K.K.U (Kula Kei Uluivuya)",
+        "url": "https://open.spotify.com/track/6W6J3EacEZ2GrS3ENrKkI3",
+        "relationship": "documented named-island association"
+      }
+    ],
+    "bg": "#181715",
+    "panel": "#2a2824",
+    "accent": "#dabf96",
+    "ink": "#f4eee4",
+    "muted": "#c9c2b7",
+    "cover": "#181715",
+    "look": "music",
+    "identityLabel": "Kula Kei Uluivuya",
+    "identitySources": [],
+    "identityNote": "Music fan design",
+    "coverArt": "./assets/skins/vinyl.webp",
+    "aliases": [
+      "Kula Kei Uluivuya",
+      "Music & bands"
+    ],
+    "family": "vinyl",
+    "materialName": "Analogue sound",
+    "edition": "91",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "music-valenisau",
+    "name": "Voqa Kei Valenisau",
+    "category": "Music",
+    "note": "Bronze reflection · Editorial serif",
+    "pattern": "plain",
+    "font": "serif",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "songs": [
+      {
+        "title": "Ara Na Yadra (Ko ‘Ra’ Me Sautu Ka Qaqa)",
+        "performer": "Voqa Kei Valenisau",
+        "url": "https://www.youtube.com/watch?v=yJZ8QC1jE8U",
+        "relationship": "direct named-place association"
+      }
+    ],
+    "bg": "#211b18",
+    "panel": "#332a23",
+    "accent": "#e1bd8c",
+    "ink": "#f5eee3",
+    "muted": "#d5c4b2",
+    "cover": "#211b18",
+    "look": "music",
+    "identityLabel": "Voqa Kei Valenisau",
+    "identitySources": [],
+    "identityNote": "Music fan design",
+    "coverArt": "./assets/skins/bronze.webp",
+    "aliases": [
+      "Voqa Kei Valenisau",
+      "Music & bands"
+    ],
+    "family": "bronze",
+    "materialName": "Bronze reflection",
+    "edition": "92",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "music-rako",
+    "name": "Rako Pasefika",
+    "category": "Music",
+    "note": "Ocean study · Modern sans",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "songs": [
+      {
+        "title": "Hanua Helava",
+        "performer": "Rako Pasefika",
+        "url": "https://www.youtube.com/watch?v=GHUaMCU06sM",
+        "relationship": "Rotuman repertoire association"
+      }
+    ],
+    "bg": "#0c252c",
+    "panel": "#142f36",
+    "accent": "#c2d4cb",
+    "ink": "#f3f2ec",
+    "muted": "#c0cdd0",
+    "cover": "#0c252c",
+    "look": "music",
+    "identityLabel": "Rako Pasefika",
+    "identitySources": [],
+    "identityNote": "Music fan design",
+    "coverArt": "./assets/skins/ocean.webp",
+    "aliases": [
+      "Rako Pasefika",
+      "Music & bands"
+    ],
+    "family": "ocean",
+    "materialName": "Ocean study",
+    "edition": "93",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  },
+  {
+    "id": "music-knox",
+    "name": "Knox",
+    "category": "Music",
+    "note": "Volcanic stone · Modern sans",
+    "pattern": "plain",
+    "font": "sans",
+    "cardStyle": "tailored",
+    "material": "matte",
+    "songs": [
+      {
+        "title": "Coming Home",
+        "performer": "Knox (Inoke Kalounisiga)",
+        "url": "https://music.apple.com/us/album/fading-ep/946880959",
+        "relationship": "thematic suggestion"
+      }
+    ],
+    "bg": "#111517",
+    "panel": "#202528",
+    "accent": "#c7c7b8",
+    "ink": "#f3f2ee",
+    "muted": "#bfc6c9",
+    "cover": "#111517",
+    "look": "music",
+    "identityLabel": "Knox",
+    "identitySources": [],
+    "identityNote": "Music fan design",
+    "coverArt": "./assets/skins/basalt.webp",
+    "aliases": [
+      "Knox",
+      "Music & bands"
+    ],
+    "family": "basalt",
+    "materialName": "Volcanic stone",
+    "edition": "94",
+    "artNote": "Original AI-generated mood study; not a documentary image or official identity."
+  }
+];
