@@ -9,6 +9,8 @@ if(!track||typeof track.id!=='string'||!/^[a-z0-9-]{1,80}$/.test(track.id)||ids.
 ids.add(track.id);return {id:track.id,title:track.title.trim(),url:AUDIO_BASE+track.path};
 });
 }
+let ext=null,catalogue=[];
+const view=()=>ext?.items?.()||catalogue;
 let dialog=null,audio=null,tracks=[],current=-1,selectedTrack=null,authoritative=false,loading=null,attempt=0,beforePlay=()=>{},focusBefore=null,inlineHost=null,message='Choose a song to start listening.';
 root.SotaPlayback?.register('playlist',pause);
 let list,filter,count,status,title,play,previous,next,retry,mood,subtitle;
@@ -32,31 +34,35 @@ subtitle.textContent=selected?'Track '+(current+1)+' of '+tracks.length+' · Sot
 play.replaceChildren(el('span',playing?'Ⅱ':'▶','sk-playlist-play-icon'),el('span',playing?'Pause':'Play'));
 play.firstChild.setAttribute('aria-hidden','true');play.disabled=previous.disabled=next.disabled=!tracks.length;
 list.querySelectorAll('[data-track-index]').forEach(b=>{
-const active=Number(b.dataset.trackIndex)===current;
+const active=!!selected&&b.dataset.trackKey===selected.key;
 if(active)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current');
 });
+ext?.sync?.(selected,playing);
 }
 function pause(){attempt++;if(audio)audio.pause();if(selectedTrack)message='Paused · '+selectedTrack.title;sync();}
 async function playTrack(index){
 const selected=tracks[index];if(!selected)return;
 beforePlay();const request=++attempt;
-if(current!==index||audio.getAttribute('src')!==selected.url||audio.error){audio.pause();current=index;audio.src=selected.url;}
+const url=selected.url||ext?.urlFor?.(selected)||'';
+if(current!==index||audio.getAttribute('src')!==url||audio.error){audio.pause();current=index;audio.src=url;}
 selectedTrack=selected;
 message='Loading · '+selected.title;sync();
 root.SotaHeroVisualiser?.prepare(audio);
 try{await audio.play();if(request!==attempt)return;message='Playing · '+selected.title;sync();}
 catch(_){if(request===attempt){message='Could not play this song. Tap Play to retry, or choose another song.';sync();}}
 }
-function move(delta){if(tracks.length)playTrack(current<0?0:(current+delta+tracks.length)%tracks.length);}
+function move(delta,auto){if(!tracks.length)return;const t=ext?.next?ext.next(delta,!!auto):current<0?0:(current+delta+tracks.length)%tracks.length;if(t>=0)playTrack(t);}
+function playKey(key){const items=view();tracks=items.slice();const i=tracks.findIndex(t=>t.key===key);if(i>=0)playTrack(i);}
 function render(){
 list.replaceChildren();const query=filter.value.trim().toLocaleLowerCase();let shown=0;
-tracks.forEach((track,index)=>{
+const items=view();
+items.forEach((track,index)=>{
 if(query&&!track.title.toLocaleLowerCase().includes(query))return;
-shown++;const row=el('li'),pick=button('',()=>playTrack(index));pick.dataset.trackIndex=String(index);pick.setAttribute('aria-label','Play '+track.title);
-const number=el('span',String(index+1).padStart(2,'0'),'sk-playlist-number');number.setAttribute('aria-hidden','true');pick.append(number,el('span',track.title,'sk-playlist-song-name'));row.append(pick);list.append(row);
+shown++;const row=el('li'),pick=button('',()=>playKey(track.key));pick.dataset.trackIndex=String(index);pick.dataset.trackKey=track.key;pick.setAttribute('aria-label','Play '+track.title);
+const number=el('span',String(index+1).padStart(2,'0'),'sk-playlist-number');number.setAttribute('aria-hidden','true');pick.append(number,el('span',track.title,'sk-playlist-song-name'));row.append(pick);ext?.row?.(track,row);list.append(row);
 });
-if(!shown)list.append(el('li',tracks.length?'No songs match your search.':'The playlist could not load.'));
-count.textContent=query?shown+' of '+tracks.length+' songs':tracks.length+' songs';sync();
+if(!shown)list.append(el('li',items.length?'No songs match your search.':ext?.empty?.()||'The playlist could not load.'));
+count.textContent=query?shown+' of '+items.length+' songs':items.length+' songs';sync();
 }
 async function readCatalogue(){
 try{
@@ -77,10 +83,10 @@ loading=(async()=>{
 try{
 const result=await readCatalogue();
 const selectedId=(tracks[current]||selectedTrack)?.id;
-tracks=result.tracks;current=selectedId?tracks.findIndex(track=>track.id===selectedId):-1;
-if(current>=0)selectedTrack=tracks[current];
+catalogue=result.tracks.map(t=>({...t,key:'mix:'+t.id}));
+if(!selectedTrack||selectedTrack.key?.startsWith('mix:')){tracks=catalogue.slice();current=selectedId?tracks.findIndex(track=>track.id===selectedId):-1;if(current>=0)selectedTrack=tracks[current];}
 message=result.stale?'Saved playlist · Connection unavailable. Music needs an internet connection.':selectedTrack?(live()?'Playing · ':'Paused · ')+selectedTrack.title:'Choose a song to start listening.';
-retry.hidden=!result.stale;render();
+retry.hidden=!result.stale;render();ext?.loaded?.();
 }
 catch(_){message=tracks.length?'The shared playlist could not refresh. Your current selection is kept.':'The playlist could not load. Check your connection and try again.';retry.hidden=false;sync();}
 finally{loading=null;}
@@ -106,16 +112,26 @@ const search=el('div','','sk-playlist-search'),label=el('label','Find your next 
 count=el('small','Loading playlist…');count.setAttribute('aria-live','polite');list=el('ol','','sk-playlist-songs');list.setAttribute('aria-label','Playlist songs');
 const queue=el('div','','sk-playlist-queue');queue.append(el('span','THE PLAYLIST'),count);
 const visuals=el('dimau-music-visualiser');visuals.setAttribute('for','sota-playlist-audio');
-dialog.append(head,hero,audio,transport,visuals,status,retry,search,queue,list);root.document.body.append(dialog);
+const extras=el('div','','sk-lib-host');
+dialog.append(head,hero,audio,transport,visuals,status,retry,extras,search,queue,list);root.document.body.append(dialog);
+const docHead=root.document.head;
+if(root.SotaMusicLibrary)extend(root.SotaMusicLibrary);
+else if(docHead){const s=el('script');s.src='/music-library.js?v=20261028-library';s.async=true;docHead.append(s);}
 audio.addEventListener('play',()=>{
 root.SotaPlayback?.activate('playlist',audio);
 beforePlay();root.document.querySelectorAll('audio').forEach(other=>{if(other!==audio)other.pause();});
 message='Playing · '+(selectedTrack?.title||'');sync();
 });
 audio.addEventListener('pause',()=>{if(selectedTrack)message='Paused · '+selectedTrack.title;sync();});
-audio.addEventListener('ended',()=>move(1));
+audio.addEventListener('ended',()=>ext?.ended?ext.ended():move(1,true));
 audio.addEventListener('error',()=>{message='This song could not load. Tap Play to retry, or choose another song.';sync();});
 dialog.addEventListener('close',()=>{sync();if(dialog.open)return;stopVisuals();if(!inlineHost&&focusBefore?.isConnected)focusBefore.focus({preventScroll:true});focusBefore=null;});
+}
+// The music add-on (/music-library.js) calls this once loaded: control deck, playlists, My music, sharing.
+function extend(addon){
+if(!dialog||ext||!addon?.attach)return;
+ext=addon.attach({dialog,audio,host:dialog.querySelector('.sk-lib-host'),catalogue:()=>catalogue,tracks:()=>tracks,index:()=>current,selected:()=>tracks[current]||selectedTrack,live,playTrack,playKey,move,select(key){const i=catalogue.findIndex(t=>t.key===key);if(i<0)return;tracks=catalogue.slice();current=i;selectedTrack=tracks[i];render();},pause,load,render,sync,say(text){message=text;sync();},clear(){filter.value='';}})||null;
+render();if(catalogue.length)ext?.loaded?.();
 }
 function stopVisuals(){const visual=dialog?.querySelector('dimau-music-visualiser');visual?.finishRecording?.();visual?.stop?.();}
 function relocate(parent){
@@ -171,6 +187,8 @@ target.querySelectorAll('[data-playlist-open]:not([data-playlist-bound])').forEa
 b.dataset.playlistBound='true';b.setAttribute('aria-haspopup','dialog');b.setAttribute('aria-controls','sk-music-playlist');b.addEventListener('click',open);
 });sync();
 }
+// Shared song / music links open the player; the add-on picks the song.
+if(root.location&&/[?&](?:song|music)=/.test(root.location.search||''))root.addEventListener?.('load',()=>root.setTimeout(open,600),{once:true});
 if(root.document)root.document.addEventListener('play',event=>{if(event.target.tagName==='AUDIO'&&event.target!==audio)pause();},true);
-return {validateCatalog,mount,open,pause,showInline,hideInline,detachInline:hideInline,isInline:()=>!!inlineHost&&!!dialog?.open&&inlineHost.isConnected};
+return {validateCatalog,mount,open,pause,extend,showInline,hideInline,detachInline:hideInline,isInline:()=>!!inlineHost&&!!dialog?.open&&inlineHost.isConnected};
 });

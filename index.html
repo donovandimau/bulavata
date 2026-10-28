@@ -9,20 +9,21 @@
 <link rel="canonical" href="https://sotakece.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sota Kece">
+<meta property="og:locale" content="en_GB">
 <meta property="og:title" content="Sota Kece — Your room. Your soundtrack.">
 <meta property="og:description" content="Make your space your own. Share music, find your Top Mates and catch up over Talanoa.">
 <meta property="og:url" content="https://sotakece.com/">
-<meta property="og:image" content="https://sotakece.com/assets/og-sota-kece-20261027g.jpg">
-<meta property="og:image:secure_url" content="https://sotakece.com/assets/og-sota-kece-20261027g.jpg">
+<meta property="og:image" content="https://sotakece.com/assets/og-sota-kece-20261028.jpg">
+<meta property="og:image:secure_url" content="https://sotakece.com/assets/og-sota-kece-20261028.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Sota Kece logo on a cream centre strip with blue masi pattern above and below.">
+<meta property="og:image:alt" content="Sota Kece logo, three glowing friends, above the words Sota Kece: Your room. Your soundtrack.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sota Kece — Your room. Your soundtrack.">
 <meta name="twitter:description" content="Make your space your own. Share music, find your Top Mates and catch up over Talanoa.">
-<meta name="twitter:image" content="https://sotakece.com/assets/og-sota-kece-20261027g.jpg">
-<meta name="twitter:image:alt" content="Sota Kece logo on a cream centre strip with blue masi pattern above and below.">
+<meta name="twitter:image" content="https://sotakece.com/assets/og-sota-kece-20261028.jpg">
+<meta name="twitter:image:alt" content="Sota Kece logo, three glowing friends, above the words Sota Kece: Your room. Your soundtrack.">
 <link rel="shortcut icon" href="/favicon-20261027g.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/sota-favicon-32-20261027g.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/icons/sota-apple-touch-icon-20261027g.png">
@@ -333,6 +334,7 @@ function shell(body){
     <div class="spacer"></div>
     <button class="luvchip" onclick="go('wallet')" title="Your wallet" style="border:0;font:inherit;cursor:pointer">💰 <b>${S.wallet&&S.wallet.has_wallet?fjd(S.wallet.balance_minor,S.wallet.currency):"—"}</b></button>
     <div class="luvchip" title="Three Uro a day. That is why one means something.">🫶 <b>${S.luv}</b></div>
+    <button type="button" class="luvchip sk-share-chip" data-sota-share title="Share Sota Kece" aria-label="Share Sota Kece" style="border:0;font:inherit;cursor:pointer">${window.SotaShare?.icon||"↗"} <b>Share</b></button>
   </header>
   <main id="view" tabindex="-1">${body}</main>
   <nav class="bottom glass" aria-label="Main navigation">
@@ -1112,7 +1114,8 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/playback.js?v=20261024-quality"></script>
 <script src="/music-badge.js?v=20261026-spinning-music-badge"></script>
 <script src="/local-music.js?v=20261026-active-panels-1"></script>
-<script src="/music-playlist.js?v=20261027-ui-clarity-3"></script>
+<script src="/sota-share.js?v=20261028-share"></script>
+<script src="/music-playlist.js?v=20261028-library"></script>
 <script src="/skin-discovery.js?v=20261025-community-design"></script>
 <script src="/room-atmosphere.js?v=20261025-1"></script>
 <script src="/room-social-layout.js?v=20261026-live-panels"></script>
