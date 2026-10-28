@@ -1,25 +1,25 @@
 import {esc} from './core.mjs';
 
-// Original generated artwork. Only these project-owned paths can be selected by data.
+// Original generated photorealistic artwork. Only these project-owned paths can be selected by data.
 export const ARTWORK=Object.freeze({
- hero:{file:'hero.webp',alt:'Original illustration of friends gathering on a sunlit veranda beside a lagoon',shape:'wide'},
- making:{file:'making.webp',alt:'Original illustration of paper flowers, colored paper and tools on a sunny craft table',shape:'wide'},
- outside:{file:'outside.webp',alt:'Original illustration of a leafy coastal path beside clear lagoon water at sunset',shape:'wide'},
- music:{file:'music.webp',alt:'Original illustration of a record player, headphones and tea on a tropical veranda',shape:'wide'},
- food:{file:'food.webp',alt:'Original illustration of a colorful shared lunch with fruit, greens and warm flatbreads',shape:'wide'},
- photos:{file:'photos.webp',alt:'Original illustration of a camera, small printed photographs and a flower on a garden table',shape:'wide'},
- culture:{file:'culture.webp',alt:'Original illustration of family and friends sharing stories and a photo album',shape:'wide'},
- ani:{file:'ani.webp',alt:'Original illustrated portrait of Ani, a fictional sample person',shape:'square'},
- jo:{file:'jo.webp',alt:'Original illustrated portrait of Jo, a fictional sample person',shape:'square'},
- lani:{file:'lani.webp',alt:'Original illustrated portrait of Lani, a fictional sample person',shape:'square'},
- eli:{file:'eli.webp',alt:'Original illustrated portrait of Eli, a fictional sample person',shape:'square'},
- mika:{file:'mika.webp',alt:'Original illustrated portrait of Mika, a fictional sample person',shape:'square'},
- sela:{file:'sela.webp',alt:'Original illustrated portrait of Sela, a fictional sample person',shape:'square'},
- identity:{file:'identity.webp',alt:'Original white flower and lagoon-green leaves illustration',shape:'square'},
- 'album-lagoon':{file:'album-lagoon.webp',alt:'Sea glass: original artwork of translucent sea glass and quiet shoreline light',shape:'square'},
- 'album-gold':{file:'album-gold.webp',alt:'The long way home: original artwork of a winding path through golden tropical light',shape:'square'},
- 'album-coral':{file:'album-coral.webp',alt:'After the rain: original artwork of rain-washed leaves and coral flowers',shape:'square'},
- 'album-night':{file:'album-night.webp',alt:'Somewhere, together: original artwork of a moonlit sea and softly lit home',shape:'square'}
+ hero:{file:'hero.webp',alt:'AI-generated photorealistic scene of Fijian friends sharing fruit and conversation on a veranda',shape:'wide'},
+ making:{file:'making.webp',alt:'AI-generated photorealistic scene of two Fijian women making paper flowers together',shape:'wide'},
+ outside:{file:'outside.webp',alt:'AI-generated photorealistic scene of Fijian friends walking beside a lagoon',shape:'wide'},
+ music:{file:'music.webp',alt:'AI-generated photorealistic scene of Fijian friends enjoying an acoustic guitar on a veranda',shape:'wide'},
+ food:{file:'food.webp',alt:'AI-generated photorealistic scene of a Fijian family sharing Sunday lunch',shape:'wide'},
+ photos:{file:'photos.webp',alt:'AI-generated photorealistic scene of Fijian friends looking through printed photographs',shape:'wide'},
+ culture:{file:'culture.webp',alt:'AI-generated photorealistic scene of a Fijian elder sharing a family photo album',shape:'wide'},
+ ani:{file:'ani.webp',alt:'AI-generated photorealistic portrait of Ani, a fictional Fijian sample person',shape:'square'},
+ jo:{file:'jo.webp',alt:'AI-generated photorealistic portrait of Jo, a fictional Fijian sample person',shape:'square'},
+ lani:{file:'lani.webp',alt:'AI-generated photorealistic portrait of Lani, a fictional Fijian sample person',shape:'square'},
+ eli:{file:'eli.webp',alt:'AI-generated photorealistic portrait of Eli, a fictional Fijian sample person',shape:'square'},
+ mika:{file:'mika.webp',alt:'AI-generated photorealistic portrait of Mika, a fictional Fijian sample person',shape:'square'},
+ sela:{file:'sela.webp',alt:'AI-generated photorealistic portrait of Sela, a fictional Fijian sample person',shape:'square'},
+ identity:{file:'identity.webp',alt:'AI-generated photorealistic white frangipani flower with rain droplets and green leaves',shape:'square'},
+ 'album-lagoon':{file:'album-lagoon.webp',alt:'Sea glass: AI-generated photorealistic scene of Fijian friends sitting beside a lagoon',shape:'square'},
+ 'album-gold':{file:'album-gold.webp',alt:'The long way home: AI-generated photorealistic scene of Fijian friends walking home at sunset',shape:'square'},
+ 'album-coral':{file:'album-coral.webp',alt:'After the rain: AI-generated photorealistic scene of a Fijian woman tending hibiscus flowers',shape:'square'},
+ 'album-night':{file:'album-night.webp',alt:'Somewhere, together: AI-generated photorealistic scene of Fijian friends talking on a veranda at dusk',shape:'square'}
 });
 export const IDENTITY_ART=Object.freeze([['identity','Island bloom'],['album-lagoon','Sea glass'],['album-gold','Golden hour'],['album-coral','After the rain'],['album-night','Moonlight']]);
 export const artworkSource=key=>'./assets/'+(Object.hasOwn(ARTWORK,key)?ARTWORK[key]:ARTWORK.identity).file;

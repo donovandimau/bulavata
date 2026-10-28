@@ -44,11 +44,13 @@ Real account mutations require a signed-in person using the interface. Automated
 
 Community music is an optional existing content source. Its recordings are not represented as ChatGPT creations. Sota Sessions, the original artwork and the revised product interface are original work for this project. No third-party AI was used.
 
-## Original image library
+## Photorealistic image library — 28 October 2026
 
-18 original images were art-directed and generated with OpenAI's built-in image generation on 28 October 2026: a community hero, six fictional portraits, six interest/community scenes, a botanical identity image and four distinct Sota Sessions album covers. They replace the former hero, emoji avatars, CSS post illustrations, blank covers, topic symbols and gradient album sleeves across the welcome page, Home, People, Talanoa, Music, Discover and personal spaces, including small player/chat/sidebar slots. The original vector logo and navigation icons remain vector artwork. User-uploaded photos and member-chosen symbols remain user content.
+All 18 original illustrated image assets are replaced with original photorealistic images made using OpenAI's built-in image generation: six fictional Fijian sample portraits, a community gathering hero, six everyday Fijian community scenes, four music mood covers and a neutral frangipani default identity image. Every image is used through the existing central registry across welcome, Home, People, Talanoa, Music, Discover and personal spaces. The 94 Room Studio cover references now use the photographic library; their names, colours, songs, credits and saved IDs are preserved. These are shared mood scenes, not 94 distinct photographs and not documentary photographs of named schools, places, musicians or actual members. Original vectors and legacy assets remain in source history.
 
-`artwork.mjs` owns the allowlisted image registry and context mapping; `artwork.css` provides responsive composition; `assets/manifest.json` records dimensions, byte counts and SHA256 hashes. The 18 web assets total 2,871,510 bytes, proportionally resized and encoded as WebP from retained PNG originals. No stock images or remote image dependencies are used. Portraits belong only to explicitly fictional sample people; real members are never assigned those identities. The sample owner can choose from five original botanical/album artworks, with their selection preserved in existing local sample storage. Covers follow the existing four themes. The original artwork checks cover asset completeness, safe path selection, identity separation, profile persistence and album updates during playback.
+All assets remain local WebP files with proportional resizing and encoding only, totalling 1,584,354 bytes. `assets/manifest.json` records dimensions and hashes; `../docs/revised-photorealistic-prompts.json` preserves the complete prompts and generated source filenames. `artwork.mjs` provides truthful alt text and the preview's About dialog identifies the imagery as generated. Real member identities and user-uploaded photos are preserved. Original vector logos and navigation controls remain vectors.
+
+The link-preview metadata uses the same new community hero. No backend, authentication, audio, user record or production setting changes.
 
 ## Publication
 
