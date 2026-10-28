@@ -1,0 +1,5 @@
+export function validatePhotoFile(file){if(!file||!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error('Choose a JPEG, PNG or WebP photo.');if(file.size>8*1024*1024)throw Error('Choose a photo under 8 MB.');}
+export async function preparePhoto(file){
+ validatePhotoFile(file);const url=URL.createObjectURL(file);
+ try{const img=new Image();img.src=url;await img.decode();if(!img.width||!img.height||img.width*img.height>40000000)throw Error('Choose a smaller photo, up to 40 megapixels.');const scale=Math.min(1,1200/Math.max(img.width,img.height)),canvas=document.createElement('canvas');canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);const context=canvas.getContext('2d');context.fillStyle='#f8f6ef';context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(img,0,0,canvas.width,canvas.height);for(const quality of [.82,.65,.45,.3]){const src=canvas.toDataURL('image/jpeg',quality);if(src.length<=400000)return {src,alt:''};}throw Error('This photo is too detailed for the sample storage. Choose a smaller image.');}finally{URL.revokeObjectURL(url);}
+}
