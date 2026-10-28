@@ -1,4 +1,4 @@
-export const THEMES = Object.freeze({lagoon:{name:'Lagoon',color:'#245b53',paper:'#f8f6ef'},coral:{name:'Coral',color:'#984c3e',paper:'#fbf1e9'},indigo:{name:'Indigo',color:'#514a7b',paper:'#f4f2f8'},forest:{name:'Forest',color:'#3e6144',paper:'#f4f5e9'}});
+export const THEMES = Object.freeze({lagoon:{name:'Lagoon',color:'#007887',paper:'#edf9fc'},coral:{name:'Coral',color:'#b34f40',paper:'#fff2ed'},indigo:{name:'Indigo',color:'#6555aa',paper:'#f4f1ff'},forest:{name:'Forest',color:'#2e7256',paper:'#f0f8ef'}});
 export const DEMO_KEY='sota.revised.sample.v1';
 export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const id=()=>globalThis.crypto?.randomUUID?.()||'local-'+Date.now()+'-'+Math.random().toString(36).slice(2);
