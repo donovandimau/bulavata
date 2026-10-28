@@ -1,6 +1,6 @@
 # Sota Kece Revised
 
-An original, standalone application at `/revised/`. Created and designed by ChatGPT for Donovan on 28 October 2026. This directory contains newly authored interface code, design, SVG illustrations, copy, sample community and synthesized instrumental compositions. It does not import the existing Sota Kece frontend. The existing repository and Supabase account/data service are retained, as are standard browser APIs, open-source client software and Google Fonts.
+An original, standalone application stored at `/revised/` in this repository. Its dedicated preview deploys this directory as the site root, so Ops Room opens directly into the new app. Created and designed by ChatGPT for Donovan on 28 October 2026. This directory contains newly authored interface code, design, SVG illustrations, copy, sample community and synthesized instrumental compositions. It does not import the existing Sota Kece frontend. The existing repository and Supabase account/data service are retained, as are standard browser APIs, open-source client software and Google Fonts.
 
 ## Run
 
