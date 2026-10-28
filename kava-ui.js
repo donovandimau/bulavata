@@ -160,7 +160,7 @@
     stop();guest=true;current=null;amount=200;
     snapshot={circle:{title:'Stories that connect us',topic:'A space for an elder’s wisdom, a musician’s song, or a question that deserves a proper conversation.',capacity:6,host:'preview',status:'planned'},people:[{member:'preview',seat:1}],comments:[],profiles:{preview:{display_name:'Your host seat',avatar_emoji:'🌺'}}};
     const old=ctx.state.tab;ctx.state.tab='circles';ctx.shell(frame(true));ctx.state.tab=old;
-    q('nav.bottom').hidden=true;q('nav.bottom').style.setProperty('display','none','important');q('.luvchip').style.display='none';bind();paint();
+    const legacyNav=q('nav.bottom'),wallet=q('.luvchip');if(legacyNav){legacyNav.hidden=true;legacyNav.style.setProperty('display','none','important');}if(wallet)wallet.style.display='none';bind();paint();
   }
   root.SotaKavaUI={init,view,stop,preview,updateGroupAppearance};
 })(window);

@@ -69,7 +69,7 @@ browserTest('remounting keeps one click handler per tab and does not recreate or
 });
 
 test('the real welcome template groups the one music photo before the tab strip and visualiser stage',()=>{
-  const studio=source('skin-studio.js'),artwork=studio.indexOf('<div class="sk-hero-artwork">'),group=studio.indexOf('id="sota-music-home"',artwork),photo=studio.indexOf('id="bv-music"',group),tabs=studio.indexOf('role="tablist"',photo),stage=studio.indexOf('class="sk-music-stage"',tabs);
+  const studio=source('skin-studio.js').replace(/function musicMarkup\(\)\{return `([\s\S]*?)`;}\n/,(_,markup)=>{sharedMusic=markup;return '';}).replace('${musicMarkup()}',sharedMusic),artwork=studio.indexOf('<div class="sk-hero-artwork">'),group=studio.indexOf('id="sota-music-home"',artwork),photo=studio.indexOf('id="bv-music"',group),tabs=studio.indexOf('role="tablist"',photo),stage=studio.indexOf('class="sk-music-stage"',tabs);
   assert(artwork>=0&&group>artwork&&photo>group&&tabs>photo&&stage>tabs,'Supplied hero → music group → music photograph → tab strip → visualiser');
   assert.equal((studio.match(/\bid="bv-music"/g)||[]).length,1);assert.equal((studio.match(/src="\/assets\/fiji-music\.jpg"/g)||[]).length,1,'The original music photograph is moved, not duplicated');
   const feature=studio.slice(studio.lastIndexOf('<section',photo),studio.indexOf('</section>',photo));assert.equal((feature.match(/\bid="bv-home-play"/g)||[]).length,1);assert.equal((feature.match(/\bdata-playlist-open\b/g)||[]).length,1,'The photo retains one music-play action');
@@ -77,7 +77,7 @@ test('the real welcome template groups the one music photo before the tab strip 
 });
 
 browserTest('the actual grouped music markup links both tabs to their labelled panels',()=>{
-  const studio=source('skin-studio.js'),group=studio.indexOf('id="sota-music-home"');assert(group>=0);const start=studio.lastIndexOf('<section',group),end=studio.indexOf('</section><main',group);assert(start>=0&&end>start);
+  const studio=source('skin-studio.js').replace(/function musicMarkup\(\)\{return `([\s\S]*?)`;}\n/,(_,markup)=>{sharedMusic=markup;return '';}).replace('${musicMarkup()}',sharedMusic),group=studio.indexOf('id="sota-music-home"');assert(group>=0);const start=studio.lastIndexOf('<section',group),end=studio.indexOf('</section><main',group);assert(start>=0&&end>start);
   const fragment=JSDOM.fragment(studio.slice(start,end)),music=fragment.querySelector('#sota-music-home');assert(music);const tabs=[...music.querySelectorAll('[role="tab"]')];assert.equal(tabs.length,2);
   for(const tab of tabs){const panel=music.querySelector('[id="'+tab.getAttribute('aria-controls')+'"]');assert(panel,'A tab controls a real panel');assert.equal(panel.getAttribute('role'),'tabpanel');assert.equal(panel.getAttribute('aria-labelledby'),tab.id);}
   assert.equal(music.querySelectorAll('#bv-music').length,1);assert.equal(music.querySelectorAll('[data-music-playlist-host]').length,1);

@@ -11,6 +11,7 @@ try{({JSDOM,VirtualConsole}=require(process.env.JSDOM_MODULE||'jsdom'));}
 catch(_){try{({JSDOM,VirtualConsole}=require('../call-controls/test-tools/node_modules/jsdom'));}catch(_){}}
 const browserTest=(name,fn)=>test(name,{skip:!JSDOM?'Install the pinned jsdom test tools to run browser integration.':false},fn);
 const root=path.join(__dirname,'..');
+let sharedMusic='';
 const source=file=>fs.readFileSync(path.join(root,file),'utf8');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
 function deferred(){let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});return {promise,resolve,reject};}
@@ -66,7 +67,7 @@ function environment(t,{reduced=false,resume=null,canvasAvailable=true}={}){
 
 function hero(h){
   h.run('music-visualiser.js');h.run('playback.js');h.run('hero-visualiser.js');
-  const studio=source('skin-studio.js'),start=studio.indexOf('<div class="sk-hero-artwork">'),end=studio.indexOf('</section><main class="bv-neon-section"',start);
+  const studio=source('skin-studio.js').replace(/function musicMarkup\(\)\{return `([\s\S]*?)`;}\n/,(_,markup)=>{sharedMusic=markup;return '';}).replace('${musicMarkup()}',sharedMusic),start=studio.indexOf('<div class="sk-hero-artwork">'),end=studio.indexOf('</section><main class="bv-neon-section"',start);
   assert(start>=0&&end>start,'Use the actual supplied-artwork hero markup');
   h.get('#app').innerHTML=studio.slice(start,end);
   const draw=h.w.DimauMusicVisuals.draw;
