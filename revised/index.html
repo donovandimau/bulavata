@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#173e38">
+  <meta name="description" content="Your people, your music, your little corner of the world. A fresh Sota Kece experience.">
+  <title>Sota Kece — a little closer</title>
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./style.css?v=1">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div id="app"><main class="initial" id="main"><img src="./icon.svg" width="64" height="64" alt=""><h1>A little closer.</h1><p>Opening Sota Kece…</p></main></div>
+  <div id="player" hidden></div>
+  <audio id="audio" preload="none" aria-label="Music playback"></audio>
+  <dialog id="dialog" aria-labelledby="dialog-title"></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <noscript><p>This interactive preview needs JavaScript. No account is required to explore the sample community.</p></noscript>
+  <script type="module" src="./app.mjs?v=1"></script>
+</body>
+</html>
