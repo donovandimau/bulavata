@@ -5,7 +5,7 @@ body {
 body:has(.editorial-studio) { background: #f8f6ef; }
 .landing-copy { background: #f4fbffed; border: 1px solid #d2e7ef; border-radius: 24px; padding: 26px; }
 .welcome-header, .welcome-band, .welcome-footer { background: #f4fbffed; }
-.main > .section-title, .filter-row > .stamp, .people-shortcuts > .text-link, .feed-explainer, .artwork-note {
+.main > .section-title, .welcome > .section-title, .filter-row > .stamp, .people-shortcuts > .text-link, .feed-explainer, .artwork-note {
   background: #f4fbffed; border-radius: 12px; padding: 12px;
 }
 .sample-bar { font-size: 11px; line-height: 1.6; }
@@ -38,6 +38,7 @@ body:has(.editorial-studio) { background: #f8f6ef; }
 .talanoa-banner .talanoa-art.artwork { position: static; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; }
 .person-card .person-top { height: auto; aspect-ratio: 3 / 2; }
 .person-top .artwork, .circle-cover .artwork, .topic-visual .artwork { height: auto; aspect-ratio: 3 / 2; object-fit: contain; }
+.feature-art.artwork { height: auto; aspect-ratio: 3 / 2; object-fit: contain; }
 .circle-cover, .topic-visual { height: auto; }
 .profile-cover:has(> .artwork) { height: auto; background: #123e56; }
 .profile-cover > .artwork { height: auto; max-height: 460px; object-fit: contain; }
@@ -55,6 +56,12 @@ body:has(.editorial-studio) { background: #f8f6ef; }
   .talanoa-banner { grid-template-columns: 1fr; }
   .talanoa-banner h2 { padding: 23px; }
   .hero-art.original-gathering { height: auto; }
+  .hero-scene { display: grid; gap: 14px; padding: 0; }
+  .hero-scene > .float-note, .hero-scene > .float-player {
+    position: static; transform: none; width: 100%; max-width: none; margin: 0;
+  }
+  .hero-scene > .scene-caption { position: static; writing-mode: horizontal-tb; width: fit-content; }
+  .hero-scene > .sunburst { display: none; }
 }
 @media (prefers-reduced-transparency: reduce) {
   .main > .page-head { background: #f4fbff; }
