@@ -1,0 +1,18 @@
+@layer dimau-header-standard {
+  body.sx-enabled #app.sx-app {padding-top:65px!important}
+  body.sx-enabled #app.sx-app > header[data-dimau-header] {position:fixed!important;left:0!important;right:0!important;top:0!important;transform:none!important;--dimau-header-bg:#f7f6ef;--dimau-header-ink:#173e38;--dimau-header-line:#d5dfd7;--dimau-header-accent:#287c70}
+  body.sx-enabled #app.sx-app .sx-rail {top:73px!important;height:calc(100dvh - 73px)!important}
+  body.sx-enabled #app.sx-app .sx-rail > :is(.sx-brand,.sx-rail-caption) {display:none!important}
+  body.sx-enabled #app.sx-app [data-dimau-brand] {width:auto!important}
+  body.sx-enabled #app.sx-app [data-dimau-title] {font:700 18px/22px Arial,Helvetica,sans-serif!important}
+  body.sx-enabled #app.sx-app [data-dimau-logo-frame] {background:#fff!important}
+  body.sx-enabled #app.sx-app [data-dimau-music-slot] :is(a,button) {display:flex!important;align-items:center!important;justify-content:center!important;border:0!important;background:transparent!important;box-shadow:none!important}
+  body.sx-enabled #app.sx-app [data-dimau-music-slot] img {width:48px!important;height:48px!important;max-width:48px!important;display:block!important;object-fit:contain!important}
+  body.sx-enabled #app.sx-app :is(.sx-account-actions,.bv-entry-account-actions) {display:contents!important;margin:0!important;padding:0!important;min-height:0!important}
+  body.sx-enabled #app.sx-app [data-dimau-account-trigger] {min-width:0!important;padding:8px 14px!important;font:600 14px/20px Arial,Helvetica,sans-serif!important;background:#fff!important;color:#173e38!important;border:1px solid #bfcfc5!important;border-radius:8px!important}
+  body.sx-enabled #app.sx-app .sx-utilities {display:contents!important}
+  body.sx-enabled #app.sx-app [data-dimau-menu-panel] #sk-sign-up {display:flex!important}
+  body.sx-enabled #app.sx-app [data-dimau-menu-panel] .sx-design-short {display:none!important}
+  body.sx-enabled #app.sx-app [data-dimau-menu-panel] .sx-design-label {display:inline!important}
+  @media(min-width:768px){body.sx-enabled #app.sx-app {padding-top:73px!important}}
+}
