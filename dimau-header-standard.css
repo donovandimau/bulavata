@@ -126,6 +126,7 @@
   [data-dimau-navigation] {
     --dimau-header-gutter:16px;
     box-sizing:border-box!important;display:flex!important;align-items:center!important;flex-wrap:nowrap!important;
+    flex-direction:row!important;justify-content:flex-start!important;
     gap:8px!important;width:100%!important;min-width:0!important;max-width:none!important;
     height:48px!important;min-height:48px!important;max-height:48px!important;
     padding:2px var(--dimau-header-gutter,16px)!important;margin:0!important;
