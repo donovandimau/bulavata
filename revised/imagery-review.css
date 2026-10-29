@@ -5,6 +5,12 @@ body {
 body:has(.editorial-studio) { background: #f8f6ef; }
 .landing-copy { background: #f4fbffed; border: 1px solid #d2e7ef; border-radius: 24px; padding: 26px; }
 .welcome-header, .welcome-band, .welcome-footer { background: #f4fbffed; }
+.main > .section-title, .filter-row > .stamp, .people-shortcuts > .text-link, .feed-explainer, .artwork-note {
+  background: #f4fbffed; border-radius: 12px; padding: 12px;
+}
+.sample-bar { font-size: 11px; line-height: 1.6; }
+.artwork-note, .post-artwork figcaption { color: #315c70; font-size: 11px; line-height: 1.6; }
+.post-artwork figcaption { background: #f4fbff; padding: 8px 12px; }
 .main > .page-head {
   background: #f4fbffd9;
   border: 1px solid #d2e7ef;
