@@ -62,6 +62,8 @@ input,textarea,select { background: #f8fcfd; border-color: #cbdfe7; }
 .mode-badge .dot { background: #219a74; }
 .main { max-width: 1260px; }
 .page-head h1 { font-size: 47px; letter-spacing: -.045em; }
+/* Route headings receive programmatic focus; interactive controls retain their rings. */
+#page-title:focus { outline: none; }
 .page-head .eyebrow { letter-spacing: .16em; }
 .sample-bar { border: 1px solid #c9e2ec; background: #f8fdffb8; color: #4f6a78; border-radius: 12px; }
 .sample-bar button { color: #24657d; }
@@ -138,8 +140,10 @@ input,textarea,select { background: #f8fcfd; border-color: #cbdfe7; }
 .chat-list button.on { background: #ccebe9; }
 .chat-head { background: #f7fcfd; }
 .profile-status { background: #dff4ed; color: #2d6b61; }
+.profile-hero { padding: 0; }
 .profile-note { color: #73578b; }
 .profile-note-card { background: #f2e9fc; }
+.room-themed .btn.primary, .room-themed .btn.primary:hover { background: var(--room-ink); color: var(--room-panel); border-color: var(--room-ink); box-shadow: none; }
 .studio-count { color: #4b7381; }
 .skin-card { box-shadow: 0 6px 14px #16506a0b; border-radius: 16px; }
 .world-intro { background: #d3f0ef; border: 1px solid #bde2e4; border-bottom: 0; }
@@ -200,8 +204,8 @@ dialog::backdrop { background: #123e5666; }
 }
 @media(max-width:680px) {
   .rail { background: #123f57f7; border-top-color: #54899c; }
-  .main-nav { padding: 7px 7px 4px; }
-  .main-nav a { min-width: 55px; padding: 3px 5px; gap: 3px; border-radius: 12px; font-size: 9px; }
+  .main-nav { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 4px; padding: 7px 7px 4px; }
+  .main-nav a { min-width: 0; padding: 3px 5px; gap: 3px; border-radius: 12px; font-size: 9px; }
   .main-nav a > .ico { width: 26px; height: 26px; padding: 3px; background: transparent; border-radius: 7px; }
   .main-nav a[aria-current=page] { background: #d9f5f5; color: #13475e; box-shadow: none; }
   .main-nav a[aria-current=page]:after { display: none; }

@@ -52,6 +52,10 @@ All assets remain local WebP files with proportional resizing and encoding only,
 
 The link-preview metadata uses the same new community hero. No backend, authentication, audio, user record or production setting changes.
 
+## Island colour refresh — 29 October 2026
+
+The shared shell uses a light lagoon-blue background with an original geometric wave pattern, a deep ocean navigation rail, coral and sunshine accents, translucent controls and brighter photographic cards. Home has a full-width Fijian community photograph and three colourful feature shortcuts; Talanoa, Music, Discover and welcome use complementary colour families. Mobile headings have a full row and the persistent navigation fits narrow phones with a clear filled active state. Existing theme IDs remain available with refreshed palettes. The final `island-colour.css` layer preserves the editorial room collection, its personal palettes and all 94 saved skin IDs, and respects reduced motion. No backend or account behavior changes.
+
 ## Publication
 
 The preview remains on the held PR branch. Production at sotakece.com is unchanged. Do not merge or promote without Donovan's publication instruction.
