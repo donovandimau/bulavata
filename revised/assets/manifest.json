@@ -1,0 +1,190 @@
+{
+  "project": "Sota Kece Revised",
+  "date": "2026-10-28",
+  "generationMode": "OpenAI built-in image_gen, one photorealistic original per call",
+  "deliveryProcessing": "Proportional downscale and WebP encoding only. No generative or compositing edits outside image_gen.",
+  "fictionalPeople": true,
+  "assets": [
+    {
+      "id": "hero",
+      "file": "hero.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 144508,
+      "sha256": "66ba41b907764b8c9a8c9eb8e9f12819c5b72e55985f3384c88d8ef7e01c32fd",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "ani",
+      "file": "ani.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 39794,
+      "sha256": "fd9b586fe3deed84221c0fd284e3fb428e14627c0e420bafdcf25d06f5ea6073",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "jo",
+      "file": "jo.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 26668,
+      "sha256": "e8f357be680afdeb1f0b1f7d17f93f94b640cb1fd1675bd38c46436d29a44c47",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "lani",
+      "file": "lani.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 39660,
+      "sha256": "3234ffeadc8210a73291277f4d59887d36206476043b698d62fff869e951316e",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "eli",
+      "file": "eli.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 28066,
+      "sha256": "19f722d49182c6a6227462f45479e8457e545e71ade3a72467811fe8ee5a35f4",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "mika",
+      "file": "mika.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 30176,
+      "sha256": "c6d23fafa2c5b2eeb8b556f1c4b20218ed1438994de952bb4cceaa665ab88240",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "sela",
+      "file": "sela.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 42852,
+      "sha256": "3c6eede7e1f7447c0ae82e0c8ec9b68cc6be877a5d6ac26882337a7d7d76f525",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "making",
+      "file": "making.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 108550,
+      "sha256": "bf5f9e7d66382cc8b4261bd2e607b933458dc99de1a3b3ced14ffe2c43eade83",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "outside",
+      "file": "outside.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 176574,
+      "sha256": "b62fdc92b8a909127de44587f339d8c6d16fd9013dae0c198fc677031cfca8e4",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "music",
+      "file": "music.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 94768,
+      "sha256": "43ccc72b09591a75d08aa1c11125a7b771e83a9600acc4266601a64a522a2248",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "food",
+      "file": "food.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 139866,
+      "sha256": "b48c2393d7fbc7c9814791711b38e31747f40893bb29aaafea96ea50ecaed527",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "photos",
+      "file": "photos.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 111312,
+      "sha256": "5585ef16ee449c372932bd9176ecd378b1adf966e92543f35a72fc378bbc8462",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "culture",
+      "file": "culture.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 140360,
+      "sha256": "1cd5868ed69344f82074af9e0987333ca44a90acc02699614e1edbae185f0e17",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "identity",
+      "file": "identity.webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 28436,
+      "sha256": "70c036421023028a1efadec9c00d33421e74b339b5e40fdf9060c38835fb53cd",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "album-lagoon",
+      "file": "album-lagoon.webp",
+      "width": 768,
+      "height": 768,
+      "bytes": 99700,
+      "sha256": "7cb1dddeabdbf5c59240e983d07740fc5024c1246c2ca8c28a8c9c4e8a0e9a28",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "album-gold",
+      "file": "album-gold.webp",
+      "width": 768,
+      "height": 768,
+      "bytes": 151672,
+      "sha256": "dc53363a2b370bf8ffb16671a4787999da1f7ea14e90b5278f42311a15cde3e9",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "album-coral",
+      "file": "album-coral.webp",
+      "width": 768,
+      "height": 768,
+      "bytes": 106768,
+      "sha256": "6c1f048b2e135bc39ad3fb5b71dda1a0b81c138637139d8b63675d27161ae1ac",
+      "style": "photorealistic-natural",
+      "generated": true
+    },
+    {
+      "id": "album-night",
+      "file": "album-night.webp",
+      "width": 768,
+      "height": 768,
+      "bytes": 74624,
+      "sha256": "3553281f9bc0feca291f17b0e4575c2b6dfcaa35b57d1098668590d0240d4dc1",
+      "style": "photorealistic-natural",
+      "generated": true
+    }
+  ],
+  "description": "Original AI-generated photorealistic Fijian community scenes and fictional sample portraits; not documentary images or real members."
+}

@@ -84,7 +84,7 @@ function client({fr=friends,gr=crews,members=[],profiles=[],user=me,authError=fa
   await check('inline entry has no fictional example or external export call to action',()=>{
     const entry=c.entryHtml();assert.match(entry,/data-friend-graph/);assert(!/Explore the example|dimau-visuals\.vercel|openPersonal\(\)/.test(entry));
   });
-  await check('Pulse initial request errors still mount the independent personal graph',async()=>{
+  await check('Home request errors preserve social panels without starting the optional People map',async()=>{
     const vm=require('node:vm'),html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
     const source=html.slice(html.indexOf('async function viewPulse(){'),html.indexOf('async function postPulse(){'));
     let mounts=0,socialMounts=0,errors=0,current=true;
@@ -95,9 +95,9 @@ function client({fr=friends,gr=crews,members=[],profiles=[],user=me,authError=fa
         SotaRoomSocial:{markup:()=>'<section data-room-social></section>',mount(target){assert.equal(target,view);socialMounts++;}},
         SotaConnections:{entryHtml:()=>'<section data-friend-graph></section>',mountEntry(){mounts++;}}
       }});
-    vm.runInContext(source+';this.testPulse=viewPulse;',context);await context.testPulse();assert.equal(errors,1);assert.equal(mounts,1);assert.equal(socialMounts,1);
-    assert.deepEqual(insertions,[{where:'afterbegin',value:'<section data-room-social></section>'},{where:'beforeend',value:'<section data-friend-graph></section>'}]);
-    current=false;await context.testPulse();assert.equal(mounts,1);assert.equal(socialMounts,1);assert.equal(insertions.length,2);assert.equal(errors,1);
+    vm.runInContext(source+';this.testPulse=viewPulse;',context);await context.testPulse();assert.equal(errors,1);assert.equal(mounts,0);assert.equal(socialMounts,1);
+    assert.deepEqual(insertions,[{where:'afterbegin',value:'<section data-room-social></section>'}]);
+    current=false;await context.testPulse();assert.equal(mounts,0);assert.equal(socialMounts,1);assert.equal(insertions.length,1);assert.equal(errors,1);
   });
   await check('truncation is explicit and queries only the bounded graph',async()=>{
     const api=client({fr:Array.from({length:130},(_,i)=>({id:String(i)})),gr:Array.from({length:45},(_,i)=>({id:i}))});

@@ -161,6 +161,7 @@
   }
 
   function reset() {
+    window.SotaExperience?.stop();
     window.SotaFrontPages?.stop();
     window.SotaMusicHome?.stop();
     window.SotaProfilePhotos?.stop();
@@ -238,7 +239,7 @@
     }
   }
   const originalShell=shell;
-  shell=function(body){reset();originalShell(body);wireMedia(app);window.SotaSpaceDesign?.mount(app);};
+  shell=function(body){reset();originalShell(body);wireMedia(app);window.SotaSpaceDesign?.mount(app);window.SotaExperience?.mountMember(app,S);};
   const originalAuth=renderAuth;
   let pendingMate='';
   function coverChoices() {
@@ -295,6 +296,10 @@
       }finally{if(button.isConnected){button.disabled=false;if(restoreFocus&&doc.activeElement===doc.body)button.focus({preventScroll:true});}}
     });
   }
+  function musicMarkup(){return `<section id="sota-music-home" class="sota-music-home" aria-label="Music">
+        <section class="bv-music-feature" id="bv-music" tabindex="-1" aria-labelledby="bv-music-title"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Fijian singer and friends sharing live music at a seaside gathering" loading="lazy" decoding="async"><div class="bv-music-copy"><small>YOUR ROOM. YOUR SOUNDTRACK.</small><h1 id="bv-music-title">Viti roots.<br>Volume up.</h1><p>Your tunes. Your people. Your island energy.</p><div class="bv-music-actions"><button id="bv-home-play" data-playlist-open type="button" aria-label="Try a sample from the online music playlist" aria-haspopup="dialog" aria-expanded="false" aria-pressed="false">▶ Try a sample</button><button type="button" data-local-music-open>Upload music</button></div><small id="bv-home-status" data-playlist-status role="status">Online music · choose a song to listen</small></div></section>
+        <div class="sota-music-views"><div class="sota-music-view-tabs" role="tablist" aria-label="Music view"><button type="button" id="music-view-visualiser" role="tab" data-music-view="visualiser" aria-controls="music-panel-visualiser" aria-selected="true" tabindex="0">Visualiser</button><button type="button" id="music-view-playlist" role="tab" data-music-view="playlist" aria-controls="music-panel-playlist" aria-selected="false" tabindex="-1">Playlist</button></div><div id="music-panel-visualiser" class="sota-music-view-panel" role="tabpanel" data-music-panel="visualiser" aria-labelledby="music-view-visualiser"><section class="sk-music-stage" data-state="idle" aria-labelledby="sk-music-stage-title"><header class="sk-music-stage-heading"><div><small>SOUND IN COLOUR</small><h2 id="sk-music-stage-title">Your soundtrack, in colour.</h2></div><button type="button" class="sk-music-stage-choose" data-playlist-open aria-haspopup="dialog"><span aria-hidden="true">♫</span> Choose a song</button></header><div class="sk-music-stage-picture" role="img" aria-label="Music visualiser · choose a song to begin"><canvas aria-hidden="true"></canvas><div class="sk-music-stage-baseline" aria-hidden="true"></div></div><footer class="sk-music-stage-footer"><p data-stage-status role="status" aria-live="off">Choose a song. Watch your sound come alive.</p><div class="sk-music-stage-controls"><label>Visual style <select data-stage-mode><option value="spectrum">Spectrum</option><option value="waveform">Waves</option><option value="halo">Halo</option></select></label><button type="button" data-stage-motion aria-pressed="false">Pause visuals</button></div></footer></section></div><div id="music-panel-playlist" class="sota-music-view-panel" role="tabpanel" data-music-panel="playlist" aria-labelledby="music-view-playlist" hidden><div data-music-playlist-host></div></div></div>
+      </section>`;}
   renderAuth=function(mode='in',expanded=false){
     guestPreviewToken++;window.SotaConnections?.stopEntry();window.SotaRoomSocial?.stop();window.SotaRoomSocialLayout?.stop();
     reset();originalAuth(mode);
@@ -308,10 +313,7 @@
     app.classList.add('bv-welcome');
     app.innerHTML=`<a class="sota-skip" href="#bv-neon">Skip to content</a><header class="sk-site-header sk-pattern-masthead" aria-label="Sota Kece header"><a class="sk-site-brand" href="/" aria-label="Sota Kece home"><img class="dimau-owner-logo" src="/assets/dimau-owner-logo-20260920.png" alt="Dimau Fintech" width="36" height="36"></a><div class="sk-pattern-heading" aria-hidden="true">Sota Kece</div><button class="sk-hero-play" id="sk-hero-play" type="button" data-playlist-open aria-label="Open music playlist" aria-pressed="false" aria-describedby="sk-hero-status" title="Open music playlist"></button><span class="sk-hero-status" id="sk-hero-status" data-playlist-status role="status">Music playlist · tap to choose a song</span></header><section class="sk-front sk-original-front" aria-label="Sota Kece original supplied design">
       <div class="sk-hero-artwork"><picture class="sk-original-picture"><source media="(max-width:760px)" srcset="/assets/mobile-front-reference-brand.jpg" width="1008" height="1896"><img class="sk-original-design" src="/assets/front-reference-brand.jpg" width="1360" height="832" fetchpriority="high" alt="Sota Kece: Create your own space with friends. Sunset room artwork, masi border and music player."></picture>${window.SotaRoomSocial?.markup({hero:true})||`<section class="sota-social-host sota-social-hero" aria-label="Your Talanoa and mates"><button type="button" class="sota-social-panel" data-social-panel="wall" onclick="renderAuth('in',true)"><span class="sota-social-heading">Talanoa</span><span>Your conversations, together.</span></button><button type="button" class="sota-social-panel" data-social-panel="mates" onclick="renderAuth('in',true)"><span class="sota-social-heading">Top Mates</span><span>Your closest connections.</span></button></section>`}<div class="sk-hero-visualiser" hidden data-state="idle" role="img" aria-label="Music visualiser · choose a song to begin"><canvas aria-hidden="true"></canvas></div><button class="sk-artwork-play" hidden type="button" data-playlist-open aria-label="Choose music for live visualiser" aria-pressed="false" aria-describedby="sk-hero-status"></button><button class="sk-hero-create" type="button" onclick="renderAuth('up',true)" aria-label="Create your space" title="Create your space"></button></div>
-      <section id="sota-music-home" class="sota-music-home" aria-label="Music">
-        <section class="bv-music-feature" id="bv-music" tabindex="-1" aria-labelledby="bv-music-title"><img src="/assets/fiji-music.jpg" width="720" height="480" alt="Fijian singer and friends sharing live music at a seaside gathering" loading="lazy" decoding="async"><div class="bv-music-copy"><small>YOUR ROOM. YOUR SOUNDTRACK.</small><h1 id="bv-music-title">Viti roots.<br>Volume up.</h1><p>Your tunes. Your people. Your island energy.</p><div class="bv-music-actions"><button id="bv-home-play" data-playlist-open type="button" aria-label="Try a sample from the online music playlist" aria-haspopup="dialog" aria-expanded="false" aria-pressed="false">▶ Try a sample</button><button type="button" data-local-music-open>Upload music</button></div><small id="bv-home-status" data-playlist-status role="status">Online music · choose a song to listen</small></div></section>
-        <div class="sota-music-views"><div class="sota-music-view-tabs" role="tablist" aria-label="Music view"><button type="button" id="music-view-visualiser" role="tab" data-music-view="visualiser" aria-controls="music-panel-visualiser" aria-selected="true" tabindex="0">Visualiser</button><button type="button" id="music-view-playlist" role="tab" data-music-view="playlist" aria-controls="music-panel-playlist" aria-selected="false" tabindex="-1">Playlist</button></div><div id="music-panel-visualiser" class="sota-music-view-panel" role="tabpanel" data-music-panel="visualiser" aria-labelledby="music-view-visualiser"><section class="sk-music-stage" data-state="idle" aria-labelledby="sk-music-stage-title"><header class="sk-music-stage-heading"><div><small>SOUND IN COLOUR</small><h2 id="sk-music-stage-title">Your soundtrack, in colour.</h2></div><button type="button" class="sk-music-stage-choose" data-playlist-open aria-haspopup="dialog"><span aria-hidden="true">♫</span> Choose a song</button></header><div class="sk-music-stage-picture" role="img" aria-label="Music visualiser · choose a song to begin"><canvas aria-hidden="true"></canvas><div class="sk-music-stage-baseline" aria-hidden="true"></div></div><footer class="sk-music-stage-footer"><p data-stage-status role="status" aria-live="off">Choose a song. Watch your sound come alive.</p><div class="sk-music-stage-controls"><label>Visual style <select data-stage-mode><option value="spectrum">Spectrum</option><option value="waveform">Waves</option><option value="halo">Halo</option></select></label><button type="button" data-stage-motion aria-pressed="false">Pause visuals</button></div></footer></section></div><div id="music-panel-playlist" class="sota-music-view-panel" role="tabpanel" data-music-panel="playlist" aria-labelledby="music-view-playlist" hidden><div data-music-playlist-host></div></div></div>
-      </section>
+      ${musicMarkup()}
     </section><main class="bv-neon-section" id="bv-neon" tabindex="-1"><div class="bv-classic">
       <header class="bv-classic-header bv-connect-header"><div class="bv-wordmark" aria-label="Sota Kece"><small>FIJI ROOTS. EVERYWHERE ENERGY.</small></div>
         <div class="bv-entry-copy"><h2>Bring your <span>whole world</span> together.</h2><p>People, pets and everything that connects you.</p><ul class="bv-entry-connections" aria-label="Explore your life connections"><li><a class="bv-entry-friends" href="#sota-connections">Friends</a></li><li><a class="bv-entry-family" href="#sota-connections">Family</a></li><li><a class="bv-entry-school" href="#sota-connections">School</a></li><li><a class="bv-entry-work" href="#sota-connections">Work</a></li><li><a class="bv-entry-pets" href="#sota-connections">Pets</a></li><li><a class="bv-entry-nature" href="#sota-connections">Nature</a></li></ul><a class="bv-entry-map-link" href="#sota-connections">Explore your life map <span aria-hidden="true">↗</span></a></div>
@@ -351,8 +353,8 @@
     $('#sk-sign-in').addEventListener('click',()=>renderAuth('in',true));
     const account=$('#bv-entry');
     $('#bv-account-close').addEventListener('click',()=>account.close());
-    account.addEventListener('close',()=>$(mode==='up'?'#sk-sign-up':'#sk-sign-in').focus({preventScroll:true}));
-    if(expanded){account.showModal();$(mode==='up'?'#a-handle':'#a-email').focus();}
+    account.addEventListener('close',()=>$('#sk-sign-in')?.focus({preventScroll:true}));
+
     $('#bv-home-search').addEventListener('submit',event=>{
       event.preventDefault();pendingMate=$('#bv-find-mate').value.trim().toLowerCase().replace(/^@/,'');
       if(!/^[a-z0-9_]{3,20}$/.test(pendingMate)){ $('#bv-search-status').textContent='Use a handle: 3–20 letters, numbers or underscores.';return; }
@@ -364,6 +366,9 @@
     wireInvite($('#sk-share-app'),$('#sk-share-status'),{input:$('#sk-invite-url')});
     wireInvite($('#sk-copy-invite'),$('#sk-share-status'),{copyOnly:true,input:$('#sk-invite-url')});
     showWelcome(picked(),homeSkinChosen);
+    window.SotaExperience?.mountGuest(app,{roomMarkup:preview(example,picked())});
+    wireMedia(app.querySelector('.sx-room-example')||app);
+    if(expanded){account.showModal();$(mode==='up'?'#a-handle':'#a-email').focus();}
   };
   function showWelcome(settings,themed=true) {
     const s=skins.normalize(settings),root=document.querySelector('#app.bv-welcome');
@@ -381,6 +386,7 @@
   }
   function showGuestRoom(settings) {
     if(S.user)return;
+    if(window.SotaExperience){history.replaceState(null,'','#profile');renderAuth('in');app.querySelector('.sx-page-heading h1')?.focus({preventScroll:true});return;}
     const s=skins.normalize(settings),name=s.customName||skins.presets.find(p=>p.id===s.id).name;
     window.SotaView?.invalidate();window.SotaConnections?.stop();window.SotaKavaUI?.stop();
     reset();app.classList.add('bv-skin-room-preview');
@@ -611,6 +617,6 @@
     if(pending.length)setTimeout(()=>pending.forEach(file=>window.SotaRoomMedia.api(sb,file.userId).remove(file.path).catch(()=>{})),0);
   }
   window.SotaPlayback?.register('sample',stopSampleOnly);
-  window.BulaSkinStudio={apply,applyChat,reset,open,preview,chatPreview,closeForOwnerChange};
+  window.BulaSkinStudio={musicMarkup,apply,applyChat,reset,open,preview,chatPreview,closeForOwnerChange};
 })();
 

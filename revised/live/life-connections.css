@@ -1,0 +1,68 @@
+/* Native 3D connection workspace; the renderer owns the WebGL scene. */
+#app .slc{--slc-selected:#f26045;--slc-selected-ink:#8a281a;position:relative;isolation:isolate;background:#0b1520;color:#ecf4ff;border:1px solid #294254;border-radius:14px;overflow:hidden;font-family:inherit}
+#app .slc button,#app .slc input,#app .slc select{font:inherit;letter-spacing:normal;box-sizing:border-box}
+#app .slc button{cursor:pointer}
+#app .slc :is(button,input,select):focus-visible{outline:3px solid #88d9ff;outline-offset:3px}
+#app .slc [hidden]{display:none!important}
+#app .slc-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 20px;border-bottom:1px solid #253b4c;background:#101f2c}
+#app .slc-eyebrow{font-size:10px;font-weight:750;letter-spacing:.11em;color:#acd4e9;line-height:1.5}
+#app .slc-motion{flex-shrink:0;min-height:44px;border:1px solid #3d586c;border-radius:8px;padding:9px 12px;background:#192d3c;color:#ebf5ff;font-size:11px;font-weight:700;white-space:nowrap}
+#app .slc-graph3d{position:relative;min-height:480px;width:100%;background:#08131c}
+#app .slc-graph-unavailable{margin:0;padding:40px 22px;font-size:14px;line-height:1.6;color:#a9c1d1}
+#app .slc-under-map{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 20px;color:#9ab3c6;font-size:11px;border-top:1px solid #203545}
+#app .slc-under-map p{margin:0;font-size:11px;line-height:1.5;color:#9ab3c6;text-shadow:none}
+#app .slc-under-map strong{color:#c6deed;font-size:11px;text-align:right;white-space:nowrap}
+#app .slc-details{margin:0 14px 14px;padding:18px;background:#122330;border:1px solid #2b4356;border-radius:11px}
+#app .slc-branch-head{display:flex;align-items:center;gap:11px}
+#app .slc-branch-dot{width:11px;height:11px;flex-shrink:0;border-radius:50%;background:var(--slc-selected);box-shadow:0 0 13px color-mix(in srgb,var(--slc-selected) 60%,transparent)}
+#app .slc-branch-head>div{flex:1;min-width:0}
+#app .slc-branch-head h4{font-size:19px;line-height:1.25;margin:0;font-weight:750;color:#eff7ff;letter-spacing:-.02em}
+#app .slc-branch-head p{font-size:11px;line-height:1.55;color:#9db8ca;margin:4px 0 0;text-shadow:none}
+#app .slc-add{min-height:44px;padding:9px 13px;border-radius:8px;border:1px solid #68a7c7;background:#b6e5f7;color:#133145;font-size:12px;font-weight:800;white-space:nowrap}
+#app .slc-tools{display:grid;grid-template-columns:minmax(145px,1fr) minmax(160px,1.4fr);gap:12px;margin:18px 0 12px;align-items:end}
+#app .slc-category-filter{display:grid;gap:6px;color:#a9c2d4;font-size:11px;font-weight:650}
+#app .slc-category-filter select{width:100%;min-height:44px;background:#0b1b28;border:1px solid #3d586e;border-radius:8px;color:#e6f4ff;padding:10px;font-size:12px}
+#app .slc-search{display:flex;align-items:center;margin:0;padding:0 12px;min-height:44px;border:1px solid #3d586e;border-radius:8px;background:#0b1b28;color:#abc6d9}
+#app .slc-search input{width:100%;min-width:0;min-height:44px;border:0!important;background:transparent!important;color:#e7f5ff!important;padding:10px 0!important;font-size:12px;box-shadow:none!important;margin:0!important;border-radius:0!important}
+#app .slc-search input::placeholder{color:#8ba6ba;opacity:1}
+#app .slc-results-label{font-size:11px;color:#a6bfd1;margin:0 0 10px}
+#app .slc-members{display:grid;gap:7px;max-height:310px;overflow:auto;scrollbar-width:thin;padding:2px}
+#app .slc-member{display:flex;align-items:center;gap:12px;padding:9px 10px;min-width:0;border:1px solid #2a4153;border-radius:8px;background:#142936}
+#app .slc-member-dot{flex-shrink:0;width:9px;height:9px;border-radius:50%;background:var(--slc-member-color)}
+#app .slc-member>div{flex:1;min-width:0}
+#app .slc-member strong{display:block;color:#ecf6ff;font-size:13px;overflow-wrap:anywhere}
+#app .slc-member small{display:block;color:#96b2c5;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+#app .slc-edit{min-width:44px;min-height:44px;border:1px solid #3f5b70;border-radius:7px;padding:8px 10px;background:#1d374a;color:#d5edff;font-size:11px;font-weight:700}
+#app .slc-accepted{font-size:10px;color:#b9e0d4;line-height:1.4;padding:6px;max-width:60px;text-align:center}
+#app .slc-empty{padding:10px 0}
+#app .slc-empty p{margin:0;color:#9ab6ca;font-size:12px;line-height:1.6;text-shadow:none}
+#app .slc-form{margin-top:16px;padding-top:16px;border-top:1px solid #355164}
+#app .slc-form-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+#app .slc-form h4{margin:0;color:#f1f8ff;font-size:16px}
+#app .slc-close{width:44px;height:44px;background:#1c3548;border:1px solid #3d596e;border-radius:8px;color:#d7eafa;font-size:24px}
+#app .slc-form label{display:block;color:#c1d7e6;font-size:12px;font-weight:650;line-height:1.5;margin:0}
+#app .slc-form label>span{font-weight:400;color:#8facbf}
+#app .slc-form input,#app .slc-form select{width:100%;min-width:0;min-height:44px;padding:11px;margin:5px 0 11px!important;border:1px solid #436076!important;border-radius:8px!important;background:#0b1b28!important;color:#eaf6ff!important;font-size:13px;box-shadow:none!important}
+#app .slc-form input::placeholder{color:#88a3b8;opacity:1}
+#app .slc-form-row{display:grid;grid-template-columns:1fr 1.2fr;gap:12px}
+#app .slc-form-note{font-size:11px;line-height:1.5;color:#94afc3;margin:0 0 12px;text-shadow:none}
+#app .slc-form-error{font-size:12px;color:#ffb1ae}
+#app .slc-save{min-height:44px;padding:11px 17px;border:1px solid #8cbed4;border-radius:8px;background:#b6e5f7;color:#123247;font-size:12px;font-weight:800}
+#app .slc-remove{min-height:44px;margin-left:10px;border:0;background:transparent;color:#ffc0bb;text-decoration:underline;font-size:11px}
+#app .slc-storage{padding:0 20px 17px}
+#app .slc-storage p{margin:0;color:#7f9bae;font-size:10px;line-height:1.6;text-shadow:none}
+#app .slc-storage strong{display:block;color:#a7c2d5;font-size:11px}
+#app .slc-storage p>span{display:block}
+#app .slc-sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+#app .sc-life-panel.sc-friends{background:#0e1d2a;border-color:#3e6178;color:#eaf6ff;box-shadow:0 10px 30px #0b1f301a;border-radius:16px}
+#app .sc-life-panel .scf-kicker{color:#7cc4e4}
+#app .sc-life-panel .scf-heading h2{color:#eef7ff}
+#app .sc-life-panel .scf-heading p{color:#aac6d9;text-shadow:none}
+#app .sc-life-panel .scf-private{color:#c7e7f8;background:#1a3448;border-color:#3e5e76}
+#app .sc-life-panel .slc-friend-sync{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;padding:12px 2px 0;color:#9dbbce;font-size:11px}
+#app .sc-life-panel .slc-friend-sync p{color:#9dbbce;text-shadow:none}
+#app .sc-life-panel .slc-friend-sync button{min-height:44px;padding:9px 12px;border-radius:8px;background:#1b384c;color:#d9f1ff;border:1px solid #45677f}
+@media(max-width:600px){#app .slc-topline{padding:10px 12px;gap:8px}#app .slc-eyebrow{font-size:9px;max-width:160px}#app .slc-motion{font-size:10px;padding:8px}#app .slc-graph3d{min-height:430px}#app .slc-under-map{padding:10px 12px;align-items:start}#app .slc-under-map p{max-width:190px;font-size:10px}#app .slc-under-map strong{font-size:10px}#app .slc-details{margin:0 8px 12px;padding:14px 12px}#app .slc-branch-head{gap:8px}#app .slc-branch-head h4{font-size:17px}#app .slc-add{padding:9px;font-size:11px}#app .slc-tools{grid-template-columns:1fr;gap:10px;margin-top:14px}#app .slc-branch-head p{display:none}#app .slc-form-row{grid-template-columns:1fr;gap:0}#app .slc-storage{padding:0 14px 14px}#app .sc-life-panel.sc-friends{padding:14px 10px}#app .sc-life-panel .scf-heading{gap:8px;margin-bottom:14px}#app .sc-life-panel .scf-heading h2{font-size:25px}}
+@media(prefers-reduced-motion:reduce){#app .slc *,#app .slc *::before,#app .slc *::after{transition:none!important}}
+@media(forced-colors:active){#app .slc,#app .slc :is(button,input,select),#app .slc-details{background:Canvas;color:CanvasText;border-color:CanvasText}#app .slc :is(button,input,select):focus-visible{outline-color:Highlight}}
+#app .slc-graph3d.lg3d-unavailable,#app .slc-graph3d:has(.slc-graph-unavailable){min-height:0}

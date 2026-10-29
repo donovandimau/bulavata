@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-28",
+  "mode": "OpenAI built-in image_gen",
+  "useCase": "photorealistic-natural",
+  "fictionalPeople": true,
+  "images": [
+    {
+      "id": "ani",
+      "prompt": "Create one photorealistic natural editorial portrait for a Fijian social app, square 1:1. A fictional indigenous iTaukei Fijian woman aged about 30, warm brown skin with natural visible pores and fine facial texture, round face, full natural curly black hair, friendly relaxed smile, wearing a simple terracotta cotton blouse. Head and shoulders, face centered and occupying enough of the frame to read in a tiny circular avatar, all hair and head inside frame with safe space. Soft daylight on a covered garden veranda in Fiji, gently blurred green plants, 85mm photographic lens, everyday candid authenticity, realistic optical depth of field. This is a fictional sample profile called Ani; no text, letters, watermark, logos, collage, illustration, painterly rendering, CGI, glossy plastic skin, exotic costume or beauty filter.",
+      "sourceImageName": "exec-d2f67078-8299-4e93-abc5-29bd3a538337.png"
+    },
+    {
+      "id": "jo",
+      "prompt": "Create a single photorealistic natural editorial head-and-shoulders portrait, square 1:1, for a fictional sample profile in a Fijian social app. Real skin pores, subtle imperfections, authentic hair and fabric texture, clear warm expression, daylight, 85mm lens shallow depth of field. Face centered, keep full head and hair inside the frame for a small circular avatar. Everyday contemporary Fiji, not costume or tourism advertising. No text, logos, watermark, collage, illustration, painting, CGI, plastic skin, glamour retouching. Subject: fictional indigenous iTaukei Fijian man about 32, deep brown skin, short tightly curled black hair, neat short beard, gentle smile, navy cotton T-shirt. Softly blurred veranda and guitar in background, casual music lover.",
+      "sourceImageName": "exec-d7f5715e-c48b-42c0-a08d-804079bac2ca.png"
+    },
+    {
+      "id": "lani",
+      "prompt": "Create a single photorealistic natural editorial head-and-shoulders portrait, square 1:1, for a fictional sample profile in a Fijian social app. Real skin pores, subtle imperfections, authentic hair and fabric texture, clear warm expression, daylight, 85mm lens shallow depth of field. Face centered, keep full head and hair inside the frame for a small circular avatar. Everyday contemporary Fiji, not costume or tourism advertising. No text, logos, watermark, collage, illustration, painting, CGI, plastic skin, glamour retouching. Subject: fictional indigenous iTaukei Fijian woman about 27, deep brown skin, natural coily black hair in a rounded afro, open joyful smile, simple sage-green linen shirt. Blurred lush Fiji walking trail and warm cloudy daylight.",
+      "sourceImageName": "exec-6ea18a94-a7b5-49bb-91db-12d41c21cbc3.png"
+    },
+    {
+      "id": "eli",
+      "prompt": "Create a single photorealistic natural editorial head-and-shoulders portrait, square 1:1, for a fictional sample profile in a Fijian social app. Real skin pores, subtle imperfections, authentic hair and fabric texture, clear warm expression, daylight, 85mm lens shallow depth of field. Face centered, keep full head and hair inside the frame for a small circular avatar. Everyday contemporary Fiji, not costume or tourism advertising. No text, logos, watermark, collage, illustration, painting, CGI, plastic skin, glamour retouching. Subject: fictional indigenous iTaukei Fijian man about 48, brown skin, broad expressive face, very short salt-and-pepper curly hair, clean shaven, smiling warmly, pale blue casual button shirt. Everyday garden kitchen veranda softly blurred behind him.",
+      "sourceImageName": "exec-73cd01b6-49d3-4034-94bf-3b7f88e7904f.png"
+    },
+    {
+      "id": "mika",
+      "prompt": "Create a single photorealistic natural editorial head-and-shoulders portrait, square 1:1, for a fictional sample profile in a Fijian social app. Real skin pores, subtle imperfections, authentic hair and fabric texture, clear warm expression, daylight, 85mm lens shallow depth of field. Face centered, keep full head and hair inside the frame for a small circular avatar. Everyday contemporary Fiji, not costume or tourism advertising. No text, logos, watermark, collage, illustration, painting, CGI, plastic skin, glamour retouching. Subject: fictional indigenous iTaukei Fijian man about 25, dark brown skin, short natural black curls, clean-shaven, thoughtful warm smile, cream cotton shirt with a camera strap at shoulder. Softly blurred Suva coastal garden background.",
+      "sourceImageName": "exec-d91710f9-05e1-45f3-8ad0-74b922d46740.png"
+    },
+    {
+      "id": "sela",
+      "prompt": "Create a single photorealistic natural editorial head-and-shoulders portrait, square 1:1, for a fictional sample profile in a Fijian social app. Real skin pores, subtle imperfections, authentic hair and fabric texture, clear warm expression, daylight, 85mm lens shallow depth of field. Face centered, keep full head and hair inside the frame for a small circular avatar. Everyday contemporary Fiji, not costume or tourism advertising. No text, logos, watermark, collage, illustration, painting, CGI, plastic skin, glamour retouching. Subject: fictional indigenous iTaukei Fijian woman about 57, medium brown skin, realistic smile lines, silver threads in short natural curly black hair, kind confident smile, plum everyday blouse. Real lush backyard garden softly out of focus.",
+      "sourceImageName": "exec-3bf195d8-8f47-4352-b10e-a885fe44c1e2.png"
+    },
+    {
+      "id": "hero",
+      "prompt": "One photorealistic natural editorial photograph for Sota Kece, a Fijian community app. Landscape 3:2 composition, realistic documentary photographic aesthetic, natural skin texture, authentic material grain, candid unposed everyday life, subtle real optical depth of field, physically believable hands. All people are fictional adults from Fiji. Contemporary everyday clothing. No text, signage, brands, watermark, collage, illustration, oil-painting effect, CGI, plastic faces, tourist costumes, or beauty retouching. Six indigenous iTaukei Fijian friends, women and men aged 25 to 65, with brown and deep brown skin and naturally curly hair, laugh in relaxed conversation around a wooden table on a simple shaded coastal veranda. An older woman passing a bowl of sliced papaya, a man leaning back laughing, natural relaxed body language. Real lived-in timber home, breadfruit and coconut trees, glimpse of ocean in background. Wide friendly composition with heads inside safe central region, late afternoon daylight, 35mm lens. Warm sense of belonging, real domestic gathering, no staged resort.",
+      "sourceImageName": "exec-affe605a-8192-49fb-814a-6145b7445520.png"
+    },
+    {
+      "id": "making",
+      "prompt": "One photorealistic natural editorial photograph for Sota Kece, a Fijian community app. Landscape 3:2 composition, realistic documentary photographic aesthetic, natural skin texture, authentic material grain, candid unposed everyday life, subtle real optical depth of field, physically believable hands. All people are fictional adults from Fiji. Contemporary everyday clothing. No text, signage, brands, watermark, collage, illustration, oil-painting effect, CGI, plastic faces, tourist costumes, or beauty retouching. Two indigenous iTaukei Fijian women about 30 and 55 making paper flowers together at a timber table on a bright home veranda. One has natural loose curly black hair and terracotta blouse, the other grey-streaked natural curls and cream top. Hands carefully fold coloured paper, scissors set down safely, believable paper offcuts and a small finished bouquet. Focus on faces and hands, medium wide candid composition, soft morning window light, 50mm lens.",
+      "sourceImageName": "exec-47cf4fb4-400a-496e-8407-162ea3d705ba.png"
+    },
+    {
+      "id": "outside",
+      "prompt": "One photorealistic natural editorial photograph for Sota Kece, a Fijian community app. Landscape 3:2 composition, realistic documentary photographic aesthetic, natural skin texture, authentic material grain, candid unposed everyday life, subtle real optical depth of field, physically believable hands. All people are fictional adults from Fiji. Contemporary everyday clothing. No text, signage, brands, watermark, collage, illustration, oil-painting effect, CGI, plastic faces, tourist costumes, or beauty retouching. Two indigenous iTaukei Fijian friends in their late twenties, woman with natural coily hair and sage cotton shirt and man in a cream T-shirt, enjoying an ordinary walk on a leafy coastal path beside a clear turquoise Fiji lagoon. Subjects in middle-right of image, left half has quiet path and foliage to support a text overlay. No resort. Natural sunlight after rain, real footprints, realistic lush leaves, gentle reflections, 35mm photograph.",
+      "sourceImageName": "exec-4625d2ad-e9e2-433d-addc-96098d7a4f53.png"
+    },
+    {
+      "id": "music",
+      "prompt": "One photorealistic natural editorial photograph for Sota Kece, a Fijian community app. Landscape 3:2 composition, realistic documentary photographic aesthetic, natural skin texture, authentic material grain, candid unposed everyday life, subtle real optical depth of field, physically believable hands. All people are fictional adults from Fiji. Contemporary everyday clothing. No text, signage, brands, watermark, collage, illustration, oil-painting effect, CGI, plastic faces, tourist costumes, or beauty retouching. Three indigenous iTaukei Fijian friends in their thirties enjoying music on a lived-in veranda at dusk, one brown-skinned man with short curly hair and navy T-shirt strums a simple acoustic guitar with correct six strings, two friends smile and listen, one woman in muted floral blouse. Warm household lamp and fading blue natural light, weathered wooden table, cups of tea, quiet garden. Candid close-medium group framing, 50mm lens, no stage or celebrity resemblance.",
+      "sourceImageName": "exec-318fff72-a470-4239-abc1-8c30a6898e3b.png"
+    },
+    {
+      "id": "food",
+      "prompt": "One photorealistic natural editorial photograph for Sota Kece, a Fijian community app. Landscape 3:2 composition, realistic documentary photographic aesthetic, natural skin texture, authentic material grain, candid unposed everyday life, subtle real optical depth of field, physically believable hands. All people are fictional adults from Fiji. Contemporary everyday clothing. No text, signage, brands, watermark, collage, illustration, oil-painting effect, CGI, plastic faces, tourist costumes, or beauty retouching. A contemporary Fijian family of five adults sharing a generous Sunday lunch on a home veranda, four indigenous iTaukei Fijian women and men with natural curly hair and one Indo-Fijian woman. Natural laughter and conversation, simple everyday cotton shirts and dresses, plausible plates of dalo, cooked greens, fish, roti and fresh papaya on an ordinary timber table. Beautiful soft daylight, unposed home hospitality, 35mm lens.",
+      "sourceImageName": "exec-59083d48-44e0-4d44-ae8a-1a965ae5d4f0.png"
+    },
+    {
+      "id": "photos",
+      "prompt": "One photorealistic natural editorial photograph for Sota Kece, a Fijian community app. Landscape 3:2 composition, realistic documentary photographic aesthetic, natural skin texture, authentic material grain, candid unposed everyday life, subtle real optical depth of field, physically believable hands. All people are fictional adults from Fiji. Contemporary everyday clothing. No text, signage, brands, watermark, collage, illustration, oil-painting effect, CGI, plastic faces, tourist costumes, or beauty retouching. A young indigenous iTaukei Fijian man with short curly hair, medium brown skin and cream shirt and an indigenous Fijian woman with natural curly hair in a sage top comparing small printed family photographs at a garden table. A plain black mirrorless camera rests nearby with no logo. Focused friendly expressions, tactile photograph paper, real leafy courtyard, filtered sunlight, 50mm lens. Prints show indistinct people, no readable writing.",
+      "sourceImageName": "exec-927fd36f-0743-419a-b91f-ff54637c532e.png"
+    },
+    {
+      "id": "culture",
+      "prompt": "One photorealistic natural editorial photograph for Sota Kece, a Fijian community app. Landscape 3:2 composition, realistic documentary photographic aesthetic, natural skin texture, authentic material grain, candid unposed everyday life, subtle real optical depth of field, physically believable hands. All people are fictional adults from Fiji. Contemporary everyday clothing. No text, signage, brands, watermark, collage, illustration, oil-painting effect, CGI, plastic faces, tourist costumes, or beauty retouching. An older indigenous iTaukei Fijian woman with silver-streaked curly hair in a plum blouse sharing family stories with three younger indigenous Fijian adults, seated comfortably together around an open photo album in a real home. A woven pandanus mat and modest patterned cushions, relaxed everyday clothes, warm brown and deep brown skin, candid affectionate expressions and attentive listening. Natural window light, 35mm lens, a lived-in family scene, no ceremonial costume.",
+      "sourceImageName": "exec-8e7fea4e-f484-41a7-92a7-178f5729908d.png"
+    },
+    {
+      "id": "album-lagoon",
+      "prompt": "Create one original square 1:1 photorealistic editorial photograph used as a music cover in a Fijian community app. This is fictional mood photography, not an image of a recording artist. Real camera aesthetic, genuine skin, hair, foliage, fabric and water texture, natural imperfect everyday details, beautiful believable lighting. All people are fictional indigenous iTaukei Fijian adults in contemporary everyday clothing. No letters or text, no logo, no collage, no illustration, no painting, no CGI, no glamour filter. Sea glass mood: two brown-skinned Fijian friends, woman with natural coily hair in pale sage and man in cream shirt, sitting at the edge of a peaceful pale turquoise lagoon, relaxed barefoot, chatting quietly, green sea-glass pebbles and sandy textures in foreground. Soft early morning light, quiet airy sea-green palette, composed to remain legible as small album artwork, 50mm lens.",
+      "sourceImageName": "exec-1bb70fb9-4c2a-4f17-a09b-f619fa05f327.png"
+    },
+    {
+      "id": "album-gold",
+      "prompt": "Create one original square 1:1 photorealistic editorial photograph used as a music cover in a Fijian community app. This is fictional mood photography, not an image of a recording artist. Real camera aesthetic, genuine skin, hair, foliage, fabric and water texture, natural imperfect everyday details, beautiful believable lighting. All people are fictional indigenous iTaukei Fijian adults in contemporary everyday clothing. No letters or text, no logo, no collage, no illustration, no painting, no CGI, no glamour filter. The long way home mood: two Fijian adults with dark brown skin and curly hair strolling back home along a real garden path past tropical greenery at golden hour, one carries a woven shopping basket. Three-quarter view from behind with their faces in profile as they smile to each other. Dappled warm sunlight, rich amber and earthy greens, 35mm lens, candid unposed.",
+      "sourceImageName": "exec-3fff4979-b142-492a-b064-0f9c3be4a435.png"
+    },
+    {
+      "id": "album-coral",
+      "prompt": "Create one original square 1:1 photorealistic editorial photograph used as a music cover in a Fijian community app. This is fictional mood photography, not an image of a recording artist. Real camera aesthetic, genuine skin, hair, foliage, fabric and water texture, natural imperfect everyday details, beautiful believable lighting. All people are fictional indigenous iTaukei Fijian adults in contemporary everyday clothing. No letters or text, no logo, no collage, no illustration, no painting, no CGI, no glamour filter. After the rain mood: a Fijian woman about 40 with brown skin and naturally coily black hair and casual coral cotton blouse tending a little hibiscus garden after a shower, water beads on vivid red-coral flowers in foreground, her happy face in clear focus, rich foliage softly blurred. Soft overcast daylight, natural skin pores, intimate real garden photograph, 50mm lens.",
+      "sourceImageName": "exec-c2e3a107-a67e-46de-82bd-d8c213f0a843.png"
+    },
+    {
+      "id": "album-night",
+      "prompt": "Create one original square 1:1 photorealistic editorial photograph used as a music cover in a Fijian community app. This is fictional mood photography, not an image of a recording artist. Real camera aesthetic, genuine skin, hair, foliage, fabric and water texture, natural imperfect everyday details, beautiful believable lighting. All people are fictional indigenous iTaukei Fijian adults in contemporary everyday clothing. No letters or text, no logo, no collage, no illustration, no painting, no CGI, no glamour filter. Somewhere together mood: three brown-skinned Fijian adult friends in quiet conversation on a small warmly lit timber home veranda near a dark blue lagoon at blue hour. One young woman with natural curly hair smiles, older man with silver curly hair, younger man in simple cotton shirt. Faces clearly visible in soft amber lamplight, believable twilight sky and ocean, real low-light camera grain, tranquil indigo and amber palette, 35mm lens.",
+      "sourceImageName": "exec-5ba8f0f5-e063-4f35-99a2-a8e5fa6025a8.png"
+    },
+    {
+      "id": "identity",
+      "prompt": "One square 1:1 photorealistic macro botanical photograph for the neutral default identity image of a Fiji community app. A real white and buttery-yellow frangipani flower against dark glossy green leaves in a Fijian home garden, tiny rain droplets, natural petal texture and imperfections, soft daylight, realistic shallow depth of field, 90mm macro lens. Centered flower readable as a tiny circular avatar. No person, no text, no logo, no illustration, no painting, no CGI, no glossy artificial flower.",
+      "sourceImageName": "exec-24e17f48-c1f3-41e7-8a76-b4cbea0c27cd.png"
+    }
+  ]
+}

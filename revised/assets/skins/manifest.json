@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-28",
+  "mode": "OpenAI built-in image_gen",
+  "items": [
+    {
+      "id": "ocean",
+      "prompt": "Create ONE original premium photographic background for an adult social app's personal room design collection. Mature editorial art direction; convincing natural photography, subtle grain, carefully controlled color, no childish illustration, no cartoon, no emoji, no collage, no borders, no typography, no logos, no watermark. An elevated aerial photograph of deep midnight teal Pacific ocean meeting a narrow limestone shoreline, one elegant diagonal of ivory surf, delicate real water texture, enormous quiet negative space, no buildings, people or boats. Deep muted petrol blue, pale stone, subdued natural daylight. Wide 3:2 composition that also crops beautifully to 16:9.",
+      "file": "./assets/skins/ocean.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 286766,
+      "sha256": "170a8742d7d3d2cae18da47b6964eefca8b3eace060bb63bfce27a744cb7f483",
+      "sourceImageName": "exec-67ea09c5-85bf-4b4a-882e-66eede8b903c.png"
+    },
+    {
+      "id": "linen",
+      "prompt": "Create ONE original premium photographic background for an adult social app's personal room design collection. Mature editorial art direction; convincing natural photography, subtle grain, carefully controlled color, no childish illustration, no cartoon, no emoji, no collage, no borders, no typography, no logos, no watermark. A sophisticated macro still life of unbleached flax linen draped in broad sculptural folds, grazing afternoon light, warm ecru and soft umber, exquisite tactile fibers, quiet architectural composition with asymmetrical shadows. No pattern, no cultural symbols, no objects. Wide 3:2, cover artwork.",
+      "file": "./assets/skins/linen.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 353384,
+      "sha256": "914d61ebc57a06d9a4a3a446c037d16a0812cc708702d2f7a3b3b9b7e9079d79",
+      "sourceImageName": "exec-f7032819-809a-4b3d-8248-d94ea5defd31.png"
+    },
+    {
+      "id": "basalt",
+      "prompt": "Create ONE original premium photographic background for an adult social app's personal room design collection. Mature editorial art direction; convincing natural photography, subtle grain, carefully controlled color, no childish illustration, no cartoon, no emoji, no collage, no borders, no typography, no logos, no watermark. A dramatic fine-art macro landscape of dark volcanic basalt rock meeting still black water, very subtle silver highlights and natural fine-grained texture, charcoal, graphite and muted slate. Architectural forms, broad diagonal light, restrained and luxurious without artificial gloss. Wide 3:2, no sky needed.",
+      "file": "./assets/skins/basalt.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 306926,
+      "sha256": "491f91627ca70b075924eb537c297486f88b4a15e3e6f3cacab398276998929e",
+      "sourceImageName": "exec-3487c2d3-8860-4a41-ab38-7a4ba0c320b0.png"
+    },
+    {
+      "id": "botanical",
+      "prompt": "Create ONE original premium photographic background for an adult social app's personal room design collection. Mature editorial art direction; convincing natural photography, subtle grain, carefully controlled color, no childish illustration, no cartoon, no emoji, no collage, no borders, no typography, no logos, no watermark. Photographic still life of one large tropical palm frond casting refined linear shadows across a muted olive plaster wall. Dark forest green leaves entering from upper right, quiet warm shadows and abundant empty space at left. Editorial interior design photography, natural daylight, authentic surfaces. Wide 3:2.",
+      "file": "./assets/skins/botanical.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 122804,
+      "sha256": "e4060ec1cf1218415f230f57c27948cfd430c42f24432aa2ff221fe5c12f6a35",
+      "sourceImageName": "exec-c67fabe7-f36f-474e-88e2-64092a574d97.png"
+    },
+    {
+      "id": "bronze",
+      "prompt": "Create ONE original premium photographic background for an adult social app's personal room design collection. Mature editorial art direction; convincing natural photography, subtle grain, carefully controlled color, no childish illustration, no cartoon, no emoji, no collage, no borders, no typography, no logos, no watermark. A moody analogue photograph of late evening copper sunlight reflected in small ripples on still water. Burnished bronze, dark chocolate shadows, a slender warm reflection off center, natural subtle grain, understated sophisticated atmosphere. No bright orange gradients, objects or people. Wide 3:2.",
+      "file": "./assets/skins/bronze.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 106478,
+      "sha256": "2c57292726e80366a511d611dc4060d989f59c5f16d225dee8b9e4cc72a273ca",
+      "sourceImageName": "exec-bdd7f482-6181-4016-9b7f-47f0eeb435e5.png"
+    },
+    {
+      "id": "vinyl",
+      "prompt": "Create ONE original premium photographic background for an adult social app's personal room design collection. Mature editorial art direction; convincing natural photography, subtle grain, carefully controlled color, no childish illustration, no cartoon, no emoji, no collage, no borders, no typography, no logos, no watermark. An intimate editorial close-up of a black vinyl record on a dark walnut turntable, cropped abstractly with sweeping concentric grooves and a small brushed metal tonearm on the right. Warm low key light, precise real materials, black, warm gray and walnut, no readable label or branding. Wide 3:2.",
+      "file": "./assets/skins/vinyl.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 107558,
+      "sha256": "af0e650c051ada6550522c4a445326d9568e8217a59931e37fb550628dc30a9e",
+      "sourceImageName": "exec-e7b62876-e940-40d9-8d5a-dfce44d6a2ce.png"
+    },
+    {
+      "id": "terracotta",
+      "prompt": "Create ONE original premium photographic background for an adult social app's personal room design collection. Mature editorial art direction; convincing natural photography, subtle grain, carefully controlled color, no childish illustration, no cartoon, no emoji, no collage, no borders, no typography, no logos, no watermark. Architectural photograph of curved sunbaked terracotta walls with one deep arched shadow and a sliver of soft sandstone floor. Dusty clay, warm brown and bone, authentic matte plaster texture, minimal refined composition, quietly Mediterranean-Pacific modern interior. Wide 3:2, no furniture, plants or people.",
+      "file": "./assets/skins/terracotta.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 149496,
+      "sha256": "5b844814f61dc5c4ba4660604c3440e16d03e8c398471364e22671509c091e2c",
+      "sourceImageName": "exec-a8677776-accd-4c2b-8fab-428068754800.png"
+    },
+    {
+      "id": "mist",
+      "prompt": "Create ONE original premium photographic background for an adult social app's personal room design collection. Mature editorial art direction; convincing natural photography, subtle grain, carefully controlled color, no childish illustration, no cartoon, no emoji, no collage, no borders, no typography, no logos, no watermark. A fine-art photograph of layers of tropical mountain ridges disappearing into soft morning mist, muted sage, slate blue and pale gray, faint distant foliage texture, broad quiet composition, calm and contemplative. Generic imagined Pacific landscape, not a specific named island. Wide 3:2.",
+      "file": "./assets/skins/mist.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 87764,
+      "sha256": "c66986040d962c03e8bca30508000a966e86ee6b0cbc62d9b993137a073da54e",
+      "sourceImageName": "exec-38e431e7-eb8e-46f2-b98d-9ec4d30e22f3.png"
+    }
+  ],
+  "description": "Eight original AI-generated photographic studies for the room collection. Imagined settings; not documentary images of named places, schools or artists. WebP conversion is delivery optimization only."
+}
