@@ -13,6 +13,7 @@
 .profile-stats{flex-wrap:wrap}@media(max-width:360px){.topbar .mobile-brand>span{font-size:16px;white-space:nowrap}.topbar .mobile-brand small{display:none}.topbar .mobile-brand img{width:27px;height:27px}.topbar .tools{gap:6px}.topbar .icon-btn{width:30px}}
 
 /* Room collection: restrained materials, editorial type and clear light/dark previews. */
+:root:has(.editorial-studio){--paper:#f8f6ef!important;--accent:#245b53!important}
 .editorial-studio{--studio-line:#d7d6cc;--studio-ink:#28312e;color:var(--studio-ink)}
 .editorial-studio .page-head{align-items:end;padding-bottom:28px;border-bottom:1px solid var(--studio-line);margin-bottom:30px}
 .editorial-studio .page-head .eyebrow{font-size:9px;letter-spacing:.2em;color:#656b60}
