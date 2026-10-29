@@ -190,3 +190,11 @@ body.sx-enabled #app.sx-app[data-space-button-style=soft] .sx-account-actions :i
 body.sx-enabled #app.sx-app .sx-account-actions button{min-height:44px}
 @media(max-width:760px){.sx-design-label{display:none}.sx-design-short{display:inline}body.sx-enabled #app.sx-app .sx-design-entry{min-width:88px;max-width:none;min-height:44px;gap:5px}body.sx-enabled #app.sx-app .sx-top-tools{flex-wrap:nowrap}body.sx-enabled #app.sx-app[data-space-designed] .sx-design-entry{font-size:13px!important}}
 @media(max-width:360px){body.sx-enabled #app.sx-app .sx-mobile-brand{font-size:17px}body.sx-enabled #app.sx-app .sx-design-entry{min-width:76px;padding:8px}.sx-top-tools{gap:6px}}
+
+/* One starting action; optional creation tools keep their original owners. */
+.sx-create-actions{grid-template-columns:minmax(0,1fr)}
+.sx-create-more{min-width:0;border-top:1px solid var(--sx-line);padding-top:8px}
+.sx-create-more>summary{min-height:48px;cursor:pointer;font-size:14px;font-weight:800;line-height:1.5;padding:12px 4px}
+.sx-create-secondary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding-top:8px}
+.sx-hero small a.sx-inline{display:inline-flex;align-items:center;min-height:44px;color:inherit;text-decoration:none;margin-left:0}
+@media(max-width:760px){.sx-create-secondary{grid-template-columns:1fr}}
