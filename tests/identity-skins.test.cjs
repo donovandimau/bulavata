@@ -10,7 +10,7 @@ test('every available skin has artwork and school/group identities remain distin
   for(const p of skins.presets){
     assert(p.coverArt,p.id+' has no cover');
     assert(p.identityLabel,p.id+' has no identity');
-    assert.match(p.coverArt,/^\/revised\/assets\/skins\/pacific-20261029\/[a-z0-9-]+\.svg$/);
+    assert.match(p.coverArt,/^\/revised\/assets\/skins\/photographic-20261029\/[a-z0-9-]+\.webp$/);assert.equal(p.artworkType,'photographic');
     assert(fs.existsSync(path.join(__dirname,'..',p.coverArt)),p.coverArt);
     assert(skins.contrast(p.ink,p.panel)>=4.5,p.name+' body contrast');
     assert(skins.contrast(p.muted,p.panel)>=4.5,p.name+' secondary contrast');

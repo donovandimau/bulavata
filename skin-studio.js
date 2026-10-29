@@ -248,8 +248,8 @@
     return ids.map(id=>skins.presets.find(p=>p.id===id)).filter(Boolean).map(skinOption).join('');
   }
   function skinThumbnail(p) {
-    const art=visuals?.cover(p)||p.coverArt||p.artwork;
-    return `<span class="bv-visual-thumb" style="${esc(skins.inline({id:p.id}))}" data-look="${p.look}" aria-hidden="true"><span class="bv-thumb-art">${art?`<img src="${esc(art)}" loading="lazy" alt="">`:''}<b>${esc(themeLabel(p))}</b></span></span>`;
+    const art=visuals?.thumbnail(p)||visuals?.cover(p)||p.coverArt||p.artwork;
+    return `<span class="bv-visual-thumb" style="${esc(skins.inline({id:p.id}))}" data-look="${p.look}" aria-hidden="true"><span class="bv-thumb-art">${art?`<img src="${esc(art)}" style="object-position:${esc(visuals?.position(p)||'center')}" loading="lazy" alt="">`:''}<b>${esc(themeLabel(p))}</b></span></span>`;
   }
   function skinOption(p) {
     return `<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<span class="bv-choice-label"><strong>${esc(p.name)}</strong><small>${esc(p.category)}</small></span></button>`;
