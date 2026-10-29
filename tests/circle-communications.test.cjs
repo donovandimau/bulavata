@@ -73,7 +73,7 @@ test('joining passes only the actual code and this member’s explicit graph con
 
 test('group appearance uses the group type, stays scoped and never changes the profile',()=>{
  const h=setup(),before=JSON.stringify(h.S.me);h.context.circleTheme({circle_type:'lotu'});
- assert.equal(h.controls.groupWorkspace.dataset.circleSkin,'masi-white');assert.equal(h.controls.groupWorkspace.style.getPropertyValue('--bv-accent'),types.get('lotu').accent);
+ assert.equal(h.controls.groupWorkspace.dataset.circleSkin,'masi-white');assert.equal(h.controls.groupWorkspace.style.getPropertyValue('--bv-accent'),types.get('lotu').displayAccent);
  assert(h.controls.groupWorkspace.classList.contains('circle-workspace'));assert.match(h.controls.circleIdentity.textContent,/Lotu Circle/);assert.equal(JSON.stringify(h.S.me),before);
  h.context.clearCircleTheme();assert.equal(h.controls.groupWorkspace.styles.size,0);assert(!h.controls.groupWorkspace.classList.contains('circle-workspace'));assert.equal(h.controls.circleIdentity.textContent,'');
 });

@@ -84,7 +84,7 @@ function changedHarness(){
 }
 test('Koro settings update the group skin, label and graph without replacing an unsent composer',()=>{
  const h=changedHarness(),group={id:42,name:'Our people',circle_type:'lotu'},before=JSON.stringify(h.S.me);Object.freeze(h.S.me);h.context.circleGroupChanged(group);
- assert.match(h.nodes['#crew-type-label'].textContent,/Lotu Circle.*White Masi/);assert.equal(h.nodes['#crew-avatar'].textContent,types.get('lotu').emoji);assert.equal(h.nodes['#crew-avatar'].style.background,types.get('lotu').accent+'22');
+ assert.match(h.nodes['#crew-type-label'].textContent,/Lotu Circle.*White Masi/);assert.equal(h.nodes['#crew-avatar'].textContent,types.get('lotu').emoji);assert.equal(h.nodes['#crew-avatar'].style.background,types.get('lotu').displayAccent+'22');
  assert.deepEqual(h.calls.skins,[group]);assert.equal(h.calls.graphs.length,1);assert.equal(h.calls.graphs[0][0],h.graph);assert.equal(h.calls.graphs[0][1],group);assert.equal(h.nodes['#cm'],h.composer);assert.equal(h.composer.value,'An unsent message');assert.equal(JSON.stringify(h.S.me),before);
 });
 
@@ -99,6 +99,6 @@ test('Talanoa applies a fresh group token skin only to the matching live group a
  vm.runInContext(sessionSkinSource,context,{filename:'actual-talanoa-session-skin.js'});
  const group={id:42,name:'Our church friends',circle_type:'lotu'};context.updateGroupAppearance({id:99,circle_type:'kava'});assert.equal(styles.size,0);
  context.guest=true;context.updateGroupAppearance(group);assert.equal(styles.size,0);context.guest=false;context.updateGroupAppearance(group);
- assert.equal(host.dataset.circleSkin,'lotu');assert.equal(styles.get('--bv-accent'),types.get('lotu').accent);assert.match(styles.get('--bv-art'),/masi-white/);assert.equal(banner.hidden,false);assert.match(banner.textContent,/Lotu Circle.*Our church friends.*White Masi/);assert.equal(profile.room_css,'Personal skin remains');
+ assert.equal(host.dataset.circleSkin,'lotu');assert.equal(styles.get('--bv-accent'),types.get('lotu').displayAccent);assert.match(styles.get('--bv-art'),/masi-white/);assert.equal(banner.hidden,false);assert.match(banner.textContent,/Lotu Circle.*Our church friends.*White Masi/);assert.equal(profile.room_css,'Personal skin remains');
  invite.onclick();assert.deepEqual(calls,[group]);
 });

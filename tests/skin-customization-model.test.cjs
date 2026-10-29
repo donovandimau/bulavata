@@ -132,7 +132,7 @@ test('font tokens come from six fixed local stacks and never accept font URLs or
  assert.equal(new Set(tokens).size,6);
  for(const value of tokens)assert.ok(!/url\s*\(|@import|[;{}\n]/i.test(value));
  for(const font of ['https://evil.invalid/font.woff2','url(x)','sans; color:red',{},null]){
-  assert.equal(skins.normalize({id:'lagoon',font}).font,'rounded');
+  assert.equal(skins.normalize({id:'lagoon',font}).font,skins.presets.find(p=>p.id==='lagoon').font);
   assert.equal(skins.tokens({id:'lagoon',font})['--bv-font'],skins.tokens({id:'lagoon'})['--bv-font']);
  }
  assert.equal(skins.tokens({font:'serif'})['--bv-font'],'Georgia, serif');

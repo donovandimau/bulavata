@@ -70,7 +70,7 @@
     return rows.map(row=>{const group=metadata(row,{legacy});if(seen.has(String(group.id)))throw Error('Circles could not load.');seen.add(String(group.id));return group;});
   }
   function skinName(type){return root.BulaSkins?.presets?.find(p=>p.id===type.skin)?.name||type.skin;}
-  function preview(typeId){const type=types().get(typeId);return `<span class="tc-swatch" aria-hidden="true" style="background:${escape(type.accent)}"></span><span><strong>${escape(type.label)}</strong><small>Automatic skin: ${escape(skinName(type))}</small></span>`;}
+  function preview(typeId){const type=types().get(typeId);return `<span class="tc-swatch" aria-hidden="true" style="background:${escape(type.displayAccent||type.accent)}"></span><span><strong>${escape(type.label)}</strong><small>Automatic skin: ${escape(skinName(type))}</small></span>`;}
   function createMarkup(prefix,initial=null){
     const guest=!owner();
     const chosen=types().get(initial?.type).id,name=typeof initial?.name==='string'?initial.name.slice(0,40):'';

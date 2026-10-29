@@ -39,22 +39,26 @@ test('room hierarchy follows the identity while saved profile settings still rou
   assert.equal(discovery.layout(null),'social');
 });
 
-test('photographic covers resolve to real local WebP assets without changing catalogue identities',()=>{
+test('regional covers resolve to the shared SVG artwork while previous photographs remain preserved',()=>{
   const fs=require('node:fs'),path=require('node:path'),visuals=require('../skin-visuals.js');
-  assert.equal(visuals.images.length,16);
+  assert.equal(visuals.images.length,94);
   assert.equal(new Set(skins.presets.filter(p=>p.category==='Schools').map(visuals.cover)).size,8);
   for(const asset of visuals.images){
+    assert.match(asset,/^\/revised\/assets\/skins\/pacific-20261029\/[a-z0-9-]+\.svg$/);
+    const svg=fs.readFileSync(path.join(__dirname,'..',asset),'utf8');
+    assert.match(svg,/^<svg[\s>]/);assert(svg.endsWith('</svg>')||svg.endsWith('</svg>\n'));assert(Buffer.byteLength(svg)<400000);
+  }
+  assert.equal(visuals.legacyImages.length,16);
+  for(const asset of visuals.legacyImages){
     assert.match(asset,/^\/assets\/skins\/editorial\/[a-z]+-20261025\.webp$/);
     const bytes=fs.readFileSync(path.join(__dirname,'..',asset));
     assert.equal(bytes.subarray(0,4).toString(),'RIFF');assert.equal(bytes.subarray(8,12).toString(),'WEBP');
     assert(bytes.length<400000);
   }
   for(const p of skins.presets){
-    assert(visuals.cover(p).endsWith('.webp'),p.id);
+    assert(visuals.cover(p).endsWith('.svg'),p.id);
     assert(fs.existsSync(path.join(__dirname,'..',visuals.cover(p))),p.id);
     assert(skins.tokens({id:p.id})['--bv-hero'].includes(visuals.cover(p)));
   }
-  assert(visuals.cover(skins.presets.find(p=>p.id==='province-ra')).includes('/ra-'));
-  assert(visuals.cover(skins.presets.find(p=>p.id==='province-nadroga-navosa')).includes('/nadroga-'));
-  assert(visuals.cover(skins.presets.find(p=>p.id==='memory-childhood-memory')).includes('/dalo-'));
+  for(const id of ['province-ra','province-nadroga-navosa','memory-childhood-memory'])assert(visuals.cover(skins.presets.find(p=>p.id===id)).endsWith('/'+id+'.svg'));
 });

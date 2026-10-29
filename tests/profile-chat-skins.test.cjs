@@ -45,9 +45,9 @@ test('Koro uses its current owner skin and removes old tokens when changing scre
   vm.runInContext(source.slice(source.indexOf('  function reset()'),source.indexOf('  function apply(profile')),context);
   context.applyChat({room_css:skins.encode({id:'studio-ocean'})});
   assert(classes.has('bv-chat-active'));
-  assert(activeStyle.textContent.includes('--bv-chat-out:#6de6dd'));
+  assert(activeStyle.textContent.includes('--bv-chat-out:'+skins.presets.find(p=>p.id==='studio-ocean').accent));
   context.applyChat({room_css:skins.encode({id:'studio-coral'})});
-  assert(activeStyle.textContent.includes('--bv-chat-out:#ffb38d'));
+  assert(activeStyle.textContent.includes('--bv-chat-out:'+skins.presets.find(p=>p.id==='studio-coral').accent));
   context.reset();assert.equal(activeStyle,null);assert.equal(classes.size,0);
   hasMessages=false;context.applyChat({room_css:skins.encode({id:'studio-retro'})});
   assert.equal(activeStyle,null);assert.equal(styles.length,2);

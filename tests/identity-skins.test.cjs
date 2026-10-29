@@ -10,14 +10,16 @@ test('every available skin has artwork and school/group identities remain distin
   for(const p of skins.presets){
     assert(p.coverArt,p.id+' has no cover');
     assert(p.identityLabel,p.id+' has no identity');
-    if(p.coverArt.startsWith('/assets/skins/'))assert(fs.existsSync(path.join(__dirname,'..',p.coverArt)),p.coverArt);
-    if(p.coverArt.startsWith('/assets/skins/identity/')){
-      const svg=fs.readFileSync(path.join(__dirname,'..',p.coverArt),'utf8');
-      assert(!/<script|<foreignObject|on\w+=|href=|url\(https?:/i.test(svg));
-      vectorArt.add(svg);
-    }
+    assert.match(p.coverArt,/^\/revised\/assets\/skins\/pacific-20261029\/[a-z0-9-]+\.svg$/);
+    assert(fs.existsSync(path.join(__dirname,'..',p.coverArt)),p.coverArt);
     assert(skins.contrast(p.ink,p.panel)>=4.5,p.name+' body contrast');
     assert(skins.contrast(p.muted,p.panel)>=4.5,p.name+' secondary contrast');
+  }
+  // The previous identity artwork remains attributed source history. The
+  // regional covers now supply the visible presentation for all saved IDs.
+  for(const style of Object.values(require('../skin-identities.js').styles))if(style.coverArt?.startsWith('/assets/skins/identity/')){
+    const svg=fs.readFileSync(path.join(__dirname,'..',style.coverArt),'utf8');
+    assert(!/<script|<foreignObject|on\w+=|href=|url\(https?:/i.test(svg));vectorArt.add(svg);
   }
   assert.equal(vectorArt.size,89);
   assert.equal(skins.presets.filter(p=>p.category==='Schools').length,8);

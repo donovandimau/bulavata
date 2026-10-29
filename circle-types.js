@@ -1,8 +1,9 @@
 (function(root,factory){
-  const api=factory();
+  const skins=typeof module==='object'&&module.exports?require('./skins.js'):root.BulaSkins;
+  const api=factory(skins);
   if(typeof module==='object'&&module.exports)module.exports=api;
   else root.SotaCircleTypes=api;
-})(typeof globalThis==='object'?globalThis:this,function(){
+})(typeof globalThis==='object'?globalThis:this,function(skins){
   'use strict';
   const types=Object.freeze([
     {id:'kava',label:'Digital Kava Session',skin:'grog',emoji:'🥥',accent:'#efc187'},
@@ -17,7 +18,12 @@
     {id:'family',label:'Family Circle',skin:'occasion-family-reunion',emoji:'🏡',accent:'#246347'},
     {id:'music',label:'Music / Sigidrigi Circle',skin:'sigidrigi',emoji:'🎶',accent:'#c4b7fc'},
     {id:'other',label:'Other Circle',skin:'lagoon',emoji:'💬',accent:'#086779'}
-  ].map(type=>Object.freeze(type)));
+  ].map(type=>{
+    const preset=Array.isArray(skins?.presets)?skins.presets.find(preset=>preset.id===type.skin):null;
+    // accent is stable server metadata, shared with bv_circle_theme. Only the
+    // display colour follows the current room palette; no saved group changes.
+    return Object.freeze({...type,displayAccent:/^#[0-9a-f]{6}$/i.test(preset?.accent)?preset.accent:type.accent});
+  }));
   const fallback=types.find(type=>type.id==='koro');
   const escape=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   function get(id){return types.find(type=>type.id===id)||fallback;}

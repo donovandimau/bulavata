@@ -1816,7 +1816,11 @@
   };
   for(const p of presets)Object.assign(p,artStyles[p.id]||{look:p.material==='paper'?'paper':'social'});
   const identities=typeof module==='object'&&module.exports?require('./skin-identities.js'):globalThis.SotaSkinIdentities;
-  if(identities){presets.push(...identities.presets);for(const p of presets)Object.assign(p,identities.styles[p.id]||{});}
+  if(identities){presets.push(...identities.presets.map(p=>({...p})));for(const p of presets)Object.assign(p,identities.styles[p.id]||{});}
+  // Regional presentation follows the identity merge. Saved IDs, credited
+  // identities, source artwork/borders and attributed song references survive.
+  const regional=typeof module==='object'&&module.exports?require('./pacific-themes.js'):globalThis.SotaPacificThemes;
+  if(regional)for(const p of presets)Object.assign(p,regional.styles[p.id]||{});
   function song(ref){
     const match=String(ref||'').match(/^([a-z0-9-]+):(\d{1,2})$/);if(!match)return null;
     const p=presets.find(p=>p.id===match[1]),s=p?.songs?.[Number(match[2])];
@@ -1892,7 +1896,7 @@
     const rgb = [1,3,5].map(i=>parseInt(colour.slice(i,i+2),16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);
     return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];
   }
-  function foreground(bg) { return luminance(bg) > .179 ? '#172433' : '#ffffff'; }
+  function foreground(bg) { return contrast(bg,'#172433')>=4.5?'#172433':contrast(bg,'#ffffff')>=4.5?'#ffffff':'#000000'; }
   function contrast(a,b) { const x=luminance(a),y=luminance(b); return (Math.max(x,y)+.05)/(Math.min(x,y)+.05); }
   function motif(pattern) {
     const light='rgba(255,255,255,.25)',dark='rgba(25,40,60,.08)';

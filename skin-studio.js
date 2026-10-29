@@ -33,6 +33,7 @@
       textScale:settings.textScale,headingScale:settings.headingScale,coverHeight:settings.coverHeight,
       coverX:settings.coverX,coverY:settings.coverY,textAlign:settings.textAlign,musicPosition:settings.musicPosition});
   }
+  function themeLabel(p) { return p.regionalTitle||p.identityLabel||p.name; }
   function skinScene(settings) {
     const p=skins.presets.find(p=>p.id===settings.id);
     if(!p?.artwork)return '';
@@ -42,7 +43,7 @@
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id),songs=p.songs||[];
     if(!songs.length&&!p.identityLabel)return '';
     const sources=(p.identitySources||[]).filter(url=>skins.safeUrl(url));
-    return `<section class="bv-identity-music"><header><span>THE MUSIC. THE MEMORIES.</span><h3>${esc(p.identityLabel||p.name)}</h3></header>
+    return `<section class="bv-identity-music"><header><span>THE MUSIC. THE MEMORIES.</span><h3>${esc(themeLabel(p))}</h3></header>
       ${songs.length?`<div class="bv-identity-songs">${songs.map((song,i)=>{
         const ref=p.id+':'+i,selected=s.songRef===ref;
         const label=/official institutional|documented school association/.test(song.relationship)?'School / community song':/alumni/.test(song.relationship)?'Alumni anthem':/school-themed|collaboration/.test(song.relationship)?'Supporter recording':'Listening reference';
@@ -52,7 +53,7 @@
   }
   function coverContent(settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
-    return `${window.SotaRoomAtmosphere?.markup(s)||''}${s.coverPath?coverMediaMarkup(s):''}<div class="bv-cover-placement"><div class="bv-cover-copy"><span class="bv-skin-tag">${s.customName?'YOUR OWN DESIGN':esc(p.category)+' · Your community'}</span><h3 class="bv-identity-title">${esc(s.customName||p.identityLabel||p.name)}</h3><div class="bv-cover-words">${esc(s.note||p.note)}</div></div></div>`;
+    return `${window.SotaRoomAtmosphere?.markup(s)||''}${s.coverPath?coverMediaMarkup(s):''}<div class="bv-cover-placement"><div class="bv-cover-copy"><span class="bv-skin-tag">${s.customName?'YOUR OWN DESIGN':esc(p.category)+' · Your community'}</span><h3 class="bv-identity-title">${esc(s.customName||themeLabel(p))}</h3><div class="bv-cover-words">${esc(s.note||p.note)}</div></div></div>`;
   }
   function preview(profile, settings) {
     const s=skins.normalize(settings),p=skins.presets.find(p=>p.id===s.id);
@@ -248,7 +249,7 @@
   }
   function skinThumbnail(p) {
     const art=visuals?.cover(p)||p.coverArt||p.artwork;
-    return `<span class="bv-visual-thumb" style="${esc(skins.inline({id:p.id}))}" data-look="${p.look}" aria-hidden="true"><span class="bv-thumb-art">${art?`<img src="${esc(art)}" loading="lazy" alt="">`:''}<b>${esc(p.identityLabel||p.name)}</b></span></span>`;
+    return `<span class="bv-visual-thumb" style="${esc(skins.inline({id:p.id}))}" data-look="${p.look}" aria-hidden="true"><span class="bv-thumb-art">${art?`<img src="${esc(art)}" loading="lazy" alt="">`:''}<b>${esc(themeLabel(p))}</b></span></span>`;
   }
   function skinOption(p) {
     return `<button type="button" class="bv-skin-option" data-skin="${p.id}" aria-pressed="${draft.id===p.id}" aria-label="${esc(p.name)} skin">${skinThumbnail(p)}<span class="bv-choice-label"><strong>${esc(p.name)}</strong><small>${esc(p.category)}</small></span></button>`;

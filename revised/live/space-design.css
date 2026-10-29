@@ -97,8 +97,16 @@ html[data-space-dialog-button-style=soft] :is(dialog:not(#ssd-editor):not(.bv-st
 @media(forced-colors:active){:is(#app,#workspace,#nativeCalls,body.cr)[data-space-button-style] :is(.btn,.sx-button,.bv-entry-button,.sx-create-tool){background:ButtonFace!important;color:ButtonText!important;border-color:ButtonText!important}.ssd-editor{background:Canvas;color:CanvasText}}
 
 .ssd-editor .ssd-head{background:#eef4ef;border-bottom:1px solid #d3e0d9;color:#173e4b}.ssd-editor .ssd-head :is(h2,small){color:#173e4b}
-#ssd-editor>.ssd-head{background:#eef4ef!important;color:#173e4b!important;border:1px solid #d3e0d9;box-shadow:none}
-#ssd-editor>.ssd-head :is(h2,small){color:#173e4b!important;text-shadow:none!important}
-#ssd-editor>.ssd-head h2{font:700 27px/1.2 Arial,system-ui,sans-serif;letter-spacing:-.035em}
-#ssd-editor>.ssd-head .ssd-close{background:#dce9e0!important;color:#173e4b!important;border:1px solid #a5bfb4}
+#ssd-editor>.ssd-head{background:radial-gradient(ellipse at 96% 110%,#b0ffe512 0 25%,transparent 25.5% 35%,#b0ffe512 35.5% 38%,transparent 38.5%),linear-gradient(115deg,#006862,#0a526b)!important;color:#fff!important;border:1px solid #0b6973;box-shadow:inset 0 -4px 0 #ffffff12}
+#ssd-editor>.ssd-head :is(h2,small){color:#fff!important;text-shadow:none!important}
+#ssd-editor>.ssd-head small{letter-spacing:.1em;font-size:9px;line-height:1.5}
+#ssd-editor>.ssd-head h2{font:900 27px/1.2 Nunito,system-ui,sans-serif;letter-spacing:-.025em}
+#ssd-editor>.ssd-head .ssd-close{background:#ddfff2!important;color:#0c4d56!important;border:1px solid #96d6d3}
+#ssd-editor{background:#fcfff9;border-color:#a8d5cb}
+#ssd-editor .ssd-mode-tabs{background:#f0fff8;border-color:#a6d8cd}
+#ssd-editor .ssd-mode-tabs [aria-selected=true],#ssd-editor .ssd-save{background:#006862;color:#fff;border-color:#006862}
+#ssd-editor .ssd-palette[aria-pressed=true]{outline-color:#007c76}
+#ssd-editor .ssd-actions{background:#fcfff9}
+#ssd-editor .ssd-preview{border-color:color-mix(in srgb,var(--preview-accent) 35%,transparent);box-shadow:0 5px 0 color-mix(in srgb,var(--preview-accent) 10%,transparent)}
 @media(max-width:380px){#ssd-editor>.ssd-head h2{font-size:23px}}
+@media(forced-colors:active){#ssd-editor,#ssd-editor .ssd-actions,#ssd-editor>.ssd-head{background:Canvas!important;color:CanvasText!important;border-color:CanvasText}#ssd-editor>.ssd-head :is(h2,small){color:CanvasText!important}#ssd-editor>.ssd-head .ssd-close{background:ButtonFace!important;color:ButtonText!important;border-color:ButtonText}#ssd-editor .ssd-mode-tabs [aria-selected=true],#ssd-editor .ssd-save{background:Highlight;color:HighlightText;border-color:Highlight}}
