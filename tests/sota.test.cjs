@@ -17,7 +17,7 @@ for(const preset of skins.presets){
   assert(skins.safeLegacy('.scrawl { border-radius: 17px; }').includes('#view.bv-room .scrawl'));
 }
 assert.equal(skins.normalize({accent:'red;position:fixed',background:'url(https://bad.test)',id:'missing'}).id,'lagoon');
-assert.equal(skins.normalize({accent:'red;position:fixed'}).accent,'#086779');
+assert.equal(skins.normalize({accent:'red;position:fixed'}).accent,skins.presets.find(p=>p.id==='lagoon').accent);
 for(const unsafe of ['@import "https://bad.test";','.scrawl{background:url(https://bad.test)}','</style><script>alert(1)</script>','.scrawl{background:u\\72l(x)}'])assert.equal(skins.safeLegacy(unsafe),'');
 assert(!skins.safeLegacy('.scrawl{position:fixed;z-index:9999;color:red}').includes('position'));
 assert(!skins.safeLegacy('body{color:red}').includes('body'));

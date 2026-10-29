@@ -90,7 +90,7 @@ test('themes use only BulaSkins.normalize id input and never mutate profiles or 
 
 test('browser UMD exposes the same immutable helper without DOM, storage or network access',()=>{
   const source=fs.readFileSync(path.join(__dirname,'../circle-types.js'),'utf8');
-  const context=vm.createContext({});
+  const context=vm.createContext({BulaSkins:skins});
   context.window=context;
   vm.runInContext(source,context,{filename:'circle-types.js'});
   const browser=context.window.SotaCircleTypes;
@@ -98,4 +98,12 @@ test('browser UMD exposes the same immutable helper without DOM, storage or netw
   assert.deepEqual(JSON.parse(JSON.stringify(browser.types)),circles.types);
   assert.equal(browser.get('unknown').id,'koro');
   assert.equal(browser.theme('school',{normalize:input=>input}).id,'varsity');
+});
+
+test('browser helper retains safe legacy defaults without the optional skin catalogue',()=>{
+  const source=fs.readFileSync(path.join(__dirname,'../circle-types.js'),'utf8');
+  for(const BulaSkins of [undefined,{presets:[]},{presets:[{id:'grog',accent:'red;position:fixed'}]}]){
+    const context=vm.createContext({BulaSkins});vm.runInContext(source,context);
+    const browser=context.SotaCircleTypes;assert.equal(browser.types.length,12);assert.equal(browser.get('kava').skin,'grog');assert.equal(browser.get('kava').accent,'#efc187');assert(Object.isFrozen(browser.get('kava')));
+  }
 });
