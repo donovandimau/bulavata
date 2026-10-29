@@ -1,0 +1,55 @@
+/* Preserve the owner's original artwork and pattern without changing room palettes. */
+body {
+  background: #d7f2ff url('./assets/original-blue-pattern.png') center top / 420px 420px repeat fixed;
+}
+body:has(.editorial-studio) { background: #f8f6ef; }
+.landing-copy { background: #f4fbffed; border: 1px solid #d2e7ef; border-radius: 24px; padding: 26px; }
+.welcome-header, .welcome-band, .welcome-footer { background: #f4fbffed; }
+.main > .page-head {
+  background: #f4fbffd9;
+  border: 1px solid #d2e7ef;
+  border-radius: 18px;
+  padding: 22px;
+}
+.original-gathering { display: block; width: 100%; height: auto; }
+.hero-art.original-gathering {
+  height: auto; aspect-ratio: 3 / 2; object-fit: contain;
+  border: 5px solid #fffdf5; border-radius: 24px;
+}
+.daily-note.original-home { display: block; padding: 0; min-height: 0; }
+.daily-note.original-home::after { display: none; }
+.original-home figure { margin: 0; }
+.original-home figcaption {
+  padding: 8px 18px; background: #103d50; color: #d7edf4; font-size: 10px;
+}
+.daily-note.original-home > div { padding: 24px 28px; max-width: none; }
+.daily-note.original-home h2 { font-size: clamp(27px, 3vw, 38px); margin: 12px 0; }
+.daily-note.original-home p { max-width: none; }
+/* Each scene keeps its full composition, rather than slicing through faces. */
+.talanoa-banner { display: grid; grid-template-columns: 1fr 1.2fr; padding: 0; min-height: 0; }
+.talanoa-banner h2 { max-width: none; align-self: center; padding: 28px; margin: 0; font-size: clamp(25px, 2.5vw, 34px); }
+.talanoa-banner::after { display: none; }
+.talanoa-banner .talanoa-art.artwork { position: static; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; }
+.person-card .person-top { height: auto; aspect-ratio: 3 / 2; }
+.person-top .artwork, .circle-cover .artwork, .topic-visual .artwork { height: auto; aspect-ratio: 3 / 2; object-fit: contain; }
+.circle-cover, .topic-visual { height: auto; }
+.profile-cover:has(> .artwork) { height: auto; background: #123e56; }
+.profile-cover > .artwork { height: auto; max-height: 460px; object-fit: contain; }
+.fictional-badge {
+  display: block; width: fit-content; margin: 5px 0;
+  padding: 3px 7px; border: 1px solid #c5dde7; border-radius: 20px;
+  background: #edf7fb; color: #315c70; font: 500 10px/1.4 var(--sans);
+}
+.person-card > .fictional-badge, .discover-person > .fictional-badge { margin: 8px auto; }
+.post-meta { line-height: 1.6; }
+.scene-caption { background: #103d50; color: #fff; padding: 7px 11px; border-radius: 12px; }
+@media (max-width: 680px) {
+  .main > .page-head { padding: 18px; }
+  .daily-note.original-home > div { padding: 21px; }
+  .talanoa-banner { grid-template-columns: 1fr; }
+  .talanoa-banner h2 { padding: 23px; }
+  .hero-art.original-gathering { height: auto; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .main > .page-head { background: #f4fbff; }
+}

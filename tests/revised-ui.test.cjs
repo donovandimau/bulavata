@@ -49,3 +49,16 @@ test('circle quote replies, search and reactions preserve unsent text',opts,asyn
 test('member signout clears search, photo, quote and feed preference state',opts,async()=>{const f=await fixture();try{f.h.state.mode='member';f.h.state.reply={text:'Private quote'};f.h.state.searchQuery='Private search';f.h.state.localPrefs={interests:[],muted:['private-owner'],hidden:[]};f.h.state.photo={src:'private'};f.h.clearMember();assert.equal(f.h.state.reply,null);assert.equal(f.h.state.searchQuery,'');assert.equal(f.h.state.photo,null);assert.equal(f.h.state.localPrefs.muted.length,0);}finally{f.dom.window.close();}});
 
 test('community search opens an actual matching moment after navigation',opts,async()=>{const f=await fixture();try{f.w.location.hash='#discover';await f.settle();await f.h.action('search');f.fill('#global-query','long way home');await f.submit('[data-form="global-search"]');assert.match(f.h.dialog.textContent,/Took the long way home/);await f.h.action('search-post','post-2');await f.settle();assert.equal(f.w.location.hash,'#home');assert.equal(f.w.document.querySelector('.moment-found').dataset.post,'post-2');assert.equal(f.w.document.activeElement.dataset.post,'post-2');assert.equal(f.h.state.searchTarget,'');}finally{f.dom.window.close();}});
+
+test('photographic sample identities remain visibly labelled and never label members as fictional',opts,async()=>{
+ const f=await fixture();try{
+  for(const page of ['home','people','discover']){
+   f.h.state.page=page;f.h.render();
+   const labels=f.w.document.querySelectorAll('.fictional-badge');assert.ok(labels.length>=3,page);assert.ok([...labels].every(x=>x.textContent==='Fictional sample'));
+  }
+  f.h.state.page='people';f.h.state.mode='member';f.h.state.member={me:{id:'owner',name:'Owner',theme:'lagoon'},people:[{id:'ani',name:'Real member',handle:'real.member',theme:'lagoon'}],posts:[],circles:[]};f.h.render();
+  assert.equal(f.w.document.querySelectorAll('.fictional-badge').length,0);
+  assert.equal(f.w.document.querySelectorAll('.person-card img[src="./assets/ani.webp"]').length,0);
+  assert.match(f.w.document.querySelector('.person-card').textContent,/Real member/);
+ }finally{f.dom.window.close();}
+});

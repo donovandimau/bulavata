@@ -29,3 +29,6 @@ export const topicArtwork=key=>['making','outside','music','food','photos','cult
 export function circleArtwork(c){return c?.id==='makers'?'making':c?.id==='sounds'||c?.type==='music'?'music':c?.id==='weekend'?'food':'hero';}
 export function coverArtwork(p,mode='demo'){if(mode==='demo'&&p?.id!=='you'){return ({'Art & making':'making',Music:'music',Outdoors:'outside','Food & family':'food',Photography:'photos'}[p?.interest]||'culture');}return ({lagoon:'outside',coral:'hero',indigo:'album-night',forest:'culture'}[p?.theme]||'outside');}
 export function albumArtwork(track){return ['lagoon','gold','coral','night'].includes(track?.id)?'album-'+track.id:track?.kind==='community'?'music':track?.kind==='local'?'album-night':'album-lagoon';}
+
+// Owner-supplied original gathering artwork, preserved byte-for-byte from assets/fiji-music.jpg.
+export function originalGatheringImage(className=''){return `<img class="original-gathering ${esc(className)}" src="./assets/original-gathering.jpg" width="1536" height="1024" alt="Original Sota Kece artwork of a Fijian music gathering; illustrative people, not member or artist photographs" fetchpriority="high" decoding="async">`;}

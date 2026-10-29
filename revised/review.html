@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Sota Kece · imagery review</title>
+<style>
+  *{box-sizing:border-box}body{margin:0;background:#e8f1f5;color:#123e56;font:14px system-ui}
+  header{padding:14px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+  select,a{padding:8px;color:inherit}iframe{display:block;border:1px solid #adc7d2;background:#fff;margin:0 auto;width:390px;height:844px;max-width:100%}
+</style>
+<header><strong>390px phone review</strong><label>Screen <select id="route">
+  <option value="home">Home</option><option value="people">People</option><option value="talanoa">Talanoa</option>
+  <option value="music">Music</option><option value="discover">Discover</option><option value="space">My space</option>
+  <option value="studio">Room Studio</option><option value="welcome">Welcome</option>
+</select></label><a href="./#home">Open full preview ↗</a></header>
+<iframe id="phone" title="Sota Kece at a 390 pixel viewport" src="./#home"></iframe>
+<script>
+  document.querySelector('#route').addEventListener('change', e => {
+    document.querySelector('#phone').src = './#' + e.target.value;
+  });
+</script>
+</html>

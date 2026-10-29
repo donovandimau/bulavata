@@ -67,3 +67,11 @@ The selected cover, colours and heading type apply to the room preview and the o
 
 Validation adds text contrast for every palette, legacy saved-ID compatibility and old-name search/default-apply behavior to the existing tests. This revision is a held preview under PR267; production publication remains separate.
 
+
+## Imagery preservation review — 29 October 2026
+
+PR #267 is already merged. This follow-up preserves the exact original Fijian music gathering from `assets/fiji-music.jpg` and original blue-and-white pattern in the revised preview, using byte-identical local copies. Home and welcome show the complete original image. Community scene cards and Talanoa use proportional frames rather than shallow face-cutting crops; personal material/landscape room covers retain their own design. Fictional generated profiles carry visible labels in People, Discover, feed posts and their personal spaces, and the global sample notice explicitly identifies generated people. Member profiles receive no fictional labels or sample portraits.
+
+Social metadata reuses the existing live original Sota Kece logo share image and canonical domain, with its actual 1200×630 dimensions and matching OG/Twitter descriptions; it no longer points at the old mutable preview branch. The original logo artwork, 18 new photo assets, eight editorial room images, 94 saved room IDs, 82-track catalogue, audio engines, account adapter and settings storage remain unchanged. `review.html` is a noindex 390px visual review frame, not a user-facing app route.
+
+Publication is held for owner review. This pass neither merges nor promotes the follow-up.
