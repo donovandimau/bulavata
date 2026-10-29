@@ -1,0 +1,119 @@
+/* The original room artwork and the 94 Room Studio identities keep their own palettes. */
+body.revised-app #app{min-width:0}
+body.revised-app :is(button,a,input,select,textarea,summary):focus-visible{outline:3px solid #a1462e;outline-offset:4px}
+body.revised-app #app :is(.btn,.chip,.icon-btn,.post-actions button,.post-name,.text-link,.main-nav a,.rail-extras a,.mini-circle,.person,.track-pick,.mate-grid button){min-height:44px}
+body.revised-app :is(#app,#player,#dialog) .icon-btn{min-width:44px;min-height:44px}
+body.revised-app .btn{border-radius:12px}
+body.revised-app .topbar{height:auto;min-height:85px;flex-wrap:wrap}
+body.revised-app .topbar .tools{flex-wrap:wrap;justify-content:flex-end;gap:8px;margin-left:auto}
+body.revised-app .design-page-control{flex:none;border:1px solid #b8d0d1;background:#f5fbf8;min-height:44px;gap:8px;color:#163e49}
+body.revised-app .design-page-control .ico{width:18px;height:18px}
+body.revised-app .welcome-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+body.revised-app .ssd-launcher{display:none!important}
+body.revised-app .feed-post .post-body{font-size:15px;line-height:1.75}
+body.revised-app :is(.settings-grid .card,.circle-card,.person-card) p{font-size:14px;line-height:1.65}
+body.revised-app .message .bubble{font-size:14px;line-height:1.65}
+body.revised-app :is(.post-meta,.post-context,.char-count,.dialog-copy,.profile-stats,.track-row small){font-size:12px;line-height:1.5}
+body.revised-app .settings-grid .card{display:flex;flex-direction:column;align-items:flex-start}
+body.revised-app .settings-grid .card>.btn{margin-top:auto}
+body.revised-app .form-stack :is(input:not([type=radio]):not([type=checkbox]),select,textarea){font-size:16px}
+body.revised-app .feed-post .row{flex-wrap:wrap}
+body.revised-app .feed-post .row .grow{min-width:100px}
+body.revised-app .track-row .track-pick{min-width:0}
+body.revised-app .track-row strong{font-size:14px}
+body.revised-app .post-actions{flex-wrap:wrap;gap:8px 18px}
+body.revised-app .post-actions button{padding:7px 2px}
+body.revised-app #dialog>.dialog-head{gap:12px}
+body.revised-app #dialog>.dialog-head>div{flex:1;min-width:0}
+html[data-space-dialog-designed] body.revised-app #dialog .dialog-head .eyebrow{color:var(--ssd-muted)!important}
+html[data-space-dialog-designed] body.revised-app #dialog .ssd-dialog-design{background:var(--ssd-accent)!important;color:var(--ssd-on-accent)!important;border:1px solid var(--ssd-accent)!important}
+
+/* The page designer supplies trusted tokens for the current route and current owner. */
+html[data-space-dialog-designed] body.revised-app{background-color:var(--ssd-background)!important;background-image:none}
+body.revised-app #app[data-space-designed]{--accent:var(--ssd-accent);--ink:var(--ssd-ink);--muted:var(--ssd-muted);--paper:var(--ssd-background);--line:color-mix(in srgb,var(--ssd-ink) 18%,var(--ssd-panel));min-height:100dvh;color:var(--ssd-background-ink)!important}
+/* Width choices affect the content column, leaving navigation in its established position. */
+body.revised-app #app[data-space-frame]{width:100%!important;max-width:none!important;margin:0!important}
+body.revised-app #app[data-space-frame=centred] :is(.main,.welcome,.welcome-header){max-width:1100px}
+body.revised-app #app[data-space-frame=wide] :is(.main,.welcome,.welcome-header){max-width:1536px}
+body.revised-app #app[data-space-designed] :is(.rail,.topbar,.welcome-header){background:var(--ssd-panel);background-image:none;color:var(--ssd-ink);border-color:var(--line)}
+body.revised-app #app[data-space-designed] .rail :is(.eyebrow,.brand small,.rail-foot p,.rail-foot small,.rail-extras,.rail-profile small){color:var(--ssd-muted)}
+body.revised-app #app[data-space-designed] .rail :is(.main-nav a,.rail-extras a){color:var(--ssd-ink)}
+body.revised-app #app[data-space-designed] .main-nav a>.ico{color:var(--ssd-accent);background:transparent}
+body.revised-app #app[data-space-designed] .main-nav a[aria-current=page]{background:var(--ssd-accent);color:var(--ssd-on-accent)}
+body.revised-app #app[data-space-designed] .main-nav a[aria-current=page]>.ico{background:transparent;color:inherit}
+body.revised-app #app[data-space-designed] .rail-extras span{background:var(--ssd-accent);color:var(--ssd-on-accent)}
+body.revised-app #app[data-space-designed] :is(.page-head,.section-title,.feed-explainer,.people-shortcuts,.visitor-note,.footer,.welcome-end,.landing-copy){color:var(--ssd-background-ink)}
+body.revised-app #app[data-space-designed] :is(.page-head,.section-title,.welcome-end,.landing-copy) :is(.eyebrow,p,.date){color:var(--ssd-background-ink)}
+body.revised-app #app[data-space-designed] :is(.card:not(.room-themed),.search,.empty,.chat-layout,.mode-badge,.sample-bar,.music-hero,.combined-feature-band,.feature-card){background:var(--ssd-panel);color:var(--ssd-ink);border-color:var(--line)}
+body.revised-app #app[data-space-designed] :is(.card:not(.room-themed),.empty,.chat-layout,.music-hero,.combined-feature-band) :is(p,small,.muted,.eyebrow,.post-context,.post-meta,.handle,.stamp){color:var(--ssd-muted)}
+body.revised-app #app[data-space-designed] :is(.post-body,.person-card h3,.circle-card h3,.settings-grid h2,.chat-head h2,.track-row strong){color:var(--ssd-ink)!important}
+body.revised-app #app[data-space-designed] :is(.composer .compose-prompt,.chip,.tag,.chat-search,.message .bubble,.quote-preview,.track-row.on,.mates-picker button){background:var(--ssd-panel);color:var(--ssd-ink);border-color:var(--ssd-muted)}
+body.revised-app #app[data-space-designed] :is(.chip.on,.mates-picker [aria-pressed=true],.compose-tabs .on){background:var(--ssd-accent);color:var(--ssd-on-accent);border-color:var(--ssd-accent)}
+body.revised-app #app[data-space-designed] :is(.btn,.design-page-control){background:var(--ssd-accent);border-color:var(--ssd-accent);color:var(--ssd-on-accent)}
+body.revised-app #app[data-space-designed] :is(.post-actions button,.post-name,.icon-btn,.text-link){color:inherit}
+body.revised-app #app[data-space-designed] .icon-btn,
+html[data-space-dialog-designed] body.revised-app #dialog .icon-btn{background:var(--ssd-panel);color:var(--ssd-ink);border:1px solid var(--ssd-muted)}
+body.revised-app #app[data-space-designed] :is(.icon-btn.on,.icon-btn.main-play){background:var(--ssd-accent);color:var(--ssd-on-accent);border-color:var(--ssd-accent)}
+body.revised-app #app[data-space-designed] .sample-bar button{color:var(--ssd-ink);text-decoration:underline;text-underline-offset:3px}
+/* The text remains readable against the light photographic overlays. */
+body.revised-app #app[data-space-designed] :is(.daily-note,.talanoa-banner){color:#123e56}
+body.revised-app #app[data-space-designed] :is(.daily-note,.talanoa-banner) :is(p,.eyebrow){color:#416575}
+body.revised-app #app[data-space-designed] :is(button,a,input,select,textarea,summary):focus-visible{outline-color:var(--ssd-background-ink)}
+
+/* Font choice covers ordinary interface and content text, without changing room title type. */
+body.revised-app #app[data-space-designed] :is(.rail,.topbar,.welcome-header,.page-head,.landing-copy,.welcome-end,.card:not(.room-themed),.empty,.chat-layout,.track-row,.settings-grid,.combined-feature-band){font-family:var(--ssd-font)}
+body.revised-app #app[data-space-designed] :is(.page-head,.landing-copy,.welcome-end,.card:not(.room-themed),.empty,.chat-layout,.combined-feature-band) :is(h1,h2,h3){font-family:var(--ssd-font)}
+body.revised-app #app[data-space-text-size=large] :is(.feed-post .post-body,.message .bubble,.person-card p,.circle-card p,.settings-grid p,.page-head p,.landing-copy p,.track-row strong){font-size:18px!important;line-height:1.65!important}
+body.revised-app #app[data-space-text-size=larger] :is(.feed-post .post-body,.message .bubble,.person-card p,.circle-card p,.settings-grid p,.page-head p,.landing-copy p,.track-row strong){font-size:20px!important;line-height:1.7!important}
+body.revised-app #app[data-space-text-size=large] :is(.post-meta,.post-context,.track-row small,.dialog-copy){font-size:14px}
+body.revised-app #app[data-space-text-size=larger] :is(.post-meta,.post-context,.track-row small,.dialog-copy){font-size:15px}
+body.revised-app #app[data-space-density=compact] :is(.columns,.music-body,.settings-grid,.circles-grid,.people-grid){gap:14px}
+body.revised-app #app[data-space-density=spacious] :is(.columns,.music-body,.settings-grid,.circles-grid,.people-grid){gap:26px}
+body.revised-app #app[data-space-corners=square] :is(.btn,.chip,.search,.empty,.chat-layout,.music-hero,.combined-feature-band){border-radius:3px}
+body.revised-app #app[data-space-corners=round] :is(.search,.empty,.chat-layout,.music-hero,.combined-feature-band){border-radius:22px}
+body.revised-app #app[data-space-button-style=outline] .btn{background:var(--ssd-panel)!important;color:var(--ssd-ink)!important;border:2px solid var(--ssd-ink)!important;box-shadow:none}
+body.revised-app #app[data-space-button-style=soft] .btn{background:color-mix(in srgb,var(--ssd-accent) 14%,var(--ssd-panel))!important;color:var(--ssd-ink)!important;border:1px solid var(--ssd-muted)!important;box-shadow:none}
+
+/* Shared native selector rules must not repaint an authored room or a skin preview. */
+body.revised-app #app[data-space-designed] .room-themed,
+html[data-space-dialog-designed] body.revised-app #dialog .room-themed{background:var(--room-panel)!important;color:var(--room-ink)!important;border-color:color-mix(in srgb,var(--room-ink) 18%,transparent)!important;font-family:var(--sans)!important}
+body.revised-app #app[data-space-designed] .profile-hero.room-themed{padding:0!important;border-radius:8px!important}
+body.revised-app #app[data-space-designed] :is(.profile-hero,.person-card){padding:0!important}
+body.revised-app #app[data-space-designed] .circle-card{padding:0 24px 24px!important}
+body.revised-app #app[data-space-designed] .topic-card{padding:0 21px 22px!important}
+body.revised-app #app[data-space-designed] .room-themed :is(h1,h2,h3,h4,p,label,small),
+html[data-space-dialog-designed] body.revised-app #dialog .room-themed :is(h1,h2,h3,h4,p,label,small){color:var(--room-ink)!important}
+body.revised-app #app[data-space-designed] .room-themed :is(.bio,.muted,.eyebrow,.studio-preview-body p),
+html[data-space-dialog-designed] body.revised-app #dialog .room-themed :is(.bio,.muted,.eyebrow,.studio-preview-body p){color:var(--room-muted)!important}
+body.revised-app #app[data-space-designed] .room-themed :is(.btn,button),
+html[data-space-dialog-designed] body.revised-app #dialog .room-themed :is(.btn,button){font-family:var(--sans)!important}
+body.revised-app #app[data-space-designed] .room-themed .btn,
+html[data-space-dialog-designed] body.revised-app #dialog .room-themed .btn{background:var(--room-panel)!important;color:var(--room-ink)!important;border-color:var(--room-ink)!important}
+body.revised-app #app[data-space-designed] .room-themed .primary,
+html[data-space-dialog-designed] body.revised-app #dialog .room-themed .primary{background:var(--room-ink)!important;color:var(--room-panel)!important}
+body.revised-app #app[data-space-designed] .profile-hero.room-themed h1{font-family:var(--room-type)!important}
+body.revised-app #app[data-space-designed] .room-themed .profile-caption{color:white!important}
+body.revised-app #app[data-space-designed] .profile-hero.room-themed .bio{font-size:14px!important}
+body.revised-app #app[data-space-designed] .editorial-studio .skin-card{font-family:var(--sans)!important}
+html[data-space-dialog-designed] body.revised-app #dialog .studio-preview-body p{font-size:10px!important;line-height:1.7!important}
+html[data-space-dialog-designed] body.revised-app #dialog .studio-preview-body h2{font:400 25px/1.15 var(--room-type)!important}
+
+@media(max-width:1100px){body.revised-app .topbar .crumb{display:none}body.revised-app .topbar .tools{margin-left:0;width:100%}}
+@media(max-width:760px){
+ body.revised-app .topbar{gap:10px;padding:14px 18px}
+ body.revised-app .topbar .tools{display:flex;justify-content:flex-start;gap:7px}
+ body.revised-app .topbar .tools .mode-badge{display:none}
+ body.revised-app .topbar .design-page-control{margin-right:auto}
+ body.revised-app .design-wide-label{display:none}
+ body.revised-app .welcome-header{flex-wrap:wrap;gap:12px}
+ body.revised-app .welcome-tools{gap:7px;margin-left:auto}
+ body.revised-app .welcome-tools .btn{padding:8px 11px}
+ body.revised-app .feed-post .post-body{font-size:14px}
+ body.revised-app #app[data-space-designed] .profile-hero.room-themed .bio{font-size:12px!important}
+ body.revised-app #app[data-space-frame] :is(.main,.welcome,.welcome-header){width:100%;max-width:100%}
+}
+@media(max-width:680px){body.revised-app #app[data-space-designed] .circle-card{padding:0 21px 21px!important}body.revised-app #app[data-space-designed] .topic-card{padding:0 15px 18px!important}}
+@media(max-width:380px){body.revised-app .topbar{padding-inline:14px}body.revised-app .topbar .tools{gap:4px}body.revised-app .topbar .tools .btn.auth{padding-inline:9px}body.revised-app .topbar .design-page-control{padding-inline:9px;font-size:12px}body.revised-app .topbar .design-page-control>.ico{display:none}body.revised-app .topbar .tools .icon-btn{width:44px}body.revised-app .welcome-tools{width:100%;justify-content:space-between}}
+@media(max-width:359px){body.revised-app #app[data-space-designed] .topic-card{padding:0 13px 16px!important}}
+@media(prefers-reduced-motion:reduce){body.revised-app .btn{transition:none}body.revised-app .btn:hover{transform:none}}
+@media(forced-colors:active){body.revised-app #app[data-space-designed] :is(.btn,.chip,.icon-btn){background:ButtonFace!important;color:ButtonText!important;border-color:ButtonText!important}body.revised-app :is(button,a,input,select,textarea,summary):focus-visible{outline-color:Highlight}}
