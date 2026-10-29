@@ -1,0 +1,39 @@
+/* Screenshot revision, 29 October 2026. The shell frames members' own designs. */
+@layer dimau-premium {
+  body.sx-enabled #app.sx-app .sx-hero {border-radius:24px!important;box-shadow:0 12px 36px #173e4b14!important}
+  body.sx-enabled #app.sx-app .sx-button {min-height:48px!important;border-radius:12px!important;font-size:14px!important;line-height:1.4!important}
+  body.sx-enabled #app.sx-app .sx-hero small {font-size:12px!important;line-height:1.5!important}
+  body.sx-enabled #app.sx-app .sx-postcard {box-shadow:0 16px 40px #123a3338!important;transform:rotate(2deg)!important}
+  body.sx-enabled #app.sx-app .sx-postcard-body div>span {font-size:11px!important;line-height:1.5!important}
+  body.sx-enabled #app.sx-app .sx-nav :is(a,button) {min-height:48px!important}
+  body.sx-enabled #app.sx-app .sx-account-actions button {min-height:44px!important;font-size:14px!important}
+  body.sx-enabled #app.sx-app:not([data-space-designed]) .sx-top {border-bottom:1px solid #d9e2df!important;background:#f7f8f2ed!important}
+  body.revised-app #app:not([data-space-designed]) :is(.topbar,.welcome-header) {background:#f8fcfbed!important;border-bottom:1px solid #d6e5e4!important}
+  body.revised-app :is(.btn,.icon-btn,.chip) {min-height:44px!important}
+  body.revised-app #app:not([data-space-designed]) .btn {border-radius:12px!important;box-shadow:0 2px 6px #173e4b0a!important}
+  body.revised-app #app:not([data-space-designed]) :is(.card:not(.room-themed),.combined-visuals,.combined-feature-band) {box-shadow:0 5px 24px #173e4b08!important}
+  @media(max-width:760px) {
+    body.sx-enabled #app.sx-app .sx-top {padding:12px 20px!important;min-height:76px!important}
+    body.sx-enabled #app.sx-app .sx-content {padding-inline:18px!important}
+    body.sx-enabled #app.sx-app .sx-hero {min-height:0!important;padding:32px 24px 36px!important;align-items:flex-start!important}
+    body.sx-enabled #app.sx-app .sx-hero-copy {width:100%!important;max-width:420px!important}
+    body.sx-enabled #app.sx-app .sx-hero h1 {font-size:clamp(36px,10.6vw,54px)!important;line-height:1.04!important;margin:22px 0!important}
+    body.sx-enabled #app.sx-app .sx-hero p {font-size:16px!important;line-height:1.6!important;margin-bottom:24px!important}
+    body.sx-enabled #app.sx-app .sx-actions {gap:10px!important}
+    body.sx-enabled #app.sx-app .sx-actions>.sx-button {width:100%!important}
+    body.sx-enabled #app.sx-app .sx-postcard {position:relative!important;width:100%!important;max-width:320px!important;inset:auto!important;margin:32px auto 24px!important;display:grid!important}
+    body.sx-enabled #app.sx-app .sx-intro {margin-top:40px!important}
+    body.sx-enabled #app.sx-app .sx-nav :is(a,button) {min-height:56px!important;font-size:11px!important;line-height:1.4!important}
+    body.revised-app .welcome-header {padding:18px!important}
+    body.revised-app .welcome {padding-inline:18px!important}
+    body.revised-app .landing-copy h1 {font-size:clamp(42px,11vw,64px)!important;line-height:1.06!important}
+    body.revised-app .landing-copy p {font-size:16px!important;line-height:1.7!important}
+    body.revised-app .page-head h1 {font-size:36px!important;line-height:1.1!important}
+  }
+  @media(prefers-reduced-motion:reduce) {
+    body.sx-enabled #app.sx-app :is(.sx-button,.sx-postcard,.sx-discover-card),body.revised-app .btn {transition:none!important;transform:none!important}
+  }
+  @media(forced-colors:active) {
+    body.sx-enabled #app.sx-app .sx-button,body.revised-app :is(.btn,.icon-btn,.chip) {background:ButtonFace!important;color:ButtonText!important;border:1px solid ButtonText!important;box-shadow:none!important}
+  }
+}
