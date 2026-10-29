@@ -1,0 +1,6 @@
+/* Phone layout tidy-up, 29 Oct 2026: the Music tab already opens music, so the extra music button leaves the top bar.
+   Inside the dimau-header-standard layer because that layer's !important header styles beat any unlayered rule. */
+@layer dimau-header-standard{@media (max-width: 899px){
+  html:not(#pt) body header.sx-top [data-dimau-music-slot]{display:none!important}
+  html:not(#pt) body :is(h1,h2,h3)[tabindex="-1"]:focus{outline:none!important;box-shadow:none!important}
+}}
