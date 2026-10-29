@@ -1,4 +1,4 @@
-/* Generated from revised/assets/skins/pacific-20261029/catalogue.json. Run node scripts/build-pacific-native.cjs. */
+/* Generated from revised/assets/skins/photographic-20261029/catalogue.json. Run node scripts/build-pacific-native.cjs. */
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.SotaPacificThemes=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
 const styles={
@@ -13,11 +13,14 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Fiji Lagoon",
-    "coverArt": "/revised/assets/skins/pacific-20261029/lagoon.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "kula": {
     "bg": "#f9dce6",
@@ -30,11 +33,14 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Kula Island Colour",
-    "coverArt": "/revised/assets/skins/pacific-20261029/kula.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-flowers.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-flowers-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "midnight": {
     "bg": "#0c1032",
@@ -47,11 +53,14 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Pacific After Dark",
-    "coverArt": "/revised/assets/skins/pacific-20261029/midnight.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-sessions.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-sessions-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "bloom": {
     "bg": "#fbe5ee",
@@ -64,11 +73,14 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Hibiscus Bloom",
-    "coverArt": "/revised/assets/skins/pacific-20261029/bloom.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-flowers.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-flowers-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "palm": {
     "bg": "#e9fbf3",
@@ -81,11 +93,14 @@ const styles={
     "note": "Coconut shade and a little island sunshine.",
     "regionalMotif": "coconut",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Coconut Coast",
-    "coverArt": "/revised/assets/skins/pacific-20261029/palm.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/coconut-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/coconut-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "sunset": {
     "bg": "#dcf4f9",
@@ -98,11 +113,14 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "Existing Sota Kece photographic mood artwork; no documentary location or official identity is claimed.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Fiji Golden Hour",
-    "coverArt": "/revised/assets/skins/pacific-20261029/sunset.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/tropical-sunset.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/tropical-sunset-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "pixel": {
     "bg": "#0b282d",
@@ -115,11 +133,14 @@ const styles={
     "note": "A whole world of colour beneath the blue.",
     "regionalMotif": "reef",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Reef Life",
-    "coverArt": "/revised/assets/skins/pacific-20261029/pixel.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-guitar.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-guitar-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "notebook": {
     "bg": "#e5fbfa",
@@ -132,11 +153,14 @@ const styles={
     "note": "Fresh rain, deep green and a bright new day.",
     "regionalMotif": "tropical-rain",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Tropical Rain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/notebook.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "electric": {
     "bg": "#130c32",
@@ -149,11 +173,14 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Pacific Frequency",
-    "coverArt": "/revised/assets/skins/pacific-20261029/electric.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-sessions.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-sessions-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "masi": {
     "bg": "#e9f9fb",
@@ -166,11 +193,14 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Island Weave",
-    "coverArt": "/revised/assets/skins/pacific-20261029/masi.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/heritage-weave.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "drua": {
     "bg": "#dcf9f9",
@@ -183,11 +213,14 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Drua on the Blue",
-    "coverArt": "/revised/assets/skins/pacific-20261029/drua.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "hibiscus": {
     "bg": "#320c25",
@@ -200,11 +233,14 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Hibiscus Heat",
-    "coverArt": "/revised/assets/skins/pacific-20261029/hibiscus.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-flowers.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-flowers-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "reef": {
     "bg": "#e5f9fb",
@@ -217,11 +253,14 @@ const styles={
     "note": "A whole world of colour beneath the blue.",
     "regionalMotif": "reef",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Coral Coast",
-    "coverArt": "/revised/assets/skins/pacific-20261029/reef.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/coral-reef.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/coral-reef-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "kava": {
     "bg": "#e9f9fb",
@@ -234,11 +273,14 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Talanoa at Sunset",
-    "coverArt": "/revised/assets/skins/pacific-20261029/kava.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/community-talanoa.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/community-talanoa-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "mango": {
     "bg": "#dcf9f3",
@@ -251,11 +293,14 @@ const styles={
     "note": "Coconut shade and a little island sunshine.",
     "regionalMotif": "coconut",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Mango Season",
-    "coverArt": "/revised/assets/skins/pacific-20261029/mango.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/coconut-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/coconut-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "candy": {
     "bg": "#360d24",
@@ -268,11 +313,14 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Island Hibiscus",
-    "coverArt": "/revised/assets/skins/pacific-20261029/candy.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-flowers.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-flowers-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "cloud": {
     "bg": "#e9fbf8",
@@ -285,11 +333,14 @@ const styles={
     "note": "Green ridges, open skies and a little home.",
     "regionalMotif": "mountain-island",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Highland Fiji",
-    "coverArt": "/revised/assets/skins/pacific-20261029/cloud.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "ink": {
     "bg": "#e5f4fb",
@@ -302,11 +353,14 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Pacific Sail",
-    "coverArt": "/revised/assets/skins/pacific-20261029/ink.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "disco": {
     "bg": "#0d1136",
@@ -319,11 +373,14 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Island Sound System",
-    "coverArt": "/revised/assets/skins/pacific-20261029/disco.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-guitar.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-guitar-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "acid": {
     "bg": "#e9fbf8",
@@ -336,11 +393,14 @@ const styles={
     "note": "Fresh rain, deep green and a bright new day.",
     "regionalMotif": "tropical-rain",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Rainforest Green",
-    "coverArt": "/revised/assets/skins/pacific-20261029/acid.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "varsity": {
     "bg": "#dcedf9",
@@ -353,11 +413,14 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Fiji Reunion",
-    "coverArt": "/revised/assets/skins/pacific-20261029/varsity.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/community-talanoa.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/community-talanoa-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "comic": {
     "bg": "#0b1c2d",
@@ -370,11 +433,14 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Pacific Together",
-    "coverArt": "/revised/assets/skins/pacific-20261029/comic.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/shared-meal.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/shared-meal-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "afterglow": {
     "bg": "#140c32",
@@ -387,11 +453,14 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "Existing Sota Kece photographic mood artwork; no documentary location or official identity is claimed.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Island Afterglow",
-    "coverArt": "/revised/assets/skins/pacific-20261029/afterglow.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/tropical-sunset.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/tropical-sunset-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "mint": {
     "bg": "#e9fbf3",
@@ -404,11 +473,14 @@ const styles={
     "note": "Fresh green, salt air and your own pace.",
     "regionalMotif": "palm",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Tropical Garden",
-    "coverArt": "/revised/assets/skins/pacific-20261029/mint.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "school-natabua-high-school": {
     "bg": "#dcedf9",
@@ -421,10 +493,13 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/school-natabua-high-school.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/school-natabua.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/school-natabua-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "school-marist-brothers-high-school": {
     "bg": "#0c3220",
@@ -437,10 +512,13 @@ const styles={
     "note": "Fresh green, salt air and your own pace.",
     "regionalMotif": "palm",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/school-marist-brothers-high-school.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/school-marist.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/school-marist-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "school-suva-grammar-school": {
     "bg": "#e5fbf9",
@@ -453,10 +531,13 @@ const styles={
     "note": "Green ridges, open skies and a little home.",
     "regionalMotif": "mountain-island",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/school-suva-grammar-school.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/school-grammar.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/school-grammar-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "school-queen-victoria-school": {
     "bg": "#e9f5fb",
@@ -469,10 +550,13 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/school-queen-victoria-school.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/school-qvs.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/school-qvs-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "school-ratu-kadavulevu-school": {
     "bg": "#dcf7f9",
@@ -485,10 +569,13 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/school-ratu-kadavulevu-school.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/school-rks.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/school-rks-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "school-adi-cakobau-school": {
     "bg": "#0d361d",
@@ -501,10 +588,13 @@ const styles={
     "note": "Fresh green, salt air and your own pace.",
     "regionalMotif": "palm",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/school-adi-cakobau-school.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/school-acs.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/school-acs-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "school-fnu": {
     "bg": "#e5fbf2",
@@ -517,10 +607,13 @@ const styles={
     "note": "Green ridges, open skies and a little home.",
     "regionalMotif": "mountain-island",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/school-fnu.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/family-stories.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/family-stories-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "school-usp": {
     "bg": "#e9f7fb",
@@ -533,10 +626,13 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/school-usp.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/community-talanoa.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/community-talanoa-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "core-masi": {
     "bg": "#dcf8f9",
@@ -549,10 +645,13 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/core-masi.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/heritage-weave.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "masi-white": {
     "bg": "#0b252d",
@@ -565,10 +664,13 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/masi-white.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/heritage-weave.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "masi-smoked": {
     "bg": "#e5f3fb",
@@ -581,10 +683,13 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/masi-smoked.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/heritage-weave.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "masi-lau": {
     "bg": "#e9fbfb",
@@ -597,10 +702,13 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/masi-lau.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/heritage-weave.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "masi-cakaudrove": {
     "bg": "#dceff9",
@@ -613,10 +721,13 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/masi-cakaudrove.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/heritage-weave.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "grog": {
     "bg": "#0c2532",
@@ -629,10 +740,13 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/grog.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/community-talanoa.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/community-talanoa-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "sigidrigi": {
     "bg": "#eae5fb",
@@ -645,10 +759,13 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/sigidrigi.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-sessions.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-sessions-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "woven-mats": {
     "bg": "#e9fbf9",
@@ -661,10 +778,13 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/woven-mats.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/heritage-weave.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "village": {
     "bg": "#dceef9",
@@ -677,10 +797,13 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/village.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/community-talanoa.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/community-talanoa-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "navala": {
     "bg": "#0d362f",
@@ -693,10 +816,13 @@ const styles={
     "note": "Green ridges, open skies and a little home.",
     "regionalMotif": "mountain-island",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/navala.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "salusalu": {
     "bg": "#fbe5f6",
@@ -709,10 +835,13 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/salusalu.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-flowers.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-flowers-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "core-drua": {
     "bg": "#e9f3fb",
@@ -725,10 +854,13 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/core-drua.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-ba": {
     "bg": "#dcf8f9",
@@ -741,10 +873,13 @@ const styles={
     "note": "Green ridges, open skies and a little home.",
     "regionalMotif": "mountain-island",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-ba.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-bua": {
     "bg": "#0b2d1a",
@@ -757,10 +892,13 @@ const styles={
     "note": "Fresh green, salt air and your own pace.",
     "regionalMotif": "palm",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-bua.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-cakaudrove": {
     "bg": "#e5f6fb",
@@ -773,10 +911,13 @@ const styles={
     "note": "Fresh rain, deep green and a bright new day.",
     "regionalMotif": "tropical-rain",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-cakaudrove.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-kadavu": {
     "bg": "#e9fbf6",
@@ -789,10 +930,13 @@ const styles={
     "note": "A whole world of colour beneath the blue.",
     "regionalMotif": "reef",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-kadavu.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/coral-reef.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/coral-reef-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-lau": {
     "bg": "#dcecf9",
@@ -805,10 +949,13 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-lau.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-lomaiviti": {
     "bg": "#0c3232",
@@ -821,10 +968,13 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-lomaiviti.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-macuata": {
     "bg": "#e5fbfb",
@@ -837,10 +987,13 @@ const styles={
     "note": "A whole world of colour beneath the blue.",
     "regionalMotif": "reef",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-macuata.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/coral-reef.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/coral-reef-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-nadroga-navosa": {
     "bg": "#e9fbf6",
@@ -853,10 +1006,13 @@ const styles={
     "note": "A whole world of colour beneath the blue.",
     "regionalMotif": "reef",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-nadroga-navosa.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/province-nadroga.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/province-nadroga-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-naitasiri": {
     "bg": "#dcf7f9",
@@ -869,10 +1025,13 @@ const styles={
     "note": "Green ridges, open skies and a little home.",
     "regionalMotif": "mountain-island",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-naitasiri.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-namosi": {
     "bg": "#0d3632",
@@ -885,10 +1044,13 @@ const styles={
     "note": "Green ridges, open skies and a little home.",
     "regionalMotif": "mountain-island",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-namosi.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-ra": {
     "bg": "#e5fbfa",
@@ -901,10 +1063,13 @@ const styles={
     "note": "Coconut shade and a little island sunshine.",
     "regionalMotif": "coconut",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-ra.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/province-ra.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/province-ra-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-rewa": {
     "bg": "#e9fbf8",
@@ -917,10 +1082,13 @@ const styles={
     "note": "Fresh rain, deep green and a bright new day.",
     "regionalMotif": "tropical-rain",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-rewa.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-serua": {
     "bg": "#dcf9e5",
@@ -933,10 +1101,13 @@ const styles={
     "note": "Fresh green, salt air and your own pace.",
     "regionalMotif": "palm",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-serua.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/coconut-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/coconut-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "province-tailevu": {
     "bg": "#0b2d25",
@@ -949,10 +1120,13 @@ const styles={
     "note": "Coconut shade and a little island sunshine.",
     "regionalMotif": "coconut",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/province-tailevu.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/coconut-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/coconut-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "island": {
     "bg": "#e5f9fb",
@@ -965,10 +1139,13 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/island.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "vanua-levu": {
     "bg": "#e9fbf7",
@@ -981,10 +1158,13 @@ const styles={
     "note": "Fresh green, salt air and your own pace.",
     "regionalMotif": "palm",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/vanua-levu.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "taveuni": {
     "bg": "#f9dcf1",
@@ -997,10 +1177,13 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/taveuni.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "rotuma": {
     "bg": "#0c2f32",
@@ -1013,10 +1196,13 @@ const styles={
     "note": "Coconut shade and a little island sunshine.",
     "regionalMotif": "coconut",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/rotuma.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/coconut-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/coconut-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "yasawa": {
     "bg": "#e5f3fb",
@@ -1029,10 +1215,13 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/yasawa.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "lomaloma": {
     "bg": "#e9fbfa",
@@ -1045,10 +1234,13 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/lomaloma.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "nadi": {
     "bg": "#dcf5f9",
@@ -1061,10 +1253,13 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/nadi.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/community-talanoa.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/community-talanoa-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "diaspora": {
     "bg": "#0d2436",
@@ -1077,10 +1272,13 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/diaspora.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/family-stories.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/family-stories-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-birthday": {
     "bg": "#e5f4fb",
@@ -1093,10 +1291,13 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-birthday.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/shared-meal.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/shared-meal-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-first-birthday": {
     "bg": "#e9fbfb",
@@ -1109,10 +1310,13 @@ const styles={
     "note": "Coconut shade and a little island sunshine.",
     "regionalMotif": "coconut",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-first-birthday.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/family-stories.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/family-stories-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-milestone-birthday": {
     "bg": "#f9dcf0",
@@ -1125,10 +1329,13 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-milestone-birthday.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/shared-meal.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/shared-meal-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-wedding": {
     "bg": "#0b192d",
@@ -1141,10 +1348,13 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-wedding.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-flowers.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-flowers-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-masi-wedding": {
     "bg": "#e5fbf8",
@@ -1157,10 +1367,13 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-masi-wedding.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/heritage-weave.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-tevutevu": {
     "bg": "#e9fbf8",
@@ -1173,10 +1386,13 @@ const styles={
     "note": "Coconut shade and a little island sunshine.",
     "regionalMotif": "coconut",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-tevutevu.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/heritage-weave.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-anniversary": {
     "bg": "#f9dcf1",
@@ -1189,10 +1405,13 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "Existing Sota Kece photographic mood artwork; no documentary location or official identity is claimed.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-anniversary.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/tropical-sunset.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/tropical-sunset-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-childbirth": {
     "bg": "#0c1e32",
@@ -1205,10 +1424,13 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-childbirth.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-flowers.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-flowers-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-roqoroqo": {
     "bg": "#e5fafb",
@@ -1221,10 +1443,13 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-roqoroqo.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/family-stories.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/family-stories-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-mother-support": {
     "bg": "#e9fbf7",
@@ -1237,10 +1462,13 @@ const styles={
     "note": "Coconut shade and a little island sunshine.",
     "regionalMotif": "coconut",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-mother-support.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/family-stories.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/family-stories-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-baby-shower": {
     "bg": "#f9dcef",
@@ -1253,10 +1481,13 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-baby-shower.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/shared-meal.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/shared-meal-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-faith-birth": {
     "bg": "#0d2b36",
@@ -1269,10 +1500,13 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "Existing Sota Kece photographic mood artwork; no documentary location or official identity is claimed.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-faith-birth.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/tropical-sunset.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/tropical-sunset-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-graduation": {
     "bg": "#e5f4fb",
@@ -1285,10 +1519,13 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-graduation.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/school-rks.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/school-rks-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-school-reunion": {
     "bg": "#e9fbf7",
@@ -1301,10 +1538,13 @@ const styles={
     "note": "Coconut shade and a little island sunshine.",
     "regionalMotif": "coconut",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-school-reunion.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/community-talanoa.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/community-talanoa-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "occasion-family-reunion": {
     "bg": "#f9dce6",
@@ -1317,10 +1557,13 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/occasion-family-reunion.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/shared-meal.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/shared-meal-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "memory-love": {
     "bg": "#2d0b28",
@@ -1333,10 +1576,13 @@ const styles={
     "note": "Big island colour. Come as you are.",
     "regionalMotif": "hibiscus",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "Existing Sota Kece photographic mood artwork; no documentary location or official identity is claimed.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/memory-love.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/tropical-sunset.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/tropical-sunset-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "memory-broken-hearted": {
     "bg": "#0c2832",
@@ -1349,10 +1595,13 @@ const styles={
     "note": "Fresh rain, deep green and a bright new day.",
     "regionalMotif": "tropical-rain",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/memory-broken-hearted.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/rainforest.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/rainforest-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "memory-childhood-memory": {
     "bg": "#e9f9fb",
@@ -1365,10 +1614,13 @@ const styles={
     "note": "Good company and a place in the circle.",
     "regionalMotif": "community",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/memory-childhood-memory.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/family-stories.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/family-stories-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "studio-ocean": {
     "bg": "#dcf0f9",
@@ -1381,11 +1633,14 @@ const styles={
     "note": "Ocean air, bright water and room to explore.",
     "regionalMotif": "ocean",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Open Pacific",
-    "coverArt": "/revised/assets/skins/pacific-20261029/studio-ocean.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/vanua-coast.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "studio-masi": {
     "bg": "#0c2e32",
@@ -1398,11 +1653,14 @@ const styles={
     "note": "Bright connections, woven your own way.",
     "regionalMotif": "woven-inspired",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Woven Island",
-    "coverArt": "/revised/assets/skins/pacific-20261029/studio-masi.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/heritage-weave.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "studio-coral": {
     "bg": "#e5f7fb",
@@ -1415,11 +1673,14 @@ const styles={
     "note": "A whole world of colour beneath the blue.",
     "regionalMotif": "reef",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Coral Garden",
-    "coverArt": "/revised/assets/skins/pacific-20261029/studio-coral.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/coral-reef.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/coral-reef-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "studio-retro": {
     "bg": "#e9ecfb",
@@ -1432,11 +1693,14 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
     "regionalTitle": "Pacific Mixtape",
-    "coverArt": "/revised/assets/skins/pacific-20261029/studio-retro.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-sessions.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-sessions-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "music-makare": {
     "bg": "#dcddf9",
@@ -1449,10 +1713,13 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/music-makare.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-guitar.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-guitar-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "music-paradise-rootz": {
     "bg": "#180d36",
@@ -1465,10 +1732,13 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/music-paradise-rootz.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-sessions.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-sessions-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "music-kku": {
     "bg": "#e5e5fb",
@@ -1481,10 +1751,13 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/music-kku.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-guitar.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-guitar-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "music-valenisau": {
     "bg": "#ece9fb",
@@ -1497,10 +1770,13 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/music-valenisau.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-sessions.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-sessions-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "music-rako": {
     "bg": "#e6dcf9",
@@ -1513,10 +1789,13 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/music-rako.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-sessions.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-sessions-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   },
   "music-knox": {
     "bg": "#0b102d",
@@ -1529,14 +1808,18 @@ const styles={
     "note": "Island roots. Your rhythm. Your people.",
     "regionalMotif": "island-music",
     "region": "Fiji / Pacific / tropical",
-    "artNote": "Original code-native Fiji/Pacific-inspired illustration. Imagined decorative scene; no official crest, sacred motif or documentary claim.",
+    "artNote": "AI-generated photorealistic Pacific mood artwork; imagined scene, not a documentary photograph, actual school campus or official identity.",
     "font": "sans",
     "pattern": "plain",
-    "coverArt": "/revised/assets/skins/pacific-20261029/music-knox.svg"
+    "coverArt": "/revised/assets/skins/photographic-20261029/island-guitar.webp",
+    "coverThumb": "/revised/assets/skins/photographic-20261029/island-guitar-thumb.webp",
+    "artworkType": "photographic",
+    "coverPosition": "50% 50%"
   }
 };
 const representatives={"school-pride":"school-ratu-kadavulevu-school","vanua-islands":"province-ra","music-crowd":"music-makare","masi-culture":"core-masi","life-memories":"occasion-school-reunion","fresh-looks":"studio-ocean"};
 for(const style of Object.values(styles))Object.freeze(style);Object.freeze(styles);
 const collectionCovers=Object.freeze(Object.fromEntries(Object.entries(representatives).map(([key,id])=>[key,styles[id].coverArt])));
-return Object.freeze({version:1,styles,collectionCovers,images:Object.freeze(Object.values(styles).map(p=>p.coverArt))});
+const collectionThumbnails=Object.freeze(Object.fromEntries(Object.entries(representatives).map(([key,id])=>[key,styles[id].coverThumb])));
+return Object.freeze({version:2,styles,collectionCovers,collectionThumbnails,images:Object.freeze([...new Set(Object.values(styles).map(p=>p.coverArt))]),thumbnails:Object.freeze([...new Set(Object.values(styles).map(p=>p.coverThumb))])});
 });

@@ -25,8 +25,8 @@ for(const p of core){
   assert(skins.contrast(p.muted,p.panel)>=4.5,p.name+' secondary text contrast');
   const personal={id:p.id,note:'My own dedication',interests:'Family, guitar',trackTitle:'My own recording',trackUrl:'https://example.org/song.mp3',layout:'wide'};
   assert.deepEqual(skins.read(skins.encode(personal)).settings,skins.normalize(personal));
-  assert.equal(skins.tokens(personal)['--bv-art'],`url("${p.artwork}")`);
-  assert.equal(skins.tokens(personal)['--bv-border'],`url("${p.border}")`);
+  assert.equal(skins.tokens(personal)['--bv-art'],`url("${p.coverArt}")`);
+  assert.equal(skins.tokens(personal)['--bv-border'],'none');
   for(const song of p.songs){assert.equal(new URL(song.url).protocol,'https:');assert(song.title);assert(song.performer);}
 }
 assert.equal(backgrounds.size,60);

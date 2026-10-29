@@ -163,6 +163,15 @@ test('activation removes only older Sota Kece shell caches',async()=>{
   await app.activate();assert.equal(app.claimed,1);assert(!app.stores.has('sota-kece-shell-old'));assert(app.stores.has('another-app'));assert(app.stores.has(app.cacheName));
 });
 
+test('photographic theme covers cache on demand without widening access to private media',async()=>{
+ const app=worker();await app.install();
+ const image='/revised/assets/skins/photographic-20261029/reef.webp';
+ assert(!app.calls.some(url=>url.includes('photographic-20261029')),'No cover is mandatory installation content');
+ const result=await app.request(image);assert(result.intercepted);assert.equal(result.response.status,200);
+ assert(app.stores.get(app.cacheName).has(origin+image));
+ for(const url of ['/revised/assets/private/reef.webp','/storage/v1/object/private/reef.webp',image+'?token=private'])assert.equal((await app.request(url)).intercepted,false);
+});
+
 test('connectivity changes update the notice while preserving active views and drafts',()=>{
   const handlers={},notices=new Map(),draft={value:'My unfinished Talanoa'},activeView={name:'room'},registrations=[];
   let boots=0;

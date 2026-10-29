@@ -39,14 +39,14 @@ test('room hierarchy follows the identity while saved profile settings still rou
   assert.equal(discovery.layout(null),'social');
 });
 
-test('regional covers resolve to the shared SVG artwork while previous photographs remain preserved',()=>{
+test('regional themes resolve to actual shared photographic subjects while previous artwork remains preserved',()=>{
   const fs=require('node:fs'),path=require('node:path'),visuals=require('../skin-visuals.js');
-  assert.equal(visuals.images.length,94);
-  assert.equal(new Set(skins.presets.filter(p=>p.category==='Schools').map(visuals.cover)).size,8);
+  const catalogue=require('../revised/assets/skins/photographic-20261029/catalogue.json');
+  assert.equal(visuals.images.length,new Set(catalogue.map(p=>p.coverArt)).size);
+  assert.equal(new Set(skins.presets.filter(p=>p.category==='Schools').map(p=>p.identityLabel)).size,8);
   for(const asset of visuals.images){
-    assert.match(asset,/^\/revised\/assets\/skins\/pacific-20261029\/[a-z0-9-]+\.svg$/);
-    const svg=fs.readFileSync(path.join(__dirname,'..',asset),'utf8');
-    assert.match(svg,/^<svg[\s>]/);assert(svg.endsWith('</svg>')||svg.endsWith('</svg>\n'));assert(Buffer.byteLength(svg)<400000);
+    assert.match(asset,/^\/revised\/assets\/skins\/photographic-20261029\/[a-z0-9-]+\.webp$/);
+    const bytes=fs.readFileSync(path.join(__dirname,'..',asset));assert.equal(bytes.subarray(0,4).toString(),'RIFF');assert.equal(bytes.subarray(8,12).toString(),'WEBP');assert(bytes.length<500000);
   }
   assert.equal(visuals.legacyImages.length,16);
   for(const asset of visuals.legacyImages){
@@ -56,9 +56,9 @@ test('regional covers resolve to the shared SVG artwork while previous photograp
     assert(bytes.length<400000);
   }
   for(const p of skins.presets){
-    assert(visuals.cover(p).endsWith('.svg'),p.id);
+    assert(visuals.cover(p).endsWith('.webp'),p.id);
     assert(fs.existsSync(path.join(__dirname,'..',visuals.cover(p))),p.id);
     assert(skins.tokens({id:p.id})['--bv-hero'].includes(visuals.cover(p)));
   }
-  for(const id of ['province-ra','province-nadroga-navosa','memory-childhood-memory'])assert(visuals.cover(skins.presets.find(p=>p.id===id)).endsWith('/'+id+'.svg'));
+  for(const id of ['province-ra','province-nadroga-navosa','memory-childhood-memory'])assert.equal(visuals.cover(skins.presets.find(p=>p.id===id)),'/revised/'+catalogue.find(p=>p.id===id).coverArt.slice(2));
 });

@@ -1,5 +1,7 @@
 # Fiji, Pacific and tropical themes
 
+This document records the earlier illustration revision. Active theme art now follows [Photographic Fiji, Pacific and tropical themes](photographic-themes-2026-10-29.md); the original vector assets remain preserved as history.
+
 Owner direction: Sota Kece targets young people, and its themes must centre Fiji, the Pacific and tropical island life. This revision changes the existing theme libraries and page designer, preserving account, social, music and publishing behaviour.
 
 The 94 stable room IDs now have 94 original local SVG covers and distinct readable palettes. Ten visual families cover lagoons and sails, coral reefs, coconut shores, palms, hibiscus, tropical rain, island highlands, music, community gatherings and original woven-inspired geometry. Generic material-study names are replaced by names such as Fiji Lagoon, Pacific After Dark, Tropical Rain, Island Hibiscus and Pacific Mixtape. Former names remain searchable aliases. School, province, cultural and artist identity credits and all attributed listening references are preserved. The illustrations are original decorative designs rather than official logos, documentary landscapes or claimed authentic cultural patterns.

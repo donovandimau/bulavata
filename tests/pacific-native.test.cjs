@@ -1,7 +1,7 @@
 'use strict';
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),{createRequire}=require('node:module');
 const root=path.resolve(__dirname,'..'),skins=require('../skins.js'),visuals=require('../skin-visuals.js'),regional=require('../pacific-themes.js');
-const catalogue=JSON.parse(fs.readFileSync(path.join(root,'revised/assets/skins/pacific-20261029/catalogue.json'),'utf8'));
+const catalogue=JSON.parse(fs.readFileSync(path.join(root,'revised/assets/skins/photographic-20261029/catalogue.json'),'utf8'));
 function originalPresets(){
  const original={exports:{}},nativeRequire=createRequire(path.join(root,'skins.js'));
  vm.runInNewContext(fs.readFileSync(path.join(root,'skins.js'),'utf8'),{module:original,require:id=>id==='./pacific-themes.js'?null:nativeRequire(id)});
@@ -13,17 +13,23 @@ test('the native regional layer preserves all 94 saved identities, categories an
  for(const p of skins.presets){const previous=original.find(x=>x.id===p.id),authored=catalogue.find(x=>x.id===p.id);
   for(const key of ['category','catalogueId','identityLabel','identitySources','identityNote','songs','artwork','border','artDescription'])assert.deepEqual(p[key],previous[key],p.id+' preserves '+key);
   for(const key of ['name','note','bg','panel','ink','muted','accent','cover','font','pattern','regionalMotif','region','artNote'])assert.equal(p[key],authored[key],p.id+' follows regional '+key);
-  assert.equal(p.coverArt,'/revised/assets/skins/pacific-20261029/'+p.id+'.svg');
+  assert.equal(p.coverArt,'/revised/'+authored.coverArt.slice(2));assert.equal(p.coverThumb,'/revised/'+authored.coverThumb.slice(2));assert.equal(p.artworkType,'photographic');
  }
 });
-test('all 94 native covers and six discovery cards use the shared regional artwork without old photographic overlays',()=>{
- const distinct=new Set();assert.equal(visuals.images.length,94);assert.equal(new Set(visuals.images).size,94);assert.equal(visuals.legacyImages.length,16);
- for(const p of skins.presets){const file=visuals.cover(p);assert.equal(file,p.coverArt);assert.equal(visuals.position(p),'center');assert(skins.tokens({id:p.id})['--bv-hero'].includes(file));
-  const svg=fs.readFileSync(path.join(root,file),'utf8');assert.match(svg,/^<svg[\s>]/);assert(!/<script|<foreignObject|\son\w+\s*=|href\s*=|url\(\s*https?:|https?:/i.test(svg.replace('xmlns="http://www.w3.org/2000/svg"','')),p.id+' is a self-contained safe SVG');distinct.add(svg);
+test('all 94 native themes and six discovery cards use the catalogue’s actual photographic subjects without vector overlays',()=>{
+ const distinct=new Set();assert.equal(visuals.images.length,new Set(catalogue.map(p=>p.coverArt)).size);assert.equal(new Set(visuals.images).size,visuals.images.length);assert.equal(visuals.legacyImages.length,16);
+ for(const p of skins.presets){const file=visuals.cover(p),tokens=skins.tokens({id:p.id});assert.equal(file,p.coverArt);assert.equal(visuals.position(p),p.coverPosition);assert(tokens['--bv-hero'].includes(file));assert.equal(tokens['--bv-art'],`url("${file}")`);assert.equal(tokens['--bv-border'],'none');assert(!/\.svg\b/.test([tokens['--bv-hero'],tokens['--bv-art'],tokens['--bv-border']].join(' ')),p.id+' active artwork is photographic');
+  assert.match(file,/^\/revised\/assets\/skins\/photographic-20261029\/[a-z0-9-]+\.webp$/);const bytes=fs.readFileSync(path.join(root,file));assert.equal(bytes.subarray(0,4).toString(),'RIFF');assert.equal(bytes.subarray(8,12).toString(),'WEBP');distinct.add(file);
   assert(skins.contrast(p.ink,p.panel)>=4.5,p.id+' readable text');assert(skins.contrast(p.muted,p.panel)>=4.5,p.id+' readable secondary text');
  }
- assert.equal(distinct.size,94);
- for(const group of require('../skin-discovery.js').collections(skins.presets)){assert.equal(visuals.collection(group.id),regional.collectionCovers[group.id]);assert(visuals.images.includes(visuals.collection(group.id)));}
+ assert.equal(distinct.size,visuals.images.length);
+ for(const group of require('../skin-discovery.js').collections(skins.presets)){assert.equal(visuals.collection(group.id),regional.collectionThumbnails[group.id]);assert(visuals.thumbnails.includes(visuals.collection(group.id)));}
+});
+test('small native cover grids use lightweight thumbnails while actual room artwork keeps the full photograph',()=>{
+ assert.equal(visuals.thumbnails.length,visuals.images.length);
+ const source=fs.readFileSync(path.join(root,'skin-studio.js'),'utf8'),esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const context=vm.createContext({skins,visuals,esc});vm.runInContext(source.slice(source.indexOf('  function themeLabel('),source.indexOf('  function skinScene(')),context);vm.runInContext(source.slice(source.indexOf('  function skinThumbnail('),source.indexOf('  function skinOption(')),context);
+ for(const p of skins.presets){const thumb=visuals.thumbnail(p);assert.equal(thumb,p.coverThumb);assert.notEqual(thumb,visuals.cover(p));assert.match(thumb,/-thumb\.webp$/);assert(context.skinThumbnail(p).includes('<img src="'+thumb+'"'));assert(skins.tokens({id:p.id})['--bv-hero'].includes(p.coverArt));const bytes=fs.readFileSync(path.join(root,thumb));assert(bytes.length<=80000);assert.equal(bytes.subarray(0,4).toString(),'RIFF');assert.equal(bytes.subarray(8,12).toString(),'WEBP');}
 });
 test('regional defaults do not replace saved personal colours, wording, media or safe legacy CSS',()=>{
  const legacy='.scrawl{border-radius:8px;color:#334455}';

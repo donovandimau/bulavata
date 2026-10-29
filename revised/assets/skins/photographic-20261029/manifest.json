@@ -1,0 +1,1365 @@
+{
+  "version": 1,
+  "date": "2026-10-29",
+  "collection": "Sota Kece photographic Fiji/Pacific/tropical themes",
+  "themeCount": 94,
+  "distinctPhotoCount": 20,
+  "generatedThisRevision": 4,
+  "reusedProjectPhotos": 16,
+  "processing": "Four new generated PNGs and the existing sunset JPEG receive proportional size/format optimization only. Existing WebPs are copied byte-for-byte. No semantic edits, cropping, tinting, montage or illustration overlays.",
+  "rejectedVectorHistory": "../pacific-20261029/catalogue.json remains preserved and is not referenced by the current skin covers.",
+  "assets": [
+    {
+      "id": "island-flowers",
+      "file": "island-flowers.webp",
+      "path": "./assets/skins/photographic-20261029/island-flowers.webp",
+      "subject": "Island flowers",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "generated-this-revision",
+        "file": "photo-hibiscus.png",
+        "originalGeneratedFile": "exec-28495c8b-9198-47b1-b495-226e46400af5.png",
+        "tool": "built-in image_gen",
+        "prompt": "Use case: photorealistic-natural. Asset type: high-resolution wide 3:2 photographic cover for a Fiji/Pacific tropical social app theme. Primary request: a REALISTIC CAMERA PHOTOGRAPH of lush pink-red hibiscus and creamy white frangipani flowers growing naturally together in a tropical Pacific garden in soft morning sunlight. Close to medium botanical composition, a few richly coloured blossoms in sharp focus against layered green leaves and a softly out-of-focus garden. Visible fine petal veins, gently irregular petal edges, natural stamens, waxy but naturally varied leaf surfaces, tiny dew droplets and realistic dappled sunlight. Authentic natural botanical texture and optical depth of field, polished youthful travel-magazine photography, balanced exposure and rich believable colour. Wide landscape 3:2 framing suitable for a theme cover. No people, no text, no logos, no flags, no graphic layout or collage. Absolutely no illustration, no cartoon, no vector art, no painting, no CGI, no plastic flowers, no oversaturated neon. The result should be indistinguishable in style from a professional tropical garden photograph.",
+        "originalPreserved": true
+      },
+      "before": {
+        "sha256": "eae680cc8dc115256500b6c5209bb5444d59616a44267939ed7d4e26654a5a6f",
+        "bytes": 2712917,
+        "width": 1536,
+        "height": 1024,
+        "format": "png"
+      },
+      "after": {
+        "sha256": "b6980c2af5249828fbc770001b450b060cc3ef55edfc6e06010a39f3dfebbc2b",
+        "bytes": 266214,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Proportional resize to at most1536px wide and WebP quality84 encoding only; full original frame retained, no cropping or semantic edits.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "island-flowers-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/island-flowers-thumb.webp",
+        "sha256": "424fde120ee9fcb539f8f545ab6d99a0a7bbc7b1c9520ba91e75742baf655b56",
+        "bytes": 38242,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "coconut-coast",
+      "file": "coconut-coast.webp",
+      "path": "./assets/skins/photographic-20261029/coconut-coast.webp",
+      "subject": "Coconut coast",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "generated-this-revision",
+        "file": "photo-coconut.png",
+        "originalGeneratedFile": "exec-c30261f1-f0e2-4502-b448-f7e170ed3572.png",
+        "tool": "built-in image_gen",
+        "prompt": "Use case: photorealistic-natural. Asset type: high-resolution wide 3:2 photographic cover for a Fiji/Pacific tropical social app theme. Primary request: a REALISTIC CAMERA PHOTOGRAPH of coconut palms leaning naturally over a quiet turquoise Pacific island beach. Eye-level view from the natural pale sand at the edge of coconut shade, several graceful real palm trunks and detailed fronds framing a clear lagoon; gentle ripples, a small soft wave washing onto the beach, subtle distant green island ridge on the horizon and a believable blue sky with a few soft clouds. Show real fibrous bark, irregular frond leaflets, natural sand grain and small organic beach details. Warm late-morning tropical light, balanced exposure, polished youthful travel-editorial photography with natural rich greens and turquoise water. Landscape wide 3:2 composition, immersive and calm. No people, no resort buildings, no boats, no text, no logos, no flags, no montage. Absolutely no illustration, cartoon, vector, painting, CGI, artificial smoothness or neon oversaturation. The result should feel like a genuine high-quality Pacific travel photograph.",
+        "originalPreserved": true
+      },
+      "before": {
+        "sha256": "2a944e24d7410c6f311e34b95c7845a7dcb3472b5e1cf2addd6e4965ee8b275f",
+        "bytes": 3366227,
+        "width": 1536,
+        "height": 1024,
+        "format": "png"
+      },
+      "after": {
+        "sha256": "3e9eafb1979d66219e7d8534a67b3b868cad0b8081e5b1830375b5d7b735c688",
+        "bytes": 426138,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Proportional resize to at most1536px wide and WebP quality84 encoding only; full original frame retained, no cropping or semantic edits.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "coconut-coast-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/coconut-coast-thumb.webp",
+        "sha256": "f8fa51d61249e3234eb6647311c97388ec125a3991cb4fd14dd3ad4b9ed2977c",
+        "bytes": 38942,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "coral-reef",
+      "file": "coral-reef.webp",
+      "path": "./assets/skins/photographic-20261029/coral-reef.webp",
+      "subject": "Tropical reef",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "generated-this-revision",
+        "file": "photo-reef.png",
+        "originalGeneratedFile": "exec-8ef52d6d-fd0d-49b9-bc6c-5d42466c3de1.png",
+        "tool": "built-in image_gen",
+        "prompt": "Create ONE single, convincingly photographic image for a Fiji/Pacific island social app theme cover. A sunlit, shallow tropical coral reef beneath exceptionally clear turquoise water, photographed at water level just below the surface with a professional underwater wide-angle camera. Real irregular branching and boulder corals, small naturally proportioned reef fish, dappled sun caustics, rich blue distance and warm natural highlights. The image must look like a real premium travel photograph: organic imperfect detail, realistic optics, believable water and biological textures, no painterly outlines or smooth vector forms. Full-bleed wide 3:2 composition, useful across a broad cover crop, no text, typography, logos, people, flags, borders, graphic shapes, icons or montage. Youthful and vivid through real natural colour, without neon grading, cartoons, illustration, 3D render or CGI. This is a fictional Fiji-inspired photographic scene, not a documentary claim about an exact reef.",
+        "originalPreserved": true
+      },
+      "before": {
+        "sha256": "cac406e9d5df4bdc5375e7a494cdeb1bfa46144021a011b8d68f3e0657d50e0b",
+        "bytes": 3492722,
+        "width": 1536,
+        "height": 1024,
+        "format": "png"
+      },
+      "after": {
+        "sha256": "13ddfdf5cc0ddbb9697752901ec88ed8e31ee5d5c16773829f066a269983eaab",
+        "bytes": 464656,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Proportional resize to at most1536px wide and WebP quality84 encoding only; full original frame retained, no cropping or semantic edits.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "coral-reef-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/coral-reef-thumb.webp",
+        "sha256": "4cb049f9df0f515486b335efea0d10cd96926fb53299c514288689d974bd409b",
+        "bytes": 52700,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "rainforest",
+      "file": "rainforest.webp",
+      "path": "./assets/skins/photographic-20261029/rainforest.webp",
+      "subject": "Pacific rainforest",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "generated-this-revision",
+        "file": "photo-rain.png",
+        "originalGeneratedFile": "exec-3e2d0bb7-f683-4fee-9907-50b297a9dbf6.png",
+        "tool": "built-in image_gen",
+        "prompt": "Create ONE full-bleed wide 3:2 photographic cover for a Fiji/Pacific tropical social app. A very realistic lush Pacific-island rainforest after warm rain, a narrow clear freshwater stream weaving between dark wet rocks and dense tropical ferns, large glossy natural leaves and distant tall palms, a little soft mist in the green hills, fresh sun shafts through light cloud. Eye-level landscape photography, not aerial, with believable imperfect foliage and leaf veins, natural rock and water texture. Bright deep greens and clean blue-green water, with subtle warm highlights and rich photographic depth. It must look like an excellent real travel/editorial photograph, not fantasy, not painted, not digital illustration, no vectors or smooth graphic shapes, no neon colours, no CGI/cartoon/3D render. No buildings, people, words, logos, symbols, flags, frame or collage. Fictional Fiji-inspired nature scene, not an exact documented location. Compose foreground left/distance right so it remains useful as a wide room cover.",
+        "originalPreserved": true
+      },
+      "before": {
+        "sha256": "57765da4fe2fe556d36386b422413b4f7dc8f1e19dd2fe5de1ece28480b77a23",
+        "bytes": 3601679,
+        "width": 1536,
+        "height": 1024,
+        "format": "png"
+      },
+      "after": {
+        "sha256": "ff4bab55907bd58f0dc2582d606887d2c910611cb18496471ef745d8edffac7f",
+        "bytes": 458996,
+        "width": 1440,
+        "height": 960,
+        "format": "webp"
+      },
+      "optimization": "Proportional resize to1440px wide and WebP quality84 encoding only; full original frame retained, no cropping or semantic edits.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "rainforest-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/rainforest-thumb.webp",
+        "sha256": "a4200861646b38742ad2cd0fe9d4f2cc99a6030d39a912e505e9b3d9582b6908",
+        "bytes": 53244,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "vanua-coast",
+      "file": "vanua-coast.webp",
+      "path": "./assets/skins/photographic-20261029/vanua-coast.webp",
+      "subject": "Pacific coastal light",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/vanua-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Mountainous tropical island, reef-textured teal lagoon and sand cove in warm evening light; imagined coastal editorial photograph.",
+        "originalGeneratedFile": "exec-a94d4eb5-8f1d-40ea-96ff-b130309b4bc6.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "1e29cc050c621bce279e4abe88b5561a1e3d87f08eb35c60e60d4e46c26a9c30",
+        "bytes": 356902,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "1e29cc050c621bce279e4abe88b5561a1e3d87f08eb35c60e60d4e46c26a9c30",
+        "bytes": 356902,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "vanua-coast-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/vanua-coast-thumb.webp",
+        "sha256": "98828989a5773294594b16bce8be8535988bd008603da39a3846d076f293c38f",
+        "bytes": 35328,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "tropical-sunset",
+      "file": "tropical-sunset.webp",
+      "path": "./assets/skins/photographic-20261029/tropical-sunset.webp",
+      "subject": "Island sunset",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-existing-project-photo",
+        "repositoryPath": "assets/fiji-sunset.jpg",
+        "claim": "Existing Sota Kece photographic asset. No documentary location, photographer or generation provenance is asserted."
+      },
+      "before": {
+        "sha256": "579a334a3edf166cb05d28d4367ff5abcb84756c2f8f688404366a94d4a17819",
+        "bytes": 353438,
+        "width": 1920,
+        "height": 1081,
+        "format": "jpeg"
+      },
+      "after": {
+        "sha256": "07c245bee6327910543e2d28f0cff23f7bf834ba535bd95a4eea85caca53ee47",
+        "bytes": 184262,
+        "width": 1536,
+        "height": 865,
+        "format": "webp"
+      },
+      "optimization": "Proportional resize to at most1536px wide and WebP quality84 encoding only; full original frame retained, no cropping or semantic edits.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "tropical-sunset-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/tropical-sunset-thumb.webp",
+        "sha256": "2238091d962406830b3381ebab322974a164ab5180db1ab40e67949cdd15f6ad",
+        "bytes": 20528,
+        "width": 480,
+        "height": 270,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "island-guitar",
+      "file": "island-guitar.webp",
+      "path": "./assets/skins/photographic-20261029/island-guitar.webp",
+      "subject": "Island guitar",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/music-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Worn acoustic guitar, studio microphone, timber floor and warm stage light; an intimate generic music still life.",
+        "originalGeneratedFile": "exec-eab85ca4-34a6-47f5-a2d9-64cf44a9a23c.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "edc5f6a489d54a3fc98fa37c06b3a0af066079dc7125cd032069460e8d70ad73",
+        "bytes": 157118,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "edc5f6a489d54a3fc98fa37c06b3a0af066079dc7125cd032069460e8d70ad73",
+        "bytes": 157118,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "island-guitar-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/island-guitar-thumb.webp",
+        "sha256": "fc2cc5dce8a65cbd6e8a8c62a3d61952a361c41b882dd0695b6bc1733d61da21",
+        "bytes": 19380,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "heritage-weave",
+      "file": "heritage-weave.webp",
+      "path": "./assets/skins/photographic-20261029/heritage-weave.webp",
+      "subject": "Barkcloth & woven texture",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/heritage-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Natural barkcloth, woven pandanus, wooden bowl edge and white frangipani; a tactile original textile study.",
+        "originalGeneratedFile": "exec-73a0f85a-8f62-426e-9d31-480d00beb2b0.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "dc1fbdf97db16ef810b21499998b37d3409db4158e1a9b04fe56d6d9e01aa043",
+        "bytes": 307146,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "dc1fbdf97db16ef810b21499998b37d3409db4158e1a9b04fe56d6d9e01aa043",
+        "bytes": 307146,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "heritage-weave-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/heritage-weave-thumb.webp",
+        "sha256": "fc7fbdd76e71a13e514b99cf30e7dbf1de0f1f2f66adc14aed5b43b97d83c029",
+        "bytes": 35818,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "province-ra",
+      "file": "province-ra.webp",
+      "path": "./assets/skins/photographic-20261029/province-ra.webp",
+      "subject": "Tropical garden rooster",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/ra-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Realistic rooster with copper-red neck and glossy tail on a timber fence in a tropical garden; original community motif.",
+        "originalGeneratedFile": "exec-e06b1f24-f748-4ac8-8268-c443fc939657.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "3b42a20c95386efcd785fc2175d735e05b4a3787dfe26ea1c7392b51857156ff",
+        "bytes": 162182,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "3b42a20c95386efcd785fc2175d735e05b4a3787dfe26ea1c7392b51857156ff",
+        "bytes": 162182,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "province-ra-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/province-ra-thumb.webp",
+        "sha256": "1672f0bd53a3c933cf3b00c6433233db1096712f27f6c9251e335bb01300de83",
+        "bytes": 27976,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "province-nadroga",
+      "file": "province-nadroga.webp",
+      "path": "./assets/skins/photographic-20261029/province-nadroga.webp",
+      "subject": "Coastal paddock",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/nadroga-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Black horse in a lush coastal paddock with palms and warm rim light; original community motif.",
+        "originalGeneratedFile": "exec-9a877864-00bb-4e2f-9ad1-c7e00636aac1.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "9d1d8cb2a935a46de1a7d1879d78192754d2452d7b0c14217dd50dad7216b26a",
+        "bytes": 242872,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "9d1d8cb2a935a46de1a7d1879d78192754d2452d7b0c14217dd50dad7216b26a",
+        "bytes": 242872,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "province-nadroga-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/province-nadroga-thumb.webp",
+        "sha256": "f77df843a58791bf81600886d05671f4f94ff3495508d1fe3ab36160ec513be3",
+        "bytes": 35388,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "school-natabua",
+      "file": "school-natabua.webp",
+      "path": "./assets/skins/photographic-20261029/school-natabua.webp",
+      "subject": "Island athletics",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/natabua-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Navy sprint shoes, pale-blue sports jacket and bronze medal beside an empty blue running track; original tropical athletics memory.",
+        "originalGeneratedFile": "exec-c0a83256-9ef4-47f1-8c3a-ad286e83367b.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "cfd0312bba6222b817fbb87075727128fcb9680a85af3272ec577e2d9f4c1b31",
+        "bytes": 274752,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "cfd0312bba6222b817fbb87075727128fcb9680a85af3272ec577e2d9f4c1b31",
+        "bytes": 274752,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "school-natabua-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/school-natabua-thumb.webp",
+        "sha256": "bc0a47949bfc42c5190a39db2979939620494a8e9dba6b52d21f5a1b22f709f7",
+        "bytes": 37634,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "school-marist",
+      "file": "school-marist.webp",
+      "path": "./assets/skins/photographic-20261029/school-marist.webp",
+      "subject": "Rugby pavilion",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/marist-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Burgundy unmarked rugby jersey and leather rugby ball on a timber stadium bench; rich evening sports-pavilion still life.",
+        "originalGeneratedFile": "exec-1b71561d-a510-415b-ad4e-9591950b779f.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "1c1528ce7b2cde97a37481a337672b370c78615e54a1e6dd3b72aeca60340f1c",
+        "bytes": 114642,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "1c1528ce7b2cde97a37481a337672b370c78615e54a1e6dd3b72aeca60340f1c",
+        "bytes": 114642,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "school-marist-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/school-marist-thumb.webp",
+        "sha256": "c9914cc84b4ab945e28ba009236f8e18772ac70894548124308eaa767e07b35c",
+        "bytes": 18062,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "school-grammar",
+      "file": "school-grammar.webp",
+      "path": "./assets/skins/photographic-20261029/school-grammar.webp",
+      "subject": "School achievement",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/grammar-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Gold athletics trophy, navy-and-gold plain ribbon and exercise books on a tropical school-pavilion bench.",
+        "originalGeneratedFile": "exec-b7ba18f2-772b-45d6-a680-e05fc6c465ff.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "612f04463e2692691ad328d5259572efcc0f24ac44811f107bb4b2dc45ff529b",
+        "bytes": 203624,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "612f04463e2692691ad328d5259572efcc0f24ac44811f107bb4b2dc45ff529b",
+        "bytes": 203624,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "school-grammar-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/school-grammar-thumb.webp",
+        "sha256": "72481e21644b4b95ecf352a403f5707e7af5dadbf995ba52e6b58c078839b3cc",
+        "bytes": 28088,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "school-qvs",
+      "file": "school-qvs.webp",
+      "path": "./assets/skins/photographic-20261029/school-qvs.webp",
+      "subject": "Tropical school memories",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/qvs-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Pale-blue blazer fabric, leather rugby ball and navy notebook on a timber desk beside tropical louvres.",
+        "originalGeneratedFile": "exec-c67d4bbe-42e4-4d07-bd9a-f069b7daea61.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "d6422efe1c7c959a75274972b5ba591231294bf3f945584057b8fed15aac4ea6",
+        "bytes": 148526,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "d6422efe1c7c959a75274972b5ba591231294bf3f945584057b8fed15aac4ea6",
+        "bytes": 148526,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "school-qvs-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/school-qvs-thumb.webp",
+        "sha256": "9c25d96bb8036d6d8c964259bd63c01bf22276119b9b69ef0571fb2dca8aa3ff",
+        "bytes": 20030,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "school-rks",
+      "file": "school-rks.webp",
+      "path": "./assets/skins/photographic-20261029/school-rks.webp",
+      "subject": "Island school memories",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/school-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Navy blazer, unmarked notebooks, leather rugby ball and trophy beside a sunlit tropical field; tactile golden-hour school-memory still life.",
+        "originalGeneratedFile": "exec-a0691bfd-bee9-4838-8004-91f38ee72e6d.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "b60b19dc08226412afe173ad15cc61d983196ea3ef075448a051161f69b7212a",
+        "bytes": 168834,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "b60b19dc08226412afe173ad15cc61d983196ea3ef075448a051161f69b7212a",
+        "bytes": 168834,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "school-rks-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/school-rks-thumb.webp",
+        "sha256": "f3096a717e66569fd6275d97917c9240c6dd31b5bad2c2262151b86f24b1a54c",
+        "bytes": 26502,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "school-acs",
+      "file": "school-acs.webp",
+      "path": "./assets/skins/photographic-20261029/school-acs.webp",
+      "subject": "Garden school memories",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "assets/skins/editorial/acs-20261025.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-25",
+        "promptBrief": "Maroon blazer, cream academic notebook, silver medal with maroon ribbon and pink ginger flowers beside a garden window.",
+        "originalGeneratedFile": "exec-c44b96fe-5e83-4a40-a6d9-422e98a148e9.png",
+        "provenanceDocument": "docs/editorial-artwork.md",
+        "claim": "Imagined mood artwork; no actual campus, performer or named event is depicted."
+      },
+      "before": {
+        "sha256": "faa0c861bbe57fd929500d980f6b7f77e7a2daa75b34af3a2d40f7a983a48e7d",
+        "bytes": 159564,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "faa0c861bbe57fd929500d980f6b7f77e7a2daa75b34af3a2d40f7a983a48e7d",
+        "bytes": 159564,
+        "width": 1536,
+        "height": 1024,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "school-acs-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/school-acs-thumb.webp",
+        "sha256": "7fc75b9ae324622f1f9263f897c607f4d25b65f8e2bc442565e2c158acf5a7ce",
+        "bytes": 22858,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "island-sessions",
+      "file": "island-sessions.webp",
+      "path": "./assets/skins/photographic-20261029/island-sessions.webp",
+      "subject": "Island music together",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "revised/assets/music.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-28",
+        "provenanceDocument": "revised/assets/manifest.json",
+        "previousManifestAsset": {
+          "id": "music",
+          "file": "music.webp",
+          "width": 1200,
+          "height": 800,
+          "bytes": 94768,
+          "sha256": "43ccc72b09591a75d08aa1c11125a7b771e83a9600acc4266601a64a522a2248",
+          "style": "photorealistic-natural",
+          "generated": true
+        },
+        "claim": "AI-generated fictional Fijian community scene; no real member or recording artist is depicted. Full original prompt is not present in the repository manifest."
+      },
+      "before": {
+        "sha256": "43ccc72b09591a75d08aa1c11125a7b771e83a9600acc4266601a64a522a2248",
+        "bytes": 94768,
+        "width": 1200,
+        "height": 800,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "43ccc72b09591a75d08aa1c11125a7b771e83a9600acc4266601a64a522a2248",
+        "bytes": 94768,
+        "width": 1200,
+        "height": 800,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "island-sessions-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/island-sessions-thumb.webp",
+        "sha256": "4263ae4fe04fdc3725ffc08c65270303d97abaf87918f56f47faef48320f4c67",
+        "bytes": 21886,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "community-talanoa",
+      "file": "community-talanoa.webp",
+      "path": "./assets/skins/photographic-20261029/community-talanoa.webp",
+      "subject": "Pacific friends together",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "revised/assets/hero.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-28",
+        "provenanceDocument": "revised/assets/manifest.json",
+        "previousManifestAsset": {
+          "id": "hero",
+          "file": "hero.webp",
+          "width": 1200,
+          "height": 800,
+          "bytes": 144508,
+          "sha256": "66ba41b907764b8c9a8c9eb8e9f12819c5b72e55985f3384c88d8ef7e01c32fd",
+          "style": "photorealistic-natural",
+          "generated": true
+        },
+        "claim": "AI-generated fictional Fijian community scene; no real member or recording artist is depicted. Full original prompt is not present in the repository manifest."
+      },
+      "before": {
+        "sha256": "66ba41b907764b8c9a8c9eb8e9f12819c5b72e55985f3384c88d8ef7e01c32fd",
+        "bytes": 144508,
+        "width": 1200,
+        "height": 800,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "66ba41b907764b8c9a8c9eb8e9f12819c5b72e55985f3384c88d8ef7e01c32fd",
+        "bytes": 144508,
+        "width": 1200,
+        "height": 800,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "community-talanoa-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/community-talanoa-thumb.webp",
+        "sha256": "5376c7a11996d6c507aab602e59a0cec122bbb9e7d556303638b6b9da9c27b72",
+        "bytes": 31878,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "family-stories",
+      "file": "family-stories.webp",
+      "path": "./assets/skins/photographic-20261029/family-stories.webp",
+      "subject": "Stories across generations",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "revised/assets/culture.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-28",
+        "provenanceDocument": "revised/assets/manifest.json",
+        "previousManifestAsset": {
+          "id": "culture",
+          "file": "culture.webp",
+          "width": 1200,
+          "height": 800,
+          "bytes": 140360,
+          "sha256": "1cd5868ed69344f82074af9e0987333ca44a90acc02699614e1edbae185f0e17",
+          "style": "photorealistic-natural",
+          "generated": true
+        },
+        "claim": "AI-generated fictional Fijian community scene; no real member or recording artist is depicted. Full original prompt is not present in the repository manifest."
+      },
+      "before": {
+        "sha256": "1cd5868ed69344f82074af9e0987333ca44a90acc02699614e1edbae185f0e17",
+        "bytes": 140360,
+        "width": 1200,
+        "height": 800,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "1cd5868ed69344f82074af9e0987333ca44a90acc02699614e1edbae185f0e17",
+        "bytes": 140360,
+        "width": 1200,
+        "height": 800,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "family-stories-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/family-stories-thumb.webp",
+        "sha256": "4a037777ab704dd1c7b58c482027a1968e9397f57f443cb3619319b08adc70d0",
+        "bytes": 30310,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    },
+    {
+      "id": "shared-meal",
+      "file": "shared-meal.webp",
+      "path": "./assets/skins/photographic-20261029/shared-meal.webp",
+      "subject": "A meal with your people",
+      "artworkType": "photographic",
+      "source": {
+        "kind": "reused-project-generated-photography",
+        "repositoryPath": "revised/assets/food.webp",
+        "tool": "built-in image_gen",
+        "generationDate": "2026-10-28",
+        "provenanceDocument": "revised/assets/manifest.json",
+        "previousManifestAsset": {
+          "id": "food",
+          "file": "food.webp",
+          "width": 1200,
+          "height": 800,
+          "bytes": 139866,
+          "sha256": "b48c2393d7fbc7c9814791711b38e31747f40893bb29aaafea96ea50ecaed527",
+          "style": "photorealistic-natural",
+          "generated": true
+        },
+        "claim": "AI-generated fictional Fijian community scene; no real member or recording artist is depicted. Full original prompt is not present in the repository manifest."
+      },
+      "before": {
+        "sha256": "b48c2393d7fbc7c9814791711b38e31747f40893bb29aaafea96ea50ecaed527",
+        "bytes": 139866,
+        "width": 1200,
+        "height": 800,
+        "format": "webp"
+      },
+      "after": {
+        "sha256": "b48c2393d7fbc7c9814791711b38e31747f40893bb29aaafea96ea50ecaed527",
+        "bytes": 139866,
+        "width": 1200,
+        "height": 800,
+        "format": "webp"
+      },
+      "optimization": "Byte-identical copy of existing project WebP; no crop or image edit.",
+      "inspection": "Selected after viewing the actual source image; photographic surfaces, lighting and texture, no illustration or vector style.",
+      "thumbnail": {
+        "file": "shared-meal-thumb.webp",
+        "path": "./assets/skins/photographic-20261029/shared-meal-thumb.webp",
+        "sha256": "549aa92a75b4577c7c3e4bf08a0630b669af1459a6574016d0b97361887df93f",
+        "bytes": 29834,
+        "width": 480,
+        "height": 320,
+        "format": "webp",
+        "optimization": "Proportional downscale within480x320px and WebP quality78 encoding only; no cropping, padding or semantic edits."
+      }
+    }
+  ],
+  "mappings": [
+    {
+      "id": "lagoon",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "midnight",
+      "file": "island-sessions.webp",
+      "thumbnail": "island-sessions-thumb.webp"
+    },
+    {
+      "id": "notebook",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "palm",
+      "file": "coconut-coast.webp",
+      "thumbnail": "coconut-coast-thumb.webp"
+    },
+    {
+      "id": "sunset",
+      "file": "tropical-sunset.webp",
+      "thumbnail": "tropical-sunset-thumb.webp"
+    },
+    {
+      "id": "disco",
+      "file": "island-guitar.webp",
+      "thumbnail": "island-guitar-thumb.webp"
+    },
+    {
+      "id": "bloom",
+      "file": "island-flowers.webp",
+      "thumbnail": "island-flowers-thumb.webp"
+    },
+    {
+      "id": "cloud",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "kula",
+      "file": "island-flowers.webp",
+      "thumbnail": "island-flowers-thumb.webp"
+    },
+    {
+      "id": "pixel",
+      "file": "island-guitar.webp",
+      "thumbnail": "island-guitar-thumb.webp"
+    },
+    {
+      "id": "electric",
+      "file": "island-sessions.webp",
+      "thumbnail": "island-sessions-thumb.webp"
+    },
+    {
+      "id": "masi",
+      "file": "heritage-weave.webp",
+      "thumbnail": "heritage-weave-thumb.webp"
+    },
+    {
+      "id": "drua",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "hibiscus",
+      "file": "island-flowers.webp",
+      "thumbnail": "island-flowers-thumb.webp"
+    },
+    {
+      "id": "reef",
+      "file": "coral-reef.webp",
+      "thumbnail": "coral-reef-thumb.webp"
+    },
+    {
+      "id": "kava",
+      "file": "community-talanoa.webp",
+      "thumbnail": "community-talanoa-thumb.webp"
+    },
+    {
+      "id": "mango",
+      "file": "coconut-coast.webp",
+      "thumbnail": "coconut-coast-thumb.webp"
+    },
+    {
+      "id": "candy",
+      "file": "island-flowers.webp",
+      "thumbnail": "island-flowers-thumb.webp"
+    },
+    {
+      "id": "ink",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "acid",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "varsity",
+      "file": "community-talanoa.webp",
+      "thumbnail": "community-talanoa-thumb.webp"
+    },
+    {
+      "id": "comic",
+      "file": "shared-meal.webp",
+      "thumbnail": "shared-meal-thumb.webp"
+    },
+    {
+      "id": "afterglow",
+      "file": "tropical-sunset.webp",
+      "thumbnail": "tropical-sunset-thumb.webp"
+    },
+    {
+      "id": "mint",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "school-natabua-high-school",
+      "file": "school-natabua.webp",
+      "thumbnail": "school-natabua-thumb.webp"
+    },
+    {
+      "id": "school-marist-brothers-high-school",
+      "file": "school-marist.webp",
+      "thumbnail": "school-marist-thumb.webp"
+    },
+    {
+      "id": "school-suva-grammar-school",
+      "file": "school-grammar.webp",
+      "thumbnail": "school-grammar-thumb.webp"
+    },
+    {
+      "id": "school-queen-victoria-school",
+      "file": "school-qvs.webp",
+      "thumbnail": "school-qvs-thumb.webp"
+    },
+    {
+      "id": "school-ratu-kadavulevu-school",
+      "file": "school-rks.webp",
+      "thumbnail": "school-rks-thumb.webp"
+    },
+    {
+      "id": "school-adi-cakobau-school",
+      "file": "school-acs.webp",
+      "thumbnail": "school-acs-thumb.webp"
+    },
+    {
+      "id": "school-fnu",
+      "file": "family-stories.webp",
+      "thumbnail": "family-stories-thumb.webp"
+    },
+    {
+      "id": "school-usp",
+      "file": "community-talanoa.webp",
+      "thumbnail": "community-talanoa-thumb.webp"
+    },
+    {
+      "id": "core-masi",
+      "file": "heritage-weave.webp",
+      "thumbnail": "heritage-weave-thumb.webp"
+    },
+    {
+      "id": "masi-white",
+      "file": "heritage-weave.webp",
+      "thumbnail": "heritage-weave-thumb.webp"
+    },
+    {
+      "id": "masi-smoked",
+      "file": "heritage-weave.webp",
+      "thumbnail": "heritage-weave-thumb.webp"
+    },
+    {
+      "id": "masi-lau",
+      "file": "heritage-weave.webp",
+      "thumbnail": "heritage-weave-thumb.webp"
+    },
+    {
+      "id": "masi-cakaudrove",
+      "file": "heritage-weave.webp",
+      "thumbnail": "heritage-weave-thumb.webp"
+    },
+    {
+      "id": "grog",
+      "file": "community-talanoa.webp",
+      "thumbnail": "community-talanoa-thumb.webp"
+    },
+    {
+      "id": "sigidrigi",
+      "file": "island-sessions.webp",
+      "thumbnail": "island-sessions-thumb.webp"
+    },
+    {
+      "id": "woven-mats",
+      "file": "heritage-weave.webp",
+      "thumbnail": "heritage-weave-thumb.webp"
+    },
+    {
+      "id": "village",
+      "file": "community-talanoa.webp",
+      "thumbnail": "community-talanoa-thumb.webp"
+    },
+    {
+      "id": "navala",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "salusalu",
+      "file": "island-flowers.webp",
+      "thumbnail": "island-flowers-thumb.webp"
+    },
+    {
+      "id": "core-drua",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "province-ba",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "province-bua",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "province-cakaudrove",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "province-kadavu",
+      "file": "coral-reef.webp",
+      "thumbnail": "coral-reef-thumb.webp"
+    },
+    {
+      "id": "province-lau",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "province-lomaiviti",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "province-macuata",
+      "file": "coral-reef.webp",
+      "thumbnail": "coral-reef-thumb.webp"
+    },
+    {
+      "id": "province-nadroga-navosa",
+      "file": "province-nadroga.webp",
+      "thumbnail": "province-nadroga-thumb.webp"
+    },
+    {
+      "id": "province-naitasiri",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "province-namosi",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "province-ra",
+      "file": "province-ra.webp",
+      "thumbnail": "province-ra-thumb.webp"
+    },
+    {
+      "id": "province-rewa",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "province-serua",
+      "file": "coconut-coast.webp",
+      "thumbnail": "coconut-coast-thumb.webp"
+    },
+    {
+      "id": "province-tailevu",
+      "file": "coconut-coast.webp",
+      "thumbnail": "coconut-coast-thumb.webp"
+    },
+    {
+      "id": "island",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "vanua-levu",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "taveuni",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "rotuma",
+      "file": "coconut-coast.webp",
+      "thumbnail": "coconut-coast-thumb.webp"
+    },
+    {
+      "id": "yasawa",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "lomaloma",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "nadi",
+      "file": "community-talanoa.webp",
+      "thumbnail": "community-talanoa-thumb.webp"
+    },
+    {
+      "id": "diaspora",
+      "file": "family-stories.webp",
+      "thumbnail": "family-stories-thumb.webp"
+    },
+    {
+      "id": "occasion-birthday",
+      "file": "shared-meal.webp",
+      "thumbnail": "shared-meal-thumb.webp"
+    },
+    {
+      "id": "occasion-first-birthday",
+      "file": "family-stories.webp",
+      "thumbnail": "family-stories-thumb.webp"
+    },
+    {
+      "id": "occasion-milestone-birthday",
+      "file": "shared-meal.webp",
+      "thumbnail": "shared-meal-thumb.webp"
+    },
+    {
+      "id": "occasion-wedding",
+      "file": "island-flowers.webp",
+      "thumbnail": "island-flowers-thumb.webp"
+    },
+    {
+      "id": "occasion-masi-wedding",
+      "file": "heritage-weave.webp",
+      "thumbnail": "heritage-weave-thumb.webp"
+    },
+    {
+      "id": "occasion-tevutevu",
+      "file": "heritage-weave.webp",
+      "thumbnail": "heritage-weave-thumb.webp"
+    },
+    {
+      "id": "occasion-anniversary",
+      "file": "tropical-sunset.webp",
+      "thumbnail": "tropical-sunset-thumb.webp"
+    },
+    {
+      "id": "occasion-childbirth",
+      "file": "island-flowers.webp",
+      "thumbnail": "island-flowers-thumb.webp"
+    },
+    {
+      "id": "occasion-roqoroqo",
+      "file": "family-stories.webp",
+      "thumbnail": "family-stories-thumb.webp"
+    },
+    {
+      "id": "occasion-mother-support",
+      "file": "family-stories.webp",
+      "thumbnail": "family-stories-thumb.webp"
+    },
+    {
+      "id": "occasion-baby-shower",
+      "file": "shared-meal.webp",
+      "thumbnail": "shared-meal-thumb.webp"
+    },
+    {
+      "id": "occasion-faith-birth",
+      "file": "tropical-sunset.webp",
+      "thumbnail": "tropical-sunset-thumb.webp"
+    },
+    {
+      "id": "occasion-graduation",
+      "file": "school-rks.webp",
+      "thumbnail": "school-rks-thumb.webp"
+    },
+    {
+      "id": "occasion-school-reunion",
+      "file": "community-talanoa.webp",
+      "thumbnail": "community-talanoa-thumb.webp"
+    },
+    {
+      "id": "occasion-family-reunion",
+      "file": "shared-meal.webp",
+      "thumbnail": "shared-meal-thumb.webp"
+    },
+    {
+      "id": "memory-love",
+      "file": "tropical-sunset.webp",
+      "thumbnail": "tropical-sunset-thumb.webp"
+    },
+    {
+      "id": "memory-broken-hearted",
+      "file": "rainforest.webp",
+      "thumbnail": "rainforest-thumb.webp"
+    },
+    {
+      "id": "memory-childhood-memory",
+      "file": "family-stories.webp",
+      "thumbnail": "family-stories-thumb.webp"
+    },
+    {
+      "id": "studio-ocean",
+      "file": "vanua-coast.webp",
+      "thumbnail": "vanua-coast-thumb.webp"
+    },
+    {
+      "id": "studio-masi",
+      "file": "heritage-weave.webp",
+      "thumbnail": "heritage-weave-thumb.webp"
+    },
+    {
+      "id": "studio-coral",
+      "file": "coral-reef.webp",
+      "thumbnail": "coral-reef-thumb.webp"
+    },
+    {
+      "id": "studio-retro",
+      "file": "island-sessions.webp",
+      "thumbnail": "island-sessions-thumb.webp"
+    },
+    {
+      "id": "music-makare",
+      "file": "island-guitar.webp",
+      "thumbnail": "island-guitar-thumb.webp"
+    },
+    {
+      "id": "music-paradise-rootz",
+      "file": "island-sessions.webp",
+      "thumbnail": "island-sessions-thumb.webp"
+    },
+    {
+      "id": "music-kku",
+      "file": "island-guitar.webp",
+      "thumbnail": "island-guitar-thumb.webp"
+    },
+    {
+      "id": "music-valenisau",
+      "file": "island-sessions.webp",
+      "thumbnail": "island-sessions-thumb.webp"
+    },
+    {
+      "id": "music-rako",
+      "file": "island-sessions.webp",
+      "thumbnail": "island-sessions-thumb.webp"
+    },
+    {
+      "id": "music-knox",
+      "file": "island-guitar.webp",
+      "thumbnail": "island-guitar-thumb.webp"
+    }
+  ],
+  "galleryDelivery": "Twenty shared thumbnailWebPs, eachat most480x320px and80KB; fullframe aspectratio preserved withoutcrop/padding. Fullphotos used forroom preview/profile."
+}
