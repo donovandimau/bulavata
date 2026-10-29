@@ -62,3 +62,43 @@ html:root[data-space-dialog-designed] :is(dialog:not(#ssd-editor):not(.bv-studio
 html:root[data-space-dialog-designed] :is(dialog:not(#ssd-editor):not(.bv-studio),.modal .box) :is(.spp-save,.spp-cancel,#bv-save,#f-go,.tc-primary){background:var(--ssd-accent)!important;color:var(--ssd-on-accent)!important;border-color:var(--ssd-accent)!important}
 @media(max-width:420px){.ssd-launcher.ssd-hosted-launcher{font-size:12px;padding:9px 11px}.ssd-editor .ssd-one-colour{min-height:97px;padding:14px;font-size:14px}.ssd-one-colours{gap:9px}}
 @media(forced-colors:active){.ssd-editor .ssd-one-colour,.ssd-design-feedback{background:Canvas;color:CanvasText;border-color:CanvasText}.ssd-editor .ssd-mode-tabs [aria-selected=true],.ssd-design-feedback button{background:Highlight;color:HighlightText}.ssd-one-colour::before{forced-color-adjust:none}}
+
+/* Typography and button treatments use validated design values. */
+:is(#app,#workspace,#nativeCalls,body.cr)[data-space-designed]{background-size:var(--ssd-wallpaper-size,cover)!important;background-position:var(--ssd-wallpaper-position,center)!important;background-repeat:var(--ssd-wallpaper-repeat,no-repeat)!important;font-family:var(--ssd-font)!important}
+:is(#app,#workspace,#nativeCalls,body.cr)[data-space-designed] :is(input,select,textarea,button){font-family:var(--ssd-font)!important}
+:is(#app,#workspace,#nativeCalls,body.cr)[data-space-text-size=large] :is(.card p,.card .sub,.card label,.card textarea,.card input,.scf-post-body,.sk-playlist-song-title){font-size:18px!important;line-height:1.6!important}
+:is(#app,#workspace,#nativeCalls,body.cr)[data-space-text-size=larger] :is(.card p,.card .sub,.card label,.card textarea,.card input,.scf-post-body,.sk-playlist-song-title){font-size:20px!important;line-height:1.65!important}
+:is(#app,#workspace,#nativeCalls,body.cr)[data-space-button-style=outline] :is(.btn,.sx-button,.bv-entry-button,.sx-create-tool,.sfp-navigation a,.sk-music-tab){background:var(--ssd-panel)!important;color:var(--ssd-ink)!important;border:2px solid var(--ssd-ink)!important;box-shadow:none!important}
+:is(#app,#workspace,#nativeCalls,body.cr)[data-space-button-style=soft] :is(.btn,.sx-button,.bv-entry-button,.sx-create-tool,.sfp-navigation a,.sk-music-tab){background:color-mix(in srgb,var(--ssd-accent) 14%,var(--ssd-panel))!important;color:var(--ssd-ink)!important;border:1px solid var(--ssd-muted)!important;box-shadow:none!important}
+html[data-space-dialog-designed] :is(dialog:not(#ssd-editor):not(.bv-studio),.modal .box){font-family:var(--ssd-font)!important}
+html[data-space-dialog-font] :is(dialog:not(#ssd-editor):not(.bv-studio),.modal .box) :is(button,input,textarea,select){font-family:var(--ssd-font)!important}
+html[data-space-dialog-text-size=large] :is(dialog:not(#ssd-editor):not(.bv-studio),.modal .box) :is(p,label,input,select,textarea){font-size:18px!important}
+html[data-space-dialog-text-size=larger] :is(dialog:not(#ssd-editor):not(.bv-studio),.modal .box) :is(p,label,input,select,textarea){font-size:20px!important}
+html[data-space-dialog-button-style=outline] :is(dialog:not(#ssd-editor):not(.bv-studio),.modal .box) :is(.btn,.sk-playlist-play,.spp-save,.spp-cancel){background:var(--ssd-panel)!important;color:var(--ssd-ink)!important;border:2px solid var(--ssd-ink)!important}
+html[data-space-dialog-button-style=soft] :is(dialog:not(#ssd-editor):not(.bv-studio),.modal .box) :is(.btn,.sk-playlist-play,.spp-save,.spp-cancel){background:color-mix(in srgb,var(--ssd-accent) 14%,var(--ssd-panel))!important;color:var(--ssd-ink)!important;border:1px solid var(--ssd-muted)!important}
+.sx-enabled .ssd-launcher{display:none!important}
+.sx-top-tools{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin-left:auto;min-width:0}
+.ssd-editor{width:min(660px,calc(100vw - 24px));border:1px solid #bdccc8;border-radius:20px;background:#fffdf7;font-family:Arial,system-ui,sans-serif;box-shadow:0 24px 100px #102c3d44}
+.ssd-editor .ssd-head h2{font-family:Arial,system-ui,sans-serif;font-weight:700;letter-spacing:-.035em}
+.ssd-editor .ssd-head small{color:#35665f}
+.ssd-editor .ssd-close{background:#e9efea;color:#173e4b}
+.ssd-editor :is(button,input,select){font-family:Arial,system-ui,sans-serif}
+.ssd-editor .ssd-local{font-size:14px;line-height:1.6}
+.ssd-editor .ssd-local span{font-size:12px}
+.ssd-wallpaper-preview{min-height:120px;aspect-ratio:16/7;border:1px solid #bdccc8;border-radius:12px;overflow:hidden}
+.ssd-editor .ssd-preview{min-height:160px;gap:9px}
+.ssd-editor .ssd-actions{background:#fffdf7}
+.ssd-editor .ssd-more summary{font-size:14px;min-height:44px;display:flex;align-items:center}
+.ssd-editor .ssd-more summary::before{content:'+';margin-right:8px;font-size:20px;color:#426b64}
+.ssd-editor .ssd-more[open] summary::before{content:'−'}
+.ssd-editor .ssd-head .ssd-close{flex:none}
+@media(max-width:760px){.sx-top-tools{gap:8px}.sx-enabled .sx-top .sx-top-tools{flex-wrap:wrap}.sx-create-tool small{font-size:13px}}
+@media(max-width:360px){.sx-top-tools{gap:5px}.sx-enabled .sx-top .sx-account-actions{max-width:70px}.ssd-editor .ssd-row{grid-template-columns:1fr}}
+@media(forced-colors:active){:is(#app,#workspace,#nativeCalls,body.cr)[data-space-button-style] :is(.btn,.sx-button,.bv-entry-button,.sx-create-tool){background:ButtonFace!important;color:ButtonText!important;border-color:ButtonText!important}.ssd-editor{background:Canvas;color:CanvasText}}
+
+.ssd-editor .ssd-head{background:#eef4ef;border-bottom:1px solid #d3e0d9;color:#173e4b}.ssd-editor .ssd-head :is(h2,small){color:#173e4b}
+#ssd-editor>.ssd-head{background:#eef4ef!important;color:#173e4b!important;border:1px solid #d3e0d9;box-shadow:none}
+#ssd-editor>.ssd-head :is(h2,small){color:#173e4b!important;text-shadow:none!important}
+#ssd-editor>.ssd-head h2{font:700 27px/1.2 Arial,system-ui,sans-serif;letter-spacing:-.035em}
+#ssd-editor>.ssd-head .ssd-close{background:#dce9e0!important;color:#173e4b!important;border:1px solid #a5bfb4}
+@media(max-width:380px){#ssd-editor>.ssd-head h2{font-size:23px}}

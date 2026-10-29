@@ -17,4 +17,4 @@ jobs:
           node-version: '22'
       - run: npm ci --ignore-scripts
         working-directory: tests/talanoa-tools
-      - run: node --test tests/revised-app.test.cjs tests/revised-ui.test.cjs tests/revised-combined.test.cjs
+      - run: node --test tests/revised-app.test.cjs tests/revised-ui.test.cjs tests/revised-combined.test.cjs tests/space-design.test.cjs tests/space-design-options.test.cjs tests/sota-experience.test.cjs tests/sota-creation-entry.test.cjs tests/revised-design.test.cjs

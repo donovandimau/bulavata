@@ -102,3 +102,91 @@ body.sx-enabled{min-width:0}
 .sx-account-actions{flex:0 0 auto}
 body.sx-enabled #app.sx-app .sx-account-actions button{flex:0 0 auto!important;max-width:none!important}
 @media(max-width:760px){body.sx-enabled #app.sx-app{padding-bottom:calc(80px + env(safe-area-inset-bottom))!important}}
+
+/* Shared creative controls, with readable labels and the same destinations. */
+body.sx-enabled #app.sx-app :is(.sx-button,.sx-nav a,.sx-nav button){min-height:44px}
+body.sx-enabled #app.sx-app .sx-button{font-size:14px;line-height:1.4;transition:background-color .15s,box-shadow .15s;overflow-wrap:anywhere}
+body.sx-enabled #app.sx-app .sx-button:hover{box-shadow:0 3px 12px #173e4b18}
+body.sx-enabled #app.sx-app :is(button,a,input,select,textarea,summary):focus-visible{outline:3px solid #137c9c;outline-offset:4px}
+body.sx-enabled #app.sx-app .sx-back{font-size:13px;min-height:44px;display:inline-flex;align-items:center}
+body.sx-enabled #app.sx-app .sx-lead{font-size:16px;line-height:1.7}
+body.sx-enabled #app.sx-app .sx-page-heading h1{font-size:clamp(32px,4vw,50px);line-height:1.12;letter-spacing:-.035em;text-wrap:balance}
+body.sx-enabled #app.sx-app .sx-top{gap:12px;height:auto;min-height:86px;flex-wrap:wrap}
+.sx-design-entry{flex:none;margin-left:auto;gap:7px;white-space:normal;background:#edf5ef;border:1px solid #b6cfc3;color:#173e4b;padding:10px 15px}
+.sx-account-actions{margin-left:0}
+.sx-create-tools{margin:24px 0 32px;padding:24px;border:1px solid var(--sx-line);border-radius:18px;background:#fffdf7}
+.sx-create-tools h2{font-size:24px;line-height:1.2;margin:0 0 8px}
+.sx-create-tools>p{max-width:65ch;color:var(--sx-muted);font-size:14px;line-height:1.6;margin:8px 0 20px}
+.sx-create-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.sx-create-tool{display:flex;flex-direction:column;align-items:start;justify-content:start;gap:9px;padding:20px;text-align:left;background:#f1f5ed;border:1px solid #d6e2d7;border-radius:12px;min-height:130px;color:var(--sx-ink);text-decoration:none;cursor:pointer;font:inherit;min-width:0}
+.sx-create-tool strong,.sx-create-tool b{font-size:16px;line-height:1.4}
+.sx-create-tool span,.sx-create-tool small{font-size:13px;line-height:1.6;color:var(--sx-muted)}
+.sx-create-tool:hover{border-color:#24776a;background:#e7f1e9}
+.sx-create-tool svg{width:22px;height:22px;flex:none}
+@media(max-width:760px){
+ body.sx-enabled #app.sx-app .sx-top{min-height:76px;padding:12px 16px;gap:8px}
+ body.sx-enabled #app.sx-app .sx-mobile-brand{font-size:20px}
+ body.sx-enabled #app.sx-app .sx-design-entry{min-height:44px;font-size:12px;padding:8px 10px;max-width:112px}
+ body.sx-enabled #app.sx-app .sx-nav :is(a,button){font-size:11px}
+ body.sx-enabled #app.sx-app .sx-lead{font-size:15px}
+ .sx-create-tools{padding:18px}.sx-create-actions{grid-template-columns:1fr}.sx-create-tool{min-height:0;padding:16px;gap:5px}
+ body.sx-enabled #app.sx-app .sx-profile-toolbar .sx-button{font-size:13px}
+}
+@media(max-width:360px){body.sx-enabled #app.sx-app .sx-mobile-brand{font-size:18px}.sx-design-entry{max-width:95px}body.sx-enabled #app.sx-app .sx-account-actions button{font-size:11px;padding:8px}}
+@media(prefers-reduced-motion:reduce){body.sx-enabled #app.sx-app .sx-button{transition:none}}
+
+/* Saved page designs reach the current shared shell as well as native panels. */
+body.sx-enabled #app.sx-app[data-space-designed]{--sx-ink:var(--ssd-ink);--sx-muted:var(--ssd-muted);--sx-paper:var(--ssd-background);--sx-line:var(--ssd-muted);--sx-cyan:var(--ssd-accent);font-family:var(--ssd-font)!important;font-size:calc(16px * var(--ssd-text-scale))!important;background-size:var(--ssd-wallpaper-size,cover)!important;background-repeat:var(--ssd-wallpaper-repeat,no-repeat)!important;background-position:var(--ssd-wallpaper-position,center)!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-brand,.sx-nav,.sx-top,.sx-hero-copy,.sx-content h1,.sx-content h2,.sx-content h3,.sx-discover-card,.sx-button,.sx-create-tool){font-family:var(--ssd-font)!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-rail,.sx-top,.sx-nav,.sx-footer,.sx-profile-toolbar,.sx-side-card,.sx-create-tools,.sx-more>div,.sx-mini-player){background:var(--ssd-panel)!important;color:var(--ssd-ink)!important;border-color:var(--ssd-muted)!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-brand,.sx-mobile-brand,.sx-mobile-brand span,.sx-top-note,.sx-rail-caption,.sx-rail-bottom,.sx-footer a,.sx-page-heading,.sx-profile-toolbar b,.sx-side-card h2,.sx-create-tools h2){color:var(--ssd-ink)!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-lead,.sx-profile-foot,.sx-side-card p,.sx-profile-toolbar p,.sx-create-tools>p,.sx-create-tool small,.sx-create-tool span){color:var(--ssd-muted)!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-nav a,.sx-nav button,.sx-more>div>button){color:var(--ssd-ink)!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-nav [aria-current=page],.sx-count,.sx-mini-toggle){background:var(--ssd-accent)!important;color:var(--ssd-on-accent)!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-create-tool,.sx-discover-card){background:var(--ssd-panel)!important;color:var(--ssd-ink)!important;border-color:var(--ssd-muted)!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-button,.sx-account-actions button,.sx-create-tool):not(.sx-inline){background:var(--ssd-accent)!important;color:var(--ssd-on-accent)!important;border:1px solid var(--ssd-accent)!important}
+body.sx-enabled #app.sx-app[data-space-designed] .sx-create-tool :is(small,span){color:inherit!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(button,a,input,select,textarea,summary):focus-visible{outline-color:var(--ssd-ink)!important;box-shadow:0 0 0 3px var(--ssd-panel)}
+body.sx-enabled #app.sx-app[data-space-designed] .sx-lead{font-size:calc(16px * var(--ssd-text-scale))}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-profile-toolbar p,.sx-profile-foot,.sx-create-tools>p,.sx-side-card p){font-size:calc(14px * var(--ssd-text-scale))}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-button,.sx-create-tool strong,.sx-create-tool b){font-size:calc(14px * var(--ssd-text-scale))}
+/* Artwork and member room skins keep their own readable image captions. */
+body.sx-enabled #app.sx-app[data-space-designed] .sx-hero .sx-eyebrow{color:#fffdf2!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sota-music-views,#sk-music-playlist,.sota-music-view-tabs){background:var(--ssd-panel)!important;color:var(--ssd-ink)!important;border-color:var(--ssd-muted)!important}
+html body.sx-enabled #app.sx-app[data-space-designed] #sk-music-playlist{font-family:var(--ssd-font)!important}
+html body.sx-enabled #app.sx-app[data-space-designed] #sk-music-playlist :is(h2,strong,.sk-playlist-title){color:var(--ssd-ink)!important;font-family:var(--ssd-font)!important}
+html body.sx-enabled #app.sx-app[data-space-designed] #sk-music-playlist :is(.sk-playlist-head,.sk-playlist-hero,.sk-playlist-search,.sk-playlist-queue){color:var(--ssd-ink)!important}
+html body.sx-enabled #app.sx-app[data-space-designed] #sk-music-playlist :is(.sk-playlist-mood,.sk-playlist-subtitle,.sk-playlist-status,.sk-playlist-eyebrow,.sk-playlist-search label){color:var(--ssd-muted)!important}
+html body.sx-enabled #app.sx-app[data-space-designed] #sk-music-playlist :is(.sk-deck,#sk-playlist-filter,.sk-playlist-close){background:var(--ssd-background)!important;color:var(--ssd-background-ink)!important;border-color:var(--ssd-muted)!important}
+html body.sx-enabled #app.sx-app[data-space-designed] #sk-music-playlist .sk-deck-play{background:var(--ssd-accent)!important;color:var(--ssd-on-accent)!important}
+html body.sx-enabled #app.sx-app[data-space-designed] .sota-music-view-tabs button{color:var(--ssd-ink)!important;font-family:var(--ssd-font)!important}
+html body.sx-enabled #app.sx-app[data-space-designed] .sota-music-view-tabs button[aria-selected=true]{background:var(--ssd-accent)!important;color:var(--ssd-on-accent)!important}
+body.sx-enabled #app.sx-app[data-space-corners=square] :is(.sx-button,.sx-create-tool,.sx-side-card,.sx-profile-toolbar,.sx-room-example,.sx-create-tools,.sx-more summary,.sx-more>div,.sx-discover-card){border-radius:3px!important}
+body.sx-enabled #app.sx-app[data-space-density=compact] :is(.sx-create-tools,.sx-side-card,.sx-profile-toolbar){padding:16px!important}
+body.sx-enabled #app.sx-app[data-space-density=compact] :is(.sx-create-actions,.sx-people-layout,.sx-talanoa-layout){gap:12px}
+body.sx-enabled #app.sx-app[data-space-frame=wide] :is(.sx-content,.sx-member-content){max-width:none!important}
+body.sx-enabled #app.sx-app[data-space-frame=centred] :is(.sx-content,.sx-member-content){max-width:1200px!important;margin-left:auto!important;margin-right:auto!important}
+@media(forced-colors:active){body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-button,.sx-create-tool,.sx-nav [aria-current=page]){background:ButtonFace!important;color:ButtonText!important;border-color:ButtonText!important}}
+
+/* Page copy follows custom background contrast; cards keep their palette pair. */
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-page-heading,.sx-page-heading h1,.sx-back,.sx-lead,.sx-profile-foot,.sx-intro,.sx-intro h2,.sx-intro p){color:var(--ssd-background-ink)!important}
+body.sx-enabled #app.sx-app[data-space-button-style=outline] :is(.sx-button,.sx-account-actions button,.sx-create-tool){background:var(--ssd-panel)!important;color:var(--ssd-ink)!important;border:2px solid var(--ssd-ink)!important;box-shadow:none!important}
+body.sx-enabled #app.sx-app[data-space-button-style=soft] :is(.sx-button,.sx-account-actions button,.sx-create-tool){background:color-mix(in srgb,var(--ssd-accent) 14%,var(--ssd-panel))!important;color:var(--ssd-ink)!important;border:1px solid var(--ssd-muted)!important;box-shadow:none!important}
+body.sx-enabled #app.sx-app[data-space-designed] .sx-create-tool :is(small,span){color:inherit!important}
+body.sx-enabled #app.sx-app[data-space-text-size=large] :is(.sx-nav a,.sx-nav button,.sx-create-tool small,.sx-top-note){font-size:15px!important}
+body.sx-enabled #app.sx-app[data-space-text-size=larger] :is(.sx-nav a,.sx-nav button,.sx-create-tool small,.sx-top-note){font-size:17px!important}
+@media(max-width:760px){body.sx-enabled #app.sx-app[data-space-text-size=large] .sx-nav :is(a,button){font-size:12px!important}body.sx-enabled #app.sx-app[data-space-text-size=larger] .sx-nav :is(a,button){font-size:13px!important}}
+/* The shared rail stays anchored while only the reading column changes width. */
+body.sx-enabled #app.sx-app[data-space-frame]{width:100%!important;max-width:none!important;margin:0!important}
+body.sx-enabled #app.sx-app[data-space-designed] :is(.sx-brand,.sx-nav,.sx-top,.sx-hero,.sx-discover-card,.sx-intro,.sx-together) *{font-family:var(--ssd-font)!important}
+html[data-space-dialog-designed] body.sx-enabled{background-color:var(--ssd-background)!important}
+body.sx-enabled #app.sx-app[data-space-designed]{background-color:var(--ssd-background)!important;background-image:var(--ssd-wallpaper,none)!important}
+body.sx-enabled #app.sx-app[data-space-button-style=outline] :is(.sx-button,.sx-account-actions button,.sx-create-tool):not(.sx-inline){background:var(--ssd-panel)!important;color:var(--ssd-ink)!important;border:2px solid var(--ssd-ink)!important}
+body.sx-enabled #app.sx-app[data-space-button-style=soft] :is(.sx-button,.sx-account-actions button,.sx-create-tool):not(.sx-inline){background:color-mix(in srgb,var(--ssd-accent) 14%,var(--ssd-panel))!important;color:var(--ssd-ink)!important;border:1px solid var(--ssd-muted)!important}
+body.sx-enabled #app.sx-app[data-space-designed] .sx-account-actions :is(#sk-sign-up,#sk-sign-in){background:var(--ssd-accent)!important;color:var(--ssd-on-accent)!important;border:1px solid var(--ssd-accent)!important}
+body.sx-enabled #app.sx-app[data-space-button-style=outline] .sx-account-actions :is(#sk-sign-up,#sk-sign-in){background:var(--ssd-panel)!important;color:var(--ssd-ink)!important;border:2px solid var(--ssd-ink)!important}
+body.sx-enabled #app.sx-app[data-space-button-style=soft] .sx-account-actions :is(#sk-sign-up,#sk-sign-in){background:color-mix(in srgb,var(--ssd-accent) 14%,var(--ssd-panel))!important;color:var(--ssd-ink)!important;border:1px solid var(--ssd-muted)!important}
+.sx-design-short{display:none}
+body.sx-enabled #app.sx-app .sx-account-actions button{min-height:44px}
+@media(max-width:760px){.sx-design-label{display:none}.sx-design-short{display:inline}body.sx-enabled #app.sx-app .sx-design-entry{min-width:88px;max-width:none;min-height:44px;gap:5px}body.sx-enabled #app.sx-app .sx-top-tools{flex-wrap:nowrap}body.sx-enabled #app.sx-app[data-space-designed] .sx-design-entry{font-size:13px!important}}
+@media(max-width:360px){body.sx-enabled #app.sx-app .sx-mobile-brand{font-size:17px}body.sx-enabled #app.sx-app .sx-design-entry{min-width:76px;padding:8px}.sx-top-tools{gap:6px}}

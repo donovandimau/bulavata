@@ -6,8 +6,8 @@ const vm=require('node:vm');
 const {pathToFileURL}=require('node:url');
 let JSDOM;try{({JSDOM}=require(process.env.JSDOM_MODULE||'jsdom'));}catch{}
 const root=path.join(__dirname,'..','revised');
-async function fixture(){
- const dom=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8'),{url:'https://preview.example/revised/#home',runScripts:'outside-only'}),w=dom.window;
+async function fixture(route='home'){
+ const dom=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8'),{url:'https://preview.example/revised/#'+route,runScripts:'outside-only'}),w=dom.window;
  for(const name of ['core.mjs','audio.mjs','social.mjs','media.mjs','artwork.mjs','combined.mjs'])Object.assign(w,await import(pathToFileURL(path.join(root,name)).href));
  const backend=await import(pathToFileURL(path.join(root,'backend.mjs')).href);w.Service=backend.Service;w.memberProfile=backend.profile;w.client=()=>{throw Error('Unexpected live auth');};
  w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=function(){};w.URL.createObjectURL=()=> 'blob:sample';w.URL.revokeObjectURL=()=>{};
@@ -22,6 +22,39 @@ async function fixture(){
  return {dom,w,h:w.harness,settle,fill,submit};
 }
 const opts={skip:!JSDOM};
+
+test('direct studio entry preserves selection focus and scroll, with an optional unsaved room preview',opts,async()=>{
+ const f=await fixture('studio');try{
+  assert.equal(f.w.document.querySelectorAll('.skin-card').length,94);
+  const scrolls=[];f.w.scrollTo=(...args)=>scrolls.push(args);Object.defineProperty(f.w,'scrollY',{value:650});
+  f.w.document.querySelector('.studio-categories').scrollLeft=200;
+  await f.h.action('studio-pick','midnight');
+  assert.equal(f.w.document.activeElement.dataset.value,'midnight');
+  assert.deepEqual(scrolls.at(-1),[0,650]);
+  assert.equal(f.w.document.querySelector('.studio-categories').scrollLeft,200);
+  assert.match(f.w.document.querySelector('.studio-selection-name').textContent,/Midnight Stone/);
+  await f.h.action('studio-preview');assert.equal(f.h.dialog.open,true);
+  assert.match(f.h.dialog.querySelector('.studio-cover').src,/basalt/);
+  assert.equal(f.w.readSpace(f.w.localStorage,'sample').skin,'');
+  await f.h.action('close-dialog');assert.equal(f.h.dialog.open,false);
+  await f.h.action('studio-preview');await f.h.action('studio-apply');await f.settle();
+  assert.equal(f.h.dialog.open,false);assert.equal(f.w.readSpace(f.w.localStorage,'sample').skin,'midnight');
+ }finally{f.dom.window.close();}
+});
+
+test('studio clears empty search and category filters without discarding the selected design',opts,async()=>{
+ const f=await fixture('studio');try{
+  await f.h.action('studio-pick','midnight');await f.h.action('studio-filter','Schools');
+  assert.equal(f.w.document.activeElement.dataset.value,'Schools');
+  f.fill('[data-studio-query]','no such design');await f.submit('[data-form="studio-search"]');
+  assert.equal(f.w.document.querySelectorAll('.skin-card').length,0);
+  assert.match(f.w.document.querySelector('.studio-grid').textContent,/Show all designs/);
+  await f.h.action('studio-clear');
+  assert.equal(f.w.document.querySelectorAll('.skin-card').length,94);
+  assert.equal(f.w.document.querySelector('.skin-card.selected').dataset.value,'midnight');
+  assert.equal(f.w.document.activeElement.name,'query');
+ }finally{f.dom.window.close();}
+});
 
 test('editorial skin search retains old names and the untouched default applies its visible preview',opts,async()=>{const f=await fixture();try{f.h.state.page='studio';f.h.render();assert.match(f.w.document.querySelector('.studio-cover').src,/skins\/ocean\.webp/);await f.h.action('studio-apply');await f.settle();assert.equal(f.w.readSpace(f.w.localStorage,'sample').skin,'lagoon');f.h.state.page='studio';f.h.render();f.fill('[data-studio-query]','Candy Crush');await f.submit('[data-form="studio-search"]');assert.equal(f.w.document.querySelectorAll('.skin-card').length,1);assert.match(f.w.document.querySelector('.skin-card').textContent,/Rosewood/);await f.h.action('studio-pick','candy');assert.equal(f.w.readSpace(f.w.localStorage,'sample').skin,'lagoon');}finally{f.dom.window.close();}});
 
