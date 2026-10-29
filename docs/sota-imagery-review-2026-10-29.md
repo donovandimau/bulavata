@@ -29,3 +29,15 @@ A concurrent Room Studio branch (`agent/codex/improve-sota-kece-skin-layouts/1`,
 ## Boundaries
 
 This pass does not verify real authenticated posting, circle membership changes, private-media uploads or actual member settings writes. It does not claim third-party Viber/social caches refreshed. The complete preview remains held for Donovan's review; no publication action is authorized by this handover.
+
+## Final approval candidate
+
+- App source: `6513c8eb201b62e4ffd8aae878e9c20bf292c5d8`.
+- Preview: https://sotakece-d49g17mdp-donovandimau-3468s-projects.vercel.app/#home
+- Deployment: `dpl_DEqzNqwWgkdR4js2ZkgCYwb5ukPf`, READY, preview target only.
+- Phone review frame: https://sotakece-d49g17mdp-donovandimau-3468s-projects.vercel.app/review.html
+- All 20 deployed image files (18 photographic library assets plus original gathering/pattern) match their source bytes. The canonical 1200×630 social share image was opened and visually verified in the browser; a shell request to that custom domain returned 403, so no share-image byte-hash claim is made.
+- Final checks: 59 revised tests pass locally; GitHub original-app, social-and-skins and graph-consent-and-invitations checks are successful. The separate targeted 24 music/navigation checks passed.
+- Browser inspection at desktop width and an exact 390px phone viewport found no horizontal overflow or broken completed image loads across Home, People, Talanoa, Music, Discover, My space and Room Studio. Welcome also has no overflow; the original image loads at 3:2 and phone sample-note/music-card rectangles no longer intersect.
+- Final screenshots: `verify/sota-imagery-review-desktop-20261029.jpg` and `verify/sota-imagery-review-mobile-20261029.jpg`. Captured from the deployed app, not generated mockups.
+- Production remains on `b26a98ffe25eeddf3a35765e27f2e57dc467c550`; this follow-up was neither merged nor promoted. Later commits that add this evidence do not alter the deployed app code.
