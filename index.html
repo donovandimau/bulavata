@@ -839,7 +839,7 @@ function circleGroupChanged(group){
   if(S.tab!=='crews'||String(S.crew)!==String(group.id))return;
   const type=window.SotaCircleTypes.get(group.circle_type),label=$('#crew-type-label'),avatar=$('#crew-avatar');
   if(label)label.textContent=type.label+' · '+(window.BulaSkins.presets.find(p=>p.id===type.skin)?.name||'Shared group skin');
-  if(avatar){avatar.textContent=type.emoji;avatar.style.background=type.accent+'22';}
+  if(avatar){avatar.textContent=type.emoji;avatar.style.background=(type.displayAccent||type.accent)+'22';}
   window.SotaCircles.applyGroupSkin(group);
   const graph=$('#crew-graph');if(graph)window.SotaCircles.mountGroupGraph(graph,group);
 }
@@ -863,7 +863,7 @@ async function viewCrews(){
       <div class="koro-section-head"><div><span class="koro-section-kicker">A PLACE TO BELONG</span><h2 id="koro-list-title">Your Koro</h2></div>${(crews||[]).length?`<span class="koro-count">${crews.length} Koro</span>`:''}</div>
       ${(crews||[]).length? `<div class="koro-list">${crews.map(c=>`
         <button type="button" class="pulse-item" onclick="S.crew=${c.id};render()" aria-label="Open ${esc(c.name)} Koro">
-          <div class="av" style="background:${esc(c.accent)}22">${esc(c.emoji)}</div>
+          <div class="av" style="background:${esc(window.SotaCircleTypes?.get(c.circle_type)?.displayAccent||c.accent)}22">${esc(c.emoji)}</div>
           <div style="flex:1;min-width:0"><div class="name">${esc(c.name)}</div>
             <div class="handle">${c.members} member${c.members==1?'':'s'}${c.last_at?' · '+ago(c.last_at):''}</div></div><span class="koro-open-arrow" aria-hidden="true">↗</span>
         </button>`).join("")}</div>` : `<div class="koro-empty"><div class="koro-empty-art" aria-hidden="true"><span>🪸</span></div><h3>Your Koro starts with you.</h3><p>Bring your people into one private space.<br>Create your first Koro, or join with a code shared with you.</p><div class="koro-empty-actions"><button type="button" class="btn" onclick="$('#koro-create input').focus()">Start your first Koro <span aria-hidden="true">↗</span></button><button type="button" class="koro-text-button" onclick="$('#c-code').focus()">I have an invite code</button></div></div>`}
@@ -911,7 +911,7 @@ async function viewCrewRoom(){
   const map=Object.fromEntries((ppl||[]).map(p=>[p.id,p]));
   shell(`<div class="glass card">
     <div class="row"><button class="btn sm ghost" aria-label="Back to your Koro" onclick="S.crew=null;render()">←</button>
-      <div class="av" id="crew-avatar" style="background:${esc(c.accent)}22">${esc(c.emoji)}</div>
+      <div class="av" id="crew-avatar" style="background:${esc(window.SotaCircleTypes?.get(c.circle_type)?.displayAccent||c.accent)}22">${esc(c.emoji)}</div>
       <div style="flex:1;min-width:0"><div class="name">${esc(c.name)}</div>
         <div class="handle">${c.members} member${c.members==1?'':'s'}</div></div>
       <button type="button" class="btn sm ghost" id="crew-invite">Invite friends</button>
@@ -1130,7 +1130,7 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/skin-studio.js?v=island-themes-20261029"></script>
 <script src="/offline.js?v=20261024-quality"></script>
 <script src="/kava.js"></script>
-<script src="/circle-types.js?v=island-themes-20261029"></script><script src="/circle-groups.js?v=20261026-active-panels-1"></script><script src="/kava-ui.js?v=20261028-preview-1"></script>
+<script src="/circle-types.js?v=island-themes-20261029-protocol"></script><script src="/circle-groups.js?v=island-themes-20261029-protocol"></script><script src="/kava-ui.js?v=20261028-preview-1"></script>
 <script src="/dimau-charts-core.js?v=20261024"></script><script src="/dimau-visuals.js?v=20261024"></script>
 <script src="/friend-feed.js?v=20261025-personal-graph"></script>
 <script src="/room-social.js?v=20261026-spatial-life-1"></script>

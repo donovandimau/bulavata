@@ -20,9 +20,9 @@
     {id:'other',label:'Other Circle',skin:'lagoon',emoji:'💬',accent:'#086779'}
   ].map(type=>{
     const preset=Array.isArray(skins?.presets)?skins.presets.find(preset=>preset.id===type.skin):null;
-    // Group badges and live group rooms share their built-in palette. Keep the
-    // original helper usable when the optional skin catalogue is unavailable.
-    return Object.freeze({...type,accent:/^#[0-9a-f]{6}$/i.test(preset?.accent)?preset.accent:type.accent});
+    // accent is stable server metadata, shared with bv_circle_theme. Only the
+    // display colour follows the current room palette; no saved group changes.
+    return Object.freeze({...type,displayAccent:/^#[0-9a-f]{6}$/i.test(preset?.accent)?preset.accent:type.accent});
   }));
   const fallback=types.find(type=>type.id==='koro');
   const escape=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));

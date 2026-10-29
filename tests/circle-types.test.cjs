@@ -21,6 +21,7 @@ const expected=[
   ['music','Music / Sigidrigi Circle','sigidrigi'],
   ['other','Other Circle','lagoon']
 ];
+const legacyAccents={kava:'#efc187',tale:'#6de6dd',kakase:'#b52b50',lotu:'#756035',koro:'#246347',mataqali:'#7a412c',school:'#8f2d40','old-boys':'#875016','old-girls':'#875016',family:'#246347',music:'#c4b7fc',other:'#086779'};
 
 test('circle types retain the requested labels, stable IDs and existing skin mappings',()=>{
   assert.deepEqual(circles.types.map(type=>[type.id,type.label,type.skin]),expected);
@@ -29,7 +30,8 @@ test('circle types retain the requested labels, stable IDs and existing skin map
   for(const type of circles.types){
     const preset=skins.presets.find(preset=>preset.id===type.skin);
     assert(preset,`existing preset for ${type.id}`);
-    assert.equal(type.accent,preset.accent,`preset accent for ${type.id}`);
+    assert.equal(type.accent,legacyAccents[type.id],`stable server metadata accent for ${type.id}`);
+    assert.equal(type.displayAccent,preset.accent,`current presentation accent for ${type.id}`);
     assert.match(type.accent,/^#[0-9a-f]{6}$/);
     assert.equal(typeof type.emoji,'string');assert(type.emoji.length>0);
   }
@@ -104,6 +106,6 @@ test('browser helper retains safe legacy defaults without the optional skin cata
   const source=fs.readFileSync(path.join(__dirname,'../circle-types.js'),'utf8');
   for(const BulaSkins of [undefined,{presets:[]},{presets:[{id:'grog',accent:'red;position:fixed'}]}]){
     const context=vm.createContext({BulaSkins});vm.runInContext(source,context);
-    const browser=context.SotaCircleTypes;assert.equal(browser.types.length,12);assert.equal(browser.get('kava').skin,'grog');assert.equal(browser.get('kava').accent,'#efc187');assert(Object.isFrozen(browser.get('kava')));
+    const browser=context.SotaCircleTypes;assert.equal(browser.types.length,12);assert.equal(browser.get('kava').skin,'grog');assert.equal(browser.get('kava').accent,'#efc187');assert.equal(browser.get('kava').displayAccent,'#efc187');assert(Object.isFrozen(browser.get('kava')));
   }
 });
