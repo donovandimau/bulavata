@@ -338,7 +338,7 @@ function shell(body){
   <header class="top glass">
     ${LOGO}<div class="brand">Sota Kece<small>alive together</small></div>
     <div class="spacer"></div>
-    <button class="luvchip" onclick="go('wallet')" title="Your wallet" style="border:0;font:inherit;cursor:pointer">💰 <b>${S.wallet&&S.wallet.has_wallet?fjd(S.wallet.balance_minor,S.wallet.currency):"—"}</b></button>
+    ${window.SOTA_WALLET_ON?`<button class="luvchip" onclick="go('wallet')" title="Your wallet" style="border:0;font:inherit;cursor:pointer">💰 <b>${S.wallet&&S.wallet.has_wallet?fjd(S.wallet.balance_minor,S.wallet.currency):"—"}</b></button>`:''}
     <div class="luvchip" title="Three Uro a day. That is why one means something.">🫶 <b>${S.luv}</b></div>
     <button type="button" class="luvchip sk-share-chip" data-sota-share title="Share Sota Kece" aria-label="Share Sota Kece" style="border:0;font:inherit;cursor:pointer">${window.SotaShare?.icon||"↗"} <b>Share</b></button>
   </header>
