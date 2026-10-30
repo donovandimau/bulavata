@@ -235,6 +235,8 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 const SB_URL = "https://aqfzpaczyodhugsgqvxi.supabase.co";
 const SB_KEY = "sb_publishable_DvpX2PSuPtxE3IqWUlRZfQ_YP2qLZtF";
 const sb = window.supabase.createClient(SB_URL, SB_KEY);
+/* The wallet stays hidden until a Reserve Bank of Fiji licence or sandbox approval is in place. Do not switch on before then. */
+window.SOTA_WALLET_ON = false;
 
 /* ---------- state ---------- */
 const S = { user:null, me:null, tab:"pulse", luv:3, pending:[], friends:[], crew:null, roomHandle:null };
