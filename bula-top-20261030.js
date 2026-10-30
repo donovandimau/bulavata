@@ -17,3 +17,6 @@
   window.addEventListener('resize',bulaTop);
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bulaTop);else bulaTop();
 })();
+
+/* 30 Oct 2026: no "?" help button (retired 28 Sep); the guided tour stays */
+;(function(){function h(){var q=document.getElementById('dg-launcher');if(q&&q.style.getPropertyValue('display')!=='none')q.style.setProperty('display','none','important');}new MutationObserver(h).observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});h();})();
