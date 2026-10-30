@@ -635,7 +635,7 @@ async function viewRoom(){
   }
 
   shell(`
-  <div class="glass card" id="room-head" style="background:linear-gradient(135deg, ${esc(p.room_accent)}22, rgba(255,255,255,.6))">
+  <div class="glass card" id="room-head" data-owner="${esc(p.id)}" style="background:linear-gradient(135deg, ${esc(p.room_accent)}22, rgba(255,255,255,.6))">
     <div class="row" style="align-items:flex-start">
       <div class="av lg" style="background:#fff">${esc(p.avatar_emoji)}</div>
       <div style="flex:1;min-width:0">
