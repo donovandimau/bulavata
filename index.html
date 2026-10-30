@@ -235,6 +235,8 @@ nav.bottom button.on{background:#fff;color:var(--accent);box-shadow:0 2px 10px r
 const SB_URL = "https://aqfzpaczyodhugsgqvxi.supabase.co";
 const SB_KEY = "sb_publishable_DvpX2PSuPtxE3IqWUlRZfQ_YP2qLZtF";
 const sb = window.supabase.createClient(SB_URL, SB_KEY);
+/* The wallet stays hidden until a Reserve Bank of Fiji licence or sandbox approval is in place. Do not switch on before then. */
+window.SOTA_WALLET_ON = false;
 
 /* ---------- state ---------- */
 const S = { user:null, me:null, tab:"pulse", luv:3, pending:[], friends:[], crew:null, roomHandle:null };
@@ -336,7 +338,7 @@ function shell(body){
   <header class="top glass">
     ${LOGO}<div class="brand">Sota Kece<small>alive together</small></div>
     <div class="spacer"></div>
-    <button class="luvchip" onclick="go('wallet')" title="Your wallet" style="border:0;font:inherit;cursor:pointer">💰 <b>${S.wallet&&S.wallet.has_wallet?fjd(S.wallet.balance_minor,S.wallet.currency):"—"}</b></button>
+    ${window.SOTA_WALLET_ON?`<button class="luvchip" onclick="go('wallet')" title="Your wallet" style="border:0;font:inherit;cursor:pointer">💰 <b>${S.wallet&&S.wallet.has_wallet?fjd(S.wallet.balance_minor,S.wallet.currency):"—"}</b></button>`:''}
     <div class="luvchip" title="Three Uro a day. That is why one means something.">🫶 <b>${S.luv}</b></div>
     <button type="button" class="luvchip sk-share-chip" data-sota-share title="Share Sota Kece" aria-label="Share Sota Kece" style="border:0;font:inherit;cursor:pointer">${window.SotaShare?.icon||"↗"} <b>Share</b></button>
   </header>
@@ -1028,7 +1030,7 @@ async function render(){
   if(S.tab==="circles") return window.SotaKavaUI.view();
   if(S.tab==="crews") return viewCrews();
   if(S.tab==="friends") return viewFriends();
-  if(S.tab==="wallet") return viewWallet();
+  if(S.tab==="wallet"){ if(window.SOTA_WALLET_ON) return viewWallet(); S.tab="pulse"; return viewPulse(); }
   if(S.tab==="music") return viewMusic();
 }
 async function boot(){
