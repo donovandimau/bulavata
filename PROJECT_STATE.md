@@ -1,3 +1,22 @@
+## 31 October 2026 — The social layer: reactions, replies, saved, stories, polls, events
+
+Owner supplied two spreadsheets of standard social-platform features (X, Instagram, YouTube, TikTok, Facebook) and asked for them to be built into the apps that need them. Sota Kece is that app. Built in one migration (`supabase/migrations/20261031140000_sota_social_plus.sql`) plus `sota-plus.js` / `sota-plus.css`, wired into Moments and rooms:
+
+- Reactions (six: Bula, Vinaka, Haha, Wow, Sad, Fire — unlimited, separate from the three-a-day Uro) on moments, wall scrawls, stories and replies, with "who reacted".
+- Replies and threaded replies on moments and wall scrawls; author or post owner can remove one.
+- Saved (private bookmarks) with a Saved page.
+- Edit a moment for one hour after posting, five edits, earlier versions kept and viewable ("edited").
+- Repost and Quote; the quoted moment shows inside, and disappears if its audience changes.
+- Polls on moments (2–4 options, 1 day to 1 week).
+- Close friends list; moments, stories and events can be "close friends only" — enforced in the moments read policy and every function, not just the screen.
+- Stories (24 hours, image link or text) with a strip at the top of Moments, a viewer, seen state, view counts for the author, and "keep on my room" highlights shown on the room. Notes: one short 24-hour status under your name on the strip.
+- Events with going / maybe / can't, hosted for friends, close friends or a Koro.
+- Memories: "On this day" from the owner's own moments in earlier years.
+- @mentions open the room; drafts save on the device; an 8-second Undo window before a moment posts.
+- Still no algorithm: every list is newest first, friends only.
+
+Verified locally on Postgres 16 with a three-person fixture (friend, close friend, stranger, anonymous): `tests/social-plus-fixture.sql` then the migration then `tests/social-plus-db.sql`. All existing node tests pass. The migration is NOT yet applied to dimau-core-sydney — the owner applies it (Supabase SQL editor or `supabase db push`) before merging; until then the Moments tab on the preview will show the retry message because `bv_moments_feed2` does not exist yet.
+
 ## 27 October 2026 — Apply the supplied chrome glass button design throughout Sota Kece
 
 The owner rejected the faint outline discs and remaining word buttons. The supplied reference is a domed glass control with reflective chrome edges, curved highlights, vivid action colours and bold dark symbols. Apply this material to all action controls in the main app, communications, calls, install prompt and companion; keep song, person, graph and skin content names readable within their existing controls. Connection-category links gain distinct subject symbols. Artwork detail links keep their whole-image hit areas and gain glass symbol markers. A one-colour design still colours the controls consistently, while Mix & match uses distinct action hues. Legacy layered header paint must not override the new material. The stationary music centre and rotating outer ring retain their existing geometry.
