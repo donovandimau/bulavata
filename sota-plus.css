@@ -1,0 +1,97 @@
+/* Sota Kece social layer — reactions, replies, stories, polls, events, saved. Light glass, sky-blue brand. */
+.sp-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line,rgba(0,0,0,.08))}
+.sp-btn{background:rgba(255,255,255,.72);border:1px solid var(--line,rgba(0,0,0,.08));border-radius:999px;padding:5px 11px;font:inherit;font-size:13px;cursor:pointer;color:inherit;display:inline-flex;align-items:center;gap:5px;min-height:32px}
+.sp-btn:hover,.sp-btn:focus-visible{background:rgba(135,206,235,.28)}
+.sp-btn.on{background:rgba(135,206,235,.42);border-color:rgba(79,168,216,.55);font-weight:600}
+.sp-who{background:none;border:0;font:inherit;font-size:13px;cursor:pointer;color:inherit;padding:4px 6px;border-radius:8px}
+.sp-who:hover{background:rgba(135,206,235,.2)}
+.sp-link{background:none;border:0;padding:2px 4px;font:inherit;font-size:12.5px;color:#1f5f8b;cursor:pointer;text-decoration:none;border-radius:6px}
+.sp-link:hover,.sp-link:focus-visible{background:rgba(135,206,235,.25)}
+.sp-link.on{font-weight:700}
+.sp-mention{background:rgba(135,206,235,.25);border:0;border-radius:6px;padding:0 4px;font:inherit;font-weight:600;color:#17486b;cursor:pointer}
+.sp-react-wrap{position:relative}
+.sp-react-menu{display:none;position:absolute;left:0;bottom:calc(100% + 6px);z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border:1px solid var(--line,rgba(0,0,0,.08));border-radius:999px;padding:4px;box-shadow:0 10px 28px rgba(31,95,139,.18);gap:2px}
+.sp-react-wrap.open .sp-react-menu{display:flex}
+.sp-react-menu button{background:none;border:0;font-size:22px;line-height:1;padding:4px 6px;border-radius:999px;cursor:pointer;transition:transform .12s}
+.sp-react-menu button:hover,.sp-react-menu button:focus-visible{transform:scale(1.3);background:rgba(135,206,235,.3)}
+.sp-react-menu button.on{background:rgba(135,206,235,.45)}
+.sp-comments{margin-top:8px;padding:8px 10px;border-radius:12px;background:rgba(240,248,255,.75)}
+.sp-comment{padding:6px 0;border-top:1px solid rgba(0,0,0,.05);font-size:14px}
+.sp-comment:first-child{border-top:0}
+.sp-comment-body{margin:3px 0 2px}
+.sp-reply{display:flex;gap:6px;margin-top:8px}
+.sp-reply input[name=body]{flex:1;min-width:0}
+.sp-close-tag{color:#1e7f4f;font-weight:600}
+.sp-quote{margin-top:8px;padding:10px 12px;border-radius:12px;border:1px solid var(--line,rgba(0,0,0,.08));background:rgba(255,255,255,.6)}
+.sp-history{margin-top:8px}
+/* polls */
+.sp-poll{margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(240,248,255,.8);border:1px solid rgba(79,168,216,.25)}
+.sp-poll-q{font-weight:600;margin-bottom:6px}
+.sp-poll-opt{position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;margin:5px 0;padding:8px 12px;border-radius:10px;border:1px solid rgba(79,168,216,.35);background:rgba(255,255,255,.7);overflow:hidden;font:inherit;text-align:left;color:inherit}
+.sp-poll-opt.vote{cursor:pointer}
+.sp-poll-opt.vote:hover{background:rgba(135,206,235,.3)}
+.sp-poll-opt.mine{border-color:#1f5f8b;font-weight:600}
+.sp-poll-fill{position:absolute;left:0;top:0;bottom:0;background:rgba(135,206,235,.45);z-index:0;transition:width .4s}
+.sp-poll-label,.sp-poll-opt b{position:relative;z-index:1}
+/* composer */
+.sp-compose{margin-top:9px}
+.sp-seg{display:inline-flex;align-items:center;gap:6px;font-size:13px}
+.sp-seg select,.sp-seg input{font:inherit;font-size:13px;padding:5px 8px;border-radius:9px;border:1px solid var(--line,rgba(0,0,0,.1));background:rgba(255,255,255,.8)}
+#sp-poll-builder{margin-top:8px;padding:10px;border-radius:12px;background:rgba(240,248,255,.8)}
+#sp-poll-builder input{width:100%;margin-bottom:6px}
+.sp-poll-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sp-poll-opts input{margin:0}
+.sp-undo{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:60;display:flex;gap:10px;align-items:center;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.92);border:1px solid rgba(79,168,216,.4);box-shadow:0 10px 28px rgba(31,95,139,.2);font-size:14px}
+/* stories strip */
+.sp-strip{margin-bottom:12px}
+.sp-strip-scroll{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.sp-story-person{display:flex;flex-direction:column;align-items:center;flex:0 0 auto;max-width:84px}
+.sp-story-btn{background:none;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font:inherit;color:inherit;flex:0 0 auto}
+.sp-story-btn small{font-size:11.5px;max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-ring{display:inline-flex;padding:3px;border-radius:50%;background:conic-gradient(var(--ring,#4FA8D8),#87CEEB,var(--ring,#4FA8D8))}
+.sp-ring.seen{background:rgba(0,0,0,.12)}
+.sp-ring.none{background:transparent;border:2px dashed rgba(0,0,0,.12);padding:1px}
+.sp-ring .av{background:#fff}
+.sp-story-btn.add .sp-ring{background:rgba(135,206,235,.5)}
+.sp-note{margin-top:-2px;font-size:11px;line-height:1.2;max-width:80px;padding:3px 7px;border-radius:10px;background:rgba(255,255,255,.9);border:1px solid var(--line,rgba(0,0,0,.08));overflow:hidden;text-overflow:ellipsis;white-space:nowrap;box-shadow:0 2px 8px rgba(31,95,139,.12)}
+.sp-memories .scrawl{margin-top:8px}
+/* story viewer */
+.sp-viewer{position:fixed;inset:0;z-index:80;background:rgba(23,72,107,.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:16px}
+.sp-viewer-card{width:min(440px,100%);max-height:92vh;overflow:auto;background:rgba(255,255,255,.96);border-radius:20px;padding:14px;box-shadow:0 20px 50px rgba(0,0,0,.3);border:2px solid var(--ring,#87CEEB)}
+.sp-viewer-dots{display:flex;gap:4px;margin-bottom:8px}
+.sp-viewer-dots i{flex:1;height:3px;border-radius:2px;background:rgba(0,0,0,.12)}
+.sp-viewer-dots i.on{background:#1f5f8b}
+.sp-viewer-text{font-size:18px;line-height:1.5;padding:18px 6px;text-align:center}
+.sp-viewer-media{margin:8px 0}
+.sp-viewer-media img{width:100%;border-radius:12px}
+.sp-viewer-card textarea{width:100%;min-height:90px}
+/* side panel, saved, close friends, events */
+.sp-side-grid{display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px}
+.sp-close-row{padding:8px 0;border-top:1px solid rgba(0,0,0,.05)}
+.sp-close-row:first-of-type{border-top:0}
+.sp-event{display:flex;gap:12px;padding:12px 0;border-top:1px solid rgba(0,0,0,.06)}
+.sp-event.off{opacity:.55}
+.sp-event-date{flex:0 0 52px;text-align:center;border-radius:12px;background:rgba(135,206,235,.35);padding:8px 0;line-height:1.1}
+.sp-event-date b{display:block;font-size:20px}
+.sp-event-date small{font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.sp-people{margin-top:6px;font-size:18px;letter-spacing:-2px}
+.sp-highlights{margin-top:12px}
+.sp-highlight{flex:0 0 120px;display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center;font-size:12px}
+.sp-highlight img{width:120px;height:120px;object-fit:cover;border-radius:14px}
+.sp-highlight-text{width:120px;height:120px;border-radius:14px;background:rgba(135,206,235,.3);display:flex;align-items:center;justify-content:center;padding:8px;font-size:12px;overflow:hidden}
+@media (max-width:640px){
+  .sp-poll-opts{grid-template-columns:1fr}
+  .sp-undo{bottom:92px;width:calc(100% - 24px);justify-content:space-between}
+  .sp-react-menu button{font-size:24px;padding:6px 7px}
+}
+/* Koro room */
+.sp-sys{text-align:center;font-size:12.5px;color:#1f5f8b;margin:8px 0;padding:4px 10px;border-radius:999px;background:rgba(135,206,235,.25);display:inline-block;align-self:center}
+.sp-msg-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:4px;font-size:12px}
+.sp-mini{background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.08);border-radius:999px;padding:1px 7px;font:inherit;font-size:12px;cursor:pointer;color:inherit}
+.sp-mini.on{background:rgba(135,206,235,.5);border-color:rgba(79,168,216,.6);font-weight:600}
+.sp-msg-react{position:relative;display:inline-flex;gap:4px;align-items:center}
+.sp-msg-react.open .sp-react-menu{display:flex}
+.sp-reply-quote{font-size:12.5px;padding:4px 8px;margin-bottom:4px;border-left:3px solid rgba(79,168,216,.6);background:rgba(240,248,255,.7);border-radius:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-reply-to{display:flex;gap:8px;align-items:center;font-size:12.5px;padding:4px 10px;margin-bottom:6px;border-radius:999px;background:rgba(135,206,235,.3)}
+.sp-pinned{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;margin:6px 0 10px;border-radius:12px;background:rgba(255,248,220,.85);border:1px solid rgba(230,190,80,.5);font-size:13.5px}
+.sp-koro-settings{display:flex;flex-direction:column;gap:8px;padding:10px;margin:6px 0;border-radius:12px;background:rgba(240,248,255,.85)}
