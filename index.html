@@ -593,7 +593,13 @@ async function viewMoments(){
   window.SotaPlus?.wireComposer();
   window.SotaPlus?.mountStrip();
 }
-async function postMoment(){ return window.SotaPlus?.post(); }
+async function postMoment(){
+  if(window.SotaPlus)return window.SotaPlus.post();
+  const b=$("#m-body").value.trim(), u=$("#m-url").value.trim();
+  if(!b && !u) return;
+  const {error}=await sb.from("bv_moments").insert({author:S.user.id,body:b,media_url:u||null});
+  if(error) return toast(error.message); toast("Posted"); render();
+}
 async function delMoment(id){ if(!confirm("Delete this moment? This can't be undone.")) return;
   await sb.from("bv_moments").delete().eq("id",id); render(); }
 async function giveLuv(kind,id){
@@ -1135,7 +1141,7 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/connections.js?v=20261026-spatial-life-1"></script>
 <script src="/icon-controls.js?v=20261027-ui-clarity-3"></script>
 <script src="/gifts.js?v=20261030-gifts-1"></script><script src="/sota-plus.js?v=20261031-social-1"></script>
-<script>window.SotaIconControls?.init();window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null,getPage:()=>S.user?S.tab:'profile'});window.SotaSpaceDesign?.mount(app);window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());window.SotaExperience?.init({go,welcome:()=>{window.SotaKavaUI?.stop();renderAuth('in');}});window.SotaGifts?.init({client:sb,state:S,toast,app});window.SotaPlus.init({client:sb,state:S,toast,render,openRoom,esc,ago,mediaMarkup,shell:b=>shell(b)});boot();installAuthLifecycle();</script>
+<script>window.SotaIconControls?.init();window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null,getPage:()=>S.user?S.tab:'profile'});window.SotaSpaceDesign?.mount(app);window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());window.SotaExperience?.init({go,welcome:()=>{window.SotaKavaUI?.stop();renderAuth('in');}});window.SotaGifts?.init({client:sb,state:S,toast,app});window.SotaPlus?.init({client:sb,state:S,toast,render,openRoom,esc,ago,mediaMarkup,shell:b=>shell(b)});boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261027-ui-clarity-3" data-app="sota-kece" defer></script>
 <link rel="stylesheet" href="/phone-tidy-20261029.css">
 <script src="/bula-welcome.js?v=20261030" data-app="sota-kece" data-mount="after:[data-dimau-header-bar]" defer></script>
