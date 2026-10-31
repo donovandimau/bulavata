@@ -71,9 +71,15 @@ returns boolean language sql stable security definer set search_path = '' as $$
      and bulavata.in_crew(p_crew);
 $$;
 
+create or replace function bulavata.reply_in_crew(p_reply bigint, p_crew bigint)
+returns boolean language sql stable security definer set search_path = '' as $$
+  select p_reply is null or exists (select 1 from bulavata.crew_messages r where r.id = p_reply and r.crew_id = p_crew);
+$$;
+
 drop policy if exists cx_ins on bulavata.crew_messages;
 create policy cx_ins on bulavata.crew_messages for insert
-  with check (author = (select auth.uid()) and kind = 'text' and bulavata.crew_can_post(crew_id));
+  with check (author = (select auth.uid()) and kind = 'text' and bulavata.crew_can_post(crew_id)
+    and bulavata.reply_in_crew(reply_to, crew_id));
 drop policy if exists cx_read on bulavata.crew_messages;
 create policy cx_read on bulavata.crew_messages for select
   using (bulavata.in_crew(crew_id) and (expires_at is null or expires_at > now()));
@@ -107,7 +113,7 @@ declare c bulavata.crews; line text; begin
   end if;
   if c.broadcast is distinct from coalesce(p_broadcast, false) then
     insert into bulavata.crew_messages(crew_id, author, body, kind, expires_at) values (p_crew, (select auth.uid()),
-      case when p_broadcast then 'This is now a broadcast Koro. Only the owner posts; everyone can react and reply privately.' else 'Everyone can post again.' end, 'system', null);
+      case when p_broadcast then 'This is now a broadcast Koro. Only the owner posts; everyone can react.' else 'Everyone can post again.' end, 'system', null);
   end if;
   return jsonb_build_object('vanish_seconds', p_vanish_seconds, 'broadcast', coalesce(p_broadcast,false));
 end $$;
@@ -145,21 +151,21 @@ returns jsonb language sql stable security definer set search_path = '' as $$
         'created_at', x.created_at, 'expires_at', x.expires_at,
         'reactions', bulavata.reaction_summary('message', x.id),
         'reply', (select jsonb_build_object('id', r.id, 'handle', rp.handle, 'body', case when r.deleted then null else left(r.body, 120) end)
-                  from bulavata.crew_messages r join bulavata.profiles rp on rp.id = r.author where r.id = x.reply_to)
+                  from bulavata.crew_messages r join bulavata.profiles rp on rp.id = r.author where r.id = x.reply_to and r.crew_id = x.crew_id)
       ) order by x.created_at desc)
       from page x join bulavata.profiles p on p.id = x.author), '[]'::jsonb));
 $$;
 
 grant execute on function public.bv_crew_settings(bigint,integer,boolean), public.bv_crew_pin(bigint,bigint),
   public.bv_crew_message_delete(bigint), public.bv_crew_messages2(bigint,integer),
-  bulavata.crew_can_post(bigint), bulavata.crew_owner(bigint) to authenticated; -- the policies run as the signed-in role
+  bulavata.crew_can_post(bigint), bulavata.crew_owner(bigint), bulavata.reply_in_crew(bigint,bigint) to authenticated; -- the policies run as the signed-in role
 revoke execute on function public.bv_crew_settings(bigint,integer,boolean), public.bv_crew_pin(bigint,bigint),
   public.bv_crew_message_delete(bigint), public.bv_crew_messages2(bigint,integer),
-  bulavata.crew_owner(bigint), bulavata.crew_can_post(bigint), bulavata.crew_message_expiry() from public, anon;
+  bulavata.crew_owner(bigint), bulavata.crew_can_post(bigint), bulavata.reply_in_crew(bigint,bigint), bulavata.crew_message_expiry() from public, anon;
 
 -- the app inserts through this view; expose reply_to so a reply can be sent the same way
 create or replace view public.bv_crew_messages with (security_invoker = true) as
-  select id, crew_id, author, body, created_at, reply_to from bulavata.crew_messages;
+  select id, crew_id, author, body, created_at, reply_to from bulavata.crew_messages where not deleted and kind = 'text';
 
 -- vanished messages are really deleted, every ten minutes
 do $$ begin

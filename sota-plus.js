@@ -420,7 +420,7 @@
         (m.reply ? '<div class="sp-reply-quote">↩ <b>@' + esc(m.reply.handle) + '</b> ' + (m.reply.body === null ? '<i>removed</i>' : esc(m.reply.body)) + '</div>' : '') +
         '<div>' + text + '</div>' +
         '<div class="sp-msg-meta"><span class="ago">' + ago(m.created_at) + (m.expires_at ? ' · ⏳ ' + vanishLabel(Math.max(60, Math.round((new Date(m.expires_at) - Date.now()) / 1000))) + ' left' : '') + '</span>' +
-        (!m.deleted ? '<button type="button" class="sp-link" data-sp="koro-reply" data-handle="' + esc(m.handle) + '">reply</button>' +
+        (!m.deleted ? (st.can_post !== false ? '<button type="button" class="sp-link" data-sp="koro-reply" data-handle="' + esc(m.handle) + '">reply</button>' : '') +
           '<span class="sp-msg-react" data-kind="message" data-id="' + m.id + '">' +
             REACTIONS.map(function (r) { var n = (m.reactions && m.reactions.counts && m.reactions.counts[r.key]) || 0; var on = m.reactions && m.reactions.mine === r.key; return (n || on) ? '<button type="button" class="sp-mini ' + (on ? 'on' : '') + '" data-sp="koro-react" data-reaction="' + (on ? '' : r.key) + '">' + r.icon + (n ? ' ' + n : '') + '</button>' : ''; }).join('') +
             '<button type="button" class="sp-mini" data-sp="koro-react-more" aria-label="React">＋</button>' +
@@ -430,9 +430,10 @@
         '</div></div>';
     }).join('');
   }
-  function koroReplyBar() { return '<div id="sp-reply-to" class="sp-reply-to" hidden><span></span><button type="button" class="sp-link" data-sp="koro-reply-clear">✕</button></div>'; }
-  function koroReplyId() { var b = document.getElementById('sp-reply-to'); return b && !b.hidden && b.dataset.mid ? Number(b.dataset.mid) : null; }
-  function koroComposerNote(d) { var st = d.settings || {}; return st.can_post === false ? '<p class="sub">📣 Only the owner posts in this Koro. You can react and reply from the message menu.</p>' : ''; }
+  function koroReplyBar() { var r = S.koroReply; return '<div id="sp-reply-to" class="sp-reply-to" ' + (r ? 'data-mid="' + r.mid + '"' : 'hidden') + '><span>' + (r ? 'Replying to @' + esc(r.handle) : '') + '</span><button type="button" class="sp-link" data-sp="koro-reply-clear">✕</button></div>'; }
+  function koroReplyId() { return S.koroReply ? Number(S.koroReply.mid) : null; }
+  function koroReplyClear() { S.koroReply = null; var b = document.getElementById('sp-reply-to'); if (b) { b.hidden = true; b.removeAttribute('data-mid'); } }
+  function koroComposerNote(d) { var st = d.settings || {}; return st.can_post === false ? '<p class="sub">📣 Only the owner posts in this Koro. You can react to any message.</p>' : ''; }
 
   /* ---------------------------------------------------------------- one delegated click handler */
   function closest(el, sel) { while (el && el !== document) { if (el.matches && el.matches(sel)) return el; el = el.parentNode; } return null; }
@@ -516,10 +517,11 @@
       if (act === 'koro-delete') { if (!confirm('Remove this message for everyone?')) return; await rpc('bv_crew_message_delete', { p_id: Number(closest(t, '.sp-msg').dataset.mid) }); return render(); }
       if (act === 'koro-reply') {
         var mm2 = closest(t, '.sp-msg'), rb = document.getElementById('sp-reply-to');
+        S.koroReply = { mid: mm2.dataset.mid, handle: t.dataset.handle };
         if (rb) { rb.hidden = false; rb.dataset.mid = mm2.dataset.mid; rb.querySelector('span').textContent = 'Replying to @' + t.dataset.handle; }
         var inp = document.getElementById('cm'); if (inp) inp.focus(); return;
       }
-      if (act === 'koro-reply-clear') { var rb2 = document.getElementById('sp-reply-to'); rb2.hidden = true; rb2.dataset.mid = ''; return; }
+      if (act === 'koro-reply-clear') { koroReplyClear(); return; }
       if (act === 'koro-react-more') { closest(t, '.sp-msg-react').classList.toggle('open'); return; }
       if (act === 'koro-react') {
         var wrap = closest(t, '.sp-msg-react');
@@ -570,5 +572,5 @@
 
   window.SotaPlus = { init: init, feed: feed, momentCard: momentCard, bar: bar, composerExtras: composerExtras, wireComposer: wireComposer, post: post,
     strip: strip, mountStrip: mountStrip, sidePanel: sidePanel, open: open, roomExtras: roomExtras, highlights: highlights, REACTIONS: REACTIONS,
-    koroRead: koroRead, koroHeader: koroHeader, koroMessages: koroMessages, koroReplyBar: koroReplyBar, koroReplyId: koroReplyId, koroComposerNote: koroComposerNote };
+    koroRead: koroRead, koroHeader: koroHeader, koroMessages: koroMessages, koroReplyBar: koroReplyBar, koroReplyId: koroReplyId, koroReplyClear: koroReplyClear, koroComposerNote: koroComposerNote };
 })();

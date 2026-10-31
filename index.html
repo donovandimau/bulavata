@@ -915,13 +915,13 @@ async function viewCrewRoom(){
     </div><hr class="hr">
     <p class="sub" id="crew-type-label">${esc(window.SotaCircleTypes.get(c.circle_type).label)} · ${esc(window.BulaSkins.presets.find(p=>p.id===window.SotaCircleTypes.get(c.circle_type).skin)?.name||'Shared group skin')}</p>
     <details class="tc-group-graph"><summary>Circle graph & visibility</summary><div id="crew-graph"></div></details>
-    ${window.SotaPlus.koroHeader(c.id,room)}
-    ${window.SotaPlus.koroReplyBar()}
+    ${window.SotaPlus?.koroHeader(c.id,room)||''}
+    ${window.SotaPlus?.koroReplyBar()||''}
     ${room.settings&&room.settings.can_post===false?window.SotaPlus.koroComposerNote(room):`<div class="row" style="margin-bottom:12px"><input id="cm" aria-label="Message your Koro" aria-describedby="cm-error" placeholder="Message…" maxlength="900">
       <button class="btn sm" id="cm-send" onclick="sendMsg(${c.id})">Send</button></div>`}
     <p id="cm-error" role="alert" hidden></p>
     <div class="msgs" id="msgs">
-      ${window.SotaPlus.koroMessages(c.id,room)}
+      ${window.SotaPlus?.koroMessages(c.id,room)||'<div class="empty"><em>🪸</em>Messages could not be drawn. Reload the page.</div>'}
     </div>
   </div>`);
   window.SotaCircles.applyGroupSkin(c);
@@ -941,6 +941,7 @@ async function sendMsg(cid){
     const {error}=await sb.from("bv_crew_messages").insert(replyTo?{crew_id:cid,author:S.user.id,body:b,reply_to:replyTo}:{crew_id:cid,author:S.user.id,body:b});
     if(error)throw error;
     if(input.value===raw)input.value='';
+    window.SotaPlus?.koroReplyClear();
     if(currentView(run))await render();
   }catch(_){
     if(currentView(run)){const message='Message did not send. Your text is still here. Try again.';if(errorBox){errorBox.textContent=message;errorBox.hidden=false;}else toast(message);}
