@@ -1,3 +1,13 @@
+## 31 October 2026 — Activity: who reacted, replied, mentioned, asked, scrawled, answered
+
+Sota Kece had every social action but no way to find out it happened to you. Migration `supabase/migrations/20261031210000_sota_activity.sql` adds `bulavata.notifications`, filled only by database triggers (reactions, comments incl. parent-reply and @mentions of friends, friend requests and acceptances, wall scrawls, event RSVPs). The writer skips self-actions, coalesces repeats (a changed reaction updates one row and re-surfaces it), and never writes to someone who could not already see the thing. Pattern from the socialens / Meadows feeds; written fresh.
+
+- `bv_activity(lim)` newest first with the actor's handle and avatar; `bv_activity_unread()`; `bv_activity_read(ids|null)`. Row-level security: you read only your own; anon gets nothing.
+- Accepting a friend request marks the request notification read for the person who had it.
+- `sota-plus.js`: 🔔 Activity in the More panel with an unread badge (polled once a minute and when the tab becomes visible; silent if the function is not deployed yet), an Activity page that marks rows read on open, "mark all read", and a Room button per row. `sota-plus.css` styles; asset queries bumped to `20261031-activity-1`; shell cache v122.
+
+Verified locally on Postgres 16: `tests/social-plus-fixture.sql` → social-plus migration → this migration → `tests/activity-db.sql` (self-reaction not notified, re-reaction coalesced, stranger @mention ignored, parent author told once, read/unread counts, friend request → accepted, RSVP snippet, anon denied). `tests/activity.test.cjs` (4) and all 62 existing node tests pass. Not verified: hosted render while signed in. The migration is NOT applied to the live project — the owner applies it in the Supabase SQL editor.
+
 ## 31 October 2026 — Sota Kece Plus checkout (Stripe, live) + wallet receipts
 
 Owner asked to connect Stripe. One line before `</body>` loads the shared Dimau buy widget (dimau-pay.js from the money engine) for product `sotakece-plus-30d` — FJ$9.90 for 30 days, already active in the engine. It shows a small pill bottom-right that opens the offer card; nothing else on the page changes. Wording is honest about what exists today: it is a supporter tier ("Plus perks land first for members") — no Plus-only feature is gated yet. Next: read the engine's entitlement (`pay?entitled=<session>`) after checkout and show a Plus badge; that needs the engine's entitlements migration run first.

@@ -305,12 +305,51 @@
   function sidePanel() {
     return '<div class="glass card sp-side"><h3>More</h3>' +
       '<div class="sp-side-grid">' +
+        '<button type="button" class="btn sm ghost sp-act-btn" data-sp="view" data-view="activity">🔔 Activity<span id="sp-act-badge" class="sp-act-badge" hidden>0</span></button>' +
         '<button type="button" class="btn sm ghost" data-sp="view" data-view="events">📅 Events</button>' +
         '<button type="button" class="btn sm ghost" data-sp="view" data-view="saved">🔖 Saved</button>' +
         '<button type="button" class="btn sm ghost" data-sp="view" data-view="close">🟢 Close friends</button>' +
       '</div></div>';
   }
   function back() { return '<button type="button" class="sp-link" data-sp="view" data-view="moments">‹ Back to Moments</button>'; }
+
+  /* ---------------------------------------------------------------- activity (notifications) */
+  var ACT_WORDS = { reaction: 'reacted to your', reply: 'replied to your', mention: 'mentioned you in a', friend_request: 'wants to be friends',
+    friend_accepted: 'accepted your friend request', wall: 'scrawled on your wall', rsvp: 'answered your event' };
+  var ACT_ICON = { reaction: '👋', reply: '💬', mention: '＠', friend_request: '🤝', friend_accepted: '✅', wall: '🖊️', rsvp: '📅' };
+  var ACT_TARGET = { moment: 'moment', pulse: 'pulse', wall: 'wall scrawl', comment: 'reply', story: 'story', event: 'event', friendship: '' };
+  function actLine(n) {
+    var sn = n.snippet || '', pre = '', text = sn, i = sn.indexOf('|');
+    if ((n.kind === 'reaction' || n.kind === 'rsvp') && i >= 0) { pre = sn.slice(0, i); text = sn.slice(i + 1); }
+    var verb = ACT_WORDS[n.kind] || n.kind, what = ACT_TARGET[n.target_kind] || '';
+    if (n.kind === 'reaction') verb = (RX[pre] ? RX[pre].icon + ' ' : '') + verb;
+    if (n.kind === 'rsvp') verb = ({ going: '✅ is going to', maybe: '🤔 might come to', no: '❌ can\'t make' })[pre] || verb;
+    return '<span class="name">@' + esc(n.handle || '') + '</span> ' + esc(verb) + (what ? ' ' + esc(what) : '') +
+      (text ? ' <span class="sub">“' + esc(text.length > 70 ? text.slice(0, 70) + '…' : text) + '”</span>' : '');
+  }
+  function setBadge(n) {
+    var b = document.getElementById('sp-act-badge'); if (!b) return;
+    n = Number(n) || 0; b.textContent = n > 99 ? '99+' : String(n); b.hidden = n === 0;
+    var btn = b.closest('.sp-act-btn'); if (btn) btn.setAttribute('aria-label', 'Activity, ' + n + ' unread');
+  }
+  async function pollUnread() {
+    if (!S || !S.user) return;
+    try { setBadge(await rpc('bv_activity_unread')); } catch (_) { /* function not deployed yet: stay quiet */ }
+  }
+  async function viewActivity() {
+    shell('<div class="glass card"><h3>Activity</h3><div class="sub">Loading…</div></div>');
+    var list; try { list = await rpc('bv_activity', { lim: 60 }); } catch (e) { return shell('<div class="glass card">' + back() + '<p>' + esc(say(e)) + '</p></div>'); }
+    shell('<div class="stack">' + back() + '<div class="glass card"><div class="row"><h3 style="margin:0">🔔 Activity</h3><div class="spacer"></div>' +
+      (list.some(function (n) { return !n.read; }) ? '<button type="button" class="sp-link" data-sp="act-read-all">mark all read</button>' : '') + '</div>' +
+      '<div class="sub" style="margin:4px 0 10px">Reactions, replies, mentions, friend requests, wall scrawls and RSVPs. Friends only, newest first.</div>' +
+      (list.length ? list.map(function (n) {
+        return '<div class="sp-act ' + (n.read ? '' : 'unread') + '" data-id="' + n.id + '"><span class="av sm" style="--accent:' + esc(n.accent || '') + '">' + esc(n.avatar_emoji || '🌺') + '</span>' +
+          '<div style="flex:1;min-width:0"><div>' + actLine(n) + '</div><div class="handle">' + esc(ago(n.created_at)) + '</div></div>' +
+          '<span class="sp-act-icon" aria-hidden="true">' + (ACT_ICON[n.kind] || '') + '</span>' +
+          '<button type="button" class="btn sm ghost" data-sp="room" data-handle="' + esc(n.handle || '') + '">Room</button></div>';
+      }).join('') : '<div class="empty"><em>🔔</em>Nothing yet. When friends react, reply or mention you, it shows up here.</div>') + '</div></div>');
+    try { if (list.some(function (n) { return !n.read; })) { await rpc('bv_activity_read', { p_ids: null }); } setBadge(0); } catch (_) {}
+  }
 
   async function viewSaved() {
     shell('<div class="glass card"><h3>Saved</h3><div class="sub">Loading…</div></div>');
@@ -375,6 +414,7 @@
   async function open(view) {
     if (view === 'moments') { S.plusView = null; return render(); }
     S.plusView = view;
+    if (view === 'activity') return viewActivity();
     if (view === 'saved') return viewSaved();
     if (view === 'close') return viewClose();
     if (view === 'events') return viewEvents(false);
@@ -486,6 +526,7 @@
     var act = t.dataset.sp, barEl = closest(t, '.sp-bar');
     try {
       if (act === 'room') { ev.preventDefault(); return openRoom(t.dataset.handle); }
+      if (act === 'act-read-all') { try { await rpc('bv_activity_read', { p_ids: null }); } catch (e) { return toast(say(e)); } document.querySelectorAll('.sp-act.unread').forEach(function (el) { el.classList.remove('unread'); }); t.remove(); return setBadge(0); }
       if (act === 'view') return open(t.dataset.view);
       if (act === 'react-open') { var w = closest(t, '.sp-react-wrap'); w.classList.toggle('open'); return; }
       if (act === 'react') {
@@ -602,11 +643,13 @@
     client = o.client; S = o.state; toast = o.toast; render = o.render; openRoom = o.openRoom; esc = o.esc; ago = o.ago; mediaMarkup = o.mediaMarkup; shell = o.shell;
     document.addEventListener('click', onClick);
     document.addEventListener('submit', onSubmit);
+    setTimeout(pollUnread, 1500); setInterval(pollUnread, 60000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) pollUnread(); });
     document.addEventListener('click', function (ev) { if (!closest(ev.target, '.sp-react-wrap')) document.querySelectorAll('.sp-react-wrap.open').forEach(function (w) { w.classList.remove('open'); }); if (!closest(ev.target, '.sp-msg-react')) document.querySelectorAll('.sp-msg-react.open').forEach(function (w) { w.classList.remove('open'); }); });
     document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') { var v = document.getElementById('sp-viewer'); if (v) v.remove(); } });
   }
 
   window.SotaPlus = { init: init, feed: feed, momentCard: momentCard, bar: bar, composerExtras: composerExtras, wireComposer: wireComposer, post: post,
-    strip: strip, mountStrip: mountStrip, sidePanel: sidePanel, open: open, roomExtras: roomExtras, highlights: highlights, REACTIONS: REACTIONS,
+    strip: strip, mountStrip: mountStrip, sidePanel: sidePanel, open: open, pollUnread: pollUnread, actLine: actLine, roomExtras: roomExtras, highlights: highlights, REACTIONS: REACTIONS,
     koroRead: koroRead, koroHeader: koroHeader, koroMessages: koroMessages, koroReplyBar: koroReplyBar, koroReplyId: koroReplyId, koroReplyClear: koroReplyClear, feedCompat: feedCompat, koroReadCompat: koroReadCompat, koroComposerNote: koroComposerNote };
 })();
