@@ -1,3 +1,9 @@
+## 31 October 2026 — Sota Kece Plus checkout (Stripe, live) + wallet receipts
+
+Owner asked to connect Stripe. One line before `</body>` loads the shared Dimau buy widget (dimau-pay.js from the money engine) for product `sotakece-plus-30d` — FJ$9.90 for 30 days, already active in the engine. It shows a small pill bottom-right that opens the offer card; nothing else on the page changes. Wording is honest about what exists today: it is a supporter tier ("Plus perks land first for members") — no Plus-only feature is gated yet. Next: read the engine's entitlement (`pay?entitled=<session>`) after checkout and show a Plus badge; that needs the engine's entitlements migration run first.
+
+The shared receipts widget (dimau-receipts.js — photo of an M-PAiSA / MyCash receipt, read on the device, parsed by the parse-receipt function, nothing stored server-side) rides along as a "+ Wallet receipts" button bottom-LEFT, so it does not sit on top of the Plus pill bottom-right.
+
 ## 31 October 2026 (later) — Koro messaging: vanish mode, broadcast Koro, replies, reactions, pin
 
 Second batch from the feature spreadsheets, built after reading how SimpleX and XMTP do disappearing messages (expiry stamped per message from a per-conversation setting, a system line in the chat when it changes, a sweep that really deletes). Migration `supabase/migrations/20261031160000_sota_koro_messaging.sql` (needs the social-plus migration first) plus the Koro section of `sota-plus.js`:
