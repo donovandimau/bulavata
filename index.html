@@ -560,7 +560,7 @@ async function viewMoments(){
   const run=viewRun();
   shell(`<div class="empty glass card" role="status"><em>🐚</em>Loading…</div>`);
   if(S.plusView&&window.SotaPlus)return window.SotaPlus.open(S.plusView);
-  const {data,error} = await requestResult(sb.rpc("bv_moments_feed2",{lim:60}));
+  const {data,error} = await requestResult(window.SotaPlus?window.SotaPlus.feedCompat(sb):sb.rpc("bv_moments_feed",{lim:60}));
   if(!currentView(run))return;
   if(error)return viewError('your moments','viewMoments()');
   shell(`
@@ -902,7 +902,7 @@ async function viewCrewRoom(){
   const c=(cs||[]).find(x=>String(x.id)===String(S.crew));
   if(!c){ S.crew=null; return render(); }
   /* newest first - latest at the top, no scrolling back up */
-  const {data:roomData,error:roomError}=await requestResult(sb.rpc("bv_crew_messages2",{p_crew:c.id,lim:80}));
+  const {data:roomData,error:roomError}=await requestResult(window.SotaPlus?window.SotaPlus.koroReadCompat(sb,c.id):sb.rpc("bv_crew_messages2",{p_crew:c.id,lim:80}));
   if(!currentView(run))return;
   if(roomError)return viewError('your Koro messages','viewCrewRoom()');
   const room=roomData||{};
@@ -1136,7 +1136,7 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/life-connections.js?v=20261027-spectrum-tidy-2"></script>
 <script src="/connections.js?v=20261026-spatial-life-1"></script>
 <script src="/icon-controls.js?v=20261027-ui-clarity-3"></script>
-<script src="/gifts.js?v=20261030-gifts-1"></script><script src="/sota-plus.js?v=20261031-koro-1"></script>
+<script src="/gifts.js?v=20261030-gifts-1"></script><script src="/sota-plus.js?v=20261031-koro-2"></script>
 <script>window.SotaIconControls?.init();window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null,getPage:()=>S.user?S.tab:'profile'});window.SotaSpaceDesign?.mount(app);window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());window.SotaExperience?.init({go,welcome:()=>{window.SotaKavaUI?.stop();renderAuth('in');}});window.SotaGifts?.init({client:sb,state:S,toast,app});window.SotaPlus?.init({client:sb,state:S,toast,render,openRoom,esc,ago,mediaMarkup,shell:b=>shell(b)});boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261027-ui-clarity-3" data-app="sota-kece" defer></script>
 <link rel="stylesheet" href="/phone-tidy-20261029.css">

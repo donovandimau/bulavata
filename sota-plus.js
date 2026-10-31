@@ -132,6 +132,7 @@
 
   function momentCard(m) {
     var mine = m.author === S.user.id;
+    if (m.compat) return momentCardCompat(m, mine);
     var quoted = m.repost ? (m.repost.visible === false
       ? '<div class="sp-quote sub">A moment you cannot see any more.</div>'
       : '<div class="sp-quote"><div class="row" style="gap:7px"><span>' + esc(m.repost.avatar_emoji || '🌺') + '</span><b>' + esc(m.repost.display_name || m.repost.handle) + '</b>' +
@@ -157,6 +158,15 @@
       '</div>' +
       bar('moment', m.id, m.reactions, m.comment_count, extra) +
       '</div>';
+  }
+
+  function momentCardCompat(m, mine) {
+    return '<div class="moment sp-moment" data-mid="' + m.id + '"><div class="row">' +
+      '<div class="av sm" style="background:' + esc(m.accent) + '18">' + esc(m.avatar_emoji || '🌺') + '</div>' +
+      '<div style="flex:1;min-width:0"><div class="name ellip">' + esc(m.display_name || m.handle) + '</div><div class="handle">@' + esc(m.handle) + ' · ' + ago(m.created_at) + '</div></div>' +
+      (mine ? '<button class="luvbtn" aria-label="Delete this moment" onclick="delMoment(' + m.id + ')">🗑</button>' : '') + '</div>' +
+      (m.body ? '<div class="body">' + rich(m.body) + '</div>' : '') + mediaMarkup(m.media_url) +
+      '<button class="luvbtn ' + (m.i_luvd ? 'on' : '') + '" onclick="giveLuv(\'moment\',' + m.id + ')">🫶 <span>Uro</span>' + (m.luv_count ? ' · ' + m.luv_count : '') + '</button></div>';
   }
 
   /* ---------------------------------------------------------------- composer: audience, poll, drafts, undo */
@@ -396,6 +406,7 @@
 
   function koroHeader(crewId, d) {
     var st = d.settings || {}, out = '';
+    if (st.compat) return '';
     if (st.broadcast) out += '<span class="pill">📣 Broadcast — only the owner posts</span> ';
     if (st.vanish_seconds) out += '<span class="pill">⏳ Vanish: ' + esc(vanishLabel(st.vanish_seconds)) + '</span> ';
     if (st.is_owner) out += '<button type="button" class="btn sm ghost" data-sp="koro-settings" data-crew="' + crewId + '">⚙️ Koro settings</button>';
@@ -413,6 +424,7 @@
     if (!list.length) return '<div class="empty"><em>🪸</em>Say something first.</div>';
     return list.map(function (m) {
       if (m.kind === 'system') return '<div class="sp-sys">' + esc(m.body || '') + '</div>';
+      if (st.compat) return '<div class="msg sp-msg ' + (m.author === S.user.id ? 'mine' : '') + '">' + (m.author !== S.user.id ? '<span class="who">' + esc(m.avatar_emoji || '🌺') + ' ' + esc(m.display_name || m.handle || '') + '</span>' : '') + rich((window.DimauCommsCore && window.DimauCommsCore.summary(m.body)) || m.body) + '</div>';
       var mine = m.author === S.user.id, canDelete = mine || st.is_owner;
       var text = m.deleted ? '<i class="sub">message removed</i>' : rich((window.DimauCommsCore && window.DimauCommsCore.summary(m.body)) || m.body);
       return '<div class="msg sp-msg ' + (mine ? 'mine' : '') + '" data-mid="' + m.id + '" data-crew="' + crewId + '">' +
@@ -434,6 +446,30 @@
   function koroReplyId() { return S.koroReply ? Number(S.koroReply.mid) : null; }
   function koroReplyClear() { S.koroReply = null; var b = document.getElementById('sp-reply-to'); if (b) { b.hidden = true; b.removeAttribute('data-mid'); } }
   function koroComposerNote(d) { var st = d.settings || {}; return st.can_post === false ? '<p class="sub">📣 Only the owner posts in this Koro. You can react to any message.</p>' : ''; }
+
+
+  /* ---------------------------------------------------------------- compatibility: work before the migrations are applied
+     If the new database functions are not there yet, read the old way and shape the rows the same, so nothing breaks.
+     Once the migrations run, these take the new path automatically. */
+  function missingFn(err) { var m = (err && (err.message || '')) + ' ' + (err && err.code || ''); return /PGRST202|42883|Could not find the function|does not exist/i.test(m); }
+  async function feedCompat(sb) {
+    var r = await sb.rpc('bv_moments_feed2', { lim: 60 });
+    if (!r.error || !missingFn(r.error)) return r;
+    var old = await sb.rpc('bv_moments_feed', { lim: 60 });
+    if (old.error) return old;
+    return { data: (old.data || []).map(function (m) { m.audience = 'friends'; m.reactions = { counts: {}, mine: null }; m.comment_count = 0; m.edit_count = 0; m.repost_count = 0; m.poll = null; m.repost = null; m.compat = true; return m; }), error: null };
+  }
+  async function koroReadCompat(sb, crewId) {
+    var r = await sb.rpc('bv_crew_messages2', { p_crew: crewId, lim: 80 });
+    if (!r.error || !missingFn(r.error)) return r;
+    var msgs = await sb.from('bv_crew_messages').select('*').eq('crew_id', crewId).order('created_at', { ascending: false }).limit(80);
+    if (msgs.error) return msgs;
+    var ids = []; (msgs.data || []).forEach(function (m) { if (ids.indexOf(m.author) < 0) ids.push(m.author); });
+    var ppl = ids.length ? await sb.from('bv_profiles').select('id,handle,display_name,avatar_emoji').in('id', ids) : { data: [] };
+    if (ppl.error) return ppl;
+    var map = {}; (ppl.data || []).forEach(function (p) { map[p.id] = p; });
+    return { data: { settings: { compat: true }, pinned: null, messages: (msgs.data || []).map(function (m) { var p = map[m.author] || {}; return { id: m.id, author: m.author, handle: p.handle, display_name: p.display_name, avatar_emoji: p.avatar_emoji, body: m.body, deleted: false, kind: 'text', created_at: m.created_at, expires_at: null, reactions: { counts: {}, mine: null }, reply: null }; }) }, error: null };
+  }
 
   /* ---------------------------------------------------------------- one delegated click handler */
   function closest(el, sel) { while (el && el !== document) { if (el.matches && el.matches(sel)) return el; el = el.parentNode; } return null; }
@@ -572,5 +608,5 @@
 
   window.SotaPlus = { init: init, feed: feed, momentCard: momentCard, bar: bar, composerExtras: composerExtras, wireComposer: wireComposer, post: post,
     strip: strip, mountStrip: mountStrip, sidePanel: sidePanel, open: open, roomExtras: roomExtras, highlights: highlights, REACTIONS: REACTIONS,
-    koroRead: koroRead, koroHeader: koroHeader, koroMessages: koroMessages, koroReplyBar: koroReplyBar, koroReplyId: koroReplyId, koroReplyClear: koroReplyClear, koroComposerNote: koroComposerNote };
+    koroRead: koroRead, koroHeader: koroHeader, koroMessages: koroMessages, koroReplyBar: koroReplyBar, koroReplyId: koroReplyId, koroReplyClear: koroReplyClear, feedCompat: feedCompat, koroReadCompat: koroReadCompat, koroComposerNote: koroComposerNote };
 })();
