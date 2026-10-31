@@ -1,5 +1,5 @@
 create schema auth; create schema bulavata;
-create role anon nologin; create role authenticated nologin;
+do $r$ begin if not exists (select 1 from pg_roles where rolname='anon') then create role anon nologin; end if; if not exists (select 1 from pg_roles where rolname='authenticated') then create role authenticated nologin; end if; end $r$;
 create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
 create table bulavata.profiles(id uuid primary key, handle text unique, display_name text, pronouns text, bio text, avatar_emoji text, room_theme text, room_accent text, room_css text, room_song text, human_verified boolean default false, created_at timestamptz default now());
 create table bulavata.friendships(id bigserial primary key, requester uuid, addressee uuid, status text, created_at timestamptz default now());
@@ -26,3 +26,12 @@ insert into bulavata.profiles(id,handle,display_name,avatar_emoji,room_accent) v
 insert into bulavata.friendships(requester,addressee,status) values ('11111111-1111-1111-1111-111111111111','22222222-2222-2222-2222-222222222222','accepted');
 insert into bulavata.crews(name,owner) values ('Koro A','11111111-1111-1111-1111-111111111111');
 insert into bulavata.crew_members values (1,'11111111-1111-1111-1111-111111111111'),(1,'22222222-2222-2222-2222-222222222222');
+alter table bulavata.crews add column join_code text default 'abc', add column kind text default 'koro', add column about text default '', add column emoji text default '🪸', add column accent text default '#4FA8D8', add column created_at timestamptz default now();
+create table bulavata.crew_messages(id bigint generated always as identity primary key, crew_id bigint references bulavata.crews(id), author uuid, body text, created_at timestamptz default now());
+alter table bulavata.crew_messages enable row level security; alter table bulavata.crews enable row level security; alter table bulavata.crew_members enable row level security;
+create function bulavata.in_crew(c bigint) returns boolean language sql stable security definer set search_path='' as $$ select exists(select 1 from bulavata.crew_members m where m.crew_id=c and m.member=(select auth.uid())) $$;
+create policy cx_ins on bulavata.crew_messages for insert with check (author=(select auth.uid()) and bulavata.in_crew(crew_id));
+create policy cx_read on bulavata.crew_messages for select using (bulavata.in_crew(crew_id));
+create policy c_read on bulavata.crews for select using (owner=(select auth.uid()) or bulavata.in_crew(id));
+create view public.bv_crew_messages with (security_invoker=true) as select id,crew_id,author,body,created_at from bulavata.crew_messages;
+grant select, insert on public.bv_crew_messages, bulavata.crew_messages to authenticated; grant select on bulavata.crews to authenticated;

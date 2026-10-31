@@ -1,3 +1,14 @@
+## 31 October 2026 (later) — Koro messaging: vanish mode, broadcast Koro, replies, reactions, pin
+
+Second batch from the feature spreadsheets, built after reading how SimpleX and XMTP do disappearing messages (expiry stamped per message from a per-conversation setting, a system line in the chat when it changes, a sweep that really deletes). Migration `supabase/migrations/20261031160000_sota_koro_messaging.sql` (needs the social-plus migration first) plus the Koro section of `sota-plus.js`:
+
+- Vanish mode — the Koro owner sets off / 1 hour / 24 hours / 7 days; new messages get an expiry at send time, are hidden the moment they expire (read policy and the room function both check), and a pg_cron sweep deletes them for real every ten minutes.
+- Broadcast Koro — only the owner posts (enforced in the insert policy); members react and reply. Switching either setting writes a system line into the chat.
+- Replies (quote the message above), reactions on messages, a pinned message at the top, delete-for-everyone by author or owner.
+- The room now reads one function (`bv_crew_messages2`) instead of two table reads; newest still at the top.
+
+Verified locally: `tests/koro-messaging-db.sql` (owner/member/stranger). Existing node tests pass; the essential shell stays under 1 MB (the old per-message markup came out of index.html to keep it there). Phone-width render checked.
+
 ## 31 October 2026 — The social layer: reactions, replies, saved, stories, polls, events
 
 Owner supplied two spreadsheets of standard social-platform features (X, Instagram, YouTube, TikTok, Facebook) and asked for them to be built into the apps that need them. Sota Kece is that app. Built in one migration (`supabase/migrations/20261031140000_sota_social_plus.sql`) plus `sota-plus.js` / `sota-plus.css`, wired into Moments and rooms:
