@@ -388,6 +388,52 @@
     }).join('') + '</div></div>';
   }
 
+
+  /* ---------------------------------------------------------------- Koro room: vanish mode, broadcast, replies, reactions, pin */
+  var VANISH = [[null, 'Off'], [3600, '1 hour'], [86400, '24 hours'], [604800, '7 days']];
+  function vanishLabel(sec) { for (var i = 0; i < VANISH.length; i++) if (VANISH[i][0] === sec) return VANISH[i][1]; return Math.round(sec / 3600) + ' h'; }
+  function koroRead(crewId) { return rpc('bv_crew_messages2', { p_crew: crewId, lim: 80 }); }
+
+  function koroHeader(crewId, d) {
+    var st = d.settings || {}, out = '';
+    if (st.broadcast) out += '<span class="pill">📣 Broadcast — only the owner posts</span> ';
+    if (st.vanish_seconds) out += '<span class="pill">⏳ Vanish: ' + esc(vanishLabel(st.vanish_seconds)) + '</span> ';
+    if (st.is_owner) out += '<button type="button" class="btn sm ghost" data-sp="koro-settings" data-crew="' + crewId + '">⚙️ Koro settings</button>';
+    var panel = st.is_owner ? '<form class="sp-koro-settings" data-sp="koro-settings-form" data-crew="' + crewId + '" hidden>' +
+      '<label class="sp-seg"><span>Messages vanish after</span><select name="vanish">' + VANISH.map(function (v) { return '<option value="' + (v[0] === null ? '' : v[0]) + '" ' + (st.vanish_seconds === v[0] ? 'selected' : '') + '>' + v[1] + '</option>'; }).join('') + '</select></label>' +
+      '<label class="sp-seg"><input type="checkbox" name="broadcast" ' + (st.broadcast ? 'checked' : '') + '> Broadcast Koro — only I post, everyone reacts</label>' +
+      '<div class="row"><div class="spacer"></div><button class="btn sm" type="submit">Save</button></div></form>' : '';
+    var pinned = d.pinned ? '<div class="sp-pinned"><span>📌</span><div style="flex:1;min-width:0"><b>@' + esc(d.pinned.handle) + '</b> ' + rich(d.pinned.body) + '</div>' +
+      (st.is_owner ? '<button type="button" class="sp-link" data-sp="koro-unpin" data-crew="' + crewId + '">unpin</button>' : '') + '</div>' : '';
+    return (out ? '<div class="row wrap" style="gap:6px;margin:6px 0">' + out + '</div>' : '') + panel + pinned;
+  }
+
+  function koroMessages(crewId, d) {
+    var st = d.settings || {}, list = d.messages || [];
+    if (!list.length) return '<div class="empty"><em>🪸</em>Say something first.</div>';
+    return list.map(function (m) {
+      if (m.kind === 'system') return '<div class="sp-sys">' + esc(m.body || '') + '</div>';
+      var mine = m.author === S.user.id, canDelete = mine || st.is_owner;
+      var text = m.deleted ? '<i class="sub">message removed</i>' : rich((window.DimauCommsCore && window.DimauCommsCore.summary(m.body)) || m.body);
+      return '<div class="msg sp-msg ' + (mine ? 'mine' : '') + '" data-mid="' + m.id + '" data-crew="' + crewId + '">' +
+        (!mine ? '<span class="who">' + esc(m.avatar_emoji || '🌺') + ' ' + esc(m.display_name || m.handle || '') + '</span>' : '') +
+        (m.reply ? '<div class="sp-reply-quote">↩ <b>@' + esc(m.reply.handle) + '</b> ' + (m.reply.body === null ? '<i>removed</i>' : esc(m.reply.body)) + '</div>' : '') +
+        '<div>' + text + '</div>' +
+        '<div class="sp-msg-meta"><span class="ago">' + ago(m.created_at) + (m.expires_at ? ' · ⏳ ' + vanishLabel(Math.max(60, Math.round((new Date(m.expires_at) - Date.now()) / 1000))) + ' left' : '') + '</span>' +
+        (!m.deleted ? '<button type="button" class="sp-link" data-sp="koro-reply" data-handle="' + esc(m.handle) + '">reply</button>' +
+          '<span class="sp-msg-react" data-kind="message" data-id="' + m.id + '">' +
+            REACTIONS.map(function (r) { var n = (m.reactions && m.reactions.counts && m.reactions.counts[r.key]) || 0; var on = m.reactions && m.reactions.mine === r.key; return (n || on) ? '<button type="button" class="sp-mini ' + (on ? 'on' : '') + '" data-sp="koro-react" data-reaction="' + (on ? '' : r.key) + '">' + r.icon + (n ? ' ' + n : '') + '</button>' : ''; }).join('') +
+            '<button type="button" class="sp-mini" data-sp="koro-react-more" aria-label="React">＋</button>' +
+            '<span class="sp-react-menu">' + REACTIONS.map(function (r) { return '<button type="button" data-sp="koro-react" data-reaction="' + r.key + '" title="' + r.name + '">' + r.icon + '</button>'; }).join('') + '</span></span>' +
+          (st.is_owner ? '<button type="button" class="sp-link" data-sp="koro-pin">pin</button>' : '') +
+          (canDelete ? '<button type="button" class="sp-link" data-sp="koro-delete">delete</button>' : '') : '') +
+        '</div></div>';
+    }).join('');
+  }
+  function koroReplyBar() { return '<div id="sp-reply-to" class="sp-reply-to" hidden><span></span><button type="button" class="sp-link" data-sp="koro-reply-clear">✕</button></div>'; }
+  function koroReplyId() { var b = document.getElementById('sp-reply-to'); return b && !b.hidden && b.dataset.mid ? Number(b.dataset.mid) : null; }
+  function koroComposerNote(d) { var st = d.settings || {}; return st.can_post === false ? '<p class="sub">📣 Only the owner posts in this Koro. You can react and reply from the message menu.</p>' : ''; }
+
   /* ---------------------------------------------------------------- one delegated click handler */
   function closest(el, sel) { while (el && el !== document) { if (el.matches && el.matches(sel)) return el; el = el.parentNode; } return null; }
 
@@ -464,6 +510,22 @@
         toast(turnOn ? 'Added to your close friends.' : 'Removed from close friends.');
         return t.dataset.stay ? render() : viewClose();
       }
+      if (act === 'koro-settings') { var f = document.querySelector('[data-sp="koro-settings-form"]'); if (f) f.hidden = !f.hidden; return; }
+      if (act === 'koro-unpin') { await rpc('bv_crew_pin', { p_crew: Number(t.dataset.crew), p_message: null }); return render(); }
+      if (act === 'koro-pin') { var mm = closest(t, '.sp-msg'); await rpc('bv_crew_pin', { p_crew: Number(mm.dataset.crew), p_message: Number(mm.dataset.mid) }); return render(); }
+      if (act === 'koro-delete') { if (!confirm('Remove this message for everyone?')) return; await rpc('bv_crew_message_delete', { p_id: Number(closest(t, '.sp-msg').dataset.mid) }); return render(); }
+      if (act === 'koro-reply') {
+        var mm2 = closest(t, '.sp-msg'), rb = document.getElementById('sp-reply-to');
+        if (rb) { rb.hidden = false; rb.dataset.mid = mm2.dataset.mid; rb.querySelector('span').textContent = 'Replying to @' + t.dataset.handle; }
+        var inp = document.getElementById('cm'); if (inp) inp.focus(); return;
+      }
+      if (act === 'koro-reply-clear') { var rb2 = document.getElementById('sp-reply-to'); rb2.hidden = true; rb2.dataset.mid = ''; return; }
+      if (act === 'koro-react-more') { closest(t, '.sp-msg-react').classList.toggle('open'); return; }
+      if (act === 'koro-react') {
+        var wrap = closest(t, '.sp-msg-react');
+        await rpc('bv_react', { p_kind: 'message', p_id: Number(wrap.dataset.id), p_reaction: t.dataset.reaction || null });
+        return render();
+      }
       if (act === 'rsvp') { await rpc('bv_event_rsvp', { p_event: Number(closest(t, '.sp-event').dataset.eid), p_status: t.dataset.status }); return viewEvents(false); }
       if (act === 'event-cancel') { if (!confirm('Cancel this event for everyone?')) return; await rpc('bv_event_cancel', { p_event: Number(closest(t, '.sp-event').dataset.eid) }); return viewEvents(false); }
     } catch (e) { toast(say(e)); }
@@ -484,6 +546,11 @@
         await rpc('bv_story_post', { p_body: f.body.value.trim(), p_media_url: f.media ? f.media.value.trim() || null : null, p_kind: kind, p_audience: f.audience ? f.audience.value : 'friends' });
         document.getElementById('sp-viewer').remove(); toast(kind === 'note' ? 'Note is up for 24 hours.' : 'Story shared for 24 hours.'); return mountStrip();
       }
+      if (f.dataset.sp === 'koro-settings-form') {
+        var v = f.vanish.value ? Number(f.vanish.value) : null;
+        await rpc('bv_crew_settings', { p_crew: Number(f.dataset.crew), p_vanish_seconds: v, p_broadcast: f.broadcast.checked });
+        toast('Koro settings saved.'); return render();
+      }
       if (f.dataset.sp === 'event-form') {
         var aud = f.audience.value, crew = null; if (aud.indexOf('crew:') === 0) { crew = Number(aud.slice(5)); aud = 'crew'; }
         await rpc('bv_event_create', { p_title: f.title.value.trim(), p_starts_at: new Date(f.starts.value).toISOString(), p_ends_at: f.ends.value ? new Date(f.ends.value).toISOString() : null,
@@ -497,10 +564,11 @@
     client = o.client; S = o.state; toast = o.toast; render = o.render; openRoom = o.openRoom; esc = o.esc; ago = o.ago; mediaMarkup = o.mediaMarkup; shell = o.shell;
     document.addEventListener('click', onClick);
     document.addEventListener('submit', onSubmit);
-    document.addEventListener('click', function (ev) { if (!closest(ev.target, '.sp-react-wrap')) document.querySelectorAll('.sp-react-wrap.open').forEach(function (w) { w.classList.remove('open'); }); });
+    document.addEventListener('click', function (ev) { if (!closest(ev.target, '.sp-react-wrap')) document.querySelectorAll('.sp-react-wrap.open').forEach(function (w) { w.classList.remove('open'); }); if (!closest(ev.target, '.sp-msg-react')) document.querySelectorAll('.sp-msg-react.open').forEach(function (w) { w.classList.remove('open'); }); });
     document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') { var v = document.getElementById('sp-viewer'); if (v) v.remove(); } });
   }
 
   window.SotaPlus = { init: init, feed: feed, momentCard: momentCard, bar: bar, composerExtras: composerExtras, wireComposer: wireComposer, post: post,
-    strip: strip, mountStrip: mountStrip, sidePanel: sidePanel, open: open, roomExtras: roomExtras, highlights: highlights, REACTIONS: REACTIONS };
+    strip: strip, mountStrip: mountStrip, sidePanel: sidePanel, open: open, roomExtras: roomExtras, highlights: highlights, REACTIONS: REACTIONS,
+    koroRead: koroRead, koroHeader: koroHeader, koroMessages: koroMessages, koroReplyBar: koroReplyBar, koroReplyId: koroReplyId, koroComposerNote: koroComposerNote };
 })();
