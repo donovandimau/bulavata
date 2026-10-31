@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><link rel="stylesheet" href="/dimau-header-standard.css?v=20261029-header-v4"><link rel="stylesheet" href="/native-header.css?v=20261029-header-v4"><script src="/dimau-header-standard.js?v=20261029-header-v4" defer></script><style>@layer dimau-premium,dimau-history-lighting;</style>
+<head><link rel="stylesheet" href="/dimau-header-standard.css?v=20261029-header-v4"><link rel="stylesheet" href="/native-header.css?v=20261029-header-v4"><link rel="stylesheet" href="/sota-plus.css?v=20261031-koro-1"><script src="/dimau-header-standard.js?v=20261029-header-v4" defer></script><style>@layer dimau-premium,dimau-history-lighting;</style>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sota Kece — alive together</title>
@@ -351,7 +351,7 @@ function shell(body){
   if(navFocused)app.querySelector(`nav.bottom [data-tab="${S.tab}"]`)?.focus({preventScroll:true});
   else if(viewFocused)$('#view')?.focus({preventScroll:true});
 }
-function go(t){ if((t!=='connections'&&/^#connections=(?:mine|example)$/.test(location.hash))||/^#(?:circle-invite|circle-graph|friends-graph)=/.test(location.hash))history.replaceState(null,'',location.pathname+location.search); window.SotaCircles?.stop(); window.SotaConnections?.stop(); window.SotaKavaUI?.stop(); window.SotaRoomSocial?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
+function go(t){ S.plusView=null; if((t!=='connections'&&/^#connections=(?:mine|example)$/.test(location.hash))||/^#(?:circle-invite|circle-graph|friends-graph)=/.test(location.hash))history.replaceState(null,'',location.pathname+location.search); window.SotaCircles?.stop(); window.SotaConnections?.stop(); window.SotaKavaUI?.stop(); window.SotaRoomSocial?.stop(); S.tab=t; S.roomHandle=null; S.crew=null; render(); }
 
 /* ================= DATA ================= */
 async function refreshMeta(){
@@ -561,45 +561,42 @@ async function answerSpark(id){
 async function viewMoments(){
   const run=viewRun();
   shell(`<div class="empty glass card" role="status"><em>🐚</em>Loading…</div>`);
-  const {data,error} = await requestResult(sb.rpc("bv_moments_feed",{lim:60}));
+  if(S.plusView&&window.SotaPlus)return window.SotaPlus.open(S.plusView);
+  const {data,error} = await requestResult(sb.rpc("bv_moments_feed2",{lim:60}));
   if(!currentView(run))return;
   if(error)return viewError('your moments','viewMoments()');
   shell(`
   <div class="grid two">
     <div class="stack">
+      ${window.SotaPlus?.strip()||''}
       <div class="glass card">
         <h3>Post a moment</h3>
         <div class="sub" style="margin-bottom:11px">Kept forever unless you delete it. We never will.</div>
         <textarea id="m-body" aria-label="Your moment" placeholder="what happened…"></textarea>
         <input id="m-url" aria-label="Moment image link (optional)" placeholder="Image link (optional)" style="margin-top:9px">
+        ${window.SotaPlus?.composerExtras()||''}
         <div class="row" style="margin-top:9px"><div class="spacer"></div>
           <button class="btn sm" onclick="postMoment()">Post</button></div>
       </div>
-      ${(data||[]).length? (data||[]).map(m=>`
-        <div class="moment">
-          <div class="row">
-            <div class="av sm" style="background:${esc(m.accent)}18">${esc(m.avatar_emoji||'🌺')}</div>
-            <div style="flex:1;min-width:0"><div class="name ellip">${esc(m.display_name||m.handle)}</div>
-              <div class="handle">@${esc(m.handle)} · ${ago(m.created_at)}</div></div>
-            ${m.author===S.user.id?`<button class="luvbtn" aria-label="Delete this moment" onclick="delMoment(${m.id})">🗑</button>`:''}
-          </div>
-          ${m.body?`<div class="body">${esc(m.body)}</div>`:''}
-          ${mediaMarkup(m.media_url)}
-          <button class="luvbtn ${m.i_luvd?'on':''}" onclick="giveLuv('moment',${m.id})">
-            🫶 <span>Uro</span>${m.luv_count? ' · '+m.luv_count : ''}</button>
-        </div>`).join("")
+      ${(data||[]).length? (data||[]).map(m=>window.SotaPlus?window.SotaPlus.momentCard(m):`<div class="moment">${esc(m.body||'')}</div>`).join("")
         : `<div class="glass card empty"><em>🐚</em>Nothing yet. Your moments live here — permanently.</div>`}
     </div>
-    <div class="glass card" style="align-self:start">
-      <h3>Moments, not content</h3>
-      <div class="sub" style="line-height:1.7;margin-top:8px">
-        Strictly newest first. No reach, no impressions, no "suggested for you".
-        Nobody who isn't your friend can see any of this — enforced in the database, not just the screen.
+    <div class="stack" style="align-self:start">
+      ${window.SotaPlus?.sidePanel()||''}
+      <div class="glass card">
+        <h3>Moments, not content</h3>
+        <div class="sub" style="line-height:1.7;margin-top:8px">
+          Strictly newest first. No reach, no impressions, no "suggested for you".
+          Nobody who isn't your friend can see any of this — enforced in the database, not just the screen.
+        </div>
       </div>
     </div>
   </div>`);
+  window.SotaPlus?.wireComposer();
+  window.SotaPlus?.mountStrip();
 }
 async function postMoment(){
+  if(window.SotaPlus)return window.SotaPlus.post();
   const b=$("#m-body").value.trim(), u=$("#m-url").value.trim();
   if(!b && !u) return;
   const {error}=await sb.from("bv_moments").insert({author:S.user.id,body:b,media_url:u||null});
@@ -654,8 +651,10 @@ async function viewRoom(){
              ?`<span class="pill">🤝 Friends</span>
                <button class="btn sm ghost" onclick="pinTop('${esc(p.id)}')">📌 Add to Top Mates 16</button>`
              :`<button class="btn sm" onclick="addFriend('${esc(p.id)}')">Ask to be friends</button>`)}
+      ${window.SotaPlus?.roomExtras(R)||''}
     </div>
   </div>
+  ${window.SotaPlus?.highlights(R)||''}
 
   <div class="grid two" style="margin-top:16px">
     <div class="stack">
@@ -673,7 +672,7 @@ async function viewRoom(){
               <span style="font-size:14px">${esc(w.avatar_emoji||'🌺')}</span>
               <b style="font-weight:600;font-size:13px">@${esc(w.handle)}</b>
               <div class="spacer"></div><span class="ago">${ago(w.created_at)}</span></div>
-            ${wallMarkup(w.body)}</div>`).join("")
+            ${wallMarkup(w.body)}${window.SotaPlus?.bar('wall',w.id,w.reactions,w.comment_count)||''}</div>`).join("")
           : `<div class="empty"><em>✍️</em>Blank wall. Someone should fix that.</div>`}
       </div>
       <div class="glass card">
@@ -682,7 +681,7 @@ async function viewRoom(){
           <div class="scrawl" style="border-left-color:${esc(p.room_accent)}">
             ${m.body?esc(m.body):''}
             ${mediaMarkup(m.media_url)}
-            <div class="ago" style="margin-top:6px">${ago(m.created_at)}</div></div>`).join("")
+            <div class="ago" style="margin-top:6px">${ago(m.created_at)}${m.audience==='close'?' · 🟢 close friends':''}${m.edited_at?' · edited':''}</div>${window.SotaPlus?.bar('moment',m.id,m.reactions,m.comment_count)||''}</div>`).join("")
           : `<div class="empty"><em>🐚</em>No moments yet.</div>`}
       </div>
     </div>
@@ -904,15 +903,11 @@ async function viewCrewRoom(){
   if(crewError)return viewError('this Koro','viewCrewRoom()');
   const c=(cs||[]).find(x=>String(x.id)===String(S.crew));
   if(!c){ S.crew=null; return render(); }
-  const {data:msgs,error:messageError}=await requestResult(sb.from("bv_crew_messages").select("*").eq("crew_id",c.id).order("created_at",{ascending:false}).limit(80));
+  /* newest first - latest at the top, no scrolling back up */
+  const {data:roomData,error:roomError}=await requestResult(sb.rpc("bv_crew_messages2",{p_crew:c.id,lim:80}));
   if(!currentView(run))return;
-  if(messageError)return viewError('your Koro messages','viewCrewRoom()');
-  const list=(msgs||[]);   /* newest first - latest at the top, no scrolling back up */
-  const ids=[...new Set(list.map(m=>m.author))];
-  const {data:ppl,error:peopleError}=ids.length?await requestResult(sb.from("bv_profiles").select("id,handle,display_name,avatar_emoji").in("id",ids)):{data:[]};
-  if(!currentView(run))return;
-  if(peopleError)return viewError('your Koro messages','viewCrewRoom()');
-  const map=Object.fromEntries((ppl||[]).map(p=>[p.id,p]));
+  if(roomError)return viewError('your Koro messages','viewCrewRoom()');
+  const room=roomData||{};
   shell(`<div class="glass card">
     <div class="row"><button class="btn sm ghost" aria-label="Back to your Koro" onclick="S.crew=null;render()">←</button>
       <div class="av" id="crew-avatar" style="background:${esc(window.SotaCircleTypes?.get(c.circle_type)?.displayAccent||c.accent)}22">${esc(c.emoji)}</div>
@@ -922,22 +917,20 @@ async function viewCrewRoom(){
     </div><hr class="hr">
     <p class="sub" id="crew-type-label">${esc(window.SotaCircleTypes.get(c.circle_type).label)} · ${esc(window.BulaSkins.presets.find(p=>p.id===window.SotaCircleTypes.get(c.circle_type).skin)?.name||'Shared group skin')}</p>
     <details class="tc-group-graph"><summary>Circle graph & visibility</summary><div id="crew-graph"></div></details>
-    <div class="row" style="margin-bottom:12px"><input id="cm" aria-label="Message your Koro" aria-describedby="cm-error" placeholder="Message…" maxlength="900">
-      <button class="btn sm" id="cm-send" onclick="sendMsg(${c.id})">Send</button></div>
+    ${window.SotaPlus?.koroHeader(c.id,room)||''}
+    ${window.SotaPlus?.koroReplyBar()||''}
+    ${room.settings&&room.settings.can_post===false?window.SotaPlus.koroComposerNote(room):`<div class="row" style="margin-bottom:12px"><input id="cm" aria-label="Message your Koro" aria-describedby="cm-error" placeholder="Message…" maxlength="900">
+      <button class="btn sm" id="cm-send" onclick="sendMsg(${c.id})">Send</button></div>`}
     <p id="cm-error" role="alert" hidden></p>
     <div class="msgs" id="msgs">
-      ${list.length? list.map(m=>{const p=map[m.author]||{};return `
-        <div class="msg ${m.author===S.user.id?'mine':''}">
-          ${m.author!==S.user.id?`<span class="who">${esc(p.avatar_emoji||'🌺')} ${esc(p.display_name||p.handle||'')}</span>`:''}
-          ${esc(window.DimauCommsCore?.summary(m.body)??m.body)}</div>`}).join("")
-        : `<div class="empty"><em>🪸</em>Say something first.</div>`}
+      ${window.SotaPlus?.koroMessages(c.id,room)||'<div class="empty"><em>🪸</em>Messages could not be drawn. Reload the page.</div>'}
     </div>
   </div>`);
   window.SotaCircles.applyGroupSkin(c);
   $('#crew-invite').onclick=()=>window.SotaCircles.openInvite(c);
   window.SotaCircles.mountGroupGraph($('#crew-graph'),c);
   const box=$("#msgs"); if(box) box.scrollTop=0;
-  $("#cm").addEventListener("keydown",e=>{if(e.key==="Enter")sendMsg(c.id)});
+  $("#cm")?.addEventListener("keydown",e=>{if(e.key==="Enter")sendMsg(c.id)});
 }
 async function sendMsg(cid){
   const input=$("#cm");if(!input||S.sendingMessage)return;
@@ -946,9 +939,11 @@ async function sendMsg(cid){
   S.sendingMessage=sendToken;input.disabled=true;if(button)button.disabled=true;
   if(errorBox){errorBox.hidden=true;errorBox.textContent='';}
   try{
-    const {error}=await sb.from("bv_crew_messages").insert({crew_id:cid,author:S.user.id,body:b});
+    const replyTo=window.SotaPlus?.koroReplyId()||null;
+    const {error}=await sb.from("bv_crew_messages").insert(replyTo?{crew_id:cid,author:S.user.id,body:b,reply_to:replyTo}:{crew_id:cid,author:S.user.id,body:b});
     if(error)throw error;
     if(input.value===raw)input.value='';
+    window.SotaPlus?.koroReplyClear();
     if(currentView(run))await render();
   }catch(_){
     if(currentView(run)){const message='Message did not send. Your text is still here. Try again.';if(errorBox){errorBox.textContent=message;errorBox.hidden=false;}else toast(message);}
@@ -1143,8 +1138,8 @@ window.SotaView={invalidate:()=>viewRun()};
 <script src="/life-connections.js?v=20261027-spectrum-tidy-2"></script>
 <script src="/connections.js?v=20261026-spatial-life-1"></script>
 <script src="/icon-controls.js?v=20261027-ui-clarity-3"></script>
-<script src="/gifts.js?v=20261030-gifts-1"></script>
-<script>window.SotaIconControls?.init();window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null,getPage:()=>S.user?S.tab:'profile'});window.SotaSpaceDesign?.mount(app);window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());window.SotaExperience?.init({go,welcome:()=>{window.SotaKavaUI?.stop();renderAuth('in');}});window.SotaGifts?.init({client:sb,state:S,toast,app});boot();installAuthLifecycle();</script>
+<script src="/gifts.js?v=20261030-gifts-1"></script><script src="/sota-plus.js?v=20261031-koro-1"></script>
+<script>window.SotaIconControls?.init();window.SotaSpaceDesign?.init({getOwner:()=>S.user?.id||null,getPage:()=>S.user?S.tab:'profile'});window.SotaSpaceDesign?.mount(app);window.SotaProfilePhotos?.init({client:sb,state:S,app,auth:renderAuth,onSaved:()=>{if(S.tab==='room')viewRoom();}});window.SotaRoomSocial?.init({client:sb,state:S,app,auth:renderAuth,go});window.SotaCircles.init({client:sb,state:S,toast,auth:renderAuth,go,render,openRoom:openCircleMember,groupChanged:circleGroupChanged});window.SotaKavaUI.init({client:sb,state:S,shell,escape:esc,toast});window.SotaConnections.init({client:sb,state:S,shell,app,auth:renderAuth,home:boot,render,openRoom,go});window.addEventListener('hashchange',()=>window.SotaCircles.route());window.SotaExperience?.init({go,welcome:()=>{window.SotaKavaUI?.stop();renderAuth('in');}});window.SotaGifts?.init({client:sb,state:S,toast,app});window.SotaPlus?.init({client:sb,state:S,toast,render,openRoom,esc,ago,mediaMarkup,shell:b=>shell(b)});boot();installAuthLifecycle();</script>
 <script src="/dimau-companion.js?v=20261027-ui-clarity-3" data-app="sota-kece" defer></script>
 <link rel="stylesheet" href="/phone-tidy-20261029.css">
 <script src="/bula-welcome.js?v=20261030" data-app="sota-kece" data-mount="after:[data-dimau-header-bar]" defer></script>
