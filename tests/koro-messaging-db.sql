@@ -27,3 +27,7 @@ select 'expired hidden via view: '||(select count(*)=0 from public.bv_crew_messa
 -- stranger
 select set_config('request.jwt.claim.sub','33333333-3333-3333-3333-333333333333',false);
 select 'cy sees messages (expect 0): '||jsonb_array_length(public.bv_crew_messages2(1,80)->'messages');
+-- cross-Koro reply must be refused
+reset role; insert into bulavata.crews(name,owner) values ('Koro B','33333333-3333-3333-3333-333333333333'); insert into bulavata.crew_members values (2,'33333333-3333-3333-3333-333333333333'); set role authenticated;
+select set_config('request.jwt.claim.sub','33333333-3333-3333-3333-333333333333',false);
+select 'cy cross-koro reply:'; do $$ begin insert into public.bv_crew_messages(crew_id,author,body,reply_to) values (2,'33333333-3333-3333-3333-333333333333','peek',1); raise exception 'LEAK'; exception when others then if sqlerrm='LEAK' then raise; end if; raise notice 'cross-koro blocked %', sqlstate; end $$;
