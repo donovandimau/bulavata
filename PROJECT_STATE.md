@@ -1,3 +1,7 @@
+## 1 November 2026 — Wallet receipts button removed; Sota Kece Plus pill stays
+
+This corrects the 31 October Plus checkout entry below. The "+ Wallet receipts" button and the dimau-receipts.js script were taken out of index.html (commit 75f9b83) because the wallet stays off until the Reserve Bank of Fiji approves it. No page loads the receipts widget now. The Sota Kece Plus pill (FJ$9.90 / 30 days, product sotakece-plus-30d) was briefly removed in the same commit, then put back (commit a7c31ea) after the owner approved it on 31 October. The pill is loaded on index.html only.
+
 ## 31 October 2026 — Activity: who reacted, replied, mentioned, asked, scrawled, answered
 
 Sota Kece had every social action but no way to find out it happened to you. Migration `supabase/migrations/20261031210000_sota_activity.sql` adds `bulavata.notifications`, filled only by database triggers (reactions, comments incl. parent-reply and @mentions of friends, friend requests and acceptances, wall scrawls, event RSVPs). The writer skips self-actions, coalesces repeats (a changed reaction updates one row and re-surfaces it), and never writes to someone who could not already see the thing. Pattern from the socialens / Meadows feeds; written fresh.
