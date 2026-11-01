@@ -526,7 +526,7 @@
     var act = t.dataset.sp, barEl = closest(t, '.sp-bar');
     try {
       if (act === 'room') { ev.preventDefault(); return openRoom(t.dataset.handle); }
-      if (act === 'act-read-all') { try { await rpc('bv_activity_read', { p_ids: null }); } catch (e) { return toast(say(e)); } document.querySelectorAll('.sp-act.unread').forEach(function (el) { el.classList.remove('unread'); }); t.remove(); return setBadge(0); }
+      if (act === 'act-read-all') { try { var ids = Array.prototype.map.call(document.querySelectorAll('.sp-act.unread'), function (el) { return Number(el.dataset.id); }); await rpc('bv_activity_read', { p_ids: ids.length ? ids : null }); } catch (e) { return toast(say(e)); } document.querySelectorAll('.sp-act.unread').forEach(function (el) { el.classList.remove('unread'); }); t.remove(); return setBadge(0); }
       if (act === 'view') return open(t.dataset.view);
       if (act === 'react-open') { var w = closest(t, '.sp-react-wrap'); w.classList.toggle('open'); return; }
       if (act === 'react') {
