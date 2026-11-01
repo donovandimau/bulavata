@@ -48,7 +48,7 @@ test('opening Activity lists rows newest-first as given, marks unread read and c
   await w.SotaPlus.open('activity');await flush();
   const items=[...w.document.querySelectorAll('.sp-act')];
   assert.equal(items.length,2);assert.equal(items[0].dataset.id,'2');assert.ok(items[0].classList.contains('unread'));
-  assert.ok(calls.some(c=>c.name==='bv_activity_read'&&c.args.p_ids===null),'unread rows are marked read on open');
+  assert.ok(calls.some(c=>c.name==='bv_activity_read'&&Array.isArray(c.args.p_ids)&&c.args.p_ids.length===1&&c.args.p_ids[0]===2),'only the loaded unread rows are marked read on open');
   assert.ok(w.document.querySelector('[data-sp="act-read-all"]'),'mark-all control shown while something is unread');
 });
 

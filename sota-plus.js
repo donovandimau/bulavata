@@ -348,7 +348,7 @@
           '<span class="sp-act-icon" aria-hidden="true">' + (ACT_ICON[n.kind] || '') + '</span>' +
           '<button type="button" class="btn sm ghost" data-sp="room" data-handle="' + esc(n.handle || '') + '">Room</button></div>';
       }).join('') : '<div class="empty"><em>🔔</em>Nothing yet. When friends react, reply or mention you, it shows up here.</div>') + '</div></div>');
-    try { if (list.some(function (n) { return !n.read; })) { await rpc('bv_activity_read', { p_ids: null }); } setBadge(0); } catch (_) {}
+    try { var unread = list.filter(function (n) { return !n.read; }).map(function (n) { return n.id; }); if (unread.length) { await rpc('bv_activity_read', { p_ids: unread }); } pollUnread(); } catch (_) {}
   }
 
   async function viewSaved() {

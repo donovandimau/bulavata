@@ -36,6 +36,9 @@ returns void language sql security definer set search_path = '' as $$
     do update set created_at = now(), read_at = null, snippet = excluded.snippet;
 $$;
 
+-- Internal only: these two run under the triggers below. Nobody calls them through the API.
+revoke all on function bulavata.notify(uuid, uuid, text, text, bigint, text) from public, anon, authenticated;
+
 create or replace function bulavata.target_snippet(p_kind text, p_id bigint)
 returns text language sql stable security definer set search_path = '' as $$
   select left(coalesce(case p_kind
@@ -46,6 +49,28 @@ returns text language sql stable security definer set search_path = '' as $$
     when 'story'   then (select s.body from bulavata.stories s where s.id = p_id)
   end, ''), 140);
 $$;
+
+revoke all on function bulavata.target_snippet(text, bigint) from public, anon, authenticated;
+
+-- Visibility for a named person (the triggers run as the actor, not the recipient).
+create or replace function bulavata.can_see_target_as(p_who uuid, p_kind text, p_id bigint)
+returns boolean language plpgsql stable security definer set search_path = '' as $$
+declare a uuid; aud text; begin
+  if p_kind in ('moment','story') then
+    if p_kind = 'moment' then select author, audience into a, aud from bulavata.moments where id = p_id;
+    else select author, audience into a, aud from bulavata.stories where id = p_id; end if;
+    if not found then return false; end if;
+    if a = p_who then return true; end if;
+    if coalesce(aud, 'friends') = 'close' then
+      return exists (select 1 from bulavata.close_friends c where c.owner = a and c.friend = p_who);
+    end if;
+    return bulavata.are_friends(p_who, a);
+  else
+    a := bulavata.target_author(p_kind, p_id);
+    return a is not null and (a = p_who or bulavata.are_friends(p_who, a));
+  end if;
+end $$;
+revoke all on function bulavata.can_see_target_as(uuid, text, bigint) from public, anon, authenticated;
 
 -- ---------------------------------------------------------------- triggers
 create or replace function bulavata.trg_notify_reaction() returns trigger
@@ -75,7 +100,8 @@ begin
   for h in select distinct lower(m[1]) from regexp_matches(new.body, '@([A-Za-z0-9_]{2,30})', 'g') m loop
     select id into mentioned from bulavata.profiles where lower(handle) = h;
     if mentioned is not null and mentioned not in (new.author, coalesce(owner_id, new.author), coalesce(parent_author, new.author))
-       and bulavata.are_friends(new.author, mentioned) then
+       and bulavata.are_friends(new.author, mentioned)
+       and bulavata.can_see_target_as(mentioned, new.target_kind, new.target_id) then
       perform bulavata.notify(mentioned, new.author, 'mention', 'comment', new.id, new.body);
     end if;
   end loop;
@@ -153,4 +179,4 @@ returns integer language sql security definer set search_path = '' as $$
 $$;
 
 grant execute on function public.bv_activity(integer), public.bv_activity_unread(), public.bv_activity_read(bigint[]) to authenticated;
-revoke execute on function public.bv_activity(integer), public.bv_activity_unread(), public.bv_activity_read(bigint[]) from anon;
+revoke execute on function public.bv_activity(integer), public.bv_activity_unread(), public.bv_activity_read(bigint[]) from public, anon;

@@ -43,5 +43,25 @@ select 'bo rsvp='||(public.bv_event_rsvp(1,'going') is not null);
 select set_config('request.jwt.claim.sub','11111111-1111-1111-1111-111111111111',false);
 select 'ana rsvp snippet='||(select x->>'snippet' from jsonb_array_elements(public.bv_activity(40)) x where x->>'kind'='rsvp');
 -- anonymous gets nothing
-set role anon; select set_config('request.jwt.claim.sub','',false);
-select 'anon activity='||coalesce((select public.bv_activity(40)::text),'denied');
+select 'anon may call activity='||(select has_function_privilege('anon','public.bv_activity(integer)','execute'));
+-- Hardening: internal functions are not callable by app roles; a mention on a close-friends moment does not reach a friend outside the list
+set role authenticated; select set_config('request.jwt.claim.sub','22222222-2222-2222-2222-222222222222',false);
+select 'bo can forge='||(select has_function_privilege('authenticated','bulavata.notify(uuid,uuid,text,text,bigint,text)','execute'));
+select 'bo can snippet='||(select has_function_privilege('authenticated','bulavata.target_snippet(text,bigint)','execute'));
+select 'anon can read activity='||(select has_function_privilege('anon','public.bv_activity(integer)','execute'));
+-- Ana posts a close-friends-only moment; Cy (now a friend, not close) is mentioned by Bo in a reply… Bo must be able to see it first, so make Bo close.
+select set_config('request.jwt.claim.sub','11111111-1111-1111-1111-111111111111',false);
+select 'close bo='||(public.bv_close_friend_set('22222222-2222-2222-2222-222222222222',true) is null);
+insert into public.bv_moments(author,body,audience) values ('11111111-1111-1111-1111-111111111111','secret plan','close');
+select set_config('request.jwt.claim.sub','22222222-2222-2222-2222-222222222222',false);
+set role postgres; insert into bulavata.friendships(requester,addressee,status) values ('22222222-2222-2222-2222-222222222222','33333333-3333-3333-3333-333333333333','accepted');
+select max(id) as closeid from bulavata.moments \gset
+set role authenticated;
+select 'bo replies on close moment='||(public.bv_comment('moment',:closeid,'what about @cy')->>'id');
+select set_config('request.jwt.claim.sub','33333333-3333-3333-3333-333333333333',false);
+select 'cy mention leaks='||(select count(*) from jsonb_array_elements(public.bv_activity(40)) x where x->>'kind'='mention');
+-- partial read: only the ids passed are marked
+select set_config('request.jwt.claim.sub','11111111-1111-1111-1111-111111111111',false);
+select 'ana unread before partial='||public.bv_activity_unread();
+select 'ana partial read='||public.bv_activity_read(array[(select (x->>'id')::bigint from jsonb_array_elements(public.bv_activity(1)) x)]);
+select 'ana unread after partial='||public.bv_activity_unread();
