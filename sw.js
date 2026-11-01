@@ -1,3 +1,4 @@
+if (typeof importScripts === 'function') importScripts('/dimau-page-timeout.js');
 // Only known public app files are cached. Auth, profiles, messages and uploaded media never enter this cache.
 const CACHE='sota-kece-shell-20261031-v122-activity';
 // Keep installation small and reliable: artwork and fonts are saved only after they are requested.
