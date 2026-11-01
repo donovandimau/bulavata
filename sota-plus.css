@@ -95,3 +95,12 @@
 .sp-reply-to{display:flex;gap:8px;align-items:center;font-size:12.5px;padding:4px 10px;margin-bottom:6px;border-radius:999px;background:rgba(135,206,235,.3)}
 .sp-pinned{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;margin:6px 0 10px;border-radius:12px;background:rgba(255,248,220,.85);border:1px solid rgba(230,190,80,.5);font-size:13.5px}
 .sp-koro-settings{display:flex;flex-direction:column;gap:8px;padding:10px;margin:6px 0;border-radius:12px;background:rgba(240,248,255,.85)}
+
+/* activity */
+.sp-act-btn{position:relative}
+.sp-act-badge{display:inline-block;min-width:18px;padding:0 5px;margin-left:6px;border-radius:9px;background:#e04a3f;color:#fff;font-size:.68rem;line-height:18px;text-align:center;font-weight:700}
+.sp-act-badge[hidden]{display:none}
+.sp-act{display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:12px}
+.sp-act+.sp-act{border-top:1px solid rgba(255,255,255,.08)}
+.sp-act.unread{background:rgba(79,168,216,.12)}
+.sp-act-icon{font-size:1.1rem;opacity:.8}
